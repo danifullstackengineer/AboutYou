@@ -6,14 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run-client": "cd client && npm start && cd ..",
-    "run-server": "cd server && \"npm run start\"",
-    "run-server-dev": "cd server && nodemon --exec \"npm run start\"",
-    "startdev": "concurrently \"npm run run-client\" \"npm run run-server-dev\"",
+    "run-server": "cd server && npm start && cd ..",
+    "startdev": "concurrently \"npm run run-client\" \"npm run run-server\"",
     "build": "cd client && npm run build && cd ..",
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
     "heroku-postbuild": "npm run install-client && npm run install-server && npm run build",
-    "start": "concurrently --kill-others-on-fail \"npm run run-server\" \"npm run start --prefix client\""
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+    "server": "cd server && node index.js"
   },
   "author": "",
   "license": "ISC",
