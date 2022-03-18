@@ -7,21 +7,27 @@ function HeaderAdd() {
 
   return (
     <div className="headerAdd">
-      <div className="headerAdd__text">
-        15% welcome discount<sup>5</sup>
+      <div className="headerAdd__container">
+        <p>
+          <span className="headerAdd__discount">15% Welcome discount</span>
+          <sup>5</sup>
+        </p>
+        <span className="headerAdd__active" onClick={() => setClicked(true)}>
+          <span className="headerAdd__active-container">
+            <span className="headerAdd__active-container-welcome">WELCOME</span>
+            <span
+              className={`headerAdd__active-container-activated ${
+                clicked
+                  ? "headerAdd__active-container-clicked"
+                  : "headerAdd__active-container-unclicked"
+              }`}
+            >
+              {!clicked ? "Activate sale code" : "Activated"}
+            </span>
+          </span>
+        </span>
       </div>
-      <div className="headerAdd__button" onClick={() => setClicked(true)}>
-        <div className="headerAdd__button-text">WELCOME</div>
-        <div
-          className="headerAdd__button-code"
-          style={{
-            backgroundColor: clicked ? "#7BB872" : "white",
-            color: clicked ? "white" : "rgb(24,24,24)",
-          }}
-        >
-          {clicked ? "Activated!" : "Activate sale code"}
-        </div>
-      </div>
+      <Link to="/" className="headerAdd__link"></Link>
     </div>
   );
 }

@@ -4,7 +4,9 @@ import "./styles/index.css";
 
 import Header from "./components/Header/Header";
 import HeaderAdd from "./components/Header/HeaderAdd";
-import HeaderSmall from './components/Header/HeaderSmall';
+import HeaderSmall from "./components/Header/HeaderSmall";
+import Slider from "./components/Slider/Slider";
+import Body from "./components/Body";
 
 function App() {
   return (
@@ -16,8 +18,7 @@ function App() {
             element={
               <>
                 <HeaderAdd />
-                <Header />
-                <HeaderSmall />
+                <Body/>
               </>
             }
           />
