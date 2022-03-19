@@ -13,10 +13,26 @@
   height: 760px;
   transform: translateX(50%);
 }
+.slider__Item-hidden {
+  display: none;
+}
 .slider__Item-slide {
   animation: 500ms ease-in-out slideLeft forwards;
 }
+.slider__Item-slide-next {
+  animation: 500ms ease-in-out slideLeftNext forwards;
+}
 @keyframes slideLeft {
+  0% {
+    transform: translateX(50%);
+    display: block;
+  }
+  100% {
+    transform: translateX(-50%);
+    display: none;
+  }
+}
+@keyframes slideLeftNext {
   0% {
     transform: translateX(50%);
   }

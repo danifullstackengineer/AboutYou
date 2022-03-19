@@ -1,0 +1,121 @@
+.dropdownBrands {
+  display: flex;
+  flex-direction: row;
+}
+.dropdownBrands__categorySpecial {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+  margin-bottom: 15px;
+  margin-left: 2em;
+}
+.dropdownBrands__categoryImage {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+  margin-bottom: 15px;
+  margin-left: 2em;
+}
+.dropdownBrands__category-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2em;
+  margin-bottom: 15px;
+  margin-left: 2em;
+}
+.dropdownBrands__items:nth-child(2) {
+  margin-left: 2em;
+}
+.dropdownBrands__items {
+  width: 150px;
+}
+.dropdownBrands__title {
+  font-size: 16px;
+  font-weight: 800;
+  color: black;
+  margin-bottom: 20px;
+}
+.dropdownBrands__items-normal,
+.dropdownBrands__items-special {
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+}
+.dropdownBrands__title-hidden {
+  opacity: 0;
+}
+.dropdownBrands__items-normal {
+  color: rgb(150, 150, 150);
+}
+.dropdownBrands__items-special {
+  font-weight: 500;
+}
+.dropdownBrands__items-normal::before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid black;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+  left: -10px;
+  display: none;
+}
+.dropdownBrands__items-normal:hover::before {
+  display: flex;
+}
+.dropdownBrands__category-container > div {
+  display: flex;
+  justify-content: center;
+}
+.dropdownBrands__image-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.dropdownBrands__itemsImage {
+  display: flex;
+  flex-direction: row;
+}
+.dropdownBrands__image-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.dropdownBrands__image-containerInner {
+    width: 150px;
+    height: 50px;
+    margin: 0.5em 0 0.5em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdownBrands__image-containerInner > img {
+  width: 100px;
+  height: 50px;
+  object-fit: contain;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.2;
+ color: black;
+ object-position: 50% 50%;
+ border: 1px solid transparent;
+ padding: 0.25em;
+}
+.dropdownBrands__image-containerInner > img:hover {
+    opacity: 1;
+    border: 1px solid black;
+}
