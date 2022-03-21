@@ -42,6 +42,42 @@ import brandOne8 from "../../assets/dropdown/brands/one/guido.webp";
 import brandOne9 from "../../assets/dropdown/brands/one/oliver.webp";
 import brandOne10 from "../../assets/dropdown/brands/one/rawwear.webp";
 
+import brandTwo1 from "../../assets/dropdown/brands/two/adidas.webp";
+import brandTwo2 from "../../assets/dropdown/brands/two/tamaris.webp";
+import brandTwo3 from "../../assets/dropdown/brands/one/about-you.webp";
+import brandTwo4 from "../../assets/dropdown/brands/two/puma.webp";
+import brandTwo5 from "../../assets/dropdown/brands/two/rebook.webp";
+import brandTwo6 from "../../assets/dropdown/brands/two/marco.webp";
+import brandTwo7 from "../../assets/dropdown/brands/two/img.webp";
+import brandTwo8 from "../../assets/dropdown/brands/two/tommy.webp";
+
+import brandThree1 from "../../assets/dropdown/brands/two/adidas.webp";
+import brandThree2 from "../../assets/dropdown/brands/two/puma.webp";
+import brandThree3 from "../../assets/dropdown/brands/three/special.webp";
+import brandThree4 from "../../assets/dropdown/brands/three/only-play.webp";
+import brandThree5 from "../../assets/dropdown/brands/three/cmp.webp";
+
+import brandFour1 from "../../assets/dropdown/brands/one/about-you.webp";
+import brandFour2 from "../../assets/dropdown/brands/two/tommy.webp";
+import brandFour3 from "../../assets/dropdown/brands/four/guess.webp";
+import brandFour4 from "../../assets/dropdown/brands/two/tamaris.webp";
+import brandFour5 from "../../assets/dropdown/brands/four/klein.webp";
+import brandFour6 from "../../assets/dropdown/brands/four/joop.webp";
+import brandFour7 from "../../assets/dropdown/brands/one/le-ger.webp";
+
+import brandFive1 from "../../assets/dropdown/brands/five/hugo.webp";
+import brandFive2 from "../../assets/dropdown/brands/four/klein.webp";
+import brandFive3 from "../../assets/dropdown/brands/four/joop.webp";
+import brandFive4 from "../../assets/dropdown/brands/five/about-you-sm.webp";
+import brandFive5 from "../../assets/dropdown/brands/five/kennel.webp";
+import brandFive6 from "../../assets/dropdown/brands/five/pepe.webp";
+import brandFive7 from "../../assets/dropdown/brands/five/boss.webp";
+import brandFive8 from "../../assets/dropdown/brands/five/drykorn.webp";
+import brandFive9 from "../../assets/dropdown/brands/five/blauer.webp";
+import brandFive10 from "../../assets/dropdown/brands/five/boss.webp";
+
+import brandSix1 from "../../assets/dropdown/brands/six/large.webp";
+
 function Header() {
   const [selectedType, setSelectedType] = useState<boolean[]>([
     true,
@@ -140,11 +176,16 @@ function Header() {
 
   const [categoriesOne, setCategoriesOne] = useState<
     {
-      category: { name: string; types: { name: string; special?: boolean }[] };
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
     }[]
   >([
     {
       category: {
+        special: true,
         name: "Categories",
         types: [
           { name: "New" },
@@ -172,6 +213,7 @@ function Header() {
     },
     {
       category: {
+        special: false,
         name: "Highlights",
         types: [
           { name: "More sustainable" },
@@ -182,6 +224,7 @@ function Header() {
     },
     {
       category: {
+        special: false,
         name: "Shop by fit",
         types: [
           { name: "Curvy" },
@@ -209,6 +252,338 @@ function Header() {
       { img: brandOne8 },
       { img: brandOne9 },
       { img: brandOne10 },
+    ],
+  });
+
+  const [categoriesTwo, setCategoriesTwo] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "Categories",
+        types: [
+          {
+            name: "New",
+          },
+          {
+            name: "Trending",
+          },
+          {
+            name: "Ankle boots",
+          },
+          {
+            name: "Boots",
+          },
+          {
+            name: "Sneakers",
+          },
+          { name: "High heels" },
+          {
+            name: "Sandals",
+          },
+          {
+            name: "Sports shoes",
+          },
+          {
+            name: "Low shoes",
+          },
+          {
+            name: "Slip-ons",
+          },
+          {
+            name: "Slippers",
+          },
+          {
+            name: "Ballet flats",
+          },
+          {
+            name: "Exclusive",
+          },
+          {
+            name: "More sustainable",
+          },
+        ],
+      },
+    },
+  ]);
+
+  const [brandTwo, setBrandTwo] = useState<{
+    name: string;
+    images: { img: string }[];
+  }>({
+    name: "Top Brands",
+    images: [
+      { img: brandTwo1 },
+      { img: brandTwo2 },
+      { img: brandTwo3 },
+      { img: brandTwo4 },
+      { img: brandTwo5 },
+      { img: brandTwo6 },
+      { img: brandTwo7 },
+      { img: brandTwo8 },
+    ],
+  });
+
+  const [categoriesFour, setCategoriesFour] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "Categories",
+        types: [
+          { name: "New" },
+          { name: "Bags & backpacks" },
+          { name: "Jewelry" },
+          { name: "Hats & caps" },
+          { name: "Scarves & Wraps" },
+          { name: "Belts" },
+          { name: "Wallets" },
+          { name: "Sunglasses" },
+          { name: "Gloves" },
+          { name: "Hair accessories" },
+          { name: "Smartphone cases" },
+          { name: "Fabric masks" },
+          { name: "Exclusive" },
+          { name: "More sustainable" },
+        ],
+      },
+    },
+  ]);
+
+  const [brandFour, setBrandFour] = useState<{
+    name: string;
+    images: { img: string }[];
+  }>({
+    name: "Top Brands",
+    images: [
+      { img: brandFour1 },
+      { img: brandFour2 },
+      { img: brandFour3 },
+      { img: brandFour4 },
+      { img: brandFour5 },
+      { img: brandFour6 },
+      { img: brandFour7 },
+    ],
+  });
+
+  const [categoriesFive, setCategoriesFive] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "Categories",
+        types: [
+          { name: "New" },
+          { name: "Jackets & coats" },
+          { name: "Dresses" },
+          { name: "Knitwear" },
+          { name: "Tops" },
+          { name: "Jeans" },
+          { name: "Sweaters & hoodies" },
+          { name: "Pants" },
+          { name: "Blouses & tunics" },
+          { name: "Underwear & swimwear" },
+          { name: "Skirts" },
+          { name: "Jumpsuits & playsuits" },
+          { name: "Shoes" },
+          { name: "Accessories" },
+        ],
+      },
+    },
+  ]);
+
+  const [brandFive, setBrandFive] = useState<{
+    name: string;
+    images: { img: string }[];
+  }>({
+    name: "Top Brands",
+    images: [
+      { img: brandFive1 },
+      { img: brandFive2 },
+      { img: brandFive3 },
+      { img: brandFive4 },
+      { img: brandFive5 },
+      { img: brandFive6 },
+      { img: brandFive7 },
+      { img: brandFive8 },
+      { img: brandFive9 },
+      { img: brandFive10 },
+    ],
+  });
+
+  const [categoriesSix, setCategoriesSix] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "",
+        types: [
+          { name: "Jackets" },
+          { name: "Coats" },
+          { name: "Dresses" },
+          { name: "Sweaters & knitwear" },
+          { name: "Tops" },
+          { name: "Jeans" },
+          { name: "Pants" },
+          { name: "Sweaters & hoodies" },
+          { name: "Blouses & tunics" },
+          { name: "Underwear" },
+          { name: "Swimwear" },
+          { name: "Skirts" },
+          { name: "Plus sizes" },
+          { name: "Maternity wear" },
+          { name: "Blazers" },
+          { name: "Jumpsuits & playsuits" },
+          { name: "Shoes" },
+          { name: "Accessories" },
+          { name: "Premium" },
+          { name: "Show more", special: true },
+        ],
+      },
+    },
+  ]);
+
+  const [categoriesSeven, setCategoriesSeven] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: {
+          name: string;
+          special?: boolean;
+          underlined?: boolean;
+          specialMargin?: true;
+        }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "",
+        types: [
+          { name: "ONLY", underlined: true },
+          { name: "ABOUT YOU", underlined: true },
+          { name: "VERO MODA", underlined: true },
+          { name: "LeGer by Lena Gercke", underlined: true },
+          { name: "VILA", underlined: true },
+          { name: "EDITED", underlined: true },
+          { name: "PIECES", underlined: true },
+          { name: "ADIDAS ORIGINALS", underlined: true },
+          { name: "TAMARIS", underlined: true },
+          { name: "Guido Maria Kretschmer", underlined: true },
+          { name: "s.Oliver", underlined: true },
+          { name: "ADIDAS PERFORMANCE", underlined: true },
+          { name: "TOMMY", underlined: true },
+          { name: "PUMA", underlined: true },
+          { name: "Show more", specialMargin: true, special: true },
+        ],
+      },
+    },
+  ]);
+
+  const [categoriesThree, setCategoriesThree] = useState<
+    {
+      category: {
+        name: string;
+        special: boolean;
+        types: { name: string; special?: boolean }[];
+      };
+    }[]
+  >([
+    {
+      category: {
+        special: true,
+        name: "Sports",
+        types: [
+          { name: "Ski" },
+          { name: "Outdoor" },
+          { name: "Fitness" },
+          { name: "Running" },
+          { name: "Yoga" },
+          { name: "Snowboard" },
+          { name: "Tennis" },
+          { name: "Basketball" },
+          { name: "Ball games" },
+        ],
+      },
+    },
+    {
+      category: {
+        special: true,
+        name: "Sportswear",
+        types: [
+          { name: "Sports bottoms & leggings" },
+          { name: "Sports tops" },
+          { name: "Sports underwear" },
+          { name: "Sports jackets" },
+          { name: "Sports sweaters" },
+          { name: "Swim & surfwear" },
+          { name: "More sustainable" },
+        ],
+      },
+    },
+    {
+      category: {
+        special: false,
+        name: "Sports shoes",
+        types: [
+          { name: "Outdoor shoes" },
+          { name: "Running shoes" },
+          { name: "Sports shoes" },
+          { name: "Pollside shoes" },
+          { name: "Show more", special: true },
+        ],
+      },
+    },
+    {
+      category: {
+        special: false,
+        name: "Sports bags & backpacks",
+        types: [{ name: "Sports bags" }, { name: "Sports backpacks" }],
+      },
+    },
+  ]);
+
+  const [brandThree, setBrandThree] = useState<{
+    name: string;
+    images: { img: string }[];
+  }>({
+    name: "Top Brands",
+    images: [
+      { img: brandThree1 },
+      { img: brandThree2 },
+      { img: brandThree3 },
+      { img: brandThree4 },
+      { img: brandThree5 },
     ],
   });
 
@@ -484,32 +859,67 @@ function Header() {
         <div className="header__bottom-option">
           <span>Clothing</span>
           <div className="header__bottom-option-pop-up">
-            <DropdownBrands itemProps={categoriesOne} imageProps={brandOne} />
+            <DropdownBrands
+              hasSpecial={true}
+              itemProps={categoriesOne}
+              imageProps={brandOne}
+              maxImg={5}
+            />
           </div>
         </div>
         <div className="header__bottom-option">
           <span>Shoes</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands
+              itemProps={categoriesTwo}
+              imageProps={brandTwo}
+              maxImg={4}
+            />
+          </div>
         </div>
         <div className="header__bottom-option">
           <span>Sportswear</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands
+              itemProps={categoriesThree}
+              hasSpecial={true}
+              imageProps={brandThree}
+              maxImg={5}
+              slider={true}
+            />
+          </div>
         </div>
         <div className="header__bottom-option">
           <span>Accessories</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands
+              itemProps={categoriesFour}
+              imageProps={brandFour}
+              maxImg={4}
+            />
+          </div>
         </div>
         <div className="header__bottom-option">
           <span>Premium</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands
+              itemProps={categoriesFive}
+              imageProps={brandFive}
+              maxImg={5}
+            />
+          </div>
         </div>
         <div className="header__bottom-option header__bottom-option-special">
           <span>SALE</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands itemProps={categoriesSix} largeImg={brandSix1} />
+          </div>
         </div>
         <div className="header__bottom-option">
           <span>Brands</span>
-          <div className="header__bottom-option-pop-up"></div>
+          <div className="header__bottom-option-pop-up">
+            <DropdownBrands itemProps={categoriesSeven} brandButton={true} />
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,35 @@
+.topCategories {
+    display: flex;
+    margin-top: 2em;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topCategories > span {
+    font-size: 27.5px;
+}
+.topCategories__category {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 2em 0 2em 0;
+}
+.topCategories__category > button {
+    width: 200px;
+    padding: 1.5vh 0 1.5vh 0;
+    border: none;
+    font-size: 16px;
+    font-weight:500;
+    cursor: pointer;
+    font-size: 1.10rem;
+    background-color: rgb(240,240,240);
+    transition: all 200ms ease-in;
+}
+.topCategories__category > button:not(:last-child) {
+    margin-right: 2em;
+}
+.topCategories__category > button:hover {
+    background-color: rgb(200,200,200);
+}
