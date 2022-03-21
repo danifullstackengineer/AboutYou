@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import "../../styles/components/Body/SliderTypeOne.css";
+import { AiOutlineHeart } from "react-icons/ai";
 
 function SliderTypeOne({
   props,
+  notfull,
 }: {
   props: {
     image: string;
@@ -13,6 +15,7 @@ function SliderTypeOne({
     title1?: string;
     title2?: string;
   }[];
+  notfull?: boolean;
 }) {
   const [showNext, setShowNext] = useState<boolean>(true);
   const [showPrev, setShowPrev] = useState<boolean>(false);
@@ -23,15 +26,28 @@ function SliderTypeOne({
   const [nextClass, setNextClass] = useState<string>("");
   const [prevClass, setPrevClass] = useState<string>("");
 
+  const [prevClassNotFull, setPrevClassNotFull] = useState<string>("");
+  const [nextClassNotFull, setNextClassNotFull] = useState<string>("");
+
   const handleNext = () => {
-    setPrevClass("");
-    setNextClass("sliderTypeOne__item-slide-Right");
+    if (!notfull) {
+      setPrevClass("");
+      setNextClass("sliderTypeOne__item-slide-Right");
+    } else {
+      setPrevClassNotFull("");
+      setNextClassNotFull("sliderTypeOne__item-slide-Right-notfull");
+    }
     setShowNext(false);
     setShowPrev(true);
   };
   const handlePrev = () => {
-    setNextClass("");
-    setPrevClass("sliderTypeOne__item-slide-Left");
+    if (!notfull) {
+      setNextClass("");
+      setPrevClass("sliderTypeOne__item-slide-Left");
+    } else {
+      setNextClassNotFull("");
+      setPrevClassNotFull("sliderTypeOne__item-slide-Left-notfull");
+    }
     setShowNext(true);
     setShowPrev(false);
   };
@@ -52,7 +68,7 @@ function SliderTypeOne({
       {props.map((item, i) => {
         return (
           <div
-            className={`sliderTypeOne__item ${nextClass} ${prevClass}`}
+            className={`sliderTypeOne__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull}`}
             key={i}
             ref={itemRef}
           >
@@ -67,7 +83,12 @@ function SliderTypeOne({
               )}
               {!item.lastSlide ? <img src={item.image} alt={item.image} /> : ""}
               {item.heart ? (
-                <div className="sliderTypeOne__item-heart"></div>
+                <div className="sliderTypeOne__item-heart">
+                  <span>
+                    <AiOutlineHeart />
+                  </span>
+                  <span>0</span>
+                </div>
               ) : (
                 ""
               )}
