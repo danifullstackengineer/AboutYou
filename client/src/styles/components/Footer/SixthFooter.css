@@ -1,0 +1,22 @@
+.sixthFooter {
+    height: 85px;
+    background-color: #F2F2F2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.sixthFooter > footer {
+    display: flex;
+    margin: .5em 0 .5em 0;
+}
+.sixthFooter > footer > section {
+    cursor: pointer;
+    margin: 0 0.5em 0 0.5em;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.sixthFooter > footer:last-child {
+    color: rgb(100,100,100);
+}

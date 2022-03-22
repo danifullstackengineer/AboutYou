@@ -1,0 +1,84 @@
+.fifthFooter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 80vw;
+  width: 80vw;
+  padding: 4em 0 4em 0;
+  flex-direction: column;
+}
+.fifthFooter > footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: row;
+  margin-bottom: 2em;
+  width: 100%;
+}
+.fifthFooter > footer > section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.fifthFooter > footer > section:first-child > div:not(:first-child) {
+  width: 100%;
+}
+.fifthFooter > footer > section:first-child > div {
+  margin: 1em 0 1em 0;
+}
+.fifthFooter__section1-contact {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.fifthFooter__section1-contact > span {
+  margin-left: 0.5em;
+}
+.fifthFooter__section1-social {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.fifthFooter__section1-social > span {
+  margin-right: 0.5em;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.fifthFooter > footer > section:nth-child(2),
+.fifthFooter > footer > section:last-child {
+  width: 100%;
+  margin: 1em 0 1em 0;
+}
+.fifthFooter > footer > section > h3 {
+  margin-bottom: 2em;
+}
+.fifthFooter > footer > section > ul {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.fifthFooter > footer > section > ul > li {
+  font-size: 1rem;
+  list-style-type: none;
+  cursor: pointer;
+  margin-bottom: 0.25em;
+}
+.fifthFooter > span {
+  width: 100%;
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  color: rgb(200,200,200);
+  font-weight: bold;
+}
+.fifthFooter > footer > section:nth-child(3) li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

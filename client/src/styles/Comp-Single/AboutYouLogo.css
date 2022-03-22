@@ -1,0 +1,34 @@
+.aboutYouLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  cursor: pointer;
+}
+.aboutYouLogo__about {
+  font-size: 30px;
+  color: white;
+  border-right: 2px solid white;
+  padding: 0 0.1em 0 0.1em;
+  font-family: "Franklin Gothic Medium";
+}
+.aboutYouLogo__you-text {
+  font-size: 30px;
+  color: white;
+  padding: 0.025em 0.1em 0.025em 0.1em;
+  font-family: "Franklin Gothic Medium";
+}
+.aboutYouLogo__you > img {
+  width: 12.5px;
+  object-fit: contain;
+  object-position: 50% 50%;
+  margin-bottom: 8px;
+  padding-right: 0.05em;
+  margin-left: 0.05em;
+}
+
+@media screen and (max-width: 1485px) {
+  .aboutYouLogo__you> img {
+    display: none;
+  }
+}

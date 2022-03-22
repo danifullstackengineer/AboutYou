@@ -4,4 +4,4 @@ declare module '*.jpg';
 declare module '*.webp';
 declare module 'jquery';
 declare module 'sass';
-declare module 'react-responsive-carousel';
+declare module '*.eps';

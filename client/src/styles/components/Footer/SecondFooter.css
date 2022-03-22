@@ -1,0 +1,19 @@
+.secondFooter {
+  width: 100%;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+}
+.secondFooter > footer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.secondFooter > footer > img {
+    height: 30px;
+    margin: 0 2em 0 2em;
+}

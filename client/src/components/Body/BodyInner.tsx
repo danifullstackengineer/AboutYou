@@ -149,6 +149,7 @@ import sliderTypeTwoFGEight3 from "../../assets/sliderTwo/Eight/Fore/Three.webp"
 import sliderTypeTwoFGEight4 from "../../assets/sliderTwo/Eight/Fore/Four.webp";
 import sliderTypeTwoFGEight5 from "../../assets/sliderTwo/Eight/Fore/Five.webp";
 import sliderTypeTwoFGEight6 from "../../assets/sliderTwo/Eight/Fore/Six.webp";
+import FooterInner from "./FooterInner";
 
 function BodyInner() {
   const [single1, setSingle1] = useState<{
@@ -1222,6 +1223,7 @@ function BodyInner() {
       <SliderTypeTwo props={sliderThirteen} />
       <TitleInner title={title14} />
       <SliderTypeTwo props={sliderFourtheen} />
+      <FooterInner />
     </div>
   );
 }

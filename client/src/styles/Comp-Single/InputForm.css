@@ -1,0 +1,43 @@
+.inputForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.inputForm > input {
+  background-color: #f2f2f2;
+  border: 1px solid transparent;
+  height: 100%;
+  width: 100%;
+  padding-left: 0.5em;
+  outline: none;
+  font-size: 1rem;
+  color: black;
+}
+.inputForm > input:hover {
+  border: 1px solid black;
+}
+.inputForm > input:focus {
+    background-color: white;
+    border: 1px solid black;
+}
+.inputForm::before {
+  content: attr(data-placeholder);
+  background-color: white;
+  left: 0.5em;
+  font-size: 1rem;
+  transform: translateY(0);
+  position: absolute;
+  transition: all 100ms ease-in;
+  opacity: 0;
+  visibility: hidden;
+}
+.inputForm__focused > input::placeholder {
+    opacity: 0;
+}
+.inputForm__focused::before {
+    opacity: 1;
+    visibility: visible;
+   transform: translateY(calc(-100% - .4rem)) translateX(0.75rem);
+   font-size: 0.75rem;
+}

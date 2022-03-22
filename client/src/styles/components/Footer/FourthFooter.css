@@ -1,0 +1,60 @@
+.fourthFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4em 0 4em 0;
+  border-bottom: 1px solid rgb(200, 200, 200);
+  width: 100%;
+}
+.fourthFooter > footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  max-width: 80vw;
+  width: 80vw;
+}
+.fourthFooter > footer > section {
+  flex: 0.5;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+.fourthFooter > footer > section > h4:not(.fourthFooter__h4-no-margin) {
+  margin: 0.5em 0 0.5em 0;
+  font-size: 1.25rem;
+  align-self: flex-start;
+  width: 100%;
+}
+.fourthFooter__h4-no-margin {
+  margin: 0 0 0.5em 0;
+  font-size: 1.25rem;
+  align-self: flex-start;
+  width: 100%;
+}
+.fourthFooter__items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.fourthFooter__items > ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 25%;
+}
+.fourthFooter__items > ul > li {
+  list-style-type: none;
+  margin: 0.5em;
+  color: rgb(150, 150, 150);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+.fourthFooter__items > ul > li:hover {
+  color: black;
+}

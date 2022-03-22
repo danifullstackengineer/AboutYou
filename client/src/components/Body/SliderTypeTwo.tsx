@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import "../../styles/components/Body/SliderTypeTwo.css";
+import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoIosArrowForward } from 'react-icons/io';
 import { AiOutlineHeart } from "react-icons/ai";
@@ -65,7 +67,7 @@ function SliderTypeTwo({
         }`}
       >
         <span>
-          <BiLeftArrow />
+          <IoIosArrowBack />
         </span>
       </button>
       <div className="sliderTypeTwo__counter">
@@ -73,14 +75,14 @@ function SliderTypeTwo({
           className={`${showNext ? "sliderTypeTwo__counter-opacity" : ""}`}
           onClick={showPrev ? handlePrev : () => {}}
         >
-          <IoIosArrowBack />
+          <MdArrowBackIos />
         </span>
         <span>{showNext ? "1" : "2"} / 2</span>
         <span
           className={`${showPrev ? "sliderTypeTwo__counter-opacity" : ""}`}
           onClick={showNext ? handleNext : () => {}}
         >
-          <IoIosArrowForward />
+          <MdArrowForwardIos />
         </span>
       </div>
       {props.map((item, i) => {
@@ -189,7 +191,7 @@ function SliderTypeTwo({
         }`}
       >
         <span>
-          <BiRightArrow />
+          <IoIosArrowForward />
         </span>
       </button>
     </div>

@@ -1,0 +1,97 @@
+.thirdFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border-bottom:1px solid rgb(200,200,200);
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+.thirdFooter > footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 900;
+}
+.thirdFooter h1 {
+  font-size: 1.5rem;
+}
+.thirdFooter h3 {
+  font-size: 1rem;
+  margin-top: 0.5em;
+}
+.thirdFooter__option {
+  margin: 1em 0 1em 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.thirdFooter__option-select {
+  margin: 0 2em 0 2em;
+  position: relative;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.thirdFooter__option-select-btn {
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin-right: 1em;
+  border: 2px solid black;
+  display: flex;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.25em;
+}
+.thirdFooter__option-select-btn > div {
+  border-radius: 100%;
+  background-color: black;
+}
+.thirdFooter__option-select:not(.thirdFooter__option-select-selected) {
+  color: rgb(155, 155, 155);
+}
+.thirdFooter__option-select:not(.thirdFooter__option-select-selected)
+  .thirdFooter__option-select-btn {
+  border: 2px solid rgb(155, 155, 155);
+}
+.thirdFooter__option-select-selected .thirdFooter__option-select-btn > div {
+  animation: 100ms ease-in 100ms showBtnSelection forwards;
+}
+.thirdFooter__option-select-selected:not(.thirdFooter__option-select-selected)
+  .thirdFooter__option-select-btn
+  > div {
+  animation: 100ms ease-in hideBtnSelection forwards;
+}
+.thirdFooter__sign-up-agree {
+  font-size: 0.8rem;
+  color: rgb(200,200,200);
+  font-weight: normal!important;
+}
+@keyframes showBtnSelection {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  100% {
+    width: 7.5px;
+    height: 7.5px;
+  }
+}
+@keyframes hideBtnSelection {
+  0% {
+    width: 7.5px;
+    height: 7.5px;
+  }
+  100% {
+    width: 0;
+    height: 0;
+  }
+}

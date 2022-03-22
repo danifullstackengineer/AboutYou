@@ -1,0 +1,21 @@
+.interactiveBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.interactiveBtn > button {
+  border: none;
+  margin: 0.5em 0 0.5em 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 150ms ease-out;
+}
+.interactiveBtn > button:hover {
+    transform: translateY(-5%);
+  }

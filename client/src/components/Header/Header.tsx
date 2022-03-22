@@ -77,6 +77,8 @@ import brandFive9 from "../../assets/dropdown/brands/five/blauer.webp";
 import brandFive10 from "../../assets/dropdown/brands/five/boss.webp";
 
 import brandSix1 from "../../assets/dropdown/brands/six/large.webp";
+import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
+import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 
 function Header() {
   const [selectedType, setSelectedType] = useState<boolean[]>([
@@ -641,13 +643,7 @@ function Header() {
           </div>
         </div>
         <div className="header__top-logo">
-          <div className="header__top-logo-container">
-            <span className="header__top-logo-about">ABOUT</span>
-            <div className="header__top-logo-you">
-              <span className="header__top-logo-you-text">YOU</span>
-              <img src={mainLogo}></img>
-            </div>
-          </div>
+          <AboutYouLogo />
         </div>
         <div className="header__top-options">
           <div
@@ -777,9 +773,7 @@ function Header() {
               <div className="header__top-option-pop-up-user-text">
                 You are not registered yet
               </div>
-              <button className="header__top-option-pop-up-user-btn">
-                Log in
-              </button>
+              <InteractiveBtn text={"Log In"} padding={[15, 150, 15, 150]} />
               <div className="header__top-option-pop-up-user-border"></div>
               <div className="header__top-option-pop-up-user-options">
                 <div className="header__top-option-pop-up-user-option">
