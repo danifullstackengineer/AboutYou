@@ -6,9 +6,8 @@ import slider2 from "../../assets/jpeg/slider2.jpg";
 import slider3 from "../../assets/jpeg/slider3.webp";
 import slider4 from "../../assets/jpeg/slider4.webp";
 import slider5 from "../../assets/jpeg/slider5.webp";
-import { BiLeftArrow } from "react-icons/bi";
-import { BiRightArrow } from "react-icons/bi";
-import { BsCircle } from "react-icons/bs";
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from 'react-icons/io';
 
 function SliderComp() {
   const [anim1, setAnim1] = useState<string>("");
@@ -119,12 +118,12 @@ function SliderComp() {
       </div>
       <button className="slide__prev" onClick={handlePrev}>
         <span>
-          <BiLeftArrow />
+          <IoIosArrowBack />
         </span>
       </button>
       <button className="slide__next" onClick={handleNext} ref={btnRef}>
         <span>
-          <BiRightArrow />
+          <IoIosArrowForward />
         </span>
       </button>
       <div className="slider__dots">

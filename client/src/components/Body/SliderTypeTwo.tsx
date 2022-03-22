@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import "../../styles/components/Body/SliderTypeTwo.css";
-import { MdArrowBackIos } from "react-icons/md";
-import { MdArrowForwardIos } from "react-icons/md";
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from 'react-icons/io';
 import { AiOutlineHeart } from "react-icons/ai";
 
 function SliderTypeTwo({
@@ -11,7 +11,7 @@ function SliderTypeTwo({
 }: {
   props: {
     backgroundImg: string;
-    foregroundImg: string;
+    foregroundImg?: string;
     tags?: { name: string; special?: boolean }[];
     title: string;
     price: string | { full: string; discount: string };
@@ -73,26 +73,36 @@ function SliderTypeTwo({
           className={`${showNext ? "sliderTypeTwo__counter-opacity" : ""}`}
           onClick={showPrev ? handlePrev : () => {}}
         >
-          <MdArrowBackIos />
+          <IoIosArrowBack />
         </span>
         <span>{showNext ? "1" : "2"} / 2</span>
         <span
           className={`${showPrev ? "sliderTypeTwo__counter-opacity" : ""}`}
           onClick={showNext ? handleNext : () => {}}
         >
-          <MdArrowForwardIos />
+          <IoIosArrowForward />
         </span>
       </div>
       {props.map((item, i) => {
         return (
           <div
-            className={`sliderTypeTwo__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull}`}
+            className={`sliderTypeTwo__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull} ${
+              !item.foregroundImg ? "sliderTypeTwo__item-no-fg" : ""
+            }`}
             key={i}
             ref={itemRef}
           >
             <div className="sliderTypeTwo__item-img">
               <div className="sliderTypeTwo__item-img-bg">
-                <img src={item.backgroundImg} alt={item.backgroundImg} />
+                <img
+                  src={item.backgroundImg}
+                  alt={item.backgroundImg}
+                  className={
+                    !item.foregroundImg
+                      ? "sliderTypeTwo__item-img-bg-no-fg"
+                      : ""
+                  }
+                />
               </div>
               <div className="sliderTypeTwo__item-img-fg">
                 <img src={item.foregroundImg} alt={item.foregroundImg} />

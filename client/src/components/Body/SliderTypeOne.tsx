@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import "../../styles/components/Body/SliderTypeOne.css";
 import { AiOutlineHeart } from "react-icons/ai";
+import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowForward } from 'react-icons/io';
 
 function SliderTypeOne({
   props,
@@ -14,6 +15,8 @@ function SliderTypeOne({
     lastSlide: boolean;
     title1?: string;
     title2?: string;
+    buttonName?: string;
+    specialTitle?: string;
   }[];
   notfull?: boolean;
 }) {
@@ -62,7 +65,7 @@ function SliderTypeOne({
         }`}
       >
         <span>
-          <BiLeftArrow />
+          <IoIosArrowBack />
         </span>
       </button>
       {props.map((item, i) => {
@@ -94,15 +97,24 @@ function SliderTypeOne({
               )}
               {item.button ? (
                 <div className="sliderTypeOne__item-btn-div">
-                  <button className="sliderTypeOne__item-btn">Story</button>
+                  <button className="sliderTypeOne__item-btn">
+                    {item.buttonName ? item.buttonName : "Story"}
+                  </button>
                 </div>
               ) : (
                 ""
               )}
             </div>
             <div className="sliderTypeOne__item-info">
-              <span>{!item.lastSlide ? item.title1 : ""}</span>
-              <span>{!item.lastSlide ? item.title2 : ""}</span>
+              {item.specialTitle ? (
+                <span>{item.specialTitle}</span>
+              ) : (
+                <>
+                  {" "}
+                  <span>{!item.lastSlide ? item.title1 : ""}</span>
+                  <span>{!item.lastSlide ? item.title2 : ""}</span>
+                </>
+              )}
             </div>
           </div>
         );
@@ -115,7 +127,7 @@ function SliderTypeOne({
         }`}
       >
         <span>
-          <BiRightArrow />
+          <IoIosArrowForward />
         </span>
       </button>
     </div>
