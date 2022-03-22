@@ -38,6 +38,6 @@
 .inputForm__focused::before {
     opacity: 1;
     visibility: visible;
-   transform: translateY(calc(-100% - .4rem)) translateX(0.75rem);
+   transform: translateY(-130%) translateX(0.75rem);
    font-size: 0.75rem;
 }

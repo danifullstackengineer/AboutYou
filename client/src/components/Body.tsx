@@ -11,10 +11,14 @@ import FourthFooter from "./Footer/FourthFooter";
 import FifthFooter from "./Footer/FifthFooter";
 import SixthFooter from "./Footer/SixthFooter";
 
-function Body() {
+function Body({
+  setClickedLogin,
+}: {
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <div className="body">
-      <Header />
+      <Header setClickedLogin={ setClickedLogin}/>
       <HeaderSmall />
       <SliderComp />
       <BodyInner />

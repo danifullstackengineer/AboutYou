@@ -19,3 +19,16 @@
 .interactiveBtn > button:hover {
     transform: translateY(-5%);
   }
+  .interactiveBtn__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .interactiveBtn__btn-icon {
+    font-size: 1.25rem;
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%) translateX(-10%);
+  }

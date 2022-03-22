@@ -80,7 +80,11 @@ import brandSix1 from "../../assets/dropdown/brands/six/large.webp";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 
-function Header() {
+function Header({
+  setClickedLogin,
+}: {
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [selectedType, setSelectedType] = useState<boolean[]>([
     true,
     false,
@@ -773,7 +777,12 @@ function Header() {
               <div className="header__top-option-pop-up-user-text">
                 You are not registered yet
               </div>
-              <InteractiveBtn text={"Log In"} padding={[15, 150, 15, 150]} />
+              <InteractiveBtn
+                text={"Log In"}
+                height={50}
+                width={340}
+                setClickedLogin={setClickedLogin}
+              />
               <div className="header__top-option-pop-up-user-border"></div>
               <div className="header__top-option-pop-up-user-options">
                 <div className="header__top-option-pop-up-user-option">
