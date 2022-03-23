@@ -1,19 +1,36 @@
 .dropdownImg {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
   flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 .dropdownImg__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   margin-top: 1em;
   margin-bottom: 2em;
 }
-.dropdownImg__item:not(.dropdownImg__item-placeholder){
-    cursor: pointer;
+.dropdownImg__item:not(.dropdownImg__item-placeholder) {
+  cursor: pointer;
 }
 .dropdownImg__item {
   margin-right: 1em;
@@ -25,61 +42,76 @@
   width: 135px;
   max-height: 180px;
   min-height: 180px;
-  object-fit:cover;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: 50% 50%;
   object-position: 50% 50%;
 }
 .dropdownImg__item-text-upper {
-    margin-top: .75em;
-    margin-bottom: .25em;
-    font-size: 12px;
+  margin-top: 0.75em;
+  margin-bottom: 0.25em;
+  font-size: 12px;
 }
-.dropdownImg__item-placeholder > div >img {
-    height: 180px;
-    object-fit: contain;
-    object-position: 50% 50%;
+.dropdownImg__item-placeholder > div > img {
+  height: 180px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  -o-object-position: 50% 50%;
+  object-position: 50% 50%;
 }
 .dropdownImg__item-placeholder-text {
-    position: absolute;
-    margin-bottom: 60px;
-    width: 15%;
-    text-align: center;
-    color: black;
-    cursor: pointer;
+  position: absolute;
+  margin-bottom: 60px;
+  width: 15%;
+  text-align: center;
+  color: black;
+  cursor: pointer;
 }
 .dropdownImg__item-text {
+  -o-text-overflow: hidden;
   text-overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   float: left;
   width: 90%;
   margin-left: 0.75em;
-  color: rgb(100,100,100);
+  color: rgb(100, 100, 100);
   font-weight: 600;
   letter-spacing: 1px;
 }
 .dropdownImg__item-text-special {
-    text-overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    float: left;
-    color: black;
-    align-self: flex-start;
+  -o-text-overflow: hidden;
+  text-overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  float: left;
+  color: black;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
 }
 .dropdownImg__item-text-title {
   margin-top: 1em;
 }
 .dropdownImg__item-img-placeholder {
-    cursor: pointer;
+  cursor: pointer;
 }
 .dropdownImg__item-placeholder > span {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }

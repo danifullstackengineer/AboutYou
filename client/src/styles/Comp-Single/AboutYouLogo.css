@@ -1,6 +1,12 @@
 .aboutYouLogo {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background-color: #333;
   cursor: pointer;
@@ -20,7 +26,9 @@
 }
 .aboutYouLogo__you > img {
   width: 12.5px;
+  -o-object-fit: contain;
   object-fit: contain;
+  -o-object-position: 50% 50%;
   object-position: 50% 50%;
   margin-bottom: 8px;
   padding-right: 0.05em;
@@ -28,7 +36,7 @@
 }
 
 @media screen and (max-width: 1485px) {
-  .aboutYouLogo__you> img {
+  .aboutYouLogo__you > img {
     display: none;
   }
 }

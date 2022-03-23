@@ -1,22 +1,33 @@
 .sixthFooter {
-    height: 85px;
-    background-color: #F2F2F2;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  height: 85px;
+  background-color: #f2f2f2;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 .sixthFooter > footer {
-    display: flex;
-    margin: .5em 0 .5em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0.5em 0 0.5em 0;
 }
 .sixthFooter > footer > section {
-    cursor: pointer;
-    margin: 0 0.5em 0 0.5em;
-    font-weight: bold;
-    letter-spacing: 1px;
+  cursor: pointer;
+  margin: 0 0.5em 0 0.5em;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 .sixthFooter > footer:last-child {
-    color: rgb(100,100,100);
+  color: rgb(100, 100, 100);
 }
