@@ -114,7 +114,8 @@
 .header__top-option-not {
   cursor: default;
 }
-.header__top-option-not-anim::after {
+.header__top-option-not-anim::after,
+.header__top-option-not-anim:after {
   width: 0%;
   height: 100%;
   left: 0;
@@ -157,12 +158,14 @@
   text-align: center;
   margin-left: 0.5em;
 }
-.header__top-option:hover::before {
+.header__top-option:hover::before,
+.header__top-option:hover:before {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-.header__top-option::before {
+.header__top-option::before,
+.header__top-option:before {
   position: absolute;
   content: "";
   width: 50px;
@@ -176,7 +179,8 @@
   display: -ms-flexbox;
   display: flex;
 }
-.header__top-option::before:hover > .header__top-option-pop-up {
+.header__top-option::before:hover > .header__top-option-pop-up,
+.header__top-option:before:hover > .header__top-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -676,7 +680,8 @@
   -ms-flex-align: center;
   align-items: center;
 }
-.header__top-option-pop-up-fav::after {
+.header__top-option-pop-up-fav::after,
+.header__top-option-pop-up-fav:after {
   content: "";
   position: absolute;
   height: 20px;
@@ -745,7 +750,8 @@
   text-align: center;
   margin: 1.5em 0 1.5em 0;
 }
-.header__top-option-pop-up-basket::after {
+.header__top-option-pop-up-basket::after,
+.header__top-option-pop-up-basket:after {
   content: "";
   position: absolute;
   height: 20px;
@@ -782,7 +788,8 @@
 .header__bottom-option {
   position: relative;
 }
-.header__bottom-option::after {
+.header__bottom-option::after,
+.header__bottom-option:after {
   content: "";
   position: absolute;
   width: 400px;
@@ -792,7 +799,8 @@
   display: none;
   cursor: default;
 }
-.header__bottom-option:hover::after {
+.header__bottom-option:hover::after,
+.header__bottom-option:hover:after {
   display: block;
 }
 .header__bottom-option:hover .header__bottom-option-pop-up {
@@ -800,7 +808,8 @@
   display: -ms-flexbox;
   display: flex;
 }
-.header__bottom-option::after:hover .header__bottom-option-pop-up {
+.header__bottom-option::after:hover .header__bottom-option-pop-up,
+.header__bottom-option:after:hover .header__bottom-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -834,7 +843,8 @@
   justify-content: center;
   cursor: default;
 }
-.header__bottom-option-pop-up::before {
+.header__bottom-option-pop-up::before,
+.header__bottom-option-pop-up:before {
   position: absolute;
   content: "";
   height: 0;
