@@ -820,6 +820,11 @@
 .header__top-option:hover > .header__top-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
+  display: flex;
+}
+/* .header__top-option:hover > .header__top-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex !important;
 }
 .header__top-option::before:hover > .header__top-option-pop-up,
@@ -842,7 +847,7 @@
 .header__bottom-option:hover:after {
   display: block !important;
 }
-.header__bottom-option:hover > .header__bottom-option-pop-up {
+.header__bottom-option span:hover ~ div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex !important;
@@ -861,7 +866,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex !important;
-}
+} */
 @-webkit-keyframes doBorderAnim {
   0% {
     width: 0%;
