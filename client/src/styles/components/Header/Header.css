@@ -792,6 +792,7 @@
   position: absolute;
   z-index: 5;
   background-color: white;
+  display: none;
 }
 .header__bottom-option-pop-up::before,
 .header__bottom-option-pop-up:before {
