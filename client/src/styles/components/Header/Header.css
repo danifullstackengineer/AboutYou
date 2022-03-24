@@ -842,7 +842,7 @@
 .header__bottom-option:hover:after {
   display: block !important;
 }
-.header__bottom-option:hover .header__bottom-option-pop-up {
+.header__bottom-option:hover > .header__bottom-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex !important;
