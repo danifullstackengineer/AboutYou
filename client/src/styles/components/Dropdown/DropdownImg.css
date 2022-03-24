@@ -29,7 +29,7 @@
   margin-top: 1em;
   margin-bottom: 2em;
 }
-.dropdownImg__item:not(.dropdownImg__item-placeholder) {
+.dropdownImg__item {
   cursor: pointer;
 }
 .dropdownImg__item {
@@ -52,21 +52,6 @@
   margin-bottom: 0.25em;
   font-size: 12px;
 }
-.dropdownImg__item-placeholder > div > img {
-  height: 180px;
-  -o-object-fit: contain;
-  object-fit: contain;
-  -o-object-position: 50% 50%;
-  object-position: 50% 50%;
-}
-.dropdownImg__item-placeholder-text {
-  position: absolute;
-  margin-bottom: 60px;
-  width: 15%;
-  text-align: center;
-  color: black;
-  cursor: pointer;
-}
 .dropdownImg__item-text {
   -o-text-overflow: hidden;
   text-overflow: hidden;
@@ -82,6 +67,7 @@
   color: rgb(100, 100, 100);
   font-weight: 600;
   letter-spacing: 1px;
+  color: black;
 }
 .dropdownImg__item-text-special {
   -o-text-overflow: hidden;
@@ -100,18 +86,11 @@
 .dropdownImg__item-text-title {
   margin-top: 1em;
 }
-.dropdownImg__item-img-placeholder {
-  cursor: pointer;
-}
-.dropdownImg__item-placeholder > span {
+.dropdownImg__item-placeholder {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  top: calc(1em + 67.5px);
+  font-size: 0.9rem;
+  color: black;
+  width: 100px;
+  text-align: center;
 }

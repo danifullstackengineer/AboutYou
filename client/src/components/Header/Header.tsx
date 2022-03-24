@@ -24,11 +24,13 @@ import dropdownOne1 from "../../assets/dropdown/dropdownOne/one.webp";
 import dropdownOne2 from "../../assets/dropdown/dropdownOne/two.webp";
 import dropdownOne3 from "../../assets/dropdown/dropdownOne/three.webp";
 import dropdownOne4 from "../../assets/dropdown/dropdownOne/four.webp";
+import dropdownOne5 from "../../assets/dropdown/placeholder.jpg";
 
 import dropdownTwo1 from "../../assets/dropdown/dropdownTwo/one.jpg";
 import dropdownTwo2 from "../../assets/dropdown/dropdownTwo/two.jpg";
 import dropdownTwo3 from "../../assets/dropdown/dropdownTwo/three.jpg";
 import dropdownTwo4 from "../../assets/dropdown/dropdownTwo/four.jpg";
+import dropdownTwo5 from "../../assets/dropdown/placeholder.jpg";
 
 //Brands
 import brandOne1 from "../../assets/dropdown/brands/one/only.webp";
@@ -131,6 +133,7 @@ function Header({
       image: string;
       title: string;
       item: string;
+      placeholder?: boolean;
     }[]
   >([
     {
@@ -149,10 +152,16 @@ function Header({
       title: "Kianush for LeGer",
       item: "Black Mesh Jeans",
     },
+    {
+      image: dropdownOne5,
+      title: "placeholder",
+      item: "placeholder",
+      placeholder: true,
+    },
   ]);
 
   const [dropdownTwo, setDropdownTwo] = useState<
-    { image: string; title: string; item: string; special: boolean }[]
+    { image: string; title: string; item: string; special: boolean; placeholder?:boolean }[]
   >([
     {
       image: dropdownTwo1,
@@ -178,6 +187,13 @@ function Header({
       item: "Dad-Style",
       special: true,
     },
+    {
+      image: dropdownTwo5,
+      title: "placeholder",
+      item: "placeholder",
+      special: true,
+      placeholder: true
+    }
   ]);
 
   const [categoriesOne, setCategoriesOne] = useState<

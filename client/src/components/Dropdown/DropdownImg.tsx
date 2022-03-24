@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/components/Dropdown/DropdownImg.css";
-import placeholder from "../../assets/dropdown/placeholder.jpg";
 
 function DropdownImg({
   itemProps,
@@ -10,15 +9,34 @@ function DropdownImg({
     title: string;
     item: string;
     special?: boolean;
+    placeholder?: boolean;
   }[];
 }) {
+  const imageRef = useRef<HTMLImageElement>(null);
+
   return (
     <div className="dropdownImg">
       {itemProps.map((item, i) => {
         return (
           <div className="dropdownImg__item" key={i}>
-            <img src={item.image} alt={item.item} />
+            <img
+              ref={imageRef}
+              className={
+                item.placeholder ? "dropdownImg__item-special-img" : ""
+              }
+              src={item.image}
+              alt={item.item}
+            />
+            {item.placeholder ? (
+              <div className="dropdownImg__item-placeholder">
+                Discover{" "}
+                <strong>all {item.special ? "outfits" : "stories"}</strong>
+              </div>
+            ) : (
+              ""
+            )}
             <div
+              style={{ opacity: item.placeholder ? "0" : "1" }}
               className={`${
                 item.special
                   ? "dropdownImg__item-text-special dropdownImg__item-text-upper"
@@ -28,6 +46,7 @@ function DropdownImg({
               {item.title}
             </div>
             <div
+              style={{ opacity: item.placeholder ? "0" : "1" }}
               className={`${
                 item.special
                   ? "dropdownImg__item-text-special"
@@ -39,28 +58,6 @@ function DropdownImg({
           </div>
         );
       })}
-      <div className="dropdownImg__item dropdownImg__item-placeholder">
-        <div className="dropdownImg__item-placeholder-div">
-          <img
-            src={placeholder}
-            alt="placeholder"
-            className="dropdownImg__item-img-placeholder"
-          />
-        </div>
-        <div className="dropdownImg__item-placeholder-text">
-          Discover{" "}
-          <strong>all {itemProps[0].special ? "stories" : "outfits"}</strong>
-        </div>
-        <div
-          style={{ opacity: "0" }}
-          className="dropdownImg__item-text dropdownImg__item-text-title"
-        >
-          d
-        </div>
-        <div style={{ opacity: "0" }} className="dropdownImg__item-text">
-          d
-        </div>
-      </div>
     </div>
   );
 }
