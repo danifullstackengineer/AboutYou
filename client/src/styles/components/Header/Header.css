@@ -822,6 +822,11 @@
   display: -ms-flexbox;
   display: flex;
 }
+.header__top-option::before:hover > .header__top-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /* .header__top-option:hover > .header__top-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
