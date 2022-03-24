@@ -767,7 +767,7 @@
 .header__bottom-option > span {
   position: relative;
 }
-.header__bottom-option-pop-up {
+/* .header__bottom-option-pop-up {
   background-color: white;
   position: absolute;
   -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.17);
@@ -787,6 +787,11 @@
   -ms-flex-pack: center;
   justify-content: center;
   cursor: default;
+} */
+.header__bottom-option-pop-up {
+  position: absolute;
+  z-index: 5;
+  background-color: white;
 }
 .header__bottom-option-pop-up::before,
 .header__bottom-option-pop-up:before {
