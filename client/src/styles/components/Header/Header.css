@@ -829,31 +829,18 @@
   display: -ms-flexbox;
   display: flex;
 }
-/* .header__bottom-option-pop-up:hover {
+.header__bottom-option:hover::after {
+  display: block;
+}
+.header__bottom-option::after:hover .header__bottom-option-pop-up {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-} */
-/*
-.header__bottom-option:hover::after,
-.header__bottom-option:hover:after {
-  display: block !important;
-}
-.header__bottom-option span:hover ~ div {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex !important;
-}
-.header__bottom-option::after:hover .header__bottom-option-pop-up,
-.header__bottom-option:after:hover .header__bottom-option-pop-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex !important;
 }
 .header__top-option-special:hover {
   border: 1px solid black;
 }
-*/
+
 @-webkit-keyframes doBorderAnim {
   0% {
     width: 0%;
