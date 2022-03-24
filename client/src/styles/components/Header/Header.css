@@ -801,42 +801,6 @@
   left: 32.5px;
   top: -15px;
 }
-.header__top-option:hover > .header__top-option-pop-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.header__top-option::before:hover > .header__top-option-pop-up,
-.header__top-option:before:hover > .header__top-option-pop-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.header__top-option-pop-up:hover {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.header__bottom-option-pop-up:hover {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.header__bottom-option:hover::after,
-.header__bottom-option:hover:after {
-  display: block;
-}
-.header__bottom-option:hover .header__bottom-option-pop-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-.header__bottom-option::after:hover .header__bottom-option-pop-up,
-.header__bottom-option:after:hover .header__bottom-option-pop-up {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .header__top-option::before,
 .header__top-option:before {
   position: absolute;
@@ -847,6 +811,42 @@
   top: 95%;
   display: none;
 }
+.header__top-option:hover > .header__top-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
+.header__top-option::before:hover > .header__top-option-pop-up,
+.header__top-option:before:hover > .header__top-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
+.header__top-option-pop-up:hover {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
+.header__bottom-option-pop-up:hover {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
+.header__bottom-option:hover::after,
+.header__bottom-option:hover:after {
+  display: block !important;
+}
+.header__bottom-option:hover .header__bottom-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
+.header__bottom-option::after:hover .header__bottom-option-pop-up,
+.header__bottom-option:after:hover .header__bottom-option-pop-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex !important;
+}
 .header__top-option-special:hover {
   border: 1px solid black;
 }
@@ -854,7 +854,7 @@
 .header__top-option:hover:before {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex !important;
 }
 @-webkit-keyframes doBorderAnim {
   0% {
