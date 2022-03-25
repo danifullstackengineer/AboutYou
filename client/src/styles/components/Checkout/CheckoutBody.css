@@ -1,0 +1,9 @@
+.checkoutBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 1500px;
+    margin: 2em 0 2em 0;
+    background-color: red;
+}

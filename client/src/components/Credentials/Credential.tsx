@@ -6,6 +6,8 @@ import { FaFacebookF } from "react-icons/fa";
 import { AiFillApple } from "react-icons/ai";
 import InputForm from "../../Comp-Single/InputForm";
 import { Link } from "react-router-dom";
+import { checkRegex } from "../../Logic/Credentials";
+import { register, login } from '../../API/Credential';
 
 function Credential({
   clickedLogin,
@@ -17,6 +19,46 @@ function Credential({
   const [chosenAction, setChosenAction] = useState<boolean[]>([true, false]);
 
   const [clickedNews, setClickedNews] = useState<boolean>(false);
+
+  const [regex, setRegex] = useState<boolean[]>([true, true, true, true]);
+  const [warning, setWarning] = useState<boolean[]>([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [input1, setInput1] = useState<string>("");
+  const [input2, setInput2] = useState<string>("");
+  const [input3, setInput3] = useState<string>("");
+  const [input4, setInput4] = useState<string>("");
+  const [warn, setWarn] = useState<string[]>([
+    "Please enter your first name",
+    "Please enter your last name",
+    "Please enter your email address",
+    "Please enter your password",
+  ]);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    var warnArr = []
+    if (!input1) {
+      setWarn(['Please enter your first name', warn[1], warn[2], warn[3]])
+    }
+    if (!input2) {
+      setWarn([warn[0], 'Please enter your last name', warn[2], warn[3]])
+    }
+    if (!input3) {
+      setWarn([warn[0], warn[1], 'Please enter your email address', warn[3]])
+    }
+    if (!input4) {
+      setWarn([warn[0], warn[1], warn[2], 'Please enter your password'])
+    }
+    if (chosenAction[0]) {
+      register(input1, input2, input3, input4)
+    }
+    else {
+      login(input3, input4) 
+    }
+  };
 
   return (
     <div
@@ -36,10 +78,11 @@ function Credential({
             <IoMdClose />
           </div>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="credential__chooser">
             <div className="credential__chooser-type">
               <button
+                type="submit"
                 onClick={(e) => {
                   e.preventDefault();
                   setChosenAction([true, false]);
@@ -51,6 +94,7 @@ function Credential({
                 Register
               </button>
               <button
+                type="submit"
                 onClick={(e) => {
                   e.preventDefault();
                   setChosenAction([false, true]);
@@ -86,35 +130,47 @@ function Credential({
               <>
                 <InputForm
                   width={270}
-                  height={40}
+                  height={50}
                   placeholder={"First name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
+                  warning={false}
+                  warningMsg={warn[0]}
+                  setInputParent={setInput1}
                 />
                 <InputForm
                   width={270}
-                  height={40}
+                  height={50}
                   placeholder={"Last name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
-                />{" "}
+                  warning={false}
+                  warningMsg={warn[1]}
+                  setInputParent={setInput2}
+                />
               </>
             ) : (
               ""
             )}
             <InputForm
               width={270}
-              height={40}
+              height={50}
               placeholder={"Your email address"}
               type={"text"}
               border={[10, 10, 10, 10]}
+              warning={false}
+              warningMsg={warn[2]}
+              setInputParent={setInput3}
             />
             <InputForm
               width={270}
-              height={40}
+              height={50}
               placeholder={"Password (min. 6 characters)"}
               type={"password"}
               border={[10, 10, 10, 10]}
+              warning={false}
+              warningMsg={warn[3]}
+              setInputParent={setInput4}
             />
           </div>
           {chosenAction[1] ? (

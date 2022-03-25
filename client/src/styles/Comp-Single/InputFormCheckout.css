@@ -1,0 +1,79 @@
+.inputFormCheckout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.inputFormCheckout input {
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+  margin-left: 0.5em;
+}
+.inputFormCheckout__warn {
+  position: absolute;
+  color: red;
+  width: 100%;
+  top: -20px;
+}
+.inputFormCheckout__warn-icon,
+.inputFormCheckout__good-icon {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  right: 0;
+  margin-right: 2em;
+}
+.inputFormCheckout__warn-icon {
+  background-color: red;
+}
+.inputFormCheckout__good-icon {
+  background-color:green;
+}
+.inputFormCheckout__warn-icon::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 45%;
+  left: 17.5%;
+  transform: rotate(45deg);
+}
+.inputFormCheckout__warn-icon::after {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 45%;
+  left: 17.5%;
+  transform: rotate(-45deg);
+}
+.inputFormCheckout__good-icon::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 55%;
+  left: 25%;
+  transform: rotate(-45deg);
+}
+.inputFormCheckout__good-icon::after {
+  position: absolute;
+  content: "";
+  width: 5px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 62.5%;
+  left: 10%;
+  transform: rotate(45deg);
+}

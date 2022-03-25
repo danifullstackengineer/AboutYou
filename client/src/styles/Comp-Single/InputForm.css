@@ -9,12 +9,11 @@
   -ms-flex-align: center;
   align-items: center;
   position: relative;
+  flex-direction: column;
 }
 .inputForm > input {
   background-color: #f2f2f2;
   border: 1px solid transparent;
-  height: 100%;
-  width: 100%;
   padding-left: 0.5em;
   outline: none;
   font-size: 1rem;
@@ -32,15 +31,30 @@
   background-color: white;
   left: 0.5em;
   font-size: 1rem;
-  -webkit-transform: translateY(0);
-  -ms-transform: translateY(0);
-  transform: translateY(0);
   position: absolute;
   -webkit-transition: all 100ms ease-in;
   -o-transition: all 100ms ease-in;
   transition: all 100ms ease-in;
   opacity: 0;
   visibility: hidden;
+}
+.inputForm::before:not(.inputForm-warn::before) {
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+}
+.inputForm-warn::before {
+  -webkit-transform: translateY(calc(0% - 0.4rem));
+  -ms-transform: translateY(calc(0% - 0.4rem));
+  transform: translateY(calc(0% - 0.4rem));
+}
+.inputForm__span-warn {
+  font-size: 0.8rem;
+  margin-left: 2em;
+  margin-top: 0.5em;
+  color: red;
+  text-align: left;
+  width: 100%;
 }
 .inputForm__focused > input::-webkit-input-placeholder {
   opacity: 0;
@@ -60,8 +74,24 @@
 .inputForm__focused::before {
   opacity: 1;
   visibility: visible;
+  -webkit-transform: translateY(-235%) translateX(0.75rem);
+  -ms-transform: translateY(-235%) translateX(0.75rem);
+  transform: translateY(-235%) translateX(0.75rem);
+  font-size: 0.75rem;
+}
+.inputForm__focused:not(.inputForm-warn)::before {
+  opacity: 1;
+  visibility: visible;
   -webkit-transform: translateY(-130%) translateX(0.75rem);
   -ms-transform: translateY(-130%) translateX(0.75rem);
   transform: translateY(-130%) translateX(0.75rem);
   font-size: 0.75rem;
+}
+.inputForm__icon-warn {
+  position: absolute;
+  top: calc(25% - .15rem);
+  right: 0;
+  margin: 0 .5em 0 0;
+  font-size: 1.2rem;
+  color: red;
 }

@@ -1,0 +1,158 @@
+.checkoutBodyMainForm {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+}
+.checkoutBodyMainForm > h1 {
+  font-size: 1.25rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.checkoutBodyMainForm__title-country {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.checkoutBodyMainForm__title {
+  border: 1px solid rgb(200, 200, 200);
+  position: relative;
+}
+.checkoutBodyMainForm__title > button {
+  border: none;
+  padding: 0.75em 1em 0.75em 1em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+}
+.checkoutBodyMainForm__title::before {
+  width: 50%;
+  height: 100%;
+  background-color: rgb(240, 240, 240);
+  position: absolute;
+  content: "";
+}
+.checkoutBodyMainForm__title-transition-left::before {
+  animation: 150ms ease-out slideLeftBefore forwards;
+}
+.checkoutBodyMainForm__title-transition-right::before {
+  animation: 150ms ease-out slideRightBefore forwards;
+}
+.checkoutBodyMainForm__active-btn {
+  color: rgb(150, 150, 150);
+}
+.checkoutBodyMainForm__country {
+  position: relative;
+}
+.checkoutBodyMainForm__country > button {
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 250px;
+}
+.checkoutBodyMainForm__country > button > span:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: -10%;
+  font-size: 1.5rem;
+}
+.checkoutBodyMainForm__country > button > span {
+  padding: 0.75em 2em 0.75em 2em;
+}
+.checkoutBodyMainForm__country-clicked > button {
+  color: black;
+}
+.checkoutBodyMainForm__country-warn {
+  position: absolute;
+  width: 100%;
+  font-size: 0.8rem;
+  color: red;
+  top: -20px;
+}
+.checkoutBodyMainForm__country-selection {
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  align-items: flex-start;
+  justify-content: center;
+  top: 105%;
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.17);
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.17);
+  background-color: white;
+  z-index: 300;
+}
+.checkoutBodyMainForm__country-input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgb(240, 240, 240);
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.checkoutBodyMainForm__country-input span {
+  margin: 0 0.25em 0 0.25em;
+  display: flex;
+  align-items: center;
+}
+.checkoutBodyMainForm__country-input input {
+  outline: none;
+  border: none;
+}
+.checkoutBodyMainForm__country-selection-sel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    min-height: 40px;
+    cursor: pointer;
+    width: 100%;
+}
+.checkoutBodyMainForm__country-selection-sel:hover {
+    background-color: rgb(240,240,240);
+}
+.checkoutBodyMainForm__country-selection-sel > img {
+    width: 20px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+.checkoutBodyMainForm__country-selection > div:last-child {
+    max-height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.checkoutBodyMainForm__input {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2em 0 2em 0;
+}
+@keyframes slideLeftBefore {
+  0% {
+    left: 50%;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes slideRightBefore {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: 50%;
+  }
+}

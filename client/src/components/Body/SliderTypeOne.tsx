@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../styles/components/Body/SliderTypeOne.css";
 import { AiOutlineHeart } from "react-icons/ai";
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 function SliderTypeOne({
   props,
@@ -54,6 +54,7 @@ function SliderTypeOne({
     setShowNext(true);
     setShowPrev(false);
   };
+
 
   return (
     <div className="sliderTypeOne">

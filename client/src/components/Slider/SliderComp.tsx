@@ -6,8 +6,8 @@ import slider2 from "../../assets/jpeg/slider2.jpg";
 import slider3 from "../../assets/jpeg/slider3.webp";
 import slider4 from "../../assets/jpeg/slider4.webp";
 import slider5 from "../../assets/jpeg/slider5.webp";
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 
 function SliderComp() {
   const [anim1, setAnim1] = useState<string>("");
@@ -17,9 +17,6 @@ function SliderComp() {
   const [anim5, setAnim5] = useState<string>("");
   const bodyRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
-
-  const [isAnim, setIsAnim] = useState<boolean>(false);
-  const { width } = useWindowDimensions();
 
   const [info, setInfo] = useState<
     {

@@ -1,0 +1,78 @@
+.wishlistBody {
+  margin: 2em 7.5em 2em 7.5em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  flex: 1;
+}
+.wishlistBody > h5 {
+  display: flex;
+  align-items: center;
+  color: rgb(100, 100, 100);
+  font-size: 1rem;
+}
+.wishlistBody__descriptive > span {
+  cursor: pointer;
+}
+.wishlistBody__selection {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 1em 0 1em 0;
+}
+.wishlistBody__selection-left,
+.wishlistBody__selection-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wishlistBody__selection-left h2 {
+  font-weight: 900;
+  font-size: 1.4rem;
+  margin-right: 0.5em;
+}
+.wishlistBody__selection-left span {
+  background-color: rgb(240, 240, 240);
+  padding: 0.15em 0.75em 0.15em 0.75em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  border-radius: 40%;
+  font-weight: 900;
+  color: rgb(150, 150, 150);
+}
+.wishlistBody__selection-right > button {
+  width: 100px;
+  height: 35px;
+  cursor: pointer;
+  background-color: white;
+  margin: 0 0.5em 0 0.5em;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.wishlistBody__selection-right > button:not(.wishlistBody__selection-selected) {
+  color: rgb(150, 150, 150);
+  border: 1px solid rgb(200, 200, 200);
+}
+.wishlistBody__selection-right > button:hover {
+  color: black;
+  border: 1px solid black;
+}
+.wishlistBody__selection-right > button > span:first-child {
+  margin-top: 0.25em;
+}
+.wishlistBody__selection-right-dropdown {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid white;
+}

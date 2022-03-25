@@ -11,11 +11,11 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import mainSliderSlice from "./redux/sliderSlices";
+import basketSlice from "./redux/slices";
 
 export const store = configureStore({
   reducer: {
-    mainSlider: mainSliderSlice.reducer,
+    basket: basketSlice.reducer,
   },
 });
 

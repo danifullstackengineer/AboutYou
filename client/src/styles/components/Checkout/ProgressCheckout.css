@@ -1,0 +1,85 @@
+.progressCheckout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+}
+.progressCheckout > div {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progressCheckout__bar {
+    flex: 0.7;
+}
+.progressCheckout__text {
+    flex: 0.3;
+}
+.progressCheckout__bar > div,
+.progressCheckout__text > a {
+  flex: 0.25;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.progressCheckout__bar-active::before,
+.progressCheckout__bar-current::before {
+  position: absolute;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+  z-index: 5;
+}
+.progressCheckout__bar-active::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  left: 50%;
+}
+.progressCheckout__bar-inactive:not(:last-child)::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: rgb(200, 200, 200);
+  left: 50%;
+}
+.progressCheckout__bar-inactive:not(.progressCheckout__bar-current)::before {
+  position: absolute;
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(200, 200, 200);
+  z-index: 5;
+}
+.progressCheckout__bar-current > div::before {
+  position: absolute;
+  content: "";
+  background-color: white;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  z-index: 10;
+  bottom: -5px;
+  left: calc(50% - 5px);
+}
+.progressCheckout__bar-active::before,
+.progressCheckout__bar-current::before,
+.progressCheckout__bar-current > div::before {
+  cursor: pointer;
+}
+.progressCheckout__text-active:hover {
+  text-decoration: underline;
+}
+.progressCheckout__text a:not(.progressCheckout__text-active){
+    cursor: default;
+}

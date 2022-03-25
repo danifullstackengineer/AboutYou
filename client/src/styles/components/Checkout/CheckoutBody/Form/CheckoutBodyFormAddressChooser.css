@@ -1,0 +1,63 @@
+.checkoutBodyFormAddressChooser {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 170px;
+}
+.checkoutBodyFormAddressChooser__option {
+  width: 47.5%;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+.checkoutBodyFormAddressChooser__option > h3 {
+  margin: 1em 0 1em 0;
+  font-size: 0.9rem;
+}
+.checkoutBodyFormAddressChooser__option > h5 {
+  font-size: 0.7rem;
+  color: rgb(100, 100, 100);
+  font-weight: normal;
+}
+.checkoutBodyFormAddressChooser__option > button {
+  margin-top: 3.5em;
+  border: 1px solid black;
+  padding: 0.5em 2em 0.5em 2em;
+  cursor: pointer;
+  background-color: white;
+}
+.checkoutBodyFormAddressChooser__option > span {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: green;
+  margin-top: 3.5em;
+  position: relative;
+}
+.checkoutBodyFormAddressChooser__option > span::before {
+    position: absolute;
+    content: "";
+    width: 15px;
+    height: 1px;
+    background-color: white;
+    z-index: 3;
+    top: 50%;
+    left:calc(50% - 5px);
+    transform: rotate(-45deg);
+}
+.checkoutBodyFormAddressChooser__option > span::after{
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 1px;
+    background-color: white;
+    z-index: 3;
+    top:55%;
+    left:14%;
+    transform: rotate(45deg);
+}

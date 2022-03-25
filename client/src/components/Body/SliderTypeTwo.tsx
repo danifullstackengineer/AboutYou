@@ -3,9 +3,12 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import "../../styles/components/Body/SliderTypeTwo.css";
 import { MdArrowBackIos } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
-import { IoIosArrowBack } from 'react-icons/io';
-import { IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHeart } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { addToBasketAction } from "../../redux/slices";
+import { addToBasketStorage } from "../../Logic/localStorage/basket";
 
 function SliderTypeTwo({
   props,
@@ -34,6 +37,8 @@ function SliderTypeTwo({
   const [prevClassNotFull, setPrevClassNotFull] = useState<string>("");
   const [nextClassNotFull, setNextClassNotFull] = useState<string>("");
 
+  const dispatch = useDispatch();
+
   const handleNext = () => {
     if (!notfull) {
       setPrevClass("");
@@ -55,6 +60,28 @@ function SliderTypeTwo({
     }
     setShowNext(true);
     setShowPrev(false);
+  };
+
+  const addToBasket = (item: {
+    backgroundImg: string;
+    foregroundImg?: string | undefined;
+    tags?:
+      | {
+          name: string;
+          special?: boolean | undefined;
+        }[]
+      | undefined;
+    title: string;
+    price:
+      | string
+      | {
+          full: string;
+          discount: string;
+        };
+    colors: string[];
+    sizes?: string[] | undefined;
+  }) => {
+    addToBasketStorage(item);
   };
 
   return (
@@ -88,6 +115,7 @@ function SliderTypeTwo({
       {props.map((item, i) => {
         return (
           <div
+            onClick={() => addToBasket(item)}
             className={`sliderTypeTwo__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull} ${
               !item.foregroundImg ? "sliderTypeTwo__item-no-fg" : ""
             }`}

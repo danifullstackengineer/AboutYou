@@ -1,0 +1,24 @@
+.continueCheckout {
+    position: fixed;
+    width: 100vw;
+    height: 70px;
+    background-color: #e2e2e2;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.continueCheckout > button {
+    background-color: #66BB6A;
+    border: none;
+    border-radius: 0.25em;
+    color: white;
+    font-size: 1.25rem;
+    padding: 0.5em 2em 0.5em 2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.continueCheckout > button:hover {
+    background-color: #329637;
+}

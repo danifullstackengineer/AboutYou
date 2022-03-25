@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../../styles/components/Header/Header.css";
 import mainLogo from "../../assets/svg/mainLogo.svg";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -18,6 +18,12 @@ import { BsCheck } from "react-icons/bs";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import DropdownImg from "../Dropdown/DropdownImg";
 import DropdownBrands from "../Dropdown/DropdownBrands";
+import { Link, useNavigate } from "react-router-dom";
+import jwt from "jwt-decode";
+import {
+  getBasketItemsStorage,
+  getBasketLengthStorage,
+} from "../../Logic/localStorage/basket";
 
 // Images
 import dropdownOne1 from "../../assets/dropdown/dropdownOne/one.webp";
@@ -81,18 +87,45 @@ import brandFive10 from "../../assets/dropdown/brands/five/boss.webp";
 import brandSix1 from "../../assets/dropdown/brands/six/large.webp";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
+import { Navigate } from "react-router-dom";
+import ItemCount from "../../Comp-Single/ItemCount";
+import CartItem from "../../Comp-Single/CartItem";
+import { getTotalBasketPrice } from "../../Logic/basket";
 
 function Header({
   setClickedLogin,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const navigate = useNavigate();
+
   const [selectedType, setSelectedType] = useState<boolean[]>([
     true,
     false,
     false,
   ]);
   const [selectedLang, setSelectedLang] = useState<boolean[]>([true, false]);
+  const [itemCount, setItemCount] = useState<
+    {
+      backgroundImg: string;
+      foregroundImg?: string | undefined;
+      tags?:
+        | {
+            name: string;
+            special?: boolean | undefined;
+          }[]
+        | undefined;
+      title: string;
+      price:
+        | string
+        | {
+            full: string;
+            discount: string;
+          };
+      colors: string[];
+      sizes?: string[] | undefined;
+    }[]
+  >();
 
   const [languages, setLanguages] = useState<
     { name: string; flag?: string; worldwide?: boolean; selected?: boolean }[]
@@ -161,7 +194,13 @@ function Header({
   ]);
 
   const [dropdownTwo, setDropdownTwo] = useState<
-    { image: string; title: string; item: string; special: boolean; placeholder?:boolean }[]
+    {
+      image: string;
+      title: string;
+      item: string;
+      special: boolean;
+      placeholder?: boolean;
+    }[]
   >([
     {
       image: dropdownTwo1,
@@ -192,8 +231,8 @@ function Header({
       title: "placeholder",
       item: "placeholder",
       special: true,
-      placeholder: true
-    }
+      placeholder: true,
+    },
   ]);
 
   const [categoriesOne, setCategoriesOne] = useState<
@@ -609,6 +648,19 @@ function Header({
     ],
   });
 
+  useEffect(() => {
+    window.addEventListener("storage", () => {
+      setItemCount(getBasketItemsStorage());
+    });
+  }, []);
+
+  useEffect(() => {
+    const items = getBasketItemsStorage();
+    if (items) {
+      setItemCount(items);
+    }
+  }, []);
+
   const [search, setSearch] = useState<string>();
   const inputRef = useRef<HTMLDivElement>(null);
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
@@ -838,27 +890,75 @@ function Header({
               </div>
             </div>
             <div className="header__top-option-pop-up header__top-option-pop-up-wishlist">
-              <button>Wishlist</button>
+              <button onClick={() => navigate("/wishlist")}>Wishlist</button>
             </div>
           </div>
           <div className="header__top-option">
             <BsBasket3 />
-            <div className="header__top-option-pop-up header__top-option-pop-up-basket">
+            <div
+              className="header__top-option-pop-up header__top-option-pop-up-basket"
+              style={{ maxWidth: itemCount ? "278.5px" : undefined }}
+            >
               <div className="header__top-option-pop-up-basket-text">
-                Your basket is empty!
+                {itemCount ? "Your basket" : "Your basket is empty!"}
               </div>
               <div className="header__top-option-pop-up-basket-border"></div>
-              <div className="header__top-option-pop-up-basket-text2">
-                Add item(s) to your basket.
+              <div className="header__top-option-pop-up-basket-items">
+                {itemCount ? (
+                  <div className="header__top-option-pop-up-basket-items-placeholder">
+                    {itemCount.map((item, i) => {
+                      return (
+                        <div key={i}>
+                          <CartItem
+                            background={
+                              item.foregroundImg
+                                ? item.foregroundImg
+                                : item.backgroundImg
+                            }
+                            title={item.title}
+                            subtitle={item.title}
+                            price={item.price}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="header__top-option-pop-up-basket-text2">
+                    Add item(s) to your basket.
+                  </div>
+                )}
               </div>
             </div>
-            <div className="header__top-option-pop-up header__top-option-basket-second">
-              <div className="header__top-option-pop-up-basket-text">
-                Haven't found anything yet?
-              </div>
-              <button>Shop new items</button>
-              <button>Discover outfits</button>
+            <div
+              className="header__top-option-pop-up header__top-option-basket-second"
+              style={{ width: itemCount ? "278.5px" : undefined }}
+            >
+              {itemCount ? (
+                <div className="header__top-option-pop-up-basket-total">
+                  <span>Total amount</span>
+                  <span>$ {getTotalBasketPrice(itemCount)}</span>
+                </div>
+              ) : (
+                <div className="header__top-option-pop-up-basket-text">
+                  Haven't found anything yet?
+                </div>
+              )}
+              <button>{itemCount ? "Basket" : "Shop new items"}</button>
+              <button
+                onClick={() => (itemCount ? navigate("/checkout") : undefined)}
+                style={{
+                  border: itemCount
+                    ? "1px solid transparent"
+                    : "1px solid rgb(220, 220, 220)",
+                  backgroundColor: itemCount ? "#97C66B" : "white",
+                  color: itemCount ? "white" : "black",
+                }}
+              >
+                {itemCount ? "Checkout" : "Discover outfits"}
+              </button>
             </div>
+            {itemCount ? <ItemCount number={itemCount.length} /> : ""}
           </div>
         </div>
       </div>
