@@ -20,7 +20,7 @@ export const store = configureStore({
 });
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:5000/graphql",
+  uri: "/graphql",
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
