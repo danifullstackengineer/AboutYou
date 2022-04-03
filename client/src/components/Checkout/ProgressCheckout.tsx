@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/components/Checkout/ProgressCheckout.css";
 
-function ProgressCheckout() {
+function ProgressCheckout({ progress }: { progress?: string }) {
   const [active, setActive] = useState<boolean[]>([true, false, false, false]);
   const [current, setCurrent] = useState<number>(1);
+
+  useEffect(() => {
+    if (progress === "payment") {
+      setActive([true, true, true, false]);
+      setCurrent(3);
+    } else if (progress === "checkout") {
+      setActive([true, false, false, false]);
+      setCurrent(1);
+    }
+  }, [progress]);
 
   return (
     <div className="progressCheckout">

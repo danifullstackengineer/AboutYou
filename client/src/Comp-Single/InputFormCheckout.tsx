@@ -10,6 +10,9 @@ function InputFormCheckout({
   height,
   bgColor,
   margin,
+  setIsGood,
+  initialInput,
+  setInputParent,
 }: {
   width: number;
   height: number;
@@ -18,6 +21,9 @@ function InputFormCheckout({
   optional: boolean;
   bgColor: string;
   margin: number[];
+  setIsGood?: React.Dispatch<React.SetStateAction<boolean>>;
+  initialInput?: string;
+  setInputParent: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [selectedInput, setSelectedInput] = useState<boolean>(false);
   const parentRef = useRef<HTMLDivElement>(null);
@@ -43,6 +49,13 @@ function InputFormCheckout({
     setSelectedInput(true);
   };
 
+  useEffect(() => {
+    if (initialInput) {
+      setInput(initialInput);
+      setInputParent(initialInput);
+    }
+  }, [initialInput]);
+
   const getIcon = (): JSX.Element => {
     if (showWarn && !optional) {
       return <span className="inputFormCheckout__warn-icon"></span>;
@@ -50,6 +63,15 @@ function InputFormCheckout({
       return <span className="inputFormCheckout__good-icon"></span>;
     }
   };
+  useEffect(() => {
+    if (setIsGood) {
+      if (showWarn && !optional) {
+        setIsGood(false);
+      } else {
+        setIsGood(true);
+      }
+    }
+  }, [showWarn]);
 
   return (
     <div
@@ -78,7 +100,10 @@ function InputFormCheckout({
         placeholder={placeholder}
         onClick={handleInputClick}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => {
+          setInput(e.target.value);
+          setInputParent(e.target.value);
+        }}
       />
       {getIcon()}
     </div>

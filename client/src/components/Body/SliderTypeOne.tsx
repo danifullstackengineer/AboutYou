@@ -9,7 +9,6 @@ function SliderTypeOne({
   notfull,
 }: {
   props: {
-    image: string;
     button: boolean;
     heart: boolean;
     lastSlide: boolean;
@@ -17,6 +16,7 @@ function SliderTypeOne({
     title2?: string;
     buttonName?: string;
     specialTitle?: string;
+    image: string;
   }[];
   notfull?: boolean;
 }) {
@@ -55,6 +55,16 @@ function SliderTypeOne({
     setShowPrev(false);
   };
 
+  const [lastSlideItem, setLastSlideItem] = useState<{
+    button: boolean;
+    heart: boolean;
+    lastSlide: boolean;
+    title1?: string | undefined;
+    title2?: string | undefined;
+    buttonName?: string | undefined;
+    specialTitle?: string | undefined;
+    image: string;
+  }>();
 
   return (
     <div className="sliderTypeOne">
@@ -70,55 +80,126 @@ function SliderTypeOne({
         </span>
       </button>
       {props.map((item, i) => {
-        return (
-          <div
-            className={`sliderTypeOne__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull}`}
-            key={i}
-            ref={itemRef}
-          >
-            <div className="sliderTypeOne__item-img" ref={imageRef}>
-              {item.lastSlide ? (
-                <div className="sliderTypeOne__item-text-div">
-                  <div className="sliderTypeOne__item-text1">{item.title1}</div>
-                  <div className="sliderTypeOne__item-text2">{item.title2}</div>
-                </div>
-              ) : (
-                ""
-              )}
-              {!item.lastSlide ? <img src={item.image} alt={item.image} /> : ""}
-              {item.heart ? (
-                <div className="sliderTypeOne__item-heart">
-                  <span>
-                    <AiOutlineHeart />
-                  </span>
-                  <span>0</span>
-                </div>
-              ) : (
-                ""
-              )}
-              {item.button ? (
-                <div className="sliderTypeOne__item-btn-div">
-                  <button className="sliderTypeOne__item-btn">
-                    {item.buttonName ? item.buttonName : "Story"}
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
+        if (!item.lastSlide) {
+          return (
+            <div
+              className={`sliderTypeOne__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull}`}
+              key={i}
+              ref={itemRef}
+            >
+              <div className="sliderTypeOne__item-img" ref={imageRef}>
+                {item.lastSlide ? (
+                  <div className="sliderTypeOne__item-text-div">
+                    <div className="sliderTypeOne__item-text1">
+                      {item.title1}
+                    </div>
+                    <div className="sliderTypeOne__item-text2">
+                      {item.title2}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {!item.lastSlide ? (
+                  <img loading="lazy" src={item.image} alt={item.image} />
+                ) : (
+                  ""
+                )}
+                {item.heart ? (
+                  <div className="sliderTypeOne__item-heart">
+                    <span>
+                      <AiOutlineHeart />
+                    </span>
+                    <span>0</span>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {item.button ? (
+                  <div className="sliderTypeOne__item-btn-div">
+                    <button className="sliderTypeOne__item-btn">
+                      {item.buttonName ? item.buttonName : "Story"}
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="sliderTypeOne__item-info">
+                {item.specialTitle ? (
+                  <span>{item.specialTitle}</span>
+                ) : (
+                  <>
+                    {" "}
+                    <span>{!item.lastSlide ? item.title1 : ""}</span>
+                    <span>{!item.lastSlide ? item.title2 : ""}</span>
+                  </>
+                )}
+              </div>
             </div>
-            <div className="sliderTypeOne__item-info">
-              {item.specialTitle ? (
-                <span>{item.specialTitle}</span>
-              ) : (
-                <>
-                  {" "}
-                  <span>{!item.lastSlide ? item.title1 : ""}</span>
-                  <span>{!item.lastSlide ? item.title2 : ""}</span>
-                </>
-              )}
+          );
+        } 
+      })}
+      {props.map((item, i)=> {
+        if (item.lastSlide) {
+          return (
+            <div
+              className={`sliderTypeOne__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull}`}
+              key={i}
+              ref={itemRef}
+            >
+              <div className="sliderTypeOne__item-img" ref={imageRef}>
+                {item.lastSlide ? (
+                  <div className="sliderTypeOne__item-text-div">
+                    <div className="sliderTypeOne__item-text1">
+                      {item.title1}
+                    </div>
+                    <div className="sliderTypeOne__item-text2">
+                      {item.title2}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {!item.lastSlide ? (
+                  <img loading="lazy" src={item.image} alt={item.image} />
+                ) : (
+                  ""
+                )}
+                {item.heart ? (
+                  <div className="sliderTypeOne__item-heart">
+                    <span>
+                      <AiOutlineHeart />
+                    </span>
+                    <span>0</span>
+                  </div>
+                ) : (
+                  ""
+                )}
+                {item.button ? (
+                  <div className="sliderTypeOne__item-btn-div">
+                    <button className="sliderTypeOne__item-btn">
+                      {item.buttonName ? item.buttonName : "Story"}
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="sliderTypeOne__item-info">
+                {item.specialTitle ? (
+                  <span>{item.specialTitle}</span>
+                ) : (
+                  <>
+                    {" "}
+                    <span>{!item.lastSlide ? item.title1 : ""}</span>
+                    <span>{!item.lastSlide ? item.title2 : ""}</span>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        );
+          )
+        }
       })}
       <button
         onClick={handleNext}

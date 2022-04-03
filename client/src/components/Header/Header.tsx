@@ -116,14 +116,12 @@ function Header({
           }[]
         | undefined;
       title: string;
-      price:
-        | string
-        | {
-            full: string;
-            discount: string;
-          };
+      price: string;
+      priceDiscount: { full: string; discount: string };
       colors: string[];
       sizes?: string[] | undefined;
+      id: string;
+      quantity: number;
     }[]
   >();
 
@@ -917,7 +915,11 @@ function Header({
                             }
                             title={item.title}
                             subtitle={item.title}
-                            price={item.price}
+                            price={
+                              item.price
+                                ? item.price
+                                : item.priceDiscount.discount
+                            }
                           />
                         </div>
                       );

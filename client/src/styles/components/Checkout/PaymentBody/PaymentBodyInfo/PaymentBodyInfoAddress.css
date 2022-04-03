@@ -1,0 +1,49 @@
+.paymentBodyInfoAddress {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 800px;
+  padding: 2em;
+}
+.paymentBodyInfoAddress > h1 {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 1em;
+}
+.paymentBodyInfoAddress > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:center;
+  width: 100%;
+}
+.paymentBodyInfoAddress__item {
+    margin: 0 2em 0 2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+.paymentBodyInfoAddress__item > h4 {
+    font-size: 0.9rem;
+    margin: 0.25em 0 0.25em 0;
+}
+.paymentBodyInfoAddress__item-info {
+    margin: 0.25em 0 0.25em 0;
+}
+.paymentBodyInfoAddress__item > h4 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.paymentBodyInfoAddress__item > h4 > a {
+  color: rgb(100, 100, 100);
+  font-size: 0.75rem;
+}
+.paymentBodyInfoAddress__item > h4 > a:hover {
+  text-decoration: underline;
+}

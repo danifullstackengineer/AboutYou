@@ -1,0 +1,96 @@
+.footerCheckout {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+.footerCheckout > footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.footerCheckout > footer > section {
+  flex: 0.333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.footerCheckout > footer > section > h4 {
+  border-bottom: 1px solid rgb(200, 200, 200);
+  width: 90%;
+  color: rgb(150, 150, 150);
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+.footerCheckout__options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-left: 2em;
+}
+.footerCheckout__options > span {
+  margin: 0 0 0.5em 0;
+  position: relative;
+  color: rgb(150, 150, 150);
+}
+.footerCheckout__options > span::before {
+  position: absolute;
+  content: "";
+  width: 15px;
+  height: 1px;
+  background-color: rgb(150, 150, 150);
+  transform: rotate(-45deg);
+  left: -20px;
+  top: 35%;
+}
+.footerCheckout__options > span::after {
+  position: absolute;
+  content: "";
+  width: 5px;
+  height: 1px;
+  background-color: rgb(150, 150, 150);
+  transform: rotate(45deg);
+  left: -22px;
+  top: 57.5%;
+}
+.footerCheckout > footer > section:last-child > span {
+  display: flex;
+  align-items: center;
+}
+.footerCheckout > footer > section:last-child > span > img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 2em;
+}
+.footerCheckout > footer:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid rgb(200, 200, 200);
+  width: 96.7%;
+  margin: 1em 0 1em 0;
+  padding-top: 0.5em;
+}
+.footerCheckout > footer:last-child > section:first-child {
+  flex: 0.15;
+}
+.footerCheckout > footer:last-child img {
+  width: 30px;
+}
+.footerCheckout > footer:last-child > section:last-child {
+  flex: 0.85;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+.footerCheckout > footer:last-child a {
+  color: rgb(150, 150, 150);
+  margin-right: 2em;
+}
+.footerCheckout a:hover {
+    text-decoration: underline;
+}

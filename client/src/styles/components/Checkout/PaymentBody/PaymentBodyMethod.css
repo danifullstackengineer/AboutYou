@@ -1,0 +1,9 @@
+.paymentBodyMethod {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.paymentBodyMethod > div:not(:last-child) {
+  border-bottom: 1px solid rgb(200, 200, 200);
+}

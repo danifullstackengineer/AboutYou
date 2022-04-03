@@ -1,0 +1,16 @@
+.paymentBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 1200px;
+    margin: 2em 0 2em 0;
+    flex-direction: row;
+  }
+  .paymentBody__items {
+    display: flex;
+  flex-direction: row;
+  }
+  .paymentBody__items > div {
+    margin: 0 2em 0 2em;
+  }

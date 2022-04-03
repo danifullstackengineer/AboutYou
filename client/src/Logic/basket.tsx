@@ -9,27 +9,24 @@ const getTotalBasketPrice = (
         }[]
       | undefined;
     title: string;
-    price:
-      | string
-      | {
-          full: string;
-          discount: string;
-        };
+    price: string;
+    priceDiscount: { full: string; discount: string };
     colors: string[];
     sizes?: string[] | undefined;
+    id: string;
+    quantity: number;
   }[]
-): number => {
+): string => {
   var total = 0;
   for (let i = 0; i < basket.length; i++) {
-    if (typeof basket[i].price === "string") {
-      total += parseFloat(basket[i].price.toString());
-    } else {
-      total += parseFloat(
-        (basket[i].price as { full: string; discount: string }).discount
-      );
+    if (basket[i].price) {
+      total += basket[i].quantity * parseFloat(basket[i].price);
+    }
+    else {
+      total += basket[i].quantity * parseFloat(basket[i].priceDiscount.discount);
     }
   }
-  return total;
+  return total.toFixed(2);
 };
 
 export { getTotalBasketPrice };

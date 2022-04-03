@@ -1,0 +1,96 @@
+.checkoutBodyBasketOrder {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+.checkoutBodyBasketOrder > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.35rem;
+  margin-top: 0.5em;
+}
+.checkoutBodyBasketOrder__item {
+  margin: 1em;
+  display: flex;
+  padding-bottom: 1em;
+}
+.checkoutBodyBasketOrder__item:not(:last-child) {
+  border-bottom: 1px solid rgb(240, 240, 240);
+}
+.checkoutBodyBasketOrder img {
+  width: 20%;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.checkoutBodyBasketOrder__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80%;
+}
+.checkoutBodyBasketOrder__info-upper {
+  display: flex;
+}
+.checkoutBodyBasketOrder__info-upper-left {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1.5em;
+  width: 200px;
+}
+.checkoutBodyBasketOrder__info-upper > a {
+  margin-right: 1em;
+  color: rgb(100, 100, 100);
+  text-align: left;
+  font-size: 0.75rem;
+}
+.checkoutBodyBasketOrder__info-upper > a:hover {
+  text-decoration: underline;
+}
+.checkoutBodyBasketOrder__info-upper-left a,
+.checkoutBodyBasketOrder__info-upper-left span {
+  margin-bottom: 0.25em;
+}
+.checkoutBodyBasketOrder__info-upper-left > span {
+  font-size: 0.75rem;
+  color: rgb(100, 100, 100);
+}
+.checkoutBodyBasketOrder__info-upper-left > a,
+.checkoutBodyBasketOrder__info-upper-left > span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.checkoutBodyBasketOrder__info-upper-left > a:hover {
+  color: rgb(150, 150, 150);
+}
+.checkoutBodyBasketOrder__info-lower {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+}
+.checkoutBodyBasketOrder__info-lower span {
+  margin-bottom: 0.25em;
+  padding-right: 20px;
+}
+.checkoutBodyBasketOrder__info-lower span:first-child {
+  color: rgb(100, 100, 100);
+  font-size: 0.75rem;
+  text-decoration: line-through;
+}
+.checkoutBodyBasketOrder__info-lower span:nth-child(2) {
+  color: rgb(100, 100, 100);
+  font-size: 0.75rem;
+}
+.checkoutBodyBasketOrder__info-lower span:last-child {
+  font-size: 1rem;
+  color: red;
+  font-weight: 900;
+}

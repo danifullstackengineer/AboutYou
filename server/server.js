@@ -4,11 +4,15 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import path from "path";
 import router from "./router.js";
-import dotenv from 'dotenv';
-import schema from './schema.js';
+import dotenv from "dotenv";
+import schema from "./schema.js";
 import { graphqlHTTP } from "express-graphql";
 import { fileURLToPath } from "url";
-dotenv.config()
+dotenv.config();
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET);
+
+import { saveItemsToDb, saveItemsToDb2 } from "./models/addData.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,3 +44,14 @@ mongoose
   .catch((err) => {
     console.log(`Mongoose responded with error: ${err}`);
   });
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  })
+);
+
+
+export {stripe}

@@ -1,0 +1,23 @@
+.checkoutBodyBasketTotal {
+  padding: 2em;
+  background-color: white;
+  margin: 2em 0 2em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.checkoutBodyBasketTotal__upper,
+.checkoutBodyBasketTotal__lower {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+}
+.checkoutBodyBasketTotal__upper {
+  border-bottom: 1px solid rgb(200, 200, 200);
+}
+.checkoutBodyBasketTotal__upper > h5 {
+    color: rgb(100,100,100);
+}

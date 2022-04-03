@@ -1,0 +1,66 @@
+.paymentMethodDropdown {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(240, 240, 240);
+  animation: 500ms ease-in showPaymentMethodDropdown forwards;
+  z-index: 1;
+}
+.paymentMethodDropdown__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 50px;
+  background-color: white;
+  cursor: pointer;
+  margin: 0.25em 0 0.25em 0;
+  padding: 0.25em 0.5em 0.25em 0.5em;
+}
+.paymentMethodDropdown__item > img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex: 0.5;
+  animation: 500ms ease-in showPaymentMethodDropdownImg forwards;
+}
+.paymentMethodDropdown__item > span {
+  flex: 0.5;
+  opacity: 0;
+  animation: 200ms ease-in 500ms showPaymentMethodDropdownSpan forwards;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 1em;
+}
+.paymentMethodDropdown__item-active {
+  background-color: rgb(100, 200, 100);
+}
+@keyframes showPaymentMethodDropdown {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 100px;
+  }
+}
+@keyframes showPaymentMethodDropdownImg {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes showPaymentMethodDropdownSpan {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

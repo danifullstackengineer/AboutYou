@@ -1,9 +1,16 @@
 .checkoutBody {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 1500px;
-    margin: 2em 0 2em 0;
-    background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 1200px;
+  margin: 2em 0 2em 0;
+  flex-direction: column;
+}
+.checkoutBody__items {
+  display: flex;
+  flex-direction: row;
+}
+.checkoutBody__items > div {
+  margin: 0 2em 0 2em;
 }

@@ -36,7 +36,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const client = new ApolloClient({
   link: from([errorLink, httpLink]),
-  cache: new InMemoryCache({}),
+  cache: new InMemoryCache({
+    typePolicies: {
+      SliderOneType: {
+        keyFields: ["id"],
+      },
+      SliderTwoType: {
+        keyFields: ["id"],
+      },
+    },
+  }),
 });
 
 ReactDOM.render(

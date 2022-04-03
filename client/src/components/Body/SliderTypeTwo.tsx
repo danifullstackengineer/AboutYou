@@ -7,7 +7,6 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { addToBasketAction } from "../../redux/slices";
 import { addToBasketStorage } from "../../Logic/localStorage/basket";
 
 function SliderTypeTwo({
@@ -19,9 +18,11 @@ function SliderTypeTwo({
     foregroundImg?: string;
     tags?: { name: string; special?: boolean }[];
     title: string;
-    price: string | { full: string; discount: string };
+    price: string;
+    priceDiscount: { full: string; discount: string };
     colors: string[];
     sizes?: string[];
+    id: string;
   }[];
   notfull?: boolean;
 }) {
@@ -63,6 +64,7 @@ function SliderTypeTwo({
   };
 
   const addToBasket = (item: {
+    id: string;
     backgroundImg: string;
     foregroundImg?: string | undefined;
     tags?:
@@ -72,18 +74,13 @@ function SliderTypeTwo({
         }[]
       | undefined;
     title: string;
-    price:
-      | string
-      | {
-          full: string;
-          discount: string;
-        };
+    price: string;
+    priceDiscount: { full: string; discount: string };
     colors: string[];
     sizes?: string[] | undefined;
   }) => {
     addToBasketStorage(item);
   };
-
   return (
     <div className="sliderTypeTwo">
       <button
@@ -125,6 +122,7 @@ function SliderTypeTwo({
             <div className="sliderTypeTwo__item-img">
               <div className="sliderTypeTwo__item-img-bg">
                 <img
+                  loading="lazy"
                   src={item.backgroundImg}
                   alt={item.backgroundImg}
                   className={
@@ -135,7 +133,11 @@ function SliderTypeTwo({
                 />
               </div>
               <div className="sliderTypeTwo__item-img-fg">
-                <img src={item.foregroundImg} alt={item.foregroundImg} />
+                <img
+                  loading="lazy"
+                  src={item.foregroundImg}
+                  alt={item.foregroundImg}
+                />
               </div>
               <span className="sliderTypeTwo__item-heart">
                 <span>
@@ -163,12 +165,12 @@ function SliderTypeTwo({
             </div>
             <div className="sliderTypeTwo__item-info">
               <span>{item.title}</span>
-              {typeof item.price === "string" ? (
+              {item.price ? (
                 <span>$ {item.price}</span>
               ) : (
                 <div>
-                  <span>$ {item.price.discount} </span>
-                  <span>$ {item.price.full} </span>
+                  <span>$ {item.priceDiscount.discount}</span>
+                  <span>$ {item.priceDiscount.full}</span>
                 </div>
               )}
               <span>
@@ -186,23 +188,27 @@ function SliderTypeTwo({
               </span>
               <span>
                 {item.sizes ? (
-                  <div>
-                    Available sizes:{" "}
-                    {item.sizes.map((size, i) => {
-                      return (
-                        <span
-                          className="sliderTypeTwo__item-info-sizes"
-                          key={i}
-                        >
-                          {item.sizes
-                            ? item.sizes.length - 1 === i
-                              ? size
-                              : size + ", "
-                            : ""}
-                        </span>
-                      );
-                    })}
-                  </div>
+                  item.sizes.length > 0 ? (
+                    <div>
+                      Available sizes:{" "}
+                      {item.sizes.map((size, i) => {
+                        return (
+                          <span
+                            className="sliderTypeTwo__item-info-sizes"
+                            key={i}
+                          >
+                            {item.sizes
+                              ? item.sizes.length - 1 === i
+                                ? size
+                                : size + ", "
+                              : ""}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    "Available in many sizes"
+                  )
                 ) : (
                   "Available in many sizes"
                 )}

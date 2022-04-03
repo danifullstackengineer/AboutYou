@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 500;
 }
 .continueCheckout > button {
     background-color: #66BB6A;

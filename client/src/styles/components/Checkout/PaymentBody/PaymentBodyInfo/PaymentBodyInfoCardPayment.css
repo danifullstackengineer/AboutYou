@@ -1,0 +1,13 @@
+.paymentBodyInfoCardPayment {
+  background-color: white;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+}
+.paymentBodyInfoCardPayment > h3 {
+  margin: 0 0 0.5em 0em;
+}
+.paymentBodyInfoCardPayment > div {
+  background-color: rgb(240,240,240);
+  padding: 0.5em;
+}

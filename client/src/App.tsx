@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/index.css";
@@ -8,10 +8,18 @@ import HeaderBody from "./components/Header/HeaderBody";
 import FooterBody from "./components/Footer/FooterBody";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Checkout from "./components/Checkout/Checkout";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [amount, setAmount] = useState<string>("");
+
+  const promise = loadStripe(
+    "pk_test_51KXAUxDelfvIQhggA3tpu3fek1HqAwqYU7SAxvQJtBhcD2ULDWuzvd0KouPGX7HrgJ8xKZbqk49L1HTL5Vwh01nj00LQLjwQQf"
+  );
+
   return (
     <div className="main">
       <Router>
@@ -40,7 +48,24 @@ function App() {
               </>
             }
           />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route
+            path="/checkout"
+            element={
+              <Elements stripe={promise}>
+                {" "}
+                <Checkout setAmount={setAmount} checkout={true} />
+              </Elements>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <Elements stripe={promise}>
+                {" "}
+                <Checkout amount={amount} payment={true} />
+              </Elements>
+            }
+          />
         </Routes>
       </Router>
     </div>

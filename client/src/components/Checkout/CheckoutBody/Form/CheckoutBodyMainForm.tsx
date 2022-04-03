@@ -11,13 +11,24 @@ import netherlandsFlag from "../../../../assets/country-flags/nl.svg";
 import japaneseFlag from "../../../../assets/country-flags/jp.svg";
 import useOutsideAlerter from "../../../../Hooks/OutsideAlerter";
 import InputFormCheckout from "../../../../Comp-Single/InputFormCheckout";
+import IAddress from "../../../../types/address";
+import {
+  getFirstAddress,
+  getSecondAddress,
+  setFirstAddress,
+  setSecondAddress,
+} from "../../../../Logic/localStorage/address";
 
 function CheckoutBodyMainForm({
   title,
   newAddress,
+  setIsEveryField,
+  clickedContinue,
 }: {
   newAddress?: boolean;
   title: string;
+  setIsEveryField: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedContinue: boolean;
 }) {
   const [activeFormality, setActiveFormality] = useState<boolean[]>([
     true,
@@ -27,16 +38,44 @@ function CheckoutBodyMainForm({
 
   const [toggleCountry, setToggleCountry] = useState<boolean>(false);
   const countryRef = useRef<HTMLDivElement>(null);
-  const [selectedCountry, setSelectedCountry] =
-    useState<{ name: string; flag: string }>();
+  const [selectedCountry, setSelectedCountry] = useState<{
+    name: string;
+    flag: string;
+  }>();
 
   const outside = useOutsideAlerter(countryRef);
+
+  const [address, setAddress] = useState<IAddress>();
 
   useEffect(() => {
     if (outside) {
       setToggleCountry(false);
     }
   }, [outside]);
+
+  useEffect(() => {
+    if (newAddress) {
+      const addr = getSecondAddress();
+      if (addr) {
+        setAddress(addr);
+      }
+    } else {
+      const addr = getFirstAddress();
+      if (addr) {
+        setAddress(addr);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    if (address) {
+      setSelectedCountry(
+        languages.filter((language) => language.name === address.country)[0]
+      );
+      setActiveFormality(
+        address.formality === "Mrs." ? [false, true] : [true, false]
+      );
+    }
+  }, [address]);
 
   const [languages, setLanguages] = useState<{ name: string; flag: string }[]>([
     {
@@ -70,8 +109,136 @@ function CheckoutBodyMainForm({
     setToggleCountry(false);
   };
 
+  const [isGoodFirst, setIsGoodFirst] = useState<boolean>(false);
+  const [isGoodLast, setIsGoodLast] = useState<boolean>(false);
+  const [isGoodAddress, setIsGoodAddress] = useState<boolean>(false);
+  const [isGoodPostal, setIsGoodPostal] = useState<boolean>(false);
+  const [isGoodCity, setIsGoodCity] = useState<boolean>(false);
+  const [isGoodBirth, setIsGoodBirth] = useState<boolean>(false);
+  const [isGoodCountry, setIsGoodCountry] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      setIsGoodCountry(true);
+    } else {
+      setIsGoodCountry(false);
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (newAddress) {
+      if (
+        isGoodFirst &&
+        isGoodLast &&
+        isGoodAddress &&
+        isGoodPostal &&
+        isGoodCity &&
+        isGoodCountry
+      ) {
+        setIsEveryField(true);
+        // Address Input For Main Address is different from Billing Addresss
+        setSecondAddress({
+          formality: activeFormality[0] ? "Ms." : "Mrs.",
+          country: selectedCountry ? selectedCountry.name : "",
+          firstName: firstInput,
+          lastName: lastInput,
+          addressOne: addres1Input,
+          addressTwo: address2Input,
+          state: stateInput,
+          p_code: codeInput,
+          city: cityInput,
+        });
+      } else {
+        setIsEveryField(false);
+      }
+    } else {
+      if (
+        isGoodFirst &&
+        isGoodLast &&
+        isGoodAddress &&
+        isGoodPostal &&
+        isGoodCity &&
+        isGoodBirth &&
+        isGoodCountry
+      ) {
+        setIsEveryField(true);
+        // Address Input for Main Address is same as Billing Addres
+      } else {
+        setIsEveryField(false);
+      }
+    }
+  }, [
+    isGoodFirst,
+    isGoodLast,
+    isGoodAddress,
+    isGoodPostal,
+    isGoodCity,
+    isGoodBirth,
+    isGoodCountry,
+  ]);
+
+  useEffect(() => {
+    if (newAddress) {
+      if (
+        isGoodFirst &&
+        isGoodLast &&
+        isGoodAddress &&
+        isGoodPostal &&
+        isGoodCity &&
+        isGoodCountry
+      ) {
+        setSecondAddress({
+          formality: activeFormality[0] ? "Ms." : "Mrs.",
+          country: selectedCountry ? selectedCountry.name : "",
+          firstName: firstInput,
+          lastName: lastInput,
+          addressOne: addres1Input,
+          addressTwo: address2Input,
+          state: stateInput,
+          p_code: codeInput,
+          city: cityInput,
+        });
+      }
+    } else if (
+      isGoodFirst &&
+      isGoodLast &&
+      isGoodAddress &&
+      isGoodPostal &&
+      isGoodCity &&
+      isGoodBirth &&
+      isGoodCountry
+    ) {
+      setFirstAddress({
+        formality: activeFormality[0] ? "Ms." : "Mrs.",
+        country: selectedCountry ? selectedCountry.name : "",
+        firstName: firstInput,
+        lastName: lastInput,
+        addressOne: addres1Input,
+        addressTwo: address2Input,
+        state: stateInput,
+        p_code: codeInput,
+        city: cityInput,
+        birth: birthInput,
+        tax: taxInput,
+      });
+    }
+  }, [clickedContinue]);
+
+  const [firstInput, setFirstInput] = useState<string>("");
+  const [lastInput, setLastInput] = useState<string>("");
+  const [addres1Input, setAddress1Input] = useState<string>("");
+  const [address2Input, setAddress2Input] = useState<string>("");
+  const [stateInput, setStateInput] = useState<string>("");
+  const [codeInput, setCodeInput] = useState<string>("");
+  const [cityInput, setCityInput] = useState<string>("");
+  const [birthInput, setBirthInput] = useState<string>("");
+  const [taxInput, setTaxInput] = useState<string>("");
+
   return (
-    <div className="checkoutBodyMainForm">
+    <div
+      className="checkoutBodyMainForm"
+      style={{ marginBottom: newAddress ? "2em" : undefined }}
+    >
       <h1>{title}</h1>
       <div className="checkoutBodyMainForm__title-country">
         <div
@@ -171,6 +338,9 @@ function CheckoutBodyMainForm({
           warning={"This entry cannot be left blank"}
           optional={false}
           margin={[0, 10, 0, 0]}
+          setIsGood={setIsGoodFirst}
+          initialInput={address?.firstName}
+          setInputParent={setFirstInput}
         />
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
@@ -180,6 +350,9 @@ function CheckoutBodyMainForm({
           warning={"This entry cannot be left blank"}
           optional={false}
           margin={[0, 0, 0, 10]}
+          setIsGood={setIsGoodLast}
+          initialInput={address?.lastName}
+          setInputParent={setLastInput}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
@@ -191,6 +364,9 @@ function CheckoutBodyMainForm({
           warning={"This entry cannot be left blank"}
           optional={false}
           margin={[0, 0, 0, 0]}
+          setIsGood={setIsGoodAddress}
+          initialInput={address?.addressOne}
+          setInputParent={setAddress1Input}
         />
       </div>
       <div className="checkoutBodyyMainForm__input">
@@ -202,6 +378,8 @@ function CheckoutBodyMainForm({
           warning={""}
           optional={true}
           margin={[0, 0, 0, 0]}
+          initialInput={address?.addressTwo}
+          setInputParent={setAddress2Input}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
@@ -213,6 +391,8 @@ function CheckoutBodyMainForm({
           warning={""}
           optional={true}
           margin={[0, 0, 0, 0]}
+          initialInput={address?.state}
+          setInputParent={setStateInput}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
@@ -224,6 +404,9 @@ function CheckoutBodyMainForm({
           optional={false}
           warning={"The postal code cannot be left blank"}
           margin={[0, 10, 0, 0]}
+          setIsGood={setIsGoodPostal}
+          initialInput={address?.p_code}
+          setInputParent={setCodeInput}
         />
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
@@ -233,6 +416,9 @@ function CheckoutBodyMainForm({
           optional={false}
           warning={"This entry cannot be left blank"}
           margin={[0, 0, 0, 10]}
+          setIsGood={setIsGoodCity}
+          initialInput={address?.city}
+          setInputParent={setCityInput}
         />
       </div>
       {newAddress === true ? (
@@ -247,6 +433,9 @@ function CheckoutBodyMainForm({
             optional={false}
             warning={"Your date of birth cannot be left blank"}
             margin={[0, 10, 0, 0]}
+            setIsGood={setIsGoodBirth}
+            initialInput={address?.birth}
+            setInputParent={setBirthInput}
           />
           <InputFormCheckout
             bgColor="rgb(240,240,240)"
@@ -256,6 +445,8 @@ function CheckoutBodyMainForm({
             optional={true}
             warning={""}
             margin={[0, 0, 10, 0]}
+            initialInput={address?.tax}
+            setInputParent={setTaxInput}
           />
         </div>
       )}

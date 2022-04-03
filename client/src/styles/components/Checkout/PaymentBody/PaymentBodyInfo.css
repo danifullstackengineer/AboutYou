@@ -1,0 +1,7 @@
+.paymentBodyInfo {
+    display: flex;
+    flex-direction: column;
+}
+.paymentBodyInfo > span {
+    margin: 1em 0 1em 5em;
+}

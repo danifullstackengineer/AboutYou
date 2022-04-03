@@ -1,0 +1,126 @@
+.paymentMethod {
+  width: 250px;
+  height: 75px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+.paymentMethod__no-wallet {
+  background-color: rgba(200, 200, 200, 0.5);
+  cursor: default;
+}
+.paymentMethod__check {
+  flex: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  z-index: 5;
+}
+.paymentMethod > img {
+  flex: 0.4;
+  width: 50px;
+  height: 30px;
+  object-fit: contain;
+  object-position: 0 50%;
+}
+.paymentMethod__manual {
+  flex: 0.4;
+}
+.paymentMethod__info {
+  flex: 0.3;
+}
+.paymentMethod__check > div {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgb(200, 200, 200);
+  transition: all 200ms ease-out;
+}
+.paymentMethod__check-active > div {
+  border: 1px solid transparent;
+  background-color: rgb(100, 200, 100);
+  position: relative;
+}
+.paymentMethod__check-active > div::before {
+  content: "";
+  position: absolute;
+  width: 7.5px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 60%;
+  left: 15%;
+  transform: rotate(45deg);
+}
+.paymentMethod__check-active > div::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 1px;
+  background-color: white;
+  z-index: 3;
+  top: 50.5%;
+  left: 29.5%;
+  transform: rotate(-45deg);
+}
+.paymentMethod:not(.paymentMethod__no-wallet):hover
+  .paymentMethod__check:not(.paymentMethod__check-active)
+  > div {
+  background-color: rgb(240, 240, 240);
+}
+.paymentMethod:hover .paymentMethod__check-active > div {
+  background-color: rgba(100, 200, 100, 0.7);
+}
+.paymentMethod__info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  color: rgb(200, 200, 200);
+  transition: all 200ms ease-in;
+  position: relative;
+}
+.paymentMethod__info-content {
+  color: black;
+  width: 300px;
+  position: absolute;
+  left: -200px;
+  top: 200%;
+  background-color: rgb(200, 200, 200);
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 0.5em;
+  letter-spacing: 0.5px;
+  display: none;
+  z-index: 10;
+}
+.paymentMethod__info:hover {
+  color: red;
+}
+.paymentMethod__info:hover .paymentMethod__info-content {
+  display: flex;
+}
+.paymentMethod__info-content > h4 {
+  font-size: 0.8rem;
+  margin: 0.125em 0 0.125em 0;
+  font-weight: normal;
+}
+.paymentMethod__info-content > h5 {
+  font-size: 0.7rem;
+  font-weight: normal;
+}
+.paymentMethod__info-content::before {
+  position: absolute;
+  content: "";
+  height: 0;
+  width: 0;
+  border-bottom: 10px solid rgb(200, 200, 200);
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  border-top: 10px solid transparent;
+  right: 72.5px;
+  bottom: 100%;
+}
