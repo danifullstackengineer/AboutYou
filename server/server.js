@@ -45,24 +45,15 @@ mongoose
     console.log(`Mongoose responded with error: ${err}`);
   });
 
-// app.use(
-//   "/graphql",
-//   graphqlHTTP({
-//     schema: schema,
-//     graphiql: true,
-//   })
-// );
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    graphiql: true,
+  })
+);
 
-app.use("/graphql",function(req,res)
-{
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Headers','Content-Type, Authorization, Content-Length, X-Requested-With');
-    res.header('Access-Control-Allow-Methods','POST, GET, DELETE')
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-    if (req.method === 'OPTIONS') {
-      res.sendStatus(200);
-    }
-  });
+
 
 
 export {stripe}
