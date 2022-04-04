@@ -23,16 +23,22 @@ const httpLink = new HttpLink({
   uri: "/graphql",
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path }) =>
+const errorLink = process.env.NODE_ENV === "production"
+  ? onError(({ graphQLErrors, networkError }) => {
       console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
+        "Something went wrong with the server, please contact the website administrator if this issue persists."
+      );
+    })
+  : onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors)
+        graphQLErrors.forEach(({ message, locations, path }) =>
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+          )
+        );
 
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
+      if (networkError) console.log(`[Network error]: ${networkError}`);
+    });
 
 const client = new ApolloClient({
   link: from([errorLink, httpLink]),

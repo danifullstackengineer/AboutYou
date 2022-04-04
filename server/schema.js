@@ -13,6 +13,7 @@ import SliderOneType from "./GraphQL/Sliders/SliderOneType.js";
 import SliderTwoType from './GraphQL/Sliders/SliderTwoType.js';
 import UserType from "./GraphQL/UserType.js";
 import Product from "./models/Products.js";
+import User from './models/User.js';
 import SliderOneProduct from "./models/SliderOne.js";
 import SliderTwoProduct from './models/SliderTwo.js';
 
@@ -43,6 +44,21 @@ const RootQuery = new GraphQLObjectType({
         return item;
       },
     },
+    getUserInfo: {
+      type: UserType,
+      args: {
+        id: {type: GraphQLID}
+      },
+      async resolve(par, args) {
+        const user = await User.findById(args.id)
+        if (user) {
+          return user;
+        }
+        else {
+          return undefined;
+        }
+      }
+    }
   },
 });
 const Mutations = new GraphQLObjectType({

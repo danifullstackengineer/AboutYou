@@ -7,7 +7,7 @@ import { AiFillApple } from "react-icons/ai";
 import InputForm from "../../Comp-Single/InputForm";
 import { Link } from "react-router-dom";
 import { checkRegex } from "../../Logic/Credentials";
-import { register, login } from '../../API/Credential';
+import { register, login } from "../../API/Credential";
 
 function Credential({
   clickedLogin,
@@ -37,33 +37,74 @@ function Credential({
     "Please enter your email address",
     "Please enter your password",
   ]);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+
+  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+  const [isLoadingRegister, setIsLoadingRegister] = useState<boolean>(false);
+
+  const handleSubmit = (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void => {
     e.preventDefault();
-    var warnArr = []
-    if (!input1) {
-      setWarn(['Please enter your first name', warn[1], warn[2], warn[3]])
-    }
-    if (!input2) {
-      setWarn([warn[0], 'Please enter your last name', warn[2], warn[3]])
-    }
-    if (!input3) {
-      setWarn([warn[0], warn[1], 'Please enter your email address', warn[3]])
-    }
-    if (!input4) {
-      setWarn([warn[0], warn[1], warn[2], 'Please enter your password'])
-    }
+    var warnArr = [];
     if (chosenAction[0]) {
-      register(input1, input2, input3, input4)
-    }
-    else {
-      login(input3, input4)
-        .then((res) => {
+      setWarning([
+        !checkRegex(input1, "first"),
+        !checkRegex(input2, "last"),
+        !checkRegex(input3, "email"),
+        !checkRegex(input4, "password"),
+      ]);
+      if (!warning[0] && !warning[1] && !warning[2] && !warning[3]) {
+        setIsLoadingRegister(true);
+        register(input1, input2, input3, input4).then((res) => {
           if (res.success) {
-          window.dispatchEvent(new Event("loggedIn"))
-        }
-      })
+            login(input3, input4).then((resLogin) => {
+              if (resLogin.success) {
+                window.dispatchEvent(new Event("loggedIn"));
+                setClickedLogin(false);
+              }
+            });
+          }
+          setIsLoadingRegister(false);
+        });
+      }
+    } else {
+      setWarning([
+        warning[0],
+        warning[1],
+        !checkRegex(input3, "email"),
+        !checkRegex(input4, "password"),
+      ]);
+      if (!warning[3] && !warning[4]) {
+        setIsLoadingLogin(true);
+        login(input3, input4).then((res) => {
+          setTimeout(() => {
+            if (res.success) {
+              window.dispatchEvent(new Event("loggedIn"));
+              setClickedLogin(false);
+            }
+            setIsLoadingLogin(false);
+          }, 1000);
+        });
+      }
     }
   };
+
+  useEffect(() => {
+    if (warning[0] && input1) {
+      setWarning([false, warning[1], warning[2], warning[3]]);
+    }
+    if (warning[1] && input2) {
+      setWarning([warning[0], false, warning[2], warning[3]]);
+    }
+    if (warning[2] && input3) {
+      setWarning([warning[0], warning[1], false, warning[3]]);
+    }
+    if (warning[3] && input4) {
+      setWarning([warning[0], warning[1], warning[2], false]);
+    }
+  }, [input1, input2, input3, input4]);
 
   return (
     <div
@@ -87,7 +128,7 @@ function Credential({
           <div className="credential__chooser">
             <div className="credential__chooser-type">
               <button
-                type="submit"
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setChosenAction([true, false]);
@@ -99,7 +140,7 @@ function Credential({
                 Register
               </button>
               <button
-                type="submit"
+                type="button"
                 onClick={(e) => {
                   e.preventDefault();
                   setChosenAction([false, true]);
@@ -113,13 +154,19 @@ function Credential({
             </div>
             <div className="credential__chooser-misc">
               <InteractiveBtn
+                onClick={() => {
+                  console.log("clicked fb");
+                }}
                 text={"Facebook"}
                 width={250}
                 height={50}
                 bgColor={"#1878F2"}
                 icon={<FaFacebookF />}
+                isLoading={false}
+                type="button"
               />
               <InteractiveBtn
+                onClick={() => {}}
                 text={"Apple"}
                 width={250}
                 height={50}
@@ -127,6 +174,8 @@ function Credential({
                 color={"black"}
                 border={"1px solid rgb(200,200,200)"}
                 icon={<AiFillApple />}
+                isLoading={false}
+                type="button"
               />
             </div>
           </div>
@@ -139,9 +188,10 @@ function Credential({
                   placeholder={"First name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
-                  warning={false}
+                  warning={warning[0]}
                   warningMsg={warn[0]}
                   setInputParent={setInput1}
+                  transformAmount={-230}
                 />
                 <InputForm
                   width={270}
@@ -149,9 +199,10 @@ function Credential({
                   placeholder={"Last name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
-                  warning={false}
+                  warning={warning[1]}
                   warningMsg={warn[1]}
                   setInputParent={setInput2}
+                  transformAmount={-230}
                 />
               </>
             ) : (
@@ -163,9 +214,10 @@ function Credential({
               placeholder={"Your email address"}
               type={"text"}
               border={[10, 10, 10, 10]}
-              warning={false}
+              warning={warning[2]}
               warningMsg={warn[2]}
               setInputParent={setInput3}
+              transformAmount={-230}
             />
             <InputForm
               width={270}
@@ -173,9 +225,10 @@ function Credential({
               placeholder={"Password (min. 6 characters)"}
               type={"password"}
               border={[10, 10, 10, 10]}
-              warning={false}
+              warning={warning[3]}
               warningMsg={warn[3]}
               setInputParent={setInput4}
+              transformAmount={-230}
             />
           </div>
           {chosenAction[1] ? (
@@ -221,9 +274,12 @@ function Credential({
             }`}
           >
             <InteractiveBtn
+              onClick={(e) => handleSubmit(e)}
               text={chosenAction[0] ? "Register" : "Login"}
               width={250}
               height={50}
+              isLoading={chosenAction[0] ? isLoadingRegister : isLoadingLogin}
+              type="submit"
             />
           </div>
           {chosenAction[0] ? (

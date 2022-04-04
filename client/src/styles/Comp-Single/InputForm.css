@@ -82,9 +82,9 @@
 .inputForm__focused:not(.inputForm-warn)::before {
   opacity: 1;
   visibility: visible;
-  -webkit-transform: translateY(-130%) translateX(0.75rem);
-  -ms-transform: translateY(-130%) translateX(0.75rem);
-  transform: translateY(-130%) translateX(0.75rem);
+  -webkit-transform: translateY(var(--transformVariableY)) translateX(0.75rem);
+  -ms-transform: translateY(var(--transformVariableY)) translateX(0.75rem);
+  transform: translateY(var(--transformVariableY)) translateX(0.75rem);
   font-size: 0.75rem;
 }
 .inputForm__icon-warn {
@@ -94,4 +94,23 @@
   margin: 0 .5em 0 0;
   font-size: 1.2rem;
   color: red;
+}
+.inputForm__icon-delete {
+  color: white;
+  position: absolute;
+  right: 0;
+  margin: 0 .5em 0 0;
+  font-size: 1.2rem;
+  background-color: rgb(200,200,200);
+  top: calc(25% - .05rem);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition: all 100ms ease-in;
+}
+.inputForm__icon-delete:hover {
+  background-color: rgb(100,100,100);
+  top: calc(25% - 0.1rem);
 }

@@ -5,7 +5,8 @@ const register = async (
   last: string,
   email: string,
   password: string
-) => {
+): Promise<{ success: boolean; message: string; }> => {
+  var result = {success: false, message: "Something went wrong, please try again."}
   await $.ajax({
     url: "/register",
     type: "POST",
@@ -17,11 +18,13 @@ const register = async (
     },
   })
     .then((res: any) => {
-      console.log(res);
+      result = res;
     })
     .catch((err: any) => {
-      console.log(err);
+      result = err;
     });
+  
+  return result;
 };
 const login = async (email: string, password: string): Promise<{ success: boolean, message: string }> => {
   var result = {success: false, message: "Something went wrong, please try again."}

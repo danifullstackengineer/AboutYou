@@ -956,7 +956,10 @@ function Header({
                 </div>
                 <div className="header__top-option-pop-up-user-border"></div>
                 <InteractiveBtn
-                  logout={() => window.dispatchEvent(new Event("loggedOut"))}
+                  onClick={() => {
+                    window.dispatchEvent(new Event("loggedOut"))
+                  }}
+                  type="button"
                   text={"Log out"}
                   height={50}
                   width={250}
@@ -975,7 +978,8 @@ function Header({
                   height={50}
                   margin={[20, 30, 20, 30]}
                   width={340}
-                  setClickedLogin={setClickedLogin}
+                    onClick={() => setClickedLogin(true)}
+                    type="button"
                 />
                 <div className="header__top-option-pop-up-user-border"></div>
                 <div className="header__top-option-pop-up-user-options">

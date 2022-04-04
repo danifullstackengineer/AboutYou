@@ -11,7 +11,6 @@ import Checkout from "./components/Checkout/Checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { authJWT } from "./API/Credential";
-import jwt from "jwt-decode";
 import Basket from "./components/Basket/Basket";
 
 function App() {
