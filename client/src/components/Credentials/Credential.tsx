@@ -56,7 +56,12 @@ function Credential({
       register(input1, input2, input3, input4)
     }
     else {
-      login(input3, input4) 
+      login(input3, input4)
+        .then((res) => {
+          if (res.success) {
+          window.dispatchEvent(new Event("loggedIn"))
+        }
+      })
     }
   };
 

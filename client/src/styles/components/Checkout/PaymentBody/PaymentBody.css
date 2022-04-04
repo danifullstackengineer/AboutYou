@@ -3,14 +3,26 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    width: 1200px;
     margin: 2em 0 2em 0;
     flex-direction: row;
   }
   .paymentBody__items {
     display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   }
   .paymentBody__items > div {
     margin: 0 2em 0 2em;
+  }
+  @media screen and (max-width: 1200px){
+    .paymentBody__items >div {
+      margin: 0 1em 0 1em;
+    }
+    .paymentBody__items {
+      flex-direction: column;
+    }
+    .paymentBody__items > div:first-child {
+      margin-bottom: 1em;
+    }
   }

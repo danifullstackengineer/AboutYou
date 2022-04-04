@@ -8,10 +8,12 @@ import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { addToBasketStorage } from "../../Logic/localStorage/basket";
+import { addToWishlistStorage } from "../../Logic/localStorage/wishlist";
 
 function SliderTypeTwo({
   props,
   notfull,
+  setClickedLogin
 }: {
   props: {
     backgroundImg: string;
@@ -24,7 +26,8 @@ function SliderTypeTwo({
     sizes?: string[];
     id: string;
   }[];
-  notfull?: boolean;
+    notfull?: boolean;
+    setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [showNext, setShowNext] = useState<boolean>(true);
   const [showPrev, setShowPrev] = useState<boolean>(false);
@@ -39,6 +42,31 @@ function SliderTypeTwo({
   const [nextClassNotFull, setNextClassNotFull] = useState<string>("");
 
   const dispatch = useDispatch();
+
+  const handleWishlistClick = (item: {
+    id: string;
+    backgroundImg: string;
+    foregroundImg?: string | undefined;
+    tags?:
+      | {
+          name: string;
+          special?: boolean | undefined;
+        }[]
+      | undefined;
+    title: string;
+    price: string;
+    priceDiscount: { full: string; discount: string };
+    colors: string[];
+    sizes?: string[] | undefined;
+  }): void => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      addToWishlistStorage(item)
+    }
+    else{
+      setClickedLogin(true)
+    }
+  };
 
   const handleNext = () => {
     if (!notfull) {
@@ -139,7 +167,10 @@ function SliderTypeTwo({
                   alt={item.foregroundImg}
                 />
               </div>
-              <span className="sliderTypeTwo__item-heart">
+              <span
+                className="sliderTypeTwo__item-heart"
+                onClick={()=>handleWishlistClick(item)}
+              >
                 <span>
                   <AiOutlineHeart />
                 </span>

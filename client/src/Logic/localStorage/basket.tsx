@@ -6,7 +6,6 @@ const addToBasketStorage = (item: any) => {
   } else {
     const basketP = JSON.parse(basket);
     const exists = basketP.filter((oldItem: any) => oldItem.id === item.id);
-    console.log(exists)
     if (exists.length === 0) {
       const newBasket =  [...basketP, newItem]
       localStorage.removeItem("basket");
@@ -19,7 +18,7 @@ const addToBasketStorage = (item: any) => {
       localStorage.setItem("basket", JSON.stringify(basketP));
     }
   }
-  window.dispatchEvent(new Event("storage"));
+  window.dispatchEvent(new Event("basket"));
 };
 
 const getBasketLengthStorage = (): number | undefined => {

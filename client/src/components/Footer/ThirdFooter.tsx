@@ -45,7 +45,7 @@ function ThirdFooter() {
           placeholder={"Your email address"}
           type={"text"}
         />
-        <InteractiveBtn text={"Sign up"} width={150} height={50} />
+        <InteractiveBtn text={"Sign up"} width={150} height={50} margin={[0,0,25,0]} />
         <span className="thirdFooter__sign-up-agree">
           I would like to receive email updates on current trends, offers and
           vouchers.

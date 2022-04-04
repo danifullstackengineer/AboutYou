@@ -15,7 +15,11 @@ import { getSliderOneItem, getSliderTwoItem } from "../../Apollo/Products";
 import FooterInner from "./FooterInner";
 import { useEffect } from "react";
 
-function BodyInner() {
+function BodyInner({
+  setClickedLogin,
+}: {
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [single1, setSingle1] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
@@ -144,7 +148,6 @@ function BodyInner() {
     button: "Story",
   });
 
-
   const { data: sliderOne1 } = useQuery(getSliderOneItem, {
     variables: {
       slideNumber: 1,
@@ -259,6 +262,7 @@ function BodyInner() {
       <TitleInner title={title4} />
       {sliderTwo1 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo1.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -272,6 +276,7 @@ function BodyInner() {
       <TitleInner title={title5} />
       {sliderTwo2 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo2.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -294,6 +299,7 @@ function BodyInner() {
       <TitleInner title={title7} />
       {sliderTwo3 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo3.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -315,6 +321,7 @@ function BodyInner() {
       <TitleInner title={title9} />
       {sliderTwo4 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo4.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -323,6 +330,7 @@ function BodyInner() {
       <TitleInner title={title10} />
       {sliderTwo5 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo5.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -331,6 +339,7 @@ function BodyInner() {
       <TitleInner title={title11} />
       {sliderTwo6 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo6.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -348,6 +357,7 @@ function BodyInner() {
       <TitleInner title={title13} />
       {sliderTwo7 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo7.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (
@@ -356,6 +366,7 @@ function BodyInner() {
       <TitleInner title={title14} />
       {sliderTwo8 ? (
         <SliderTypeTwo
+          setClickedLogin={setClickedLogin}
           props={sliderTwo8.getSliderTwoProductsBasedOnSlideNumber}
         />
       ) : (

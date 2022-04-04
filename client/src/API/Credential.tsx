@@ -23,7 +23,8 @@ const register = async (
       console.log(err);
     });
 };
-const login = async (email: string, password: string) => {
+const login = async (email: string, password: string): Promise<{ success: boolean, message: string }> => {
+  var result = {success: false, message: "Something went wrong, please try again."}
   await $.ajax({
     url: "/login",
     type: "POST",
@@ -35,16 +36,17 @@ const login = async (email: string, password: string) => {
     .then((res: any) => {
       if (res.success) {
         localStorage.setItem("token", res.token);
-      } else {
-        return res;
-      }
+      } 
+      result = res;
     })
     .catch((err: any) => {
-      return err;
+      result = err;
     });
+  return result;
 };
 
-const authJWT = async () => {
+const authJWT = async (): Promise<{ success: boolean, message: string }> => {
+  var result = {success: false, message: "Something went wrong while authenticating."}
   await $.ajax({
     url: "/isUserAuth",
     type: "GET",
@@ -52,7 +54,12 @@ const authJWT = async () => {
       "x-access-token": localStorage.getItem("token"),
     },
   })
-    .then((res: any) => {})
-    .catch((res: any) => {});
+    .then((res: any) => {
+      result = res;
+    })
+    .catch((res: any) => {
+      result = res;
+    });
+  return result;
 };
-export { register, login };
+export { register, login, authJWT };

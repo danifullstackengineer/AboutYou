@@ -529,7 +529,6 @@
   -ms-flex-direction: column;
   flex-direction: column;
   cursor: default;
-  width: 400px;
 }
 .header__top-option-pop-up-user-text {
   font-size: 20px;
@@ -752,16 +751,14 @@
 .header__bottom-option {
   position: relative;
 }
-.header__bottom-option::after,
-.header__bottom-option:after {
+.header__bottom-option-pop-up::after {
   content: "";
   position: absolute;
-  width: 400px;
   height: 40px;
-  top: 15px;
-  left: -20px;
-  display: none;
-  cursor: default;
+  width: 100%;
+  top: -40px;
+  left: 0;
+  opacity: 0;
 }
 .header__bottom-option > span {
   position: relative;
@@ -861,6 +858,35 @@
   max-height: 300px;
   overflow-y: scroll;
 }
+.header__top-option-pop-up-user-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-direction: flex-start;
+  width: 100%;
+  margin-left: 1.5em;
+}
+.header__top-option-pop-up-user-content-option {
+  margin: 0.25em 0 0 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  color: rgb(100,100,100);
+}
+.header__top-option-pop-up-user-content-option:not(:last-child){
+  margin-bottom: 0.25em;
+}
+.header__top-option-pop-up-user-content-option > span {
+  margin-top: 0.25em;
+  margin-right: 0.5em;
+  font-size: 1.25rem;
+}
+.header__top-option-pop-up-user-content-option:hover {
+  color: black;
+  font-weight: 900;
+}
 @-webkit-keyframes doBorderAnim {
   0% {
     width: 0%;
@@ -946,7 +972,7 @@
     margin-left: 10em;
   }
 }
-@media screen and (max-width: 990px) {
+@media screen and (max-width: 1100px) {
   .header__top-logo {
     margin-left: 0;
   }

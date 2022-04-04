@@ -16,7 +16,7 @@
   -ms-flex-pack: start;
   justify-content: flex-start;
   position: relative;
-  min-width: 900px;
+  min-width: 768px;
 }
 .slide {
   -webkit-user-select: none;

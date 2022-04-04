@@ -6,11 +6,13 @@ function CartItem({
   title,
   subtitle,
   price,
+  quantity
 }: {
   background: string;
   title: string;
   subtitle: string;
-  price: string | { full: string; discount: string };
+    price: string | { full: string; discount: string };
+    quantity: number;
 }) {
   return (
     <div className="cartItem">
@@ -18,6 +20,7 @@ function CartItem({
       <div className="cartItem__text">
         <span>{title}</span>
         <span>{subtitle}</span>
+        <span>Quantity: { quantity}</span>
       </div>
       <span>$ {typeof price === "string" ? price : price.discount}</span>
     </div>

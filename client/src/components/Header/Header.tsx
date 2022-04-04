@@ -8,6 +8,10 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BsBasket3 } from "react-icons/bs";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { BiLockAlt } from "react-icons/bi";
+import { VscSettings } from "react-icons/vsc";
+import { RiMessage2Line } from "react-icons/ri";
 import germanyFlag from "../../assets/country-flags/de.svg";
 import romaniaFlag from "../../assets/country-flags/ro.svg";
 import serbiaFlag from "../../assets/country-flags/rs.svg";
@@ -19,7 +23,6 @@ import { MdOutlineDeliveryDining } from "react-icons/md";
 import DropdownImg from "../Dropdown/DropdownImg";
 import DropdownBrands from "../Dropdown/DropdownBrands";
 import { Link, useNavigate } from "react-router-dom";
-import jwt from "jwt-decode";
 import {
   getBasketItemsStorage,
   getBasketLengthStorage,
@@ -91,6 +94,8 @@ import { Navigate } from "react-router-dom";
 import ItemCount from "../../Comp-Single/ItemCount";
 import CartItem from "../../Comp-Single/CartItem";
 import { getTotalBasketPrice } from "../../Logic/basket";
+import { authJWT } from "../../API/Credential";
+import { getWishlistItemsStorage } from "../../Logic/localStorage/wishlist";
 
 function Header({
   setClickedLogin,
@@ -124,6 +129,24 @@ function Header({
       quantity: number;
     }[]
   >();
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    window.addEventListener("loggedIn", () => {
+      setIsLoggedIn(true);
+    });
+    window.addEventListener("loggedOut", () => {
+      setIsLoggedIn(false);
+      localStorage.removeItem("token");
+    });
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   const [languages, setLanguages] = useState<
     { name: string; flag?: string; worldwide?: boolean; selected?: boolean }[]
@@ -646,9 +669,32 @@ function Header({
     ],
   });
 
+  const [wishlist, setWishlist] = useState<
+    {
+      backgroundImg: string;
+      foregroundImg?: string | undefined;
+      tags?:
+        | {
+            name: string;
+            special?: boolean | undefined;
+          }[]
+        | undefined;
+      title: string;
+      price: string;
+      priceDiscount: { full: string; discount: string };
+      colors: string[];
+      sizes?: string[] | undefined;
+      id: string;
+      quantity: number;
+    }[]
+  >();
+
   useEffect(() => {
-    window.addEventListener("storage", () => {
+    window.addEventListener("basket", () => {
       setItemCount(getBasketItemsStorage());
+    });
+    window.addEventListener("wishlist", () => {
+      setWishlist(getWishlistItemsStorage());
     });
   }, []);
 
@@ -656,6 +702,10 @@ function Header({
     const items = getBasketItemsStorage();
     if (items) {
       setItemCount(items);
+    }
+    const wishlist = getWishlistItemsStorage();
+    if (wishlist) {
+      setWishlist(wishlist);
     }
   }, []);
 
@@ -682,6 +732,51 @@ function Header({
       setToggleLang(!toggleLang);
     }
   };
+
+  const handleCheckoutClick = (): void => {
+    const token = localStorage.getItem("token");
+    if (itemCount && token) {
+      navigate("/checkout");
+    } else if (itemCount) {
+      setClickedLogin(true);
+    }
+  };
+
+  const basketRef = useRef<HTMLDivElement>(null);
+  const basketRefSecond = useRef<HTMLDivElement>(null);
+  const [isMouseOverBasket, setIsMouseOverBasket] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (basketRef.current && isMouseOverBasket && basketRefSecond.current) {
+      basketRefSecond.current.style.top =
+        basketRef.current.offsetHeight +
+        basketRef.current.offsetTop +
+        10 +
+        "px";
+      basketRefSecond.current.style.width =
+        basketRef.current.offsetWidth + "px";
+    }
+  }, [isMouseOverBasket]);
+
+  const wishlistRef = useRef<HTMLDivElement>(null);
+  const wishlistRefSecond = useRef<HTMLDivElement>(null);
+  const [isMouseOverWishlist, setIsMouseOverWishlist] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      wishlistRef.current &&
+      wishlistRefSecond.current &&
+      isMouseOverWishlist
+    ) {
+      wishlistRefSecond.current.style.top =
+        wishlistRef.current.offsetHeight +
+        wishlistRef.current.offsetTop +
+        10 +
+        "px";
+      wishlistRefSecond.current.style.width = wishlistRef.current.offsetWidth + "px";
+    }
+  }, [isMouseOverWishlist]);
 
   return (
     <div className="header">
@@ -839,63 +934,150 @@ function Header({
           </div>
           <div className="header__top-option">
             <BiUser />
-            <div className="header__top-option-pop-up header__top-option-pop-up-user">
-              <div className="header__top-option-pop-up-user-text">
-                You are not registered yet
-              </div>
-              <InteractiveBtn
-                text={"Log In"}
-                height={50}
-                width={340}
-                setClickedLogin={setClickedLogin}
-              />
-              <div className="header__top-option-pop-up-user-border"></div>
-              <div className="header__top-option-pop-up-user-options">
-                <div className="header__top-option-pop-up-user-option">
-                  <span className="header__top-option-pop-up-user-option-icon">
-                    <MdOutlineDeliveryDining />
-                  </span>
-                  <span className="header__top-option-pop-up-user-option-text">
-                    Track your orders
-                  </span>
+            {isLoggedIn ? (
+              <div className="header__top-option-pop-up header__top-option-pop-up-user">
+                <div className="header__top-option-pop-up-user-content">
+                  <div className="header__top-option-pop-up-user-content-option">
+                    <span>{<AiOutlineShoppingCart />}</span>
+                    Orders
+                  </div>
+                  <div className="header__top-option-pop-up-user-content-option">
+                    <span>{<BiLockAlt />}</span>
+                    Profile &amp; Security
+                  </div>
+                  <div className="header__top-option-pop-up-user-content-option">
+                    <span>{<VscSettings />}</span>
+                    Settings
+                  </div>
+                  <div className="header__top-option-pop-up-user-content-option">
+                    <span>{<RiMessage2Line />}</span>
+                    Help
+                  </div>
                 </div>
-                <div className="header__top-option-pop-up-user-option">
-                  <span className="header__top-option-pop-up-user-option-icon">
-                    <AiOutlineHeart />
-                  </span>
-                  <span className="header__top-option-pop-up-user-option-text">
-                    Like your favorites
-                  </span>
+                <div className="header__top-option-pop-up-user-border"></div>
+                <InteractiveBtn
+                  logout={() => window.dispatchEvent(new Event("loggedOut"))}
+                  text={"Log out"}
+                  height={50}
+                  width={250}
+                  bgColor={"white"}
+                  color={"black"}
+                  hoverBgColor={"rgb(240,240,240)"}
+                />
+              </div>
+            ) : (
+              <div className="header__top-option-pop-up header__top-option-pop-up-user">
+                <div className="header__top-option-pop-up-user-text">
+                  You are not registered yet
+                </div>
+                <InteractiveBtn
+                  text={"Log In"}
+                  height={50}
+                  margin={[20, 30, 20, 30]}
+                  width={340}
+                  setClickedLogin={setClickedLogin}
+                />
+                <div className="header__top-option-pop-up-user-border"></div>
+                <div className="header__top-option-pop-up-user-options">
+                  <div className="header__top-option-pop-up-user-option">
+                    <span className="header__top-option-pop-up-user-option-icon">
+                      <MdOutlineDeliveryDining />
+                    </span>
+                    <span className="header__top-option-pop-up-user-option-text">
+                      Track your orders
+                    </span>
+                  </div>
+                  <div className="header__top-option-pop-up-user-option">
+                    <span className="header__top-option-pop-up-user-option-icon">
+                      <AiOutlineHeart />
+                    </span>
+                    <span className="header__top-option-pop-up-user-option-text">
+                      Like your favorites
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-          <div className="header__top-option">
+          <div
+            className="header__top-option"
+            onMouseOver={() => setIsMouseOverWishlist(true)}
+            onMouseLeave={() => setIsMouseOverWishlist(false)}
+          >
             <AiOutlineHeart />
-            <div className="header__top-option-pop-up header__top-option-pop-up-fav">
-              <div className="header__top-option-pop-up-fav-text">
-                Your wishlist is empty!
+            {wishlist && wishlist.length > 0 && isLoggedIn ? (
+              <div
+                className="header__top-option-pop-up header__top-option-pop-up-basket"
+                ref={wishlistRef}
+              >
+                <div className="header__top-option-pop-up-fav-text">
+                  Your wishlist
+                </div>
+                <div className="header__top-option-pop-up-fav-border"></div>
+                <div className="header__top-option-pop-up-basket-items-placeholder">
+                  {wishlist
+                    ? wishlist.map((item, i) => {
+                        return (
+                          <div key={i}>
+                            <CartItem
+                              quantity={item.quantity}
+                              background={
+                                item.foregroundImg
+                                  ? item.foregroundImg
+                                  : item.backgroundImg
+                              }
+                              title={item.title}
+                              subtitle={item.title}
+                              price={
+                                item.price
+                                  ? item.price
+                                  : item.priceDiscount.discount
+                              }
+                            />
+                          </div>
+                        );
+                      })
+                    : ""}
+                </div>
               </div>
-              <div className="header__top-option-pop-up-fav-border"></div>
-              <div className="header__top-option-pop-up-fav-text2">
-                <span>
-                  Select{" "}
-                  <span className="header__top-option-pop-up-fav-heart">
-                    <AiOutlineHeart />
-                  </span>{" "}
-                  to add something to your Wishlist
-                </span>
-              </div>
-            </div>
-            <div className="header__top-option-pop-up header__top-option-pop-up-wishlist">
+            ) : (
+              <>
+                <div
+                  className="header__top-option-pop-up header__top-option-pop-up-fav"
+                  ref={wishlistRef}
+                >
+                  <div className="header__top-option-pop-up-fav-text">
+                    Your wishlist is empty!
+                  </div>
+                  <div className="header__top-option-pop-up-fav-border"></div>
+                  <div className="header__top-option-pop-up-fav-text2">
+                    <span>
+                      Select{" "}
+                      <span className="header__top-option-pop-up-fav-heart">
+                        <AiOutlineHeart />
+                      </span>{" "}
+                      to add something to your Wishlist
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+            <div
+              className="header__top-option-pop-up header__top-option-pop-up-wishlist"
+              ref={wishlistRefSecond}
+            >
               <button onClick={() => navigate("/wishlist")}>Wishlist</button>
             </div>
           </div>
-          <div className="header__top-option">
+          <div
+            className="header__top-option"
+            onMouseOver={() => setIsMouseOverBasket(true)}
+            onMouseLeave={() => setIsMouseOverBasket(false)}
+          >
             <BsBasket3 />
             <div
               className="header__top-option-pop-up header__top-option-pop-up-basket"
-              style={{ maxWidth: itemCount ? "278.5px" : undefined }}
+              ref={basketRef}
             >
               <div className="header__top-option-pop-up-basket-text">
                 {itemCount ? "Your basket" : "Your basket is empty!"}
@@ -908,6 +1090,7 @@ function Header({
                       return (
                         <div key={i}>
                           <CartItem
+                            quantity={item.quantity}
                             background={
                               item.foregroundImg
                                 ? item.foregroundImg
@@ -934,7 +1117,7 @@ function Header({
             </div>
             <div
               className="header__top-option-pop-up header__top-option-basket-second"
-              style={{ width: itemCount ? "278.5px" : undefined }}
+              ref={basketRefSecond}
             >
               {itemCount ? (
                 <div className="header__top-option-pop-up-basket-total">
@@ -946,9 +1129,9 @@ function Header({
                   Haven't found anything yet?
                 </div>
               )}
-              <button>{itemCount ? "Basket" : "Shop new items"}</button>
+              <button onClick={()=>itemCount ? navigate('/basket') : undefined}>{itemCount ? "Basket" : "Shop new items"}</button>
               <button
-                onClick={() => (itemCount ? navigate("/checkout") : undefined)}
+                onClick={handleCheckoutClick}
                 style={{
                   border: itemCount
                     ? "1px solid transparent"

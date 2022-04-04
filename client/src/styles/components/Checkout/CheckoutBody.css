@@ -3,9 +3,10 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  width: 1200px;
   margin: 2em 0 2em 0;
   flex-direction: column;
+  min-width: inherit;
+  min-width: 1050px;
 }
 .checkoutBody__items {
   display: flex;
@@ -13,4 +14,12 @@
 }
 .checkoutBody__items > div {
   margin: 0 2em 0 2em;
+}
+@media screen and (max-width: 1000px){
+  .checkoutBody__items > div:first-child {
+    margin: 0 0 0 1em;
+  }
+  .checkoutBody__items > div:last-child {
+    margin: 0 1em 0 1em;
+  }
 }

@@ -1,7 +1,8 @@
 .footerCheckout {
-  width: 1200px;
+ min-width: 800px;
   display: flex;
   flex-direction: column;
+  margin-top: 2em;
 }
 .footerCheckout > footer {
   width: 100%;
@@ -15,6 +16,7 @@
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+  margin: 0 1.5em 0 1.5em;
 }
 .footerCheckout > footer > section > h4 {
   border-bottom: 1px solid rgb(200, 200, 200);
@@ -29,6 +31,7 @@
   align-items: flex-start;
   justify-content: center;
   margin-left: 2em;
+  
 }
 .footerCheckout__options > span {
   margin: 0 0 0.5em 0;

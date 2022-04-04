@@ -83,7 +83,7 @@ const verifyJWT = async (req, res, next) => {
   });
 };
 const isAuth = async (_, res) => {
-  res.send(loginGood);
+  return res.send(loginGood);
 };
 
 export { register, login, verifyJWT, isAuth };

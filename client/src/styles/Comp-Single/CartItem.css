@@ -44,7 +44,10 @@
     text-overflow: ellipsis;
     font-weight: 700;
 }
-.cartItem__text > span:last-child {
+.cartItem__text > span {
+    margin: 0.125em;
+}
+.cartItem__text > span:nth-child(2) {
     color: rgb(200,200,200);
 }
 .cartItem > span {

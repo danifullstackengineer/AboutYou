@@ -26,8 +26,8 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  max-width: 80vw;
-  width: 80vw;
+  width: 80%;
+  transform: translateX(5%);
 }
 .fourthFooter > footer > section {
   -webkit-box-flex: 0.5;
@@ -100,4 +100,9 @@
 }
 .fourthFooter__items > ul > li:hover {
   color: black;
+}
+@media screen and (max-width: 800px){
+  .fourthFooter > footer {
+    transform: translateX(0);
+  }
 }

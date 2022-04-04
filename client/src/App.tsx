@@ -10,6 +10,9 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import Checkout from "./components/Checkout/Checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { authJWT } from "./API/Credential";
+import jwt from "jwt-decode";
+import Basket from "./components/Basket/Basket";
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
@@ -19,6 +22,17 @@ function App() {
   const promise = loadStripe(
     "pk_test_51KXAUxDelfvIQhggA3tpu3fek1HqAwqYU7SAxvQJtBhcD2ULDWuzvd0KouPGX7HrgJ8xKZbqk49L1HTL5Vwh01nj00LQLjwQQf"
   );
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      authJWT().then((res: any) => {
+        if (!res.success) {
+          localStorage.removeItem("token");
+        }
+      });
+    }
+  }, []);
 
   return (
     <div className="main">
@@ -33,7 +47,7 @@ function App() {
             element={
               <>
                 <HeaderBody setClickedLogin={setClickedLogin} />
-                <Body />
+                <Body setClickedLogin={setClickedLogin} />
                 <FooterBody />
               </>
             }
@@ -64,6 +78,15 @@ function App() {
                 {" "}
                 <Checkout amount={amount} payment={true} />
               </Elements>
+            }
+          />
+          <Route
+            path="/basket"
+            element={
+              <>
+                <HeaderBody setClickedLogin={setClickedLogin} /> <Basket />
+                <FooterBody />
+              </>
             }
           />
         </Routes>

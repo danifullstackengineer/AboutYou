@@ -21,3 +21,13 @@
 .checkoutBodyBasketTotal__upper > h5 {
     color: rgb(100,100,100);
 }
+@media screen and (max-width: 900px){
+  .checkoutBodyBasketTotal {
+    margin-top: 0;
+  }
+}
+@media screen and (max-width: 800px){
+  .checkoutBodyBasketTotal {
+    display: none;
+  }
+}
