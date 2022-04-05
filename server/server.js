@@ -9,14 +9,18 @@ import schema from "./schema.js";
 import { graphqlHTTP } from "express-graphql";
 import { fileURLToPath } from "url";
 import expressStaticGzip from 'express-static-gzip';
+import compression from 'compression';
 dotenv.config();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
+
+app.use(compression())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
