@@ -8,11 +8,10 @@ import dotenv from "dotenv";
 import schema from "./schema.js";
 import { graphqlHTTP } from "express-graphql";
 import { fileURLToPath } from "url";
+import expressStaticGzip from 'express-static-gzip';
 dotenv.config();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
-
-import { saveItemsToDb, saveItemsToDb2 } from "./models/addData.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +24,7 @@ if (!(process.env.NODE_ENV === "production")) {
 }
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "..", "client", "build")));
+  app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
   app.get("*", (req, res) => {
     res.sendFile(
       path.resolve(__dirname, "..", "client", "build", "index.html")
