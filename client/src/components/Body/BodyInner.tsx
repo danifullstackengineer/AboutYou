@@ -13,14 +13,13 @@ import SliderTypeTwo from "./SliderTypeTwo";
 import { useQuery } from "@apollo/client";
 import { getSliderOneItem, getSliderTwoItem } from "../../Apollo/Products";
 import FooterInner from "./FooterInner";
-import { useEffect } from "react";
 
 function BodyInner({
   setClickedLogin,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [single1, setSingle1] = useState<{
+  const [single1] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
     button: string;
@@ -34,7 +33,7 @@ function BodyInner({
     button: "Story",
   });
 
-  const [single2, setSingle2] = useState<{
+  const [single2] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
     button: string;
@@ -49,64 +48,64 @@ function BodyInner({
   });
 
   //Titltes
-  const [title1, setTitle1] = useState<{ title1: string; title2: string }>({
+  const [title1] = useState<{ title1: string; title2: string }>({
     title1: "New",
     title2: "Our latest trends, guides & styling ideas",
   });
-  const [title2, setTitle2] = useState<{ title1: string; title2: string }>({
+  const [title2] = useState<{ title1: string; title2: string }>({
     title1: "New outfits",
     title2: "New in stock",
   });
-  const [title3, setTitle3] = useState<{ title1: string; title2: string }>({
+  const [title3] = useState<{ title1: string; title2: string }>({
     title1: "Wedding",
     title2: "For brides, bridesmaids, and wedding guests",
   });
-  const [title4, setTitle4] = useState<{ title1: string; title2: string }>({
+  const [title4] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From ONLY",
   });
-  const [title5, setTitle5] = useState<{ title1: string; title2: string }>({
+  const [title5] = useState<{ title1: string; title2: string }>({
     title1: "Popular products",
     title2: "From ABOUT YOU Limited",
   });
-  const [title6, setTitle6] = useState<{ title1: string; title2: string }>({
+  const [title6] = useState<{ title1: string; title2: string }>({
     title1: "Popular Outfits",
     title2: "From the undefined category",
   });
-  const [title7, setTitle7] = useState<{ title1: string; title2: string }>({
+  const [title7] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From the Dresses category",
   });
-  const [title8, setTitle8] = useState<{ title1: string; title2: string }>({
+  const [title8] = useState<{ title1: string; title2: string }>({
     title1: "Popular brands",
     title2: "Our favorite brands for you",
   });
-  const [title9, setTitle9] = useState<{ title1: string; title2: string }>({
+  const [title9] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From the Espadrilles category",
   });
-  const [title10, setTitle10] = useState<{ title1: string; title2: string }>({
+  const [title10] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From LeGer by Lena Gercke",
   });
-  const [title11, setTitle11] = useState<{ title1: string; title2: string }>({
+  const [title11] = useState<{ title1: string; title2: string }>({
     title1: "Popular products",
     title2: "From Athlecia",
   });
-  const [title12, setTitle12] = useState<{ title1: string; title2: string }>({
+  const [title12] = useState<{ title1: string; title2: string }>({
     title1: "Popular outfits",
     title2: "From the undefined category",
   });
-  const [title13, setTitle13] = useState<{ title1: string; title2: string }>({
+  const [title13] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From the Tops category",
   });
-  const [title14, setTitle14] = useState<{ title1: string; title2: string }>({
+  const [title14] = useState<{ title1: string; title2: string }>({
     title1: "Popular items",
     title2: "From the Tunics category",
   });
 
-  const [single3, setSingle3] = useState<{
+  const [single3] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
     button: string;
@@ -120,7 +119,7 @@ function BodyInner({
     button: "Story",
   });
 
-  const [single4, setSingle4] = useState<{
+  const [single4] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
     button: string;
@@ -134,7 +133,7 @@ function BodyInner({
     button: "Story",
   });
 
-  const [single5, setSingle5] = useState<{
+  const [single5] = useState<{
     info: { title1: string; title2: string; bgColor: string };
     image: string;
     button: string;

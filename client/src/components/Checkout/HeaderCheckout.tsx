@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 import "../../styles/components/Checkout/HeaderCheckout.css";

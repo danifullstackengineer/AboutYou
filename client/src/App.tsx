@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/index.css";
 import Body from "./components/Body";
@@ -15,7 +14,6 @@ import Basket from "./components/Basket/Basket";
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const [amount, setAmount] = useState<string>("");
 
   const promise = loadStripe(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   getFirstAddress,
@@ -24,7 +24,7 @@ function PaymentBodyInfoAddress() {
     if (addr2) {
       setAddressTwo(addr2);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="paymentBodyInfoAddress">
@@ -47,7 +47,7 @@ function PaymentBodyInfoAddress() {
           </span>
           <span className="paymentBodyInfoAddress__item-info">
             {!addressOne?.addressTwo
-              ? "Address: " + "" + addressOne?.addressOne
+              ? "Address: " + addressOne?.addressOne
               : "Address One: " + addressOne.addressOne}
           </span>
           {addressOne?.addressTwo ? (

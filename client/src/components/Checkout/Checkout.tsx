@@ -7,7 +7,6 @@ import {
 } from "../../API/Payment";
 import "../../styles/components/Checkout/Checkout.css";
 import { useNavigate } from "react-router-dom";
-import IAddress from "../../types/address";
 import CheckoutBody from "./CheckoutBody";
 import ContinueCheckout from "./ContinueCheckout";
 import FooterCheckout from "./FooterCheckout";
@@ -44,7 +43,7 @@ function Checkout({
   const [clientSecret, setClientSecret] = useState<string>("");
 
   useEffect(() => {
-    const secret = getClientSecretFunction();
+    getClientSecretFunction();
   }, []);
 
   const getClientSecretFunction = async () => {
@@ -54,6 +53,15 @@ function Checkout({
       }
     });
   };
+
+  const [currentMethod, setCurrentMethod] = useState<boolean[]>([
+    true,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
 
   useEffect(() => {
     if (redirectToPaymentProvider) {
@@ -103,7 +111,7 @@ function Checkout({
             (window as any).ethereum.request({
               method: "eth_requestAccounts",
             });
-            const txHash = await (window as any).ethereum
+            await (window as any).ethereum
               .request({
                 method: "eth_sendTransaction",
                 params: [transactionParam],
@@ -131,15 +139,7 @@ function Checkout({
         //Manual transfer of crypto to address
       }
     }
-  }, [redirectToPaymentProvider]);
-
-  const [currentMethod, setCurrentMethod] = useState<boolean[]>([
-    true,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  }, [redirectToPaymentProvider, cardElement, clientSecret, currentMethod, navigate, stripe]);
 
   const [activeDropdown, setActiveDropdown] = useState<boolean[]>([
     false,

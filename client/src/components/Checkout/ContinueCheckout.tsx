@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../../styles/components/Checkout/ContinueCheckout.css";
 
 function ContinueCheckout({

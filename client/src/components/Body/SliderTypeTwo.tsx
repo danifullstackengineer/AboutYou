@@ -1,19 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
+import React, { useRef, useState } from "react";
 import "../../styles/components/Body/SliderTypeTwo.css";
 import { MdArrowBackIos } from "react-icons/md";
 import { MdArrowForwardIos } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useDispatch } from "react-redux";
 import { addToBasketStorage } from "../../Logic/localStorage/basket";
 import { addToWishlistStorage } from "../../Logic/localStorage/wishlist";
 
 function SliderTypeTwo({
   props,
   notfull,
-  setClickedLogin
+  setClickedLogin,
 }: {
   props: {
     backgroundImg: string;
@@ -26,12 +24,11 @@ function SliderTypeTwo({
     sizes?: string[];
     id: string;
   }[];
-    notfull?: boolean;
-    setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  notfull?: boolean;
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [showNext, setShowNext] = useState<boolean>(true);
   const [showPrev, setShowPrev] = useState<boolean>(false);
-  const imageRef = useRef<HTMLImageElement>(null);
   const itemRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
@@ -40,8 +37,6 @@ function SliderTypeTwo({
 
   const [prevClassNotFull, setPrevClassNotFull] = useState<string>("");
   const [nextClassNotFull, setNextClassNotFull] = useState<string>("");
-
-  const dispatch = useDispatch();
 
   const handleWishlistClick = (item: {
     id: string;
@@ -59,12 +54,11 @@ function SliderTypeTwo({
     colors: string[];
     sizes?: string[] | undefined;
   }): void => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (token) {
-      addToWishlistStorage(item)
-    }
-    else{
-      setClickedLogin(true)
+      addToWishlistStorage(item);
+    } else {
+      setClickedLogin(true);
     }
   };
 
@@ -91,24 +85,33 @@ function SliderTypeTwo({
     setShowPrev(false);
   };
 
-  const addToBasket = (item: {
-    id: string;
-    backgroundImg: string;
-    foregroundImg?: string | undefined;
-    tags?:
-      | {
-          name: string;
-          special?: boolean | undefined;
-        }[]
-      | undefined;
-    title: string;
-    price: string;
-    priceDiscount: { full: string; discount: string };
-    colors: string[];
-    sizes?: string[] | undefined;
-  }) => {
-    addToBasketStorage(item);
+  const addToBasket = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    item: {
+      id: string;
+      backgroundImg: string;
+      foregroundImg?: string | undefined;
+      tags?:
+        | {
+            name: string;
+            special?: boolean | undefined;
+          }[]
+        | undefined;
+      title: string;
+      price: string;
+      priceDiscount: { full: string; discount: string };
+      colors: string[];
+      sizes?: string[] | undefined;
+    }
+  ) => {
+    if (heartRef.current) {
+      if (e.target !== heartRef.current && e.target !== heartRef.current.childNodes[0]) {
+        addToBasketStorage(item);
+      }
+    }
   };
+
+  const heartRef = useRef<HTMLSpanElement>(null);
   return (
     <div className="sliderTypeTwo">
       <button
@@ -140,7 +143,7 @@ function SliderTypeTwo({
       {props.map((item, i) => {
         return (
           <div
-            onClick={() => addToBasket(item)}
+            onClick={(e) => addToBasket(e, item)}
             className={`sliderTypeTwo__item ${nextClass} ${prevClass} ${nextClassNotFull} ${prevClassNotFull} ${
               !item.foregroundImg ? "sliderTypeTwo__item-no-fg" : ""
             }`}
@@ -168,11 +171,12 @@ function SliderTypeTwo({
                 />
               </div>
               <span
+                ref={heartRef}
                 className="sliderTypeTwo__item-heart"
-                onClick={()=>handleWishlistClick(item)}
+                onClick={() => handleWishlistClick(item)}
               >
-                <span>
-                  <AiOutlineHeart />
+                <span ref={heartRef}>
+                  <AiOutlineHeart/>
                 </span>
               </span>
               {item.tags ? (

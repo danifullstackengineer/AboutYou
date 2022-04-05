@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import {useRef } from "react";
 import "../../styles/components/Dropdown/DropdownImg.css";
 
 function DropdownImg({

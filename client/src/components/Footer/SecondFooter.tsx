@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/components/Footer/SecondFooter.css";
 import card from "../../assets/svg/card.svg";
 import paypal from "../../assets/svg/paypal.svg";

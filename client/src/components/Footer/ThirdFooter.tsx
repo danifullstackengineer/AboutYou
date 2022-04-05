@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputForm from "../../Comp-Single/InputForm";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import "../../styles/components/Footer/ThirdFooter.css";

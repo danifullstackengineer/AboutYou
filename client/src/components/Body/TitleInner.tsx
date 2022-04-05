@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/components/Body/TitleInner.css";
 
 function TitleInner({ title }: { title: { title1: string; title2: string } }) {

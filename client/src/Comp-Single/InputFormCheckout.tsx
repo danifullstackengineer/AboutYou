@@ -54,7 +54,7 @@ function InputFormCheckout({
       setInput(initialInput);
       setInputParent(initialInput);
     }
-  }, [initialInput]);
+  }, [initialInput, setInputParent]);
 
   const getIcon = (): JSX.Element => {
     if (showWarn && !optional) {
@@ -71,7 +71,7 @@ function InputFormCheckout({
         setIsGood(true);
       }
     }
-  }, [showWarn]);
+  }, [showWarn, optional, setIsGood]);
 
   return (
     <div

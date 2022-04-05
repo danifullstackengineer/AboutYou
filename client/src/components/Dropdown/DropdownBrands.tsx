@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import "../../styles/components/Dropdown/DropdownBrands.css";
 
 function DropdownBrands({
@@ -33,7 +32,7 @@ function DropdownBrands({
 
   const returnDropdown = (): JSX.Element => {
     const myArr = itemProps.map((item, i) => {
-      if (item.category.special) return;
+      if (item.category.special) return <></>
       else {
         return (
           <div className="dropdownBrands__category" key={i}>
@@ -105,6 +104,7 @@ function DropdownBrands({
                         </div>
                       );
                     }
+                    else return <></>
                   })}
                 </div>
                 {itemProps[i].category.types.length > 10 ? (
@@ -137,6 +137,7 @@ function DropdownBrands({
                           </div>
                         );
                       }
+                      else return <></>
                     })}
                   </div>
                 ) : (
@@ -145,6 +146,7 @@ function DropdownBrands({
               </div>
             );
           }
+          else return <></>
         })}
         {hasSpecial ? (
           <div className="dropdownBrands__category-container">
@@ -166,10 +168,11 @@ function DropdownBrands({
                         key={i}
                         className="dropdownBrands__image-containerInner"
                       >
-                        <img src={image.img} />
+                        <img src={image.img} alt={image.img}/>
                       </div>
                     );
                   }
+                  else return <></>
                 })}
               </div>
               {imageProps.images.length > 5 ? (
@@ -184,10 +187,11 @@ function DropdownBrands({
                           key={i}
                           className="dropdownBrands__image-containerInner"
                         >
-                          <img src={image.img} />
+                          <img src={image.img} alt={image.img}/>
                         </div>
                       );
                     }
+                    else return <></>
                   })}
                 </div>
               ) : (

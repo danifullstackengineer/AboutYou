@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useWindowDimensions } from "../../Hooks/Viewport";
+import  { useRef, useState } from "react";
 import "../../styles/components/Slider/Slider.css";
 import slider1 from "../../assets/jpeg/slider1.jpg";
 import slider2 from "../../assets/jpeg/slider2.jpg";
@@ -18,7 +17,7 @@ function SliderComp() {
   const bodyRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const [info, setInfo] = useState<
+  const [info] = useState<
     {
       title1: string;
       title2: string;
@@ -33,7 +32,6 @@ function SliderComp() {
 
   const interval = setInterval(() => {
     clearInterval(interval);
-    var infoDummy;
     if (anim1) {
       setAnim2("slide__anim2");
       setAnim1("");
@@ -51,10 +49,6 @@ function SliderComp() {
       setAnim5("");
     } else {
       setAnim1("slide__anim1");
-      infoDummy = {
-        title1: "Stylish through the season",
-        title2: "Shirt Jackets",
-      };
     }
   }, 5000);
 

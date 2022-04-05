@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../../../styles/components/Checkout/CheckoutBody/Form/CheckoutBodyMainForm.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import germanyFlag from "../../../../assets/country-flags/de.svg";
 import romaniaFlag from "../../../../assets/country-flags/ro.svg";
 import serbiaFlag from "../../../../assets/country-flags/rs.svg";
@@ -65,19 +64,9 @@ function CheckoutBodyMainForm({
         setAddress(addr);
       }
     }
-  }, []);
-  useEffect(() => {
-    if (address) {
-      setSelectedCountry(
-        languages.filter((language) => language.name === address.country)[0]
-      );
-      setActiveFormality(
-        address.formality === "Mrs." ? [false, true] : [true, false]
-      );
-    }
-  }, [address]);
+  }, [newAddress]);
 
-  const [languages, setLanguages] = useState<{ name: string; flag: string }[]>([
+  const [languages] = useState<{ name: string; flag: string }[]>([
     {
       name: "Germany",
       flag: germanyFlag,
@@ -103,6 +92,16 @@ function CheckoutBodyMainForm({
       flag: japaneseFlag,
     },
   ]);
+  useEffect(() => {
+    if (address) {
+      setSelectedCountry(
+        languages.filter((language) => language.name === address.country)[0]
+      );
+      setActiveFormality(
+        address.formality === "Mrs." ? [false, true] : [true, false]
+      );
+    }
+  }, [address, languages]);
 
   const handleCountryChange = (index: number): void => {
     setSelectedCountry(languages[index]);
@@ -124,6 +123,84 @@ function CheckoutBodyMainForm({
       setIsGoodCountry(false);
     }
   }, [selectedCountry]);
+
+  const [firstInput, setFirstInput] = useState<string>("");
+  const [lastInput, setLastInput] = useState<string>("");
+  const [addres1Input, setAddress1Input] = useState<string>("");
+  const [address2Input, setAddress2Input] = useState<string>("");
+  const [stateInput, setStateInput] = useState<string>("");
+  const [codeInput, setCodeInput] = useState<string>("");
+  const [cityInput, setCityInput] = useState<string>("");
+  const [birthInput, setBirthInput] = useState<string>("");
+  const [taxInput, setTaxInput] = useState<string>("");
+
+  useEffect(() => {
+    if (newAddress) {
+      if (
+        isGoodFirst &&
+        isGoodLast &&
+        isGoodAddress &&
+        isGoodPostal &&
+        isGoodCity &&
+        isGoodCountry
+      ) {
+        setSecondAddress({
+          formality: activeFormality[0] ? "Ms." : "Mrs.",
+          country: selectedCountry ? selectedCountry.name : "",
+          firstName: firstInput,
+          lastName: lastInput,
+          addressOne: addres1Input,
+          addressTwo: address2Input,
+          state: stateInput,
+          p_code: codeInput,
+          city: cityInput,
+        });
+      }
+    } else if (
+      isGoodFirst &&
+      isGoodLast &&
+      isGoodAddress &&
+      isGoodPostal &&
+      isGoodCity &&
+      isGoodBirth &&
+      isGoodCountry
+    ) {
+      setFirstAddress({
+        formality: activeFormality[0] ? "Ms." : "Mrs.",
+        country: selectedCountry ? selectedCountry.name : "",
+        firstName: firstInput,
+        lastName: lastInput,
+        addressOne: addres1Input,
+        addressTwo: address2Input,
+        state: stateInput,
+        p_code: codeInput,
+        city: cityInput,
+        birth: birthInput,
+        tax: taxInput,
+      });
+    }
+  }, [
+    clickedContinue,
+    activeFormality,
+    addres1Input,
+    address2Input,
+    birthInput,
+    cityInput,
+    codeInput,
+    firstInput,
+    isGoodAddress,
+    isGoodBirth,
+    isGoodCity,
+    isGoodCountry,
+    isGoodFirst,
+    isGoodLast,
+    isGoodPostal,
+    lastInput,
+    newAddress,
+    selectedCountry,
+    stateInput,
+    taxInput
+  ]);
 
   useEffect(() => {
     if (newAddress) {
@@ -175,64 +252,18 @@ function CheckoutBodyMainForm({
     isGoodCity,
     isGoodBirth,
     isGoodCountry,
+    activeFormality,
+    addres1Input,
+    address2Input,
+    cityInput,
+    codeInput,
+    firstInput,
+    lastInput,
+    newAddress,
+    selectedCountry,
+    setIsEveryField,
+    stateInput,
   ]);
-
-  useEffect(() => {
-    if (newAddress) {
-      if (
-        isGoodFirst &&
-        isGoodLast &&
-        isGoodAddress &&
-        isGoodPostal &&
-        isGoodCity &&
-        isGoodCountry
-      ) {
-        setSecondAddress({
-          formality: activeFormality[0] ? "Ms." : "Mrs.",
-          country: selectedCountry ? selectedCountry.name : "",
-          firstName: firstInput,
-          lastName: lastInput,
-          addressOne: addres1Input,
-          addressTwo: address2Input,
-          state: stateInput,
-          p_code: codeInput,
-          city: cityInput,
-        });
-      }
-    } else if (
-      isGoodFirst &&
-      isGoodLast &&
-      isGoodAddress &&
-      isGoodPostal &&
-      isGoodCity &&
-      isGoodBirth &&
-      isGoodCountry
-    ) {
-      setFirstAddress({
-        formality: activeFormality[0] ? "Ms." : "Mrs.",
-        country: selectedCountry ? selectedCountry.name : "",
-        firstName: firstInput,
-        lastName: lastInput,
-        addressOne: addres1Input,
-        addressTwo: address2Input,
-        state: stateInput,
-        p_code: codeInput,
-        city: cityInput,
-        birth: birthInput,
-        tax: taxInput,
-      });
-    }
-  }, [clickedContinue]);
-
-  const [firstInput, setFirstInput] = useState<string>("");
-  const [lastInput, setLastInput] = useState<string>("");
-  const [addres1Input, setAddress1Input] = useState<string>("");
-  const [address2Input, setAddress2Input] = useState<string>("");
-  const [stateInput, setStateInput] = useState<string>("");
-  const [codeInput, setCodeInput] = useState<string>("");
-  const [cityInput, setCityInput] = useState<string>("");
-  const [birthInput, setBirthInput] = useState<string>("");
-  const [taxInput, setTaxInput] = useState<string>("");
 
   return (
     <div

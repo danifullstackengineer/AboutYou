@@ -1,29 +1,29 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "../../styles/components/Footer/FourthFooter.css";
 
 function FourthFooter() {
-  const [list1, setList1] = useState<string[]>([
+  const [list1] = useState<string[]>([
     "Women's fashion",
     "White sneakers",
     "Oversized tops",
     "Outdoor fashion",
     "Bootcut jeans",
   ]);
-  const [list2, setList2] = useState<string[]>([
+  const [list2] = useState<string[]>([
     "Maternity wear",
     "Skinny jeans",
     "Lingerie",
     "Bikinis",
     "Jeans skirts",
   ]);
-  const [list3, setList3] = useState<string[]>([
+  const [list3] = useState<string[]>([
     "Adidas sneakers",
     "Coccinelle bags",
     "Jeans jackets",
     "Puma sportswear",
     "Boots",
   ]);
-  const [list4, setList4] = useState<string[]>([
+  const [list4] = useState<string[]>([
     "Puma sneakers",
     "Plus Size Fashion",
     "Coctail dresses",
@@ -31,28 +31,28 @@ function FourthFooter() {
     "Sportswear",
   ]);
 
-  const [list5, setList5] = useState<string[]>([
+  const [list5] = useState<string[]>([
     "ONLY",
     "Calvin Klein Underwear",
     "Hunkemöller",
     "AMERICAN VINTAGE",
     "TRIUMPH",
   ]);
-  const [list6, setList6] = useState<string[]>([
+  const [list6] = useState<string[]>([
     "NA-KD",
     "PIECES",
     "MARCO TOZZI",
     "UNDER ARMOUR",
     "Mavi",
   ]);
-  const [list7, setList7] = useState<string[]>([
+  const [list7] = useState<string[]>([
     "TAMARIS",
     "HUGO",
     "Calvin Klein",
     "TOMS",
     "ADIDAS ORIGINALS",
   ]);
-  const [list8, setList8] = useState<string[]>([
+  const [list8] = useState<string[]>([
     "Coccinelle",
     "Public Desire",
     "PUMA",

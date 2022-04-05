@@ -1,6 +1,5 @@
 import React from "react";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBodyInfo.css";
-import IAddress from "../../../types/address";
 import PaymentBodyInfoAddress from "./PaymentBodyInfo/PaymentBodyInfoAddress";
 import PaymentBodyInfoCardPayment from "./PaymentBodyInfo/PaymentBodyInfoCardPayment";
 import PaymentBodyInfoItems from "./PaymentBodyInfo/PaymentBodyInfoItems";

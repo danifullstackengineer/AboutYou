@@ -49,7 +49,7 @@ function AboutYouLogo() {
         setName(res.data.getUserInfo.first);
       })
     }
-  }, [idVariable]);
+  }, [idVariable, getFirstName]);
 
   return (
     <div className="aboutYouLogo" onClick={() => navigate("/")}>
@@ -65,7 +65,7 @@ function AboutYouLogo() {
         >
           {name ? name : "YOU"}
         </span>
-        <img src={mainLogo}></img>
+        <img src={mainLogo} alt={mainLogo}></img>
       </div>
     </div>
   );

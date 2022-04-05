@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/components/Credentials/Credential.css";
 import { IoMdClose } from "react-icons/io";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
@@ -20,7 +20,6 @@ function Credential({
 
   const [clickedNews, setClickedNews] = useState<boolean>(false);
 
-  const [regex, setRegex] = useState<boolean[]>([true, true, true, true]);
   const [warning, setWarning] = useState<boolean[]>([
     false,
     false,
@@ -31,7 +30,7 @@ function Credential({
   const [input2, setInput2] = useState<string>("");
   const [input3, setInput3] = useState<string>("");
   const [input4, setInput4] = useState<string>("");
-  const [warn, setWarn] = useState<string[]>([
+  const [warn] = useState<string[]>([
     "Please enter your first name",
     "Please enter your last name",
     "Please enter your email address",
@@ -47,7 +46,6 @@ function Credential({
       | React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
     e.preventDefault();
-    var warnArr = [];
     if (chosenAction[0]) {
       setWarning([
         !checkRegex(input1, "first"),
@@ -104,7 +102,7 @@ function Credential({
     if (warning[3] && input4) {
       setWarning([warning[0], warning[1], warning[2], false]);
     }
-  }, [input1, input2, input3, input4]);
+  }, [input1, input2, input3, input4, warning]);
 
   return (
     <div

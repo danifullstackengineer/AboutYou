@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PaymentMethod from "../../../Comp-Single/PaymentMethod";
 import paypal from "../../../assets/svg/paypal.svg";
 import card from "../../../assets/svg/card.svg";
 import binance from "../../../assets/svg/binance.svg";
 import metamask from "../../../assets/svg/metamask.svg";
-import bitcoin from "../../../assets/svg/bitcoin.svg";
-import ethereum from "../../../assets/svg/ethereum.svg";
-import liquality from "../../../assets/png/liquality.png";
-import crypto from "../../../assets/png/crypto.png";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBodyMethod.css";
-import PaymentMethodDropdown from "../../../Comp-Single/PaymentMethodDropdown";
 
 function PaymentBodyMethod({
   currentMethod,

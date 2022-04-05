@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/components/Checkout/CheckoutBody.css";
-import { useScrollDirection } from "../../Hooks/ScrollDetector";
 import CheckoutBodyForm from "./CheckoutBody/CheckoutBodyForm";
 import CheckoutBodyItems from "./CheckoutBody/CheckoutBodyItems";
-import ContinueCheckout from "./ContinueCheckout";
 import { useNavigate } from "react-router-dom";
-import IAddress from "../../types/address";
 
 function CheckoutBody({
   setAmount,
@@ -45,7 +42,7 @@ function CheckoutBody({
         continueRef.current.style.position = "fixed";
       }
     }
-  }, [scrollPosition]);
+  }, [scrollPosition, continueRef, isNewAddress]);
   useEffect(() => {
     if (continueRef.current) {
       if (!isNewAddress && continueRef.current.style.position === "relative") {
@@ -57,7 +54,7 @@ function CheckoutBody({
         continueRef.current.style.position = "fixed";
       }
     }
-  }, [isNewAddress]);
+  }, [isNewAddress, continueRef]);
 
   const [isEveryField, setIsEveryField] = useState<boolean>(false);
   const [isEveryField2, setIsEveryField2] = useState<boolean>(false);
@@ -75,7 +72,7 @@ function CheckoutBody({
         }
       }
     }
-  }, [clickedContinue]);
+  }, [clickedContinue, isEveryField, isEveryField2, isNewAddress, navigate, setClickedContinue]);
 
   return (
     <div className="checkoutBody">

@@ -14,7 +14,7 @@ function CheckoutBodyFormAddressChooser({
     } else {
       setShowNewAddress(false);
     }
-  }, [selected]);
+  }, [selected, setShowNewAddress]);
   return (
     <div className="checkoutBodyFormAddressChooser">
       <div

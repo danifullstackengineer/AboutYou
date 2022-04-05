@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { IconBaseProps } from "react-icons";
 import "../styles/Comp-Single/InteractiveBtn.css";
 import LoadingDots from "./LoadingDots";
 
@@ -37,7 +36,7 @@ function InteractiveBtn({
     if (setClickedLogin) {
       setClickedLogin(true)
     }
-  }, [])
+  }, [setClickedLogin])
   
   const interactiveRef = useRef<HTMLButtonElement>(null);
 

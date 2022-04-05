@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  {useState } from "react";
 import LeftSelection from "../../Comp-Single/LeftSelection";
 import WishlistBody from "./WishlistBody";
 import "../../styles/components/Wishlist/Wishlist.css";

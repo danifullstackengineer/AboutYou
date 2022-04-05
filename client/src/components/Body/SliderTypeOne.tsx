@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import "../../styles/components/Body/SliderTypeOne.css";
 import { AiOutlineHeart } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
@@ -54,17 +54,6 @@ function SliderTypeOne({
     setShowNext(true);
     setShowPrev(false);
   };
-
-  const [lastSlideItem, setLastSlideItem] = useState<{
-    button: boolean;
-    heart: boolean;
-    lastSlide: boolean;
-    title1?: string | undefined;
-    title2?: string | undefined;
-    buttonName?: string | undefined;
-    specialTitle?: string | undefined;
-    image: string;
-  }>();
 
   return (
     <div className="sliderTypeOne">
@@ -139,6 +128,7 @@ function SliderTypeOne({
             </div>
           );
         } 
+        else return <></>
       })}
       {props.map((item, i)=> {
         if (item.lastSlide) {
@@ -200,6 +190,7 @@ function SliderTypeOne({
             </div>
           )
         }
+        else return <></>
       })}
       <button
         onClick={handleNext}

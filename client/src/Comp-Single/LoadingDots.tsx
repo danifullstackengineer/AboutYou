@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/Comp-Single/LoadingDots.css";
 
 function LoadingDots() {
@@ -23,7 +23,7 @@ function LoadingDots() {
     }, 500);
 
     return () => clearInterval(interval);
-  }, [runs]);
+  }, [runs, loadingQueue]);
 
   return (
     <div className="loadingDots">

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../styles/components/Header/Header.css";
-import mainLogo from "../../assets/svg/mainLogo.svg";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiWorld } from "react-icons/bi";
 import { BiUser } from "react-icons/bi";
@@ -22,79 +21,16 @@ import { BsCheck } from "react-icons/bs";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import DropdownImg from "../Dropdown/DropdownImg";
 import DropdownBrands from "../Dropdown/DropdownBrands";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import {
   getBasketItemsStorage,
-  getBasketLengthStorage,
 } from "../../Logic/localStorage/basket";
 
-// Images
-import dropdownOne1 from "../../assets/dropdown/dropdownOne/one.webp";
-import dropdownOne2 from "../../assets/dropdown/dropdownOne/two.webp";
-import dropdownOne3 from "../../assets/dropdown/dropdownOne/three.webp";
-import dropdownOne4 from "../../assets/dropdown/dropdownOne/four.webp";
-import dropdownOne5 from "../../assets/dropdown/placeholder.jpg";
-
-import dropdownTwo1 from "../../assets/dropdown/dropdownTwo/one.jpg";
-import dropdownTwo2 from "../../assets/dropdown/dropdownTwo/two.jpg";
-import dropdownTwo3 from "../../assets/dropdown/dropdownTwo/three.jpg";
-import dropdownTwo4 from "../../assets/dropdown/dropdownTwo/four.jpg";
-import dropdownTwo5 from "../../assets/dropdown/placeholder.jpg";
-
-//Brands
-import brandOne1 from "../../assets/dropdown/brands/one/only.webp";
-import brandOne2 from "../../assets/dropdown/brands/one/vero-moda.webp";
-import brandOne3 from "../../assets/dropdown/brands/one/about-you.webp";
-import brandOne4 from "../../assets/dropdown/brands/one/le-ger.webp";
-import brandOne5 from "../../assets/dropdown/brands/one/vila.webp";
-import brandOne6 from "../../assets/dropdown/brands/one/edited.webp";
-import brandOne7 from "../../assets/dropdown/brands/one/pieces.webp";
-import brandOne8 from "../../assets/dropdown/brands/one/guido.webp";
-import brandOne9 from "../../assets/dropdown/brands/one/oliver.webp";
-import brandOne10 from "../../assets/dropdown/brands/one/rawwear.webp";
-
-import brandTwo1 from "../../assets/dropdown/brands/two/adidas.webp";
-import brandTwo2 from "../../assets/dropdown/brands/two/tamaris.webp";
-import brandTwo3 from "../../assets/dropdown/brands/one/about-you.webp";
-import brandTwo4 from "../../assets/dropdown/brands/two/puma.webp";
-import brandTwo5 from "../../assets/dropdown/brands/two/rebook.webp";
-import brandTwo6 from "../../assets/dropdown/brands/two/marco.webp";
-import brandTwo7 from "../../assets/dropdown/brands/two/img.webp";
-import brandTwo8 from "../../assets/dropdown/brands/two/tommy.webp";
-
-import brandThree1 from "../../assets/dropdown/brands/two/adidas.webp";
-import brandThree2 from "../../assets/dropdown/brands/two/puma.webp";
-import brandThree3 from "../../assets/dropdown/brands/three/special.webp";
-import brandThree4 from "../../assets/dropdown/brands/three/only-play.webp";
-import brandThree5 from "../../assets/dropdown/brands/three/cmp.webp";
-
-import brandFour1 from "../../assets/dropdown/brands/one/about-you.webp";
-import brandFour2 from "../../assets/dropdown/brands/two/tommy.webp";
-import brandFour3 from "../../assets/dropdown/brands/four/guess.webp";
-import brandFour4 from "../../assets/dropdown/brands/two/tamaris.webp";
-import brandFour5 from "../../assets/dropdown/brands/four/klein.webp";
-import brandFour6 from "../../assets/dropdown/brands/four/joop.webp";
-import brandFour7 from "../../assets/dropdown/brands/one/le-ger.webp";
-
-import brandFive1 from "../../assets/dropdown/brands/five/hugo.webp";
-import brandFive2 from "../../assets/dropdown/brands/four/klein.webp";
-import brandFive3 from "../../assets/dropdown/brands/four/joop.webp";
-import brandFive4 from "../../assets/dropdown/brands/five/about-you-sm.webp";
-import brandFive5 from "../../assets/dropdown/brands/five/kennel.webp";
-import brandFive6 from "../../assets/dropdown/brands/five/pepe.webp";
-import brandFive7 from "../../assets/dropdown/brands/five/boss.webp";
-import brandFive8 from "../../assets/dropdown/brands/five/drykorn.webp";
-import brandFive9 from "../../assets/dropdown/brands/five/blauer.webp";
-import brandFive10 from "../../assets/dropdown/brands/five/boss.webp";
-
-import brandSix1 from "../../assets/dropdown/brands/six/large.webp";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
-import { Navigate } from "react-router-dom";
 import ItemCount from "../../Comp-Single/ItemCount";
 import CartItem from "../../Comp-Single/CartItem";
 import { getTotalBasketPrice } from "../../Logic/basket";
-import { authJWT } from "../../API/Credential";
 import { getWishlistItemsStorage } from "../../Logic/localStorage/wishlist";
 
 function Header({
@@ -148,7 +84,7 @@ function Header({
     }
   }, []);
 
-  const [languages, setLanguages] = useState<
+  const [languages] = useState<
     { name: string; flag?: string; worldwide?: boolean; selected?: boolean }[]
   >([
     {
@@ -181,8 +117,7 @@ function Header({
       selected: true,
     },
   ]);
-
-  const [dropdownOne, setDropdownOne] = useState<
+  const [dropdownOne] = useState<
     {
       image: string;
       title: string;
@@ -191,30 +126,30 @@ function Header({
     }[]
   >([
     {
-      image: dropdownOne1,
+      image: "/assets/dropdown/dropdownOne/one.webp",
       title: "Lena Gercke",
       item: "Striped Shirt Lsddssds",
     },
-    { image: dropdownOne2, title: "Tara Zoe", item: "Classy Long Blouse" },
+    { image: "/assets/dropdown/dropdownOne/two.webp", title: "Tara Zoe", item: "Classy Long Blouse" },
     {
-      image: dropdownOne3,
+      image: "/assets/dropdown/dropdownOne/three.webp",
       title: "Lilia for LeGer",
       item: "Black Shirt Zebra",
     },
     {
-      image: dropdownOne4,
+      image: "/assets/dropdown/dropdownOne/four.webp",
       title: "Kianush for LeGer",
       item: "Black Mesh Jeans",
     },
     {
-      image: dropdownOne5,
+      image: "/assets/dropdown/placeholder.jpg",
       title: "placeholder",
       item: "placeholder",
       placeholder: true,
     },
   ]);
 
-  const [dropdownTwo, setDropdownTwo] = useState<
+  const [dropdownTwo] = useState<
     {
       image: string;
       title: string;
@@ -224,31 +159,31 @@ function Header({
     }[]
   >([
     {
-      image: dropdownTwo1,
+      image: "/assets/dropdown/dropdownTwo/one.jpg",
       title: "Bodytype: Wider Hips",
       item: "Swimwear for Curves",
       special: true,
     },
     {
-      image: dropdownTwo2,
+      image: "/assets/dropdown/dropdownTwo/two.jpg",
       title: "Feel Good",
       item: "Swimsuits",
       special: true,
     },
     {
-      image: dropdownTwo3,
+      image: "/assets/dropdown/dropdownTwo/three.jpg",
       title: "Coat trends that are ruling the season",
       item: "Transitional Coats",
       special: true,
     },
     {
-      image: dropdownTwo4,
+      image: "/assets/dropdown/dropdownTwo/four.jpg",
       title: "Stolen looks from your dads closet",
       item: "Dad-Style",
       special: true,
     },
     {
-      image: dropdownTwo5,
+      image: "/assets/dropdown/placeholder.jpg",
       title: "placeholder",
       item: "placeholder",
       special: true,
@@ -256,7 +191,7 @@ function Header({
     },
   ]);
 
-  const [categoriesOne, setCategoriesOne] = useState<
+  const [categoriesOne] = useState<
     {
       category: {
         name: string;
@@ -318,26 +253,26 @@ function Header({
     },
   ]);
 
-  const [brandOne, setBrandOne] = useState<{
+  const [brandOne] = useState<{
     name: string;
     images: { img: string }[];
   }>({
     name: "Top Brands",
     images: [
-      { img: brandOne1 },
-      { img: brandOne2 },
-      { img: brandOne3 },
-      { img: brandOne4 },
-      { img: brandOne5 },
-      { img: brandOne6 },
-      { img: brandOne7 },
-      { img: brandOne8 },
-      { img: brandOne9 },
-      { img: brandOne10 },
+      { img: "/assets/dropdown/brands/one/only.webp" },
+      { img: "/assets/dropdown/brands/one/vero-moda.webp" },
+      { img: "/assets/dropdown/brands/one/about-you.webp" },
+      { img: "/assets/dropdown/brands/one/le-ger.webp" },
+      { img: "/assets/dropdown/brands/one/vila.webp" },
+      { img: "/assets/dropdown/brands/one/edited.webp" },
+      { img: "/assets/dropdown/brands/one/pieces.webp" },
+      { img: "/assets/dropdown/brands/one/guido.webp" },
+      { img: "/assets/dropdown/brands/one/oliver.webp" },
+      { img: "/assets/dropdown/brands/one/rawwear.webp" },
     ],
   });
 
-  const [categoriesTwo, setCategoriesTwo] = useState<
+  const [categoriesTwo] = useState<
     {
       category: {
         name: string;
@@ -396,24 +331,25 @@ function Header({
     },
   ]);
 
-  const [brandTwo, setBrandTwo] = useState<{
+
+  const [brandTwo] = useState<{
     name: string;
     images: { img: string }[];
   }>({
     name: "Top Brands",
     images: [
-      { img: brandTwo1 },
-      { img: brandTwo2 },
-      { img: brandTwo3 },
-      { img: brandTwo4 },
-      { img: brandTwo5 },
-      { img: brandTwo6 },
-      { img: brandTwo7 },
-      { img: brandTwo8 },
+      { img: "/assets/dropdown/brands/two/adidas.webp" },
+      { img: "/assets/dropdown/brands/two/tamaris.webp" },
+      { img: "/assets/dropdown/brands/one/about-you.webp" },
+      { img: "/assets/dropdown/brands/two/puma.webp" },
+      { img: "/assets/dropdown/brands/two/rebook.webp" },
+      { img: "/assets/dropdown/brands/two/marco.webp" },
+      { img: "/assets/dropdown/brands/two/img.webp" },
+      { img: "/assets/dropdown/brands/two/tommy.webp" },
     ],
   });
 
-  const [categoriesFour, setCategoriesFour] = useState<
+  const [categoriesFour] = useState<
     {
       category: {
         name: string;
@@ -446,23 +382,23 @@ function Header({
     },
   ]);
 
-  const [brandFour, setBrandFour] = useState<{
+  const [brandFour] = useState<{
     name: string;
     images: { img: string }[];
   }>({
     name: "Top Brands",
     images: [
-      { img: brandFour1 },
-      { img: brandFour2 },
-      { img: brandFour3 },
-      { img: brandFour4 },
-      { img: brandFour5 },
-      { img: brandFour6 },
-      { img: brandFour7 },
+      { img: "/assets/dropdown/brands/one/about-you.webp" },
+      { img: "/assets/dropdown/brands/two/tommy.webp" },
+      { img: "/assets/dropdown/brands/four/guess.webp" },
+      { img: "/assets/dropdown/brands/two/tamaris.webp"},
+      { img: "/assets/dropdown/brands/four/klein.webp" },
+      { img: "/assets/dropdown/brands/four/joop.webp" },
+      { img: "/assets/dropdown/brands/one/le-ger.webp" },
     ],
   });
 
-  const [categoriesFive, setCategoriesFive] = useState<
+  const [categoriesFive] = useState<
     {
       category: {
         name: string;
@@ -495,26 +431,27 @@ function Header({
     },
   ]);
 
-  const [brandFive, setBrandFive] = useState<{
+
+  const [brandFive] = useState<{
     name: string;
     images: { img: string }[];
   }>({
     name: "Top Brands",
     images: [
-      { img: brandFive1 },
-      { img: brandFive2 },
-      { img: brandFive3 },
-      { img: brandFive4 },
-      { img: brandFive5 },
-      { img: brandFive6 },
-      { img: brandFive7 },
-      { img: brandFive8 },
-      { img: brandFive9 },
-      { img: brandFive10 },
+      { img: "/assets/dropdown/brands/five/hugo.webp" },
+      { img: "/assets/dropdown/brands/four/klein.webp" },
+      { img: "/assets/dropdown/brands/four/joop.webp" },
+      { img: "/assets/dropdown/brands/five/about-you-sm.webp" },
+      { img: "/assets/dropdown/brands/five/kennel.webp" },
+      { img: "/assets/dropdown/brands/five/pepe.webp" },
+      { img: "/assets/dropdown/brands/five/boss.webp" },
+      { img: "/assets/dropdown/brands/five/drykorn.webp" },
+      { img: "/assets/dropdown/brands/five/blauer.webp" },
+      { img: "/assets/dropdown/brands/five/boss.webp" },
     ],
   });
 
-  const [categoriesSix, setCategoriesSix] = useState<
+  const [categoriesSix] = useState<
     {
       category: {
         name: string;
@@ -553,7 +490,7 @@ function Header({
     },
   ]);
 
-  const [categoriesSeven, setCategoriesSeven] = useState<
+  const [categoriesSeven] = useState<
     {
       category: {
         name: string;
@@ -592,7 +529,7 @@ function Header({
     },
   ]);
 
-  const [categoriesThree, setCategoriesThree] = useState<
+  const [categoriesThree] = useState<
     {
       category: {
         name: string;
@@ -655,17 +592,17 @@ function Header({
     },
   ]);
 
-  const [brandThree, setBrandThree] = useState<{
+  const [brandThree] = useState<{
     name: string;
     images: { img: string }[];
   }>({
     name: "Top Brands",
     images: [
-      { img: brandThree1 },
-      { img: brandThree2 },
-      { img: brandThree3 },
-      { img: brandThree4 },
-      { img: brandThree5 },
+      { img: "/assets/dropdown/brands/two/adidas.webp" },
+      { img: "/assets/dropdown/brands/two/puma.webp" },
+      { img: "/assets/dropdown/brands/three/special.webp" },
+      { img: "/assets/dropdown/brands/three/only-play.webp" },
+      { img: "/assets/dropdown/brands/three/cmp.webp"},
     ],
   });
 
@@ -1220,7 +1157,7 @@ function Header({
         <div className="header__bottom-option header__bottom-option-special">
           <span>SALE</span>
           <div className="header__bottom-option-pop-up">
-            <DropdownBrands itemProps={categoriesSix} largeImg={brandSix1} />
+            <DropdownBrands itemProps={categoriesSix} largeImg={"/assets/dropdown/brands/six/large.webp"} />
           </div>
         </div>
         <div className="header__bottom-option">

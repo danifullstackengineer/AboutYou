@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import "../../../../styles/components/Checkout/CheckoutBody/Basket/CheckoutBodyBasketTotal.css";
 
 function CheckoutBodyBasketTotal({
@@ -25,7 +25,6 @@ function CheckoutBodyBasketTotal({
     | undefined;
   setAmount: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const [discount, setDiscount] = useState<number>(10);
   const getTotalAfterDiscount = (
     basket:
       | {
@@ -66,7 +65,7 @@ function CheckoutBodyBasketTotal({
     if (basket) {
       setAmount(getTotalAfterDiscount(basket));
     }
-  }, [basket]);
+  }, [basket, setAmount]);
 
   return (
     <div className="checkoutBodyBasketTotal">

@@ -38,14 +38,14 @@ function InputForm({
     if (divRef.current) {
       divRef.current.setAttribute("data-placeholder", placeholder);
     }
-  }, []);
+  }, [placeholder]);
 
 
   useEffect(() => {
     if (divRef.current) {
       divRef.current.style.setProperty("--transformVariableY", transformAmount + "%")
     }
-  }, [])
+  }, [transformAmount])
 
   useEffect(() => {
     if (input && !warning && isFocused) {
@@ -53,7 +53,7 @@ function InputForm({
     } else {
       setDeleteTyped(false);
     }
-  }, [input, isFocused]);
+  }, [input, isFocused, warning]);
 
   useEffect(() => {
     if (clearInput) {

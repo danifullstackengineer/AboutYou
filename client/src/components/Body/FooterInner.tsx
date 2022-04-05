@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/components/Body/FooterInner.css";
 
 function FooterInner() {

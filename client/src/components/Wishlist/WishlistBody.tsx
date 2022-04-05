@@ -14,7 +14,7 @@ function WishlistBody({
     setSelected(selected?.filter((option, z) => (z <= i ? option : undefined)));
   };
 
-  const [activeDropdown, setActiveDropdown] = useState<
+  const [activeDropdown] = useState<
     [
       { type: { option: string; active: boolean }[] },
       { type: { option: string; active: boolean }[] }

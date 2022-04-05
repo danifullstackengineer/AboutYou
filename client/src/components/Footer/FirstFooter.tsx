@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/components/Footer/FirstFooter.css";
 import { FaShippingFast } from "react-icons/fa";
 import { BsArrowLeftRight } from "react-icons/bs";

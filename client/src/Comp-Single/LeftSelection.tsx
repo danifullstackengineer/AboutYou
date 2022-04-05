@@ -8,9 +8,6 @@ function LeftSelection({
     setSelected: React.Dispatch<React.SetStateAction<string[]>>;
     selected: string[];
 }) {
-  const [isChildSelected, setIsChildSelected] = useState<boolean>(false);
-  const [isChildChildSelected, setIsChildChildSelected] =
-    useState<boolean>(false);
   
   useEffect(() => {
     switch (selected?.length) {

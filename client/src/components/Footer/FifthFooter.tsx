@@ -1,4 +1,3 @@
-import React from "react";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 import "../../styles/components/Footer/FifthFooter.css";
 import { GrContact } from "react-icons/gr";

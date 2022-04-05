@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import IAddress from "../../../types/address";
 import CheckoutBodyFormAdressChooser from "./Form/CheckoutBodyFormAddressChooser";
 import CheckoutBodyMainForm from "./Form/CheckoutBodyMainForm";
 
@@ -19,7 +18,7 @@ function CheckoutBodyForm({
   const [showNewAddress, setShowNewAddress] = useState<boolean>(false);
   useEffect(() => {
     setIsNewAddress(showNewAddress);
-  }, [showNewAddress]);
+  }, [showNewAddress, setIsNewAddress]);
 
   return (
     <div className="checkoutBodyForm">

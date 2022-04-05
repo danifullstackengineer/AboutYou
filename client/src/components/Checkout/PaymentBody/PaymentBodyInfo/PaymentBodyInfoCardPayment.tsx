@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import React from "react";
+import { CardElement, useElements } from "@stripe/react-stripe-js";
 import { StripeCardElement } from '@stripe/stripe-js';
 import "../../../../styles/components/Checkout/PaymentBody/PaymentBodyInfo/PaymentBodyInfoCardPayment.css";
 

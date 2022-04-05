@@ -9,22 +9,14 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import basketSlice from "./redux/slices";
 
-export const store = configureStore({
-  reducer: {
-    basket: basketSlice.reducer,
-  },
-});
 
 const httpLink = new HttpLink({
   uri: "/graphql",
 });
 
 const errorLink = process.env.NODE_ENV === "production"
-  ? onError(({ graphQLErrors, networkError }) => {
+  ? onError(() => {
       console.log(
         "Something went wrong with the server, please contact the website administrator if this issue persists."
       );
@@ -56,11 +48,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
       <ApolloProvider client={client}>
         <App />
       </ApolloProvider>
-    </Provider>
   </React.StrictMode>,
   document.querySelector("#root")
 );

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import  { useRef, useState } from "react";
 import "../../styles/components/Header/HeaderSmall.css";
 import { FaShippingFast } from "react-icons/fa";
 import { BsArrowLeftRight } from "react-icons/bs";

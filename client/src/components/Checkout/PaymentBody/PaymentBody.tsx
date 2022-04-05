@@ -1,11 +1,7 @@
 import React from "react";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBody.css";
-import IAddress from "../../../types/address";
-import ContinueCheckout from "../ContinueCheckout";
 import PaymentBodyInfo from "./PaymentBodyInfo";
 import PaymentBodyMethod from "./PaymentBodyMethod";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import { StripeCardElement } from '@stripe/stripe-js';
 
 
