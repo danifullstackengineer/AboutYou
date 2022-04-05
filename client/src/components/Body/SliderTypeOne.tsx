@@ -128,7 +128,7 @@ function SliderTypeOne({
             </div>
           );
         } 
-        else return <></>
+        else return <div key={i}></div>
       })}
       {props.map((item, i)=> {
         if (item.lastSlide) {
@@ -190,7 +190,7 @@ function SliderTypeOne({
             </div>
           )
         }
-        else return <></>
+        else return <div key={i}></div>
       })}
       <button
         onClick={handleNext}

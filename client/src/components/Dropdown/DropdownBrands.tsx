@@ -32,7 +32,7 @@ function DropdownBrands({
 
   const returnDropdown = (): JSX.Element => {
     const myArr = itemProps.map((item, i) => {
-      if (item.category.special) return <></>
+      if (item.category.special) return <div key={i}></div>
       else {
         return (
           <div className="dropdownBrands__category" key={i}>
@@ -104,7 +104,7 @@ function DropdownBrands({
                         </div>
                       );
                     }
-                    else return <></>
+                    else return <div key={i}></div>
                   })}
                 </div>
                 {itemProps[i].category.types.length > 10 ? (
@@ -137,7 +137,7 @@ function DropdownBrands({
                           </div>
                         );
                       }
-                      else return <></>
+                      else return <div key={i}></div>
                     })}
                   </div>
                 ) : (
@@ -146,7 +146,7 @@ function DropdownBrands({
               </div>
             );
           }
-          else return <></>
+          else return <div key={i}></div>
         })}
         {hasSpecial ? (
           <div className="dropdownBrands__category-container">
@@ -172,7 +172,7 @@ function DropdownBrands({
                       </div>
                     );
                   }
-                  else return <></>
+                  else return <div key={i}></div>
                 })}
               </div>
               {imageProps.images.length > 5 ? (
@@ -191,7 +191,7 @@ function DropdownBrands({
                         </div>
                       );
                     }
-                    else return <></>
+                    else return <div key={i}></div>
                   })}
                 </div>
               ) : (

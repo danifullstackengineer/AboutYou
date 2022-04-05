@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import mainLogo from "../assets/svg/mainLogo.svg";
 import "../styles/Comp-Single/AboutYouLogo.css";
 import { useLazyQuery } from "@apollo/client";
 import { getUserFirstName } from "../Apollo/User";
@@ -65,7 +64,7 @@ function AboutYouLogo() {
         >
           {name ? name : "YOU"}
         </span>
-        <img src={mainLogo} alt={mainLogo}></img>
+        <img src={"/assets/svg/mainLogo.svg"} alt={"/assets/svg/mainLogo.svg"}></img>
       </div>
     </div>
   );

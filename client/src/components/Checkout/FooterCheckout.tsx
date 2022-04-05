@@ -1,7 +1,4 @@
 import "../../styles/components/Checkout/FooterCheckout.css";
-import card from "../../assets/svg/card.svg";
-import paypal from "../../assets/svg/paypal.svg";
-import bitcoin from "../../assets/svg/bitcoin.svg";
 import ssl from "../../assets/ssl/ssl.png";
 import { Link } from "react-router-dom";
 
@@ -33,9 +30,9 @@ function FooterCheckout() {
         <section>
           <h4>Pay securely with</h4>
           <span>
-            <img src={card} alt={card} />
-            <img src={paypal} alt={card} />
-            <img src={bitcoin} alt={bitcoin} />
+            <img src={"/assets/svg/card.svg"} alt={"/assets/svg/card.svg"} />
+            <img src={"/assets/svg/paypal.svg"} alt={"/assets/svg/paypal.svg"} />
+            <img src={"/assets/svg/bitcoin.svg"} alt={"/assets/svg/bitcoin.svg"} />
           </span>
         </section>
       </footer>

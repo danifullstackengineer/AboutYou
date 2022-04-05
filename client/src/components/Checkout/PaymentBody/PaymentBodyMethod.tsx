@@ -1,9 +1,5 @@
 import React from "react";
 import PaymentMethod from "../../../Comp-Single/PaymentMethod";
-import paypal from "../../../assets/svg/paypal.svg";
-import card from "../../../assets/svg/card.svg";
-import binance from "../../../assets/svg/binance.svg";
-import metamask from "../../../assets/svg/metamask.svg";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBodyMethod.css";
 
 function PaymentBodyMethod({
@@ -22,7 +18,7 @@ function PaymentBodyMethod({
       <PaymentMethod
         type={"paypal"}
         active={currentMethod[0]}
-        icon={paypal}
+        icon="/assets/svg/paypal.svg"
         info={{
           infoTitle: "The benefits of PayPal",
           infoDescription:
@@ -33,7 +29,7 @@ function PaymentBodyMethod({
       <PaymentMethod
         type="card"
         active={currentMethod[1]}
-        icon={card}
+        icon={"/assets/svg/card.svg"}
         info={{
           infoTitle: "Benefits of paying by debit or credit card",
           infoDescription:
@@ -44,7 +40,7 @@ function PaymentBodyMethod({
       <PaymentMethod
         type="third-party"
         active={currentMethod[2]}
-        icon={binance}
+        icon={"/assets/svg/binance.svg"}
         info={{
           infoTitle: "Benefits of paying through Binance",
           infoDescription:
@@ -55,7 +51,7 @@ function PaymentBodyMethod({
       <PaymentMethod
         type="wallet"
         active={currentMethod[3]}
-        icon={metamask}
+        icon={"/assets/svg/metamask.svg"}
         info={{
           infoTitle: "Benefits of paying through your wallet extension",
           infoDescription:

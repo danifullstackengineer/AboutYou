@@ -1,15 +1,12 @@
 import "../../styles/components/Footer/SecondFooter.css";
-import card from "../../assets/svg/card.svg";
-import paypal from "../../assets/svg/paypal.svg";
-import bitcoin from "../../assets/svg/bitcoin.svg";
 
 function SecondFooter() {
   return (
     <div className="secondFooter">
       <footer>
-        <img src={card} alt="" />
-        <img src={paypal} alt="" />
-        <img src={bitcoin} alt="" />
+        <img src={"/assets/svg/card.svg"} alt="/assets/svg/card.svg" />
+        <img src={"/assets/svg/paypal.svg"} alt="/assets/svg/paypal.svg" />
+        <img src={"/assets/svg/bitcoin.svg"} alt="/assets/svg/bitcoin.svg" />
       </footer>
     </div>
   );
