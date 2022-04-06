@@ -7,3 +7,56 @@
 .paymentBodyMethod > div:not(:last-child) {
   border-bottom: 1px solid rgb(200, 200, 200);
 }
+.paymentBodyMethod__manual-dropdown {
+  width: 100%;
+  background-color: rgb(240, 240, 240);
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  max-height: 250px;
+  overflow-x: hidden;
+  padding-top: 0.5em;
+  user-select: none;
+}
+.paymentBodyMethod__manual-dropdown > div {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  flex-direction: column;
+}
+.paymentBodyMethod__manual-dropdown > div > div {
+  color: black;
+  z-index: 3;
+  letter-spacing: 2px;
+  font-size: 1rem;
+  position: relative;
+  margin-left: 1em;
+  width: 100%;
+  padding: 0.5em;
+  cursor: pointer;
+}
+.paymentBodyMethod__manual-dropdown
+  > div
+  > div:not(.paymentBodyMethod__manual-dropdown-active):nth-child(2n + 1) {
+  background-color: rgba(200, 100, 100, 0.5);
+}
+.paymentBodyMethod__manual-dropdown
+  > div
+  > div:not(.paymentBodyMethod__manual-dropdown-active):nth-child(2n) {
+  background-color: white;
+}
+.paymentBodyMethod__manual-dropdown-active {
+  background-color: rgb(100, 200, 100);
+}
+.paymentBodyMethod__manual-dropdown > div > div > img {
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
+  transform: translateY(5px);
+}
+.paymentBodyMethod__manual-dropdown > div > div > span {
+  font-size: 1rem;
+  margin-left: 1em;
+}

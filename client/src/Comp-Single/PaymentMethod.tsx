@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import "../styles/Comp-Single/PaymentMethod.css";
 
@@ -34,6 +34,7 @@ function PaymentMethod({
         break;
     }
   };
+
 
   return (
     <div onClick={handleMethodChange} className={`paymentMethod`}>

@@ -5,7 +5,7 @@ import {
   verifyJWT,
   isAuth,
 } from "./controllers/Credential.js";
-import { createCryptoPayment, createPaypalPaymentPage, handlePaypalFailurePayment, handlePaypalSuccessPayment,createStripeSecret, createStripePayment, getTotalCrypto} from "./controllers/Payment.js";
+import { createCryptoPayment, createPaypalPaymentPage, handlePaypalFailurePayment, handlePaypalSuccessPayment,createStripeSecret, createStripePayment, getTotalCrypto, createCoinpaymentsPayment} from "./controllers/Payment.js";
 
 
 const router = express.Router();
@@ -28,6 +28,8 @@ router.post('/createStripePayment', createStripePayment);
 //Crypto
 router.post('/getTotalCrypto', getTotalCrypto)
 
+//Coinpayments
+router.post('/createCoinpaymentsPayment', createCoinpaymentsPayment)
 
 
 export default router;

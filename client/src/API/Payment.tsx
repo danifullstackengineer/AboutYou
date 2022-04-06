@@ -104,17 +104,40 @@ const calculateTotalCrypto = async (): Promise<{
   message: string;
   total?: string;
 }> => {
-  var result = { success: false, message: "Something went wrong, please try again." }
+  var result = {
+    success: false,
+    message: "Something went wrong, please try again.",
+  };
   await $.ajax({
-    url: '/getTotalCrypto',
-    type: 'POST',
+    url: "/getTotalCrypto",
+    type: "POST",
     data: {
-      basket: getBasketItemsStorage()
-    }
-  })
-    .then((res: { success: boolean; message: string; total?: string }) => {
-      result = res;
-    })
+      basket: getBasketItemsStorage(),
+    },
+  }).then((res: { success: boolean; message: string; total?: string }) => {
+    result = res;
+  });
+
+  return result;
+};
+
+const createCoinpaymentsPayment = async (coin: string): Promise<{
+  success: boolean;
+  message: string;
+}> => {
+  var result = {
+    success: false,
+    message: "Something went wrong, please try again.",
+  };
+
+  await $.ajax({
+    url: "/createCoinpaymentsPayment",
+    type: "POST",
+    data: {
+      basket: getBasketItemsStorage(),
+      coin: coin
+    },
+  }).then((res: { success: boolean; message: string }) => (result = res));
 
   return result;
 };
@@ -124,5 +147,6 @@ export {
   createPaypalPayment,
   getClientSecret,
   saveCardPaymentDB,
-  calculateTotalCrypto
+  calculateTotalCrypto,
+  createCoinpaymentsPayment
 };

@@ -1,13 +1,13 @@
-// import { createPaypalPaymentIntent } from "../Payment/paypal.js";
 import paypal from "paypal-rest-sdk";
 import { stripe } from "../server.js";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
 import SliderTwoProduct from "../models/SliderTwo.js";
-import Web3 from 'web3';
-import BN from 'bn.js';
+import Web3 from "web3";
+import BN from "bn.js";
 import User from "../models/User.js";
 import Order from "../models/Orders.js";
+import { coinpaymentsClient } from "../server.js";
 import {
   decideTotal,
   createJSONItemArray,
@@ -183,14 +183,14 @@ const getTotalCrypto = async (req, res) => {
     if (total && total > 0) {
       const ethPrice = await fetch(
         "https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH"
-      )
-      const data = await ethPrice.json()
+      );
+      const data = await ethPrice.json();
       const dataMultipled = data.ETH * total;
-      const dataWEI = Web3.utils.toWei(dataMultipled.toString(), 'ether')
+      const dataWEI = Web3.utils.toWei(dataMultipled.toString(), "ether");
       return res.send({
         success: true,
         message: "Total calculated succesfully",
-        total: "0x" + BigInt(dataWEI).toString(16)
+        total: "0x" + BigInt(dataWEI).toString(16),
       });
     } else {
       return res.send({
@@ -206,6 +206,40 @@ const getTotalCrypto = async (req, res) => {
   }
 };
 
+const createCoinpaymentsPayment = async (req, res) => {
+  try {
+    const body = req.body;
+    await coinpaymentsClient
+      .createTransaction({
+        currency1: "USD",
+        currency2: body.coin,
+        amount: await decideTotal(body.basket),
+        buyer_email: "danifullstack@gmail.com",
+        success_url:
+          process.env.NODE_ENV === "production"
+            ? "/payment/paypal/success"
+            : "http://localhost:5000/payment/manual/success",
+        cancel_url:
+          process.env.NODE_ENV === "production"
+            ? "/payment/paypal/failure"
+            : "http://localhost:5000/payment/manual/failure",
+      })
+      .then((resTransaction) => {
+        if (resTransaction) {
+          return res.send({
+            success: true,
+            message: resTransaction.checkout_url,
+          });
+        }
+      });
+  } catch (err) {
+    return res.send({
+      success: false,
+      message: "Something went wrong while creating the payment.",
+    });
+  }
+};
+
 export {
   createCryptoPayment,
   createPaypalPaymentPage,
@@ -215,4 +249,5 @@ export {
   createStripePayment,
   createStripeSecret,
   getTotalCrypto,
+  createCoinpaymentsPayment,
 };

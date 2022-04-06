@@ -78,6 +78,21 @@
   -webkit-animation: 500ms ease-in-out anim5 forwards;
   animation: 500ms ease-in-out anim5 forwards;
 }
+.slide__anim1-backwards {
+  animation: 500ms ease-in-out anim1-backwards forwards;
+}
+.slide__anim2-backwards {
+  animation: 500ms ease-in-out anim2-backwards forwards;
+}
+.slide__anim3-backwards {
+  animation: 500ms ease-in-out anim3-backwards forwards;
+}
+.slide__anim4-backwards {
+  animation: 500ms ease-in-out anim4-backwards forwards;
+}
+.slide__anim5-backwards {
+  animation: 500ms ease-in-out anim5-backwards forwards;
+}
 @-webkit-keyframes anim1 {
   0% {
     transfrom: translateX(0);

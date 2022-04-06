@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   calculateTotalCrypto,
+  createCoinpaymentsPayment,
   createPaypalPayment,
   getClientSecret,
   saveCardPaymentDB,
@@ -62,6 +63,7 @@ function Checkout({
     false,
   ]);
 
+  const [currentCoin, setCurrentCoin] = useState<string>("");
 
   useEffect(() => {
     if (redirectToPaymentProvider) {
@@ -91,7 +93,6 @@ function Checkout({
             });
         }
       } else if (currentMethod[2]) {
-        //Third party crypto providers
       } else if (currentMethod[3]) {
         //Browser wallet crypto payment
         //Handle ethereum
@@ -117,11 +118,13 @@ function Checkout({
                 params: [transactionParam],
               })
               .then((res: any) => {
-                setTitleProcessing("Payment was successful. This window will close in 3 seconds.");
+                setTitleProcessing(
+                  "Payment was successful. This window will close in 3 seconds."
+                );
                 setTimeout(() => {
                   setVisibleProcessing(false);
-                  localStorage.removeItem("basket")
-                }, 3000)
+                  localStorage.removeItem("basket");
+                }, 3000);
               })
               .catch((error: any) => {
                 if (error.code === 4001) {
@@ -136,10 +139,24 @@ function Checkout({
           }
         });
       } else if (currentMethod[4]) {
-        //Manual transfer of crypto to address
+        createCoinpaymentsPayment(currentCoin)
+          .then(res => {
+            if (res.success) {
+              window.open(res.message);
+              navigate('/orders')
+              localStorage.removeItem("basket")
+          }
+        })
       }
     }
-  }, [redirectToPaymentProvider, cardElement, clientSecret, currentMethod, navigate, stripe]);
+  }, [
+    redirectToPaymentProvider,
+    cardElement,
+    clientSecret,
+    currentMethod,
+    navigate,
+    stripe,
+  ]);
 
   const [activeDropdown, setActiveDropdown] = useState<boolean[]>([
     false,
@@ -168,6 +185,7 @@ function Checkout({
         />
       ) : (
         <PaymentBody
+          setCurrentCoin={setCurrentCoin}
           currentMethod={currentMethod}
           setCurrentMethod={setCurrentMethod}
           setCardElement={setCardElement}

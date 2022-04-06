@@ -1,4 +1,4 @@
-import  { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../styles/components/Slider/Slider.css";
 import slider1 from "../../assets/jpeg/slider1.jpg";
 import slider2 from "../../assets/jpeg/slider2.jpg";
@@ -7,6 +7,7 @@ import slider4 from "../../assets/jpeg/slider4.webp";
 import slider5 from "../../assets/jpeg/slider5.webp";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import useTimer from "../../Hooks/Timer";
 
 function SliderComp() {
   const [anim1, setAnim1] = useState<string>("");
@@ -16,6 +17,38 @@ function SliderComp() {
   const [anim5, setAnim5] = useState<string>("");
   const bodyRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const [{ seconds, reset }] = useTimer(1000);
+
+  const [isSliding, setIsSliding] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log("seconds is: ", seconds);
+    if (seconds === 5) {
+      if (anim1) {
+        setAnim2("slide__anim2");
+        setAnim1("");
+      } else if (anim2) {
+        setAnim3("slide__anim3");
+        setAnim2("");
+      } else if (anim3) {
+        setAnim4("slide__anim4");
+        setAnim3("");
+      } else if (anim4) {
+        setAnim5("slide__anim5");
+        setAnim4("");
+      } else if (anim5) {
+        setAnim1("slide__anim1");
+        setAnim5("");
+      } else {
+        setAnim1("slide__anim1");
+      }
+      setIsSliding(true);
+      setTimeout(() => {
+        setIsSliding(false);
+      }, 500);
+      reset();
+    }
+  }, [seconds]);
 
   const [info] = useState<
     {
@@ -30,35 +63,48 @@ function SliderComp() {
     { title1: "With a flair", title2: "Flattering dresses" },
   ]);
 
-  const interval = setInterval(() => {
-    clearInterval(interval);
-    if (anim1) {
-      setAnim2("slide__anim2");
-      setAnim1("");
-    } else if (anim2) {
-      setAnim3("slide__anim3");
-      setAnim2("");
-    } else if (anim3) {
-      setAnim4("slide__anim4");
-      setAnim3("");
-    } else if (anim4) {
-      setAnim5("slide__anim5");
-      setAnim4("");
-    } else if (anim5) {
-      setAnim1("slide__anim1");
-      setAnim5("");
-    } else {
-      setAnim1("slide__anim1");
-    }
-  }, 5000);
-
-  const handlePrev = (): void => {};
+  const handlePrev = (): void => {
+    
+  };
   const handleNext = (): void => {
-    clearInterval(interval);
+    if (!isSliding) {
+      reset();
+      if (anim1) {
+        setAnim2("slide__anim2");
+        setAnim1("");
+      } else if (anim2) {
+        setAnim3("slide__anim3");
+        setAnim2("");
+      } else if (anim3) {
+        setAnim4("slide__anim4");
+        setAnim3("");
+      } else if (anim4) {
+        setAnim5("slide__anim5");
+        setAnim4("");
+      } else if (anim5) {
+        setAnim1("slide__anim1");
+        setAnim5("");
+      } else {
+        setAnim1("slide__anim1");
+      }
+      setIsSliding(true);
+      setTimeout(() => {
+        setIsSliding(false);
+      }, 500);
+      reset();
+    }
   };
 
   return (
     <div className="slider" ref={bodyRef}>
+      <div className={`slide ${anim1} ${anim2} ${anim3} ${anim4} ${anim5}`}>
+        <img src={slider5} alt={slider5} />
+        <div className="slider__info">
+          <span>{info[0].title1}</span>
+          <span>{info[0].title2}</span>
+          <button>Story</button>
+        </div>
+      </div>
       <div className={`slide ${anim1} ${anim2} ${anim3} ${anim4} ${anim5}`}>
         <img src={slider1} alt="" />
         <div className="slider__info">
