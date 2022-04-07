@@ -21,10 +21,8 @@ import { BsCheck } from "react-icons/bs";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import DropdownImg from "../Dropdown/DropdownImg";
 import DropdownBrands from "../Dropdown/DropdownBrands";
-import {  useNavigate } from "react-router-dom";
-import {
-  getBasketItemsStorage,
-} from "../../Logic/localStorage/basket";
+import { useNavigate } from "react-router-dom";
+import { getBasketItemsStorage } from "../../Logic/localStorage/basket";
 
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
@@ -82,6 +80,10 @@ function Header({
     } else {
       setIsLoggedIn(false);
     }
+    return () => {
+      window.removeEventListener("loggedIn", () => { })
+      window.removeEventListener("loggedOut", ()=>{})
+    }
   }, []);
 
   const [languages] = useState<
@@ -130,7 +132,11 @@ function Header({
       title: "Lena Gercke",
       item: "Striped Shirt Lsddssds",
     },
-    { image: "/assets/dropdown/dropdownOne/two.webp", title: "Tara Zoe", item: "Classy Long Blouse" },
+    {
+      image: "/assets/dropdown/dropdownOne/two.webp",
+      title: "Tara Zoe",
+      item: "Classy Long Blouse",
+    },
     {
       image: "/assets/dropdown/dropdownOne/three.webp",
       title: "Lilia for LeGer",
@@ -331,7 +337,6 @@ function Header({
     },
   ]);
 
-
   const [brandTwo] = useState<{
     name: string;
     images: { img: string }[];
@@ -391,7 +396,7 @@ function Header({
       { img: "/assets/dropdown/brands/one/about-you.webp" },
       { img: "/assets/dropdown/brands/two/tommy.webp" },
       { img: "/assets/dropdown/brands/four/guess.webp" },
-      { img: "/assets/dropdown/brands/two/tamaris.webp"},
+      { img: "/assets/dropdown/brands/two/tamaris.webp" },
       { img: "/assets/dropdown/brands/four/klein.webp" },
       { img: "/assets/dropdown/brands/four/joop.webp" },
       { img: "/assets/dropdown/brands/one/le-ger.webp" },
@@ -430,7 +435,6 @@ function Header({
       },
     },
   ]);
-
 
   const [brandFive] = useState<{
     name: string;
@@ -602,7 +606,7 @@ function Header({
       { img: "/assets/dropdown/brands/two/puma.webp" },
       { img: "/assets/dropdown/brands/three/special.webp" },
       { img: "/assets/dropdown/brands/three/only-play.webp" },
-      { img: "/assets/dropdown/brands/three/cmp.webp"},
+      { img: "/assets/dropdown/brands/three/cmp.webp" },
     ],
   });
 
@@ -711,7 +715,8 @@ function Header({
         wishlistRef.current.offsetTop +
         10 +
         "px";
-      wishlistRefSecond.current.style.width = wishlistRef.current.offsetWidth + "px";
+      wishlistRefSecond.current.style.width =
+        wishlistRef.current.offsetWidth + "px";
     }
   }, [isMouseOverWishlist]);
 
@@ -894,7 +899,7 @@ function Header({
                 <div className="header__top-option-pop-up-user-border"></div>
                 <InteractiveBtn
                   onClick={() => {
-                    window.dispatchEvent(new Event("loggedOut"))
+                    window.dispatchEvent(new Event("loggedOut"));
                   }}
                   type="button"
                   text={"Log out"}
@@ -915,8 +920,8 @@ function Header({
                   height={50}
                   margin={[20, 30, 20, 30]}
                   width={340}
-                    onClick={() => setClickedLogin(true)}
-                    type="button"
+                  onClick={() => setClickedLogin(true)}
+                  type="button"
                 />
                 <div className="header__top-option-pop-up-user-border"></div>
                 <div className="header__top-option-pop-up-user-options">
@@ -1070,7 +1075,11 @@ function Header({
                   Haven't found anything yet?
                 </div>
               )}
-              <button onClick={()=>itemCount ? navigate('/basket') : undefined}>{itemCount ? "Basket" : "Shop new items"}</button>
+              <button
+                onClick={() => (itemCount ? navigate("/basket") : undefined)}
+              >
+                {itemCount ? "Basket" : "Shop new items"}
+              </button>
               <button
                 onClick={handleCheckoutClick}
                 style={{
@@ -1157,7 +1166,10 @@ function Header({
         <div className="header__bottom-option header__bottom-option-special">
           <span>SALE</span>
           <div className="header__bottom-option-pop-up">
-            <DropdownBrands itemProps={categoriesSix} largeImg={"/assets/dropdown/brands/six/large.webp"} />
+            <DropdownBrands
+              itemProps={categoriesSix}
+              largeImg={"/assets/dropdown/brands/six/large.webp"}
+            />
           </div>
         </div>
         <div className="header__bottom-option">

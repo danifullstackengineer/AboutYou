@@ -1,0 +1,53 @@
+.paymentBodyInfoSubscribe {
+  background-color: rgb(205, 235, 205);
+  padding: 2em 3em 2em 3em;
+  display: flex;
+}
+.paymentBodyInfoSubscribe__check {
+    background-color: white;
+    width: 12.5px;
+    height: 12.5px;
+    transform: translateY(2.5px);
+    margin-right: 1em;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgb(150,150,150);
+    transition: border 150ms ease-in;
+}
+.paymentBodyInfoSubscribe__check-active {
+    border: 1px solid black;
+}
+.paymentBodyInfoSubscribe__check::before {
+    content :"";
+    position: absolute;
+    width: 10px;
+    height: 1px;
+    background-color: rgb(150,150,150);
+    transform: rotate(-45deg);
+    top: 45%;
+    left: 20%;
+    opacity: 0;
+    transition: all 150ms ease-in;
+}
+.paymentBodyInfoSubscribe__check::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 1px;
+    background-color: rgb(150,150,150);
+    transform: rotate(45deg);
+    top: 60%;
+    left: 15%;
+    opacity: 0;
+    transition: all 150ms ease-in;
+}
+.paymentBodyInfoSubscribe__check-active::after, .paymentBodyInfoSubscribe__check-active::before {
+    opacity: 1;
+}
+.paymentBodyInfoSubscribe__content {
+    flex: 0.95;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}

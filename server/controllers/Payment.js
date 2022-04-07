@@ -34,6 +34,7 @@ const createPaypalPaymentPage = async (req, res) => {
     const itemArray = await createJSONItemArray(body.basket);
     const address = await createJSONAddress(body.address);
     const user = await User.findById(id);
+    console.log(address)
     if (!user) {
       return res.send({ success: false, message: "No user is logged in." });
     }

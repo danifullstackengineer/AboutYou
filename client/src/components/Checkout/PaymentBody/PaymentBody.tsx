@@ -12,7 +12,8 @@ function PaymentBody({
   setCardElement,
   setActiveDropdown,
   activeDropdown,
-  setCurrentCoin
+  setCurrentCoin,
+  setAmount
 }: {
   currentMethod: boolean[];
     setCurrentMethod: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -20,6 +21,7 @@ function PaymentBody({
     setActiveDropdown: React.Dispatch<React.SetStateAction<boolean[]>>;
     activeDropdown: boolean[];
     setCurrentCoin: React.Dispatch<React.SetStateAction<string>>;
+    setAmount?: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
       <div className="paymentBody">
@@ -31,7 +33,7 @@ function PaymentBody({
           activeDropdown={activeDropdown}
           setCurrentCoin={setCurrentCoin}
           />
-          <PaymentBodyInfo isCardPayment={currentMethod[1]} setCardElement={setCardElement} />
+        <PaymentBodyInfo isCardPayment={currentMethod[1]} setCardElement={setCardElement} setAmount={setAmount}/>
         </div>
       </div>
   );

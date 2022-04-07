@@ -4,6 +4,7 @@ import "../../../../styles/components/Checkout/CheckoutBody/Basket/CheckoutBodyB
 function CheckoutBodyBasketTotal({
   basket,
   setAmount,
+  payment
 }: {
   basket:
     | {
@@ -23,7 +24,8 @@ function CheckoutBodyBasketTotal({
         quantity: number;
       }[]
     | undefined;
-  setAmount: React.Dispatch<React.SetStateAction<string>>;
+    setAmount?: React.Dispatch<React.SetStateAction<string>>;
+    payment?: true;
 }) {
   const getTotalAfterDiscount = (
     basket:
@@ -62,7 +64,7 @@ function CheckoutBodyBasketTotal({
   };
 
   useEffect(() => {
-    if (basket) {
+    if (basket && setAmount) {
       setAmount(getTotalAfterDiscount(basket));
     }
   }, [basket, setAmount]);

@@ -32,7 +32,7 @@ const createJSONItemArray = async (basket) => {
 
 const createJSONAddress = async (address) => {
   var addressJSON;
-  if (address.secondAddress) {
+  if (address.secondAddress!== 'false') {
     addressJSON = {
       line1: address.secondAddress.addressOne,
       line2: address.secondAddress.addressTwo,

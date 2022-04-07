@@ -71,7 +71,10 @@ function Checkout({
         createPaypalPayment().then((res) => {
           if (res.success) {
             window.open(res.message);
-            navigate("/orders");
+            setVisibleProcessing(true);
+            setTitleProcessing(
+              "Processing payment through Paypal. A new window will soon open..."
+            );
             localStorage.removeItem("basket");
           }
         });
@@ -139,14 +142,13 @@ function Checkout({
           }
         });
       } else if (currentMethod[4]) {
-        createCoinpaymentsPayment(currentCoin)
-          .then(res => {
-            if (res.success) {
-              window.open(res.message);
-              navigate('/orders')
-              localStorage.removeItem("basket")
+        createCoinpaymentsPayment(currentCoin).then((res) => {
+          if (res.success) {
+            window.open(res.message);
+            navigate("/orders");
+            localStorage.removeItem("basket");
           }
-        })
+        });
       }
     }
   }, [
@@ -191,6 +193,7 @@ function Checkout({
           setCardElement={setCardElement}
           setActiveDropdown={setActiveDropdown}
           activeDropdown={activeDropdown}
+          setAmount={setAmount}
         />
       )}
       {checkout ? (

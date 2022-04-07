@@ -107,30 +107,28 @@ function PaymentBodyMethod({
         }}
         setCurrentMethod={setCurrentMethod}
       />
-      {currentMethod[4] ? (
-        <div className="paymentBodyMethod__manual-dropdown">
-          <div>
-            {currency.map((cur, i) => {
-              return (
-                <div
-                  className={
-                    cur.active
-                      ? "paymentBodyMethod__manual-dropdown-active"
-                      : ""
-                  }
-                  key={i}
-                  onClick={() => handleCoinChoose(i)}
-                >
-                  <img src={cur.icon} alt={cur.icon} />
-                  <span>{cur.name}</span>
-                </div>
-              );
-            })}
-          </div>
+      <div
+        className={`paymentBodyMethod__manual-dropdown ${
+          currentMethod[4] ? "paymentBodyMethod__manual-dropdown-show" : ""
+        }`}
+      >
+        <div>
+          {currency.map((cur, i) => {
+            return (
+              <div
+                className={
+                  cur.active ? "paymentBodyMethod__manual-dropdown-active" : ""
+                }
+                key={i}
+                onClick={() => handleCoinChoose(i)}
+              >
+                <img src={cur.icon} alt={cur.icon} />
+                <span>{cur.name}</span>
+              </div>
+            );
+          })}
         </div>
-      ) : (
-        ""
-      )}
+      </div>
     </div>
   );
 }

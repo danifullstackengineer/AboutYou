@@ -30,7 +30,7 @@ function AboutYouLogo() {
       window.removeEventListener("loggedIn", () => {});
       window.removeEventListener("loggedOut", () => {});
     };
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const id = getIdStorage();
@@ -47,6 +47,8 @@ function AboutYouLogo() {
       getFirstName().then((res) => {
         setName(res.data.getUserInfo.first);
       })
+    } else {
+      setName(undefined)
     }
   }, [idVariable, getFirstName]);
 
