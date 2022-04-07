@@ -2,9 +2,7 @@ import paypal from "paypal-rest-sdk";
 import { stripe } from "../server.js";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
-import SliderTwoProduct from "../models/SliderTwo.js";
 import Web3 from "web3";
-import BN from "bn.js";
 import User from "../models/User.js";
 import Order from "../models/Orders.js";
 import { coinpaymentsClient } from "../server.js";
@@ -17,8 +15,14 @@ dotenv.config();
 
 paypal.configure({
   mode: process.env.NODE_ENV === "production" ? "live" : "sandbox",
-  client_id: process.env.PAYPAL_CLIENT_ID,
-  client_secret: process.env.PAYPAL_SECRET,
+  client_id:
+    process.env.NODE_ENV === "production"
+      ? process.env.PAYPAL_CLIENT_ID_LIVE
+      : process.env.PAYPAL_CLIENT_ID,
+  client_secret:
+    process.env.NODE_ENV === "production"
+      ? process.env.PAYPAL_SECRET_LIVE
+      : process.env.PAYPAL_SECRET,
 });
 
 const createCryptoPayment = async (req, res) => {
@@ -34,7 +38,7 @@ const createPaypalPaymentPage = async (req, res) => {
     const itemArray = await createJSONItemArray(body.basket);
     const address = await createJSONAddress(body.address);
     const user = await User.findById(id);
-    console.log(address)
+    console.log(address);
     if (!user) {
       return res.send({ success: false, message: "No user is logged in." });
     }
