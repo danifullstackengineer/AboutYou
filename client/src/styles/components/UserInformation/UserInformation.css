@@ -1,0 +1,55 @@
+.userInformation {
+    margin-top: 3.5em;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: flex-start;
+    min-height: 80vh;
+    width: 100%;
+    padding-left: 300px;
+}
+.userInformation__selection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 2em;
+}
+.userInformation__selection > button {
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0.15em;
+    width: 250px;
+    height: 50px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5em;
+}
+.userInformation__selection > button > span {
+   display: inline-flex;
+}
+.userInformation__selection > button > span:first-child {
+    margin-right: 0.5em;
+}
+.userInformation__selection > button:not(.userInformation__selection-active) {
+    border: 1px solid transparent;
+    color: rgb(100,100,100);
+}
+.userInformation__selection-active{
+    border: 1px solid black;
+    color: black;
+}
+.userInformation__selection > button:not(.userInformation__selection-active):hover {
+    color: black;
+}
+.userInformation__content {
+    display: flex;
+    flex-direction: column;
+}
+@media screen and (max-width: 1000px){
+    .userInformation {
+        padding-left: 0;
+    }
+}

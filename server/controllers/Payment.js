@@ -25,11 +25,6 @@ paypal.configure({
       : process.env.PAYPAL_SECRET,
 });
 
-const createCryptoPayment = async (req, res) => {
-  try {
-  } catch (err) {}
-};
-
 const createPaypalPaymentPage = async (req, res) => {
   try {
     const body = req.body;
@@ -38,7 +33,6 @@ const createPaypalPaymentPage = async (req, res) => {
     const itemArray = await createJSONItemArray(body.basket);
     const address = await createJSONAddress(body.address);
     const user = await User.findById(id);
-    console.log(address);
     if (!user) {
       return res.send({ success: false, message: "No user is logged in." });
     }
@@ -50,12 +44,12 @@ const createPaypalPaymentPage = async (req, res) => {
       redirect_urls: {
         return_url:
           process.env.NODE_ENV === "production"
-            ? "/payment/paypal/success"
-            : "http://localhost:5000/payment/paypal/success",
+            ? "/payment/success"
+            : "http://localhost:3000/payment/success",
         cancel_url:
           process.env.NODE_ENV === "production"
-            ? "/payment/paypal/failure"
-            : "http://localhost:5000/payment/paypal/failure",
+            ? "/payment/failure"
+            : "http://localhost:3000/payment/failure",
       },
       transactions: [
         {
@@ -99,10 +93,6 @@ const createPaypalPaymentPage = async (req, res) => {
     });
   }
 };
-const createPaypalPayment = async (req, res) => {
-  try {
-  } catch (err) {}
-};
 const returnExecutePaymentJSON = async (payerId) => {
   return {
     payer_id: payerId,
@@ -111,28 +101,36 @@ const returnExecutePaymentJSON = async (payerId) => {
 };
 
 const handlePaypalSuccessPayment = async (req, res) => {
-  const payerId = req.query.PayerID;
-  const paymentId = req.query.paymentId;
-  const paymentJSON = await returnExecutePaymentJSON(payerId);
+  try {
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+    const paymentJSON = await returnExecutePaymentJSON(payerId);
 
-  paypal.payment.execute(paymentId, paymentJSON, async (error, payment) => {
-    if (error) {
-      return res.send({
-        success: false,
-        message: "There was a problem while processing your payment.",
+    const alreadyPaid = await Order.find({ payId: payerId }).paid;
+
+    if (!alreadyPaid) {
+      paypal.payment.execute(paymentId, paymentJSON, async (error, payment) => {
+        if (error) {
+          console.log(error);
+          return res.send({
+            success: false,
+            message: "There was a problem while processing your payment.",
+          });
+        } else {
+          await Order.findOneAndUpdate({ payId: payment.id }, { paid: true });
+          return res.send({
+            success: true,
+            message: "Payment succesfully made.",
+          });
+        }
       });
-    } else {
-      await Order.findOneAndUpdate({ payId: payment.id }, { paid: true });
-      return res.send(
-        "<html>Payment was successful! You can now close the window</html>"
-      );
     }
-  });
-};
-const handlePaypalFailurePayment = async (req, res) => {
-  res.send(
-    "<html>Payment was unsuccessful! Close this window and try again. If the problem persists please contact us.</html>"
-  );
+  } catch (err) {
+    return res.send({
+      success: false,
+      message: "There was a problem while processing payment.",
+    });
+  }
 };
 
 const createStripePayment = async (req, res) => {
@@ -222,12 +220,12 @@ const createCoinpaymentsPayment = async (req, res) => {
         buyer_email: "danifullstack@gmail.com",
         success_url:
           process.env.NODE_ENV === "production"
-            ? "/payment/paypal/success"
-            : "http://localhost:5000/payment/manual/success",
+            ? "/payment/success"
+            : "http://localhost:3000/payment/success",
         cancel_url:
           process.env.NODE_ENV === "production"
-            ? "/payment/paypal/failure"
-            : "http://localhost:5000/payment/manual/failure",
+            ? "/payment/failure"
+            : "http://localhost:3000/payment/failure",
       })
       .then((resTransaction) => {
         if (resTransaction) {
@@ -246,10 +244,7 @@ const createCoinpaymentsPayment = async (req, res) => {
 };
 
 export {
-  createCryptoPayment,
   createPaypalPaymentPage,
-  createPaypalPayment,
-  handlePaypalFailurePayment,
   handlePaypalSuccessPayment,
   createStripePayment,
   createStripeSecret,

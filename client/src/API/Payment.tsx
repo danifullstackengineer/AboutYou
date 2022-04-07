@@ -5,17 +5,6 @@ import {
 } from "../Logic/localStorage/address";
 import { getBasketItemsStorage } from "../Logic/localStorage/basket";
 import { getIdStorage } from "../Logic/localStorage/user";
-import cryptoType from "../types/crypto";
-
-const createCryptoPayment = async (amount: number, type: cryptoType) => {
-  await $.ajax({
-    url: "/createCryptoPayment",
-    type: "POST",
-    data: { amount },
-  })
-    .then((res: any) => {})
-    .catch((err: any) => {});
-};
 
 const createPaypalPayment = async (): Promise<{
   success: boolean;
@@ -24,7 +13,7 @@ const createPaypalPayment = async (): Promise<{
   var result = {
     success: false,
     message:
-      "Something went wrong while creating a pay request, please try again!",
+      "Something went wrong while creating a pay request, please try again.",
   };
   await $.ajax({
     url: "/createPaypalPayment",
@@ -45,8 +34,29 @@ const createPaypalPayment = async (): Promise<{
       result = {
         success: false,
         message:
-          "Something went wrong while creating a pay request, please try again!",
+          "Something went wrong while creating a pay request, please try again.",
       };
+    });
+  return result;
+};
+
+const executePaypalPayment = async (
+  pathname: string
+): Promise<{ success: boolean; message: string }> => {
+  var result = {
+    success: false,
+    message:
+      "Something went wrong while processing the payment, please try again.",
+  };
+  await $.ajax({
+    url: `/executePaypalPayment/${pathname}`,
+    type: "GET",
+  })
+    .then((res: { success: boolean; message: string }) => {
+      result = res;
+    })
+    .catch((err: { success: boolean; message: string }) => {
+      result = err;
     });
   return result;
 };
@@ -121,7 +131,9 @@ const calculateTotalCrypto = async (): Promise<{
   return result;
 };
 
-const createCoinpaymentsPayment = async (coin: string): Promise<{
+const createCoinpaymentsPayment = async (
+  coin: string
+): Promise<{
   success: boolean;
   message: string;
 }> => {
@@ -135,18 +147,17 @@ const createCoinpaymentsPayment = async (coin: string): Promise<{
     type: "POST",
     data: {
       basket: getBasketItemsStorage(),
-      coin: coin
+      coin: coin,
     },
   }).then((res: { success: boolean; message: string }) => (result = res));
 
   return result;
 };
-
 export {
-  createCryptoPayment,
   createPaypalPayment,
+  executePaypalPayment,
   getClientSecret,
   saveCardPaymentDB,
   calculateTotalCrypto,
-  createCoinpaymentsPayment
+  createCoinpaymentsPayment,
 };

@@ -11,6 +11,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { authJWT } from "./API/Credential";
 import Basket from "./components/Basket/Basket";
+import UserInformation from "./components/UserInformation/UserInformation";
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
@@ -26,10 +27,13 @@ function App() {
       authJWT().then((res: any) => {
         if (!res.success) {
           localStorage.removeItem("token");
+        } else {
         }
       });
     }
   }, []);
+
+  const [disableClosing, setDisableClosing] = useState<boolean>(false);
 
   return (
     <div className="main">
@@ -37,6 +41,7 @@ function App() {
         <Credential
           clickedLogin={clickedLogin}
           setClickedLogin={setClickedLogin}
+          disableClosing={disableClosing}
         />
         <Routes>
           <Route
@@ -64,7 +69,12 @@ function App() {
             element={
               <Elements stripe={promise}>
                 {" "}
-                <Checkout setAmount={setAmount} checkout={true} />
+                <Checkout
+                  setAmount={setAmount}
+                  checkout={true}
+                  setClickedLogin={setClickedLogin}
+                  setDisableClosing={setDisableClosing}
+                />
               </Elements>
             }
           />
@@ -73,7 +83,12 @@ function App() {
             element={
               <Elements stripe={promise}>
                 {" "}
-                <Checkout amount={amount} payment={true} />
+                <Checkout
+                  amount={amount}
+                  payment={true}
+                  setClickedLogin={setClickedLogin}
+                  setDisableClosing={setDisableClosing}
+                />
               </Elements>
             }
           />
@@ -82,6 +97,75 @@ function App() {
             element={
               <>
                 <HeaderBody setClickedLogin={setClickedLogin} /> <Basket />
+                <FooterBody />
+              </>
+            }
+          />
+          <Route
+            path="/payment/success"
+            element={
+              <>
+                <Elements stripe={promise}>
+                  <Checkout
+                    amount={amount}
+                    paid={true}
+                    setClickedLogin={setClickedLogin}
+                    setDisableClosing={setDisableClosing}
+                  />
+                </Elements>
+              </>
+            }
+          />
+          <Route
+            path="/payment/failure"
+            element={
+              <>
+                <Elements stripe={promise}>
+                  <Checkout
+                    amount={amount}
+                    paid={true}
+                    setClickedLogin={setClickedLogin}
+                    setDisableClosing={setDisableClosing}
+                  />
+                </Elements>
+              </>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <>
+                <HeaderBody
+                  setClickedLogin={setClickedLogin}
+                  noSmallAdd={true}
+                />
+                <UserInformation type={0} setClickedLogin={setClickedLogin} setDisableClosing={setDisableClosing} />
+                <FooterBody />
+              </>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <>
+                <HeaderBody
+                  setClickedLogin={setClickedLogin}
+                  noSmallAdd={true}
+                />
+                <UserInformation type={1} setClickedLogin={setClickedLogin}  setDisableClosing={setDisableClosing}/>
+                <FooterBody />
+              </>
+            }
+          />
+          <Route
+            path="/help"
+            element={
+              <>
+                <HeaderBody
+                  setClickedLogin={setClickedLogin}
+                  noSmallAdd={true}
+                />
+                <UserInformation type={2} setClickedLogin={setClickedLogin} setDisableClosing={setDisableClosing}/>{" "}
                 <FooterBody />
               </>
             }

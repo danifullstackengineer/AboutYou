@@ -668,7 +668,6 @@ function Header({
   const openLangSelect = () => {
     if (toggleLang === undefined) {
       setToggleLang(true);
-      return;
     } else {
       setToggleLang(!toggleLang);
     }
@@ -680,6 +679,10 @@ function Header({
       navigate("/checkout");
     } else if (itemCount) {
       setClickedLogin(true);
+      window.addEventListener('loggedIn', () => {
+        navigate('/checkout')
+        window.removeEventListener("loggedIn", ()=> {})
+      })
     }
   };
 
@@ -783,7 +786,7 @@ function Header({
               </form>
             </div>
           </div>
-          <div className="header__top-option header__top-option-special">
+          <div className="header__top-option header__top-option-special" onMouseLeave={()=>setToggleLang(undefined)}>
             <BiWorld />
             <div className="header__top-option-lang">EN</div>
             <div
@@ -879,11 +882,11 @@ function Header({
             {isLoggedIn ? (
               <div className="header__top-option-pop-up header__top-option-pop-up-user">
                 <div className="header__top-option-pop-up-user-content">
-                  <div className="header__top-option-pop-up-user-content-option">
+                  <div className="header__top-option-pop-up-user-content-option" onClick={()=> navigate('/orders')}>
                     <span>{<AiOutlineShoppingCart />}</span>
                     Orders
                   </div>
-                  <div className="header__top-option-pop-up-user-content-option">
+                  <div className="header__top-option-pop-up-user-content-option" onClick={()=> navigate('/profile')}>
                     <span>{<BiLockAlt />}</span>
                     Profile &amp; Security
                   </div>
@@ -891,7 +894,7 @@ function Header({
                     <span>{<VscSettings />}</span>
                     Settings
                   </div>
-                  <div className="header__top-option-pop-up-user-content-option">
+                  <div className="header__top-option-pop-up-user-content-option" onClick={()=> navigate('/help')}>
                     <span>{<RiMessage2Line />}</span>
                     Help
                   </div>

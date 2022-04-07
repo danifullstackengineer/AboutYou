@@ -1,0 +1,37 @@
+.orders {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.orders > h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    text-shadow: 0px 1px, 1px 0px, 1px 1px;
+    letter-spacing: 1px;
+}
+.orders__no-orders {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+.orders__no-orders > img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 2em;
+}
+.orders__no-orders-info > h4 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    text-shadow: 1px 0 black;
+    margin-bottom: 0.5em;
+}
+.orders__no-orders-info > h5 {
+    font-size: 1rem;
+    color: rgb(100,100,100);
+}
+.orders__no-orders-info {
+    max-width: 350px;
+}

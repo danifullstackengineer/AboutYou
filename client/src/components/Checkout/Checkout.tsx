@@ -17,17 +17,25 @@ import ProgressCheckout from "./ProgressCheckout";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { useStripe } from "@stripe/react-stripe-js";
 import ProcessingPayment from "../../Comp-Single/ProcessingPayment";
+import PaymentFailure from "./PaymentBody/PaymentFinished/PaymentFailure";
+import PaymentSuccess from "./PaymentBody/PaymentFinished/PaymentSuccess";
 
 function Checkout({
   setAmount,
   amount,
   payment,
   checkout,
+  setClickedLogin,
+  setDisableClosing,
+  paid,
 }: {
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   amount?: string;
   payment?: boolean;
   checkout?: boolean;
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setDisableClosing: React.Dispatch<React.SetStateAction<boolean>>;
+  paid?: boolean;
 }) {
   const continueRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +50,14 @@ function Checkout({
   >();
   const stripe = useStripe();
   const [clientSecret, setClientSecret] = useState<string>("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setClickedLogin(true);
+      setDisableClosing(true);
+    }
+  }, []);
 
   useEffect(() => {
     getClientSecretFunction();
@@ -68,18 +84,20 @@ function Checkout({
   useEffect(() => {
     if (redirectToPaymentProvider) {
       if (currentMethod[0]) {
+        setVisibleProcessing(true);
+        setTitleProcessing("Processing payment through Paypal. A new window will soon open...")
         createPaypalPayment().then((res) => {
           if (res.success) {
             window.open(res.message);
-            setVisibleProcessing(true);
-            setTitleProcessing(
-              "Processing payment through Paypal. A new window will soon open..."
-            );
-            localStorage.removeItem("basket");
+            navigate("/orders");
           }
         });
       } else if (currentMethod[1]) {
         if (cardElement) {
+          setVisibleProcessing(true);
+          setTitleProcessing(
+            "Processing card payment. Do not close this window."
+          );
           stripe
             ?.confirmCardPayment(clientSecret, {
               payment_method: {
@@ -89,8 +107,12 @@ function Checkout({
             .then(({ paymentIntent }) => {
               if (paymentIntent?.status === "succeeded") {
                 saveCardPaymentDB(paymentIntent).then(() => {
-                  navigate("/orders");
-                  localStorage.removeItem("basket");
+                  setFinished(true);
+                  setTimeout(() => {
+                    setVisibleProcessing(false);
+                    navigate("/orders");
+                    localStorage.removeItem("basket");
+                  }, 3000);
                 });
               }
             });
@@ -151,6 +173,7 @@ function Checkout({
         });
       }
     }
+    return () => window.removeEventListener("paymentSuccess", () => {});
   }, [
     redirectToPaymentProvider,
     cardElement,
@@ -166,11 +189,16 @@ function Checkout({
   ]);
   const [visibleProcessing, setVisibleProcessing] = useState<boolean>(false);
   const [titleProcesing, setTitleProcessing] = useState<string>("");
+  const [finished, setFinished] = useState<boolean>(false);
 
   return (
     <div className="checkout">
-      <ProcessingPayment visible={visibleProcessing} type={titleProcesing} />
-      <HeaderCheckout />
+      <ProcessingPayment
+        visible={visibleProcessing}
+        type={titleProcesing}
+        finished={finished}
+      />
+      {paid === undefined ? <HeaderCheckout /> : ""}
       {checkout ? (
         <ProgressCheckout progress="checkout" />
       ) : payment ? (
@@ -178,14 +206,14 @@ function Checkout({
       ) : (
         ""
       )}
-      {!payment && setAmount ? (
+      {!payment && setAmount && paid === undefined ? (
         <CheckoutBody
           setAmount={setAmount}
           continueRef={continueRef}
           clickedContinue={clickedContinue}
           setClickedContinue={setClickedContinue}
         />
-      ) : (
+      ) : paid === undefined ? (
         <PaymentBody
           setCurrentCoin={setCurrentCoin}
           currentMethod={currentMethod}
@@ -195,24 +223,32 @@ function Checkout({
           activeDropdown={activeDropdown}
           setAmount={setAmount}
         />
-      )}
-      {checkout ? (
-        <ContinueCheckout
-          refProp={continueRef}
-          setClickedContinue={setClickedContinue}
-          continueText={"Continue to payment method"}
-          setRedirectToPaymentProvider={setRedirectToPaymentProvider}
-        />
+      ) : paid === true ? (
+        <PaymentSuccess />
       ) : (
-        <ContinueCheckout
-          refProp={continueRef}
-          setClickedContinue={setClickedContinue}
-          continueText={"Order and pay now"}
-          redirectToPaymentProvider={true}
-          setRedirectToPaymentProvider={setRedirectToPaymentProvider}
-        />
+        <PaymentFailure />
       )}
-      <FooterCheckout />
+      {paid === undefined ? (
+        checkout ? (
+          <ContinueCheckout
+            refProp={continueRef}
+            setClickedContinue={setClickedContinue}
+            continueText={"Continue to payment method"}
+            setRedirectToPaymentProvider={setRedirectToPaymentProvider}
+          />
+        ) : (
+          <ContinueCheckout
+            refProp={continueRef}
+            setClickedContinue={setClickedContinue}
+            continueText={"Order and pay now"}
+            redirectToPaymentProvider={true}
+            setRedirectToPaymentProvider={setRedirectToPaymentProvider}
+          />
+        )
+      ) : (
+        ""
+      )}
+      {paid === undefined ? <FooterCheckout /> : ""}
     </div>
   );
 }

@@ -12,7 +12,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 0.5em;
 }
 .checkoutBodyBasketTotal__upper {
@@ -20,6 +20,16 @@
 }
 .checkoutBodyBasketTotal__upper > h5 {
     color: rgb(100,100,100);
+}
+.checkoutBodyBasketTotal__lower > div{
+display: flex;
+flex-direction: column;
+}
+.checkoutBodyBasketTotal__lower > div > h3:first-child {
+  text-decoration: line-through;
+}
+.checkoutBodyBasketTotal__lower > div >h3:last-child {
+  color: red;
 }
 @media screen and (max-width: 900px){
   .checkoutBodyBasketTotal {

@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/components/Header/Add.css";
 
 function HeaderAdd() {
   const [clicked, setClicked] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (clicked) {
+      localStorage.setItem("voucher", "WELCOME");
+    }
+  }, [clicked]);
+
+  useEffect(() => {
+    const voucher = localStorage.getItem("voucher");
+    if (voucher === "WELCOME") {
+      setClicked(true);
+    }
+  }, []);
 
   return (
     <div className="headerAdd">

@@ -8,17 +8,21 @@ import InputForm from "../../Comp-Single/InputForm";
 import { Link } from "react-router-dom";
 import { checkRegex } from "../../Logic/Credentials";
 import { register, login } from "../../API/Credential";
+import { useNavigate } from "react-router-dom";
 
 function Credential({
   clickedLogin,
   setClickedLogin,
+  disableClosing,
 }: {
   clickedLogin: boolean;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  disableClosing?: boolean;
 }) {
   const [chosenAction, setChosenAction] = useState<boolean[]>([true, false]);
 
   const [clickedNews, setClickedNews] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const [warning, setWarning] = useState<boolean[]>([
     false,
@@ -114,9 +118,14 @@ function Credential({
         <div className="credential__container-top">
           <h2>Log in</h2>
           <div
-            className="credential__container-close"
+            className={`credential__container-close`}
             onClick={() => {
-              setClickedLogin(false);
+              if (!disableClosing) {
+                setClickedLogin(false);
+              } else {
+                navigate("/");
+                setClickedLogin(false);
+              }
             }}
           >
             <IoMdClose />

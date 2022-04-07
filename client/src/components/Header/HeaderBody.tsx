@@ -6,14 +6,16 @@ import '../../styles/components/Header/HeaderBody.css';
 
 function HeaderBody({
   setClickedLogin,
+  noSmallAdd
 }: {
-  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+    setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+    noSmallAdd?: boolean;
 }) {
   return (
     <div className="headerBody">
       <HeaderAdd />
       <Header setClickedLogin={setClickedLogin} />
-      <HeaderSmall />
+      {!noSmallAdd ? <HeaderSmall /> : ""}
     </div>
   );
 }
