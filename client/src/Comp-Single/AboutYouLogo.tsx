@@ -17,6 +17,8 @@ function AboutYouLogo() {
   });
   const [name, setName] = useState<string | undefined>();
 
+  const [changedInformation, setChangedInformation] = useState<number>(0);
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,11 +28,15 @@ function AboutYouLogo() {
     window.addEventListener("loggedOut", () => {
       setIsLoggedIn(false);
     });
+    window.addEventListener("changedInformation", () => {
+      setChangedInformation(changedInformation + 1);
+    })
     return () => {
       window.removeEventListener("loggedIn", () => {});
-      window.removeEventListener("loggedOut", () => {});
+      window.removeEventListener("loggedOut", () => { });
+      window.removeEventListener("changedInformation", ()=> {})
     };
-  }, [isLoggedIn]);
+  }, [isLoggedIn, changedInformation]);
 
   useEffect(() => {
     const id = getIdStorage();
@@ -45,12 +51,14 @@ function AboutYouLogo() {
   useEffect(() => {
     if (idVariable) {
       getFirstName().then((res) => {
-        setName(res.data.getUserInfo.first);
+        if (res.data.getUserInfo) {
+          setName(res.data.getUserInfo.first);
+        } 
       })
     } else {
       setName(undefined)
     }
-  }, [idVariable, getFirstName]);
+  }, [idVariable, getFirstName, changedInformation]);
 
   return (
     <div className="aboutYouLogo" onClick={() => navigate("/")}>

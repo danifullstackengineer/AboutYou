@@ -1,0 +1,32 @@
+.helpTopicSquare{
+    display: flex;
+    padding: 1em 2em 1em 2em;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    min-width: 200px;
+    background-color: white;
+    border-radius: 0.5em;
+    margin: 0 1em 0 1em;
+    cursor: pointer;
+}
+.helpTopicSquare > span:first-child {
+    font-weight: 900;
+    text-shadow: .5px 0 black;
+    line-height: 20px;
+    width: 80%;
+}
+.helpTopicSquare > span:last-child {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.helpTopicSquare:hover > span:first-child {
+    text-decoration: underline;
+}
+@media screen and (max-width: 1420px){
+    .helpTopicSquare {
+        padding: 1em;
+    }
+}

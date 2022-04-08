@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "../styles/Comp-Single/InputForm.css";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { IoIosClose } from "react-icons/io";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 function InputForm({
   width,
@@ -13,7 +15,14 @@ function InputForm({
   warningMsg,
   setInputParent,
   transformAmount,
-  dontShowDelete
+  dontShowDelete,
+  value,
+  locked,
+  bgColor,
+  calendar,
+  setDate,
+  phoneNumber,
+  date,
 }: {
   width: number;
   placeholder: string;
@@ -23,8 +32,15 @@ function InputForm({
   warning?: boolean;
   warningMsg?: string;
   setInputParent?: React.Dispatch<React.SetStateAction<string>>;
-    transformAmount: number;
-    dontShowDelete?: boolean;
+  transformAmount: number;
+  dontShowDelete?: boolean;
+  value?: string;
+  locked?: boolean;
+  bgColor?: string;
+  calendar?: boolean;
+  setDate?: React.Dispatch<React.SetStateAction<Date | string>>;
+  phoneNumber?: boolean;
+  date?: string | Date;
 }) {
   const [input, setInput] = useState<string>("");
   const [deleteTyped, setDeleteTyped] = useState<boolean>(false);
@@ -35,17 +51,25 @@ function InputForm({
   const [clearInput, setClearInput] = useState<boolean>(false);
 
   useEffect(() => {
+    if (value) {
+      setInput(value);
+    }
+  }, [value]);
+
+  useEffect(() => {
     if (divRef.current) {
       divRef.current.setAttribute("data-placeholder", placeholder);
     }
   }, [placeholder]);
 
-
   useEffect(() => {
     if (divRef.current) {
-      divRef.current.style.setProperty("--transformVariableY", transformAmount + "%")
+      divRef.current.style.setProperty(
+        "--transformVariableY",
+        transformAmount + "%"
+      );
     }
-  }, [transformAmount])
+  }, [transformAmount]);
 
   useEffect(() => {
     if (input && !warning && isFocused) {
@@ -70,11 +94,27 @@ function InputForm({
     }
   }, [input, clearInput]);
 
+  const [visibleDate, setVisibleDate] = useState<boolean>(false);
+
+  const handlePhoneNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const regex = /^([+]?[0-9]{0,15})$/;
+    if (regex.test(e.target.value)) {
+      setInput(e.target.value);
+      if (setInputParent) {
+        setInputParent(e.target.value);
+      }
+    }
+  };
+
   return (
     <div
       ref={divRef}
-      className={`inputForm ${isFocused ? "inputForm__focused" : ""} ${
+      className={`inputForm ${isFocused || input ? "inputForm__focused" : ""} ${
         warning ? "inputForm-warn" : ""
+      } ${locked ? "inputForm-locked" : ""} ${
+        calendar ? "inputForm-calendar" : ""
       }`}
       style={{
         marginTop: border[0] + "px",
@@ -84,20 +124,31 @@ function InputForm({
       }}
     >
       <input
+        disabled={locked}
         ref={inputRef}
+        onClick={() => setVisibleDate(!visibleDate)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => (deleteTyped ? undefined : setIsFocused(false))}
         type={type}
         placeholder={placeholder}
-        style={{ width: width, height: height }}
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: bgColor ? bgColor : undefined,
+        }}
         name="input"
         onChange={(e) => {
-          setInput(e.target.value);
-          if (setInputParent) {
-            setInputParent(e.target.value);
+          if (!phoneNumber) {
+            setInput(e.target.value);
+            if (setInputParent) {
+              setInputParent(e.target.value);
+            }
+          } else {
+            handlePhoneNumberChange(e);
           }
         }}
         value={input}
+        readOnly={calendar}
       />
       {warning ? (
         <span className="inputForm__icon-warn">
@@ -106,7 +157,7 @@ function InputForm({
       ) : (
         ""
       )}
-      {deleteTyped && !dontShowDelete ? (
+      {deleteTyped && !dontShowDelete && !locked ? (
         <span
           className="inputForm__icon-delete"
           onClick={() => {
@@ -124,6 +175,24 @@ function InputForm({
       >
         {warningMsg}
       </span>
+      {calendar ? (
+        <div
+          className="inputForm__calendar"
+          style={{ top: height + 10, display: visibleDate ? "block" : "none" }}
+        >
+          <Calendar
+            calendarType="ISO 8601"
+            onChange={(value: Date) => {
+              if (setDate && date instanceof Date) {
+                setDate(value);
+              }
+              setVisibleDate(!visibleDate);
+            }}
+          />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

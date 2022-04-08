@@ -32,7 +32,6 @@ function PaymentBodyInfoPhoneNumber() {
       <div className="paymentBodyInfoPhoneNumber__content">
         <input
           type="text"
-          pattern="[0-9]*"
           value={input}
           onChange={handleChange}
           placeholder="Phone number"

@@ -20,6 +20,7 @@
     "jquery": "^3.6.0",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
+    "react-calendar": "^3.7.0",
     "react-dom": "^17.0.2",
     "react-new-window": "^0.2.1",
     "react-redux": "^7.2.6",
@@ -59,6 +60,7 @@
   "devDependencies": {
     "@types/jwt-decode": "^3.1.0",
     "@types/radium": "^0.24.4",
+    "@types/react-calendar": "^3.5.0",
     "@types/react-currency-format": "^1.0.0",
     "@types/react-image-gallery": "^1.0.5",
     "@types/react-slick": "^0.23.8"

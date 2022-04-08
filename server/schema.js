@@ -1,4 +1,4 @@
-import graphql, { GraphQLList } from "graphql";
+import graphql, { GraphQLList, GraphQLNonNull } from "graphql";
 
 import {
   GraphQLObjectType,
@@ -12,7 +12,6 @@ import ProductType from "./GraphQL/ProductType.js";
 import SliderOneType from "./GraphQL/Sliders/SliderOneType.js";
 import SliderTwoType from "./GraphQL/Sliders/SliderTwoType.js";
 import UserType from "./GraphQL/UserType.js";
-import Product from "./models/Products.js";
 import User from "./models/User.js";
 import Voucher from "./models/Voucher.js";
 import SliderOneProduct from "./models/SliderOne.js";
@@ -75,8 +74,40 @@ const RootQuery = new GraphQLObjectType({
 const Mutations = new GraphQLObjectType({
   name: "Mutations",
   fields: {
-    createUser: {
+    modifyUserInformation: {
       type: UserType,
+      args: {
+        first: { type: GraphQLString },
+        last: { type: GraphQLString },
+        email: { type: GraphQLString },
+        birthDate: { type: GraphQLString },
+        phoneNumber: { type: GraphQLString },
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      async resolve(par, args) {
+        const currentUser = await User.findById(args.id);
+        if (currentUser) {
+          const newUser = {
+            first: args.first ? args.first : currentUser.first,
+            last: args.last ? args.last : currentUser.last,
+            email: args.email ? args.email : currentUser.email,
+            birthDate: args.birthDate ? args.birthDate : currentUser.birthDate,
+            phoneNumber: args.phoneNumber
+              ? args.phoneNumber
+              : currentUser.phoneNumber,
+          };
+          return await User.findOneAndUpdate(
+            { id: args.id },
+            {
+              first: newUser.first,
+              last: newUser.last,
+              email: newUser.email,
+              birthDate: newUser.birthDate,
+              phoneNumber: newUser.phoneNumber,
+            }
+          );
+        }
+      },
     },
   },
 });

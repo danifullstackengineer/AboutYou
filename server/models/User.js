@@ -9,7 +9,9 @@ const userTable = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date()
-    }
+    },
+    birthDate: String,
+    phoneNumber: String,
 })
 
 export default mongoose.model("User", userTable);

@@ -1,4 +1,4 @@
-import  { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../styles/components/Header/HeaderSmall.css";
 import { FaShippingFast } from "react-icons/fa";
 import { BsArrowLeftRight } from "react-icons/bs";
@@ -10,12 +10,13 @@ function HeaderSmall() {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const handleClick = () => {
+    localStorage.setItem("headerSmall", "true");
     setClicked(true);
     setTimeout(() => {
       if (headerRef.current) {
         headerRef.current.style.display = "none";
       }
-    }, 201)
+    }, 201);
   };
 
   return (

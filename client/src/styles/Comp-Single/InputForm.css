@@ -10,6 +10,7 @@
   align-items: center;
   position: relative;
   flex-direction: column;
+  position: relative;
 }
 .inputForm > input {
   background-color: #f2f2f2;
@@ -19,12 +20,22 @@
   font-size: 1rem;
   color: black;
 }
-.inputForm > input:hover {
+.inputForm:not(.inputForm-locked) > input:hover, .inputForm-calendar > input {
   border: 1px solid black;
 }
-.inputForm > input:focus {
+.inputForm-locked > input {
+  border: 1px solid rgb(200, 200, 200);
+}
+.inputForm > input:focus, .inputForm-calendar > input {
   background-color: white;
   border: 1px solid black;
+}
+.inputForm__focused > input {
+  background-color: white;
+  border: 1px solid rgb(200,200,200);
+}
+.inputForm-calendar > input {
+  cursor: default;
 }
 .inputForm::before {
   content: attr(data-placeholder);
@@ -56,19 +67,19 @@
   text-align: left;
   width: 100%;
 }
-.inputForm__focused > input::-webkit-input-placeholder {
+.inputForm__focused:not(.inputForm-locked) > input::-webkit-input-placeholder {
   opacity: 0;
 }
-.inputForm__focused > input::-moz-placeholder {
+.inputForm__focused:not(.inputForm-locked) > input::-moz-placeholder {
   opacity: 0;
 }
-.inputForm__focused > input:-ms-input-placeholder {
+.inputForm__focused:not(.inputForm-locked) > input:-ms-input-placeholder {
   opacity: 0;
 }
-.inputForm__focused > input::-ms-input-placeholder {
+.inputForm__focused:not(.inputForm-locked) > input::-ms-input-placeholder {
   opacity: 0;
 }
-.inputForm__focused > input::placeholder {
+.inputForm__focused:not(.inputForm-locked) > input::placeholder {
   opacity: 0;
 }
 .inputForm__focused::before {
@@ -78,6 +89,14 @@
   -ms-transform: translateY(-235%) translateX(0.75rem);
   transform: translateY(-235%) translateX(0.75rem);
   font-size: 0.75rem;
+}
+.inputForm-locked::before, .inputForm-calendar::before {
+  -webkit-transform: translateY(var(--transformVariableY)) translateX(0.75rem);
+  -ms-transform: translateY(var(--transformVariableY)) translateX(0.75rem);
+  transform: translateY(var(--transformVariableY)) translateX(0.75rem);
+  font-size: 0.75rem;
+  opacity: 1;
+  visibility: visible;
 }
 .inputForm__focused:not(.inputForm-warn)::before {
   opacity: 1;
@@ -89,9 +108,9 @@
 }
 .inputForm__icon-warn {
   position: absolute;
-  top: calc(25% - .15rem);
+  top: calc(25% - 0.15rem);
   right: 0;
-  margin: 0 .5em 0 0;
+  margin: 0 0.5em 0 0;
   font-size: 1.2rem;
   color: red;
 }
@@ -99,10 +118,10 @@
   color: white;
   position: absolute;
   right: 0;
-  margin: 0 .5em 0 0;
+  margin: 0 0.5em 0 0;
   font-size: 1.2rem;
-  background-color: rgb(200,200,200);
-  top: calc(25% - .05rem);
+  background-color: rgb(200, 200, 200);
+  top: calc(25% - 0.05rem);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -111,6 +130,16 @@
   transition: all 100ms ease-in;
 }
 .inputForm__icon-delete:hover {
-  background-color: rgb(100,100,100);
+  background-color: rgb(100, 100, 100);
   top: calc(25% - 0.1rem);
+}
+.inputForm-locked {
+  color: rgb(200, 200, 200);
+}
+.inputForm-locked > input {
+  color: rgb(200, 200, 200);
+}
+.inputForm__calendar {
+  position: absolute;
+  z-index: 300;
 }

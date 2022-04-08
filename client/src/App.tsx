@@ -12,6 +12,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { authJWT } from "./API/Credential";
 import Basket from "./components/Basket/Basket";
 import UserInformation from "./components/UserInformation/UserInformation";
+import useTimer from "./Hooks/Timer";
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
@@ -21,17 +22,35 @@ function App() {
     "pk_test_51KXAUxDelfvIQhggA3tpu3fek1HqAwqYU7SAxvQJtBhcD2ULDWuzvd0KouPGX7HrgJ8xKZbqk49L1HTL5Vwh01nj00LQLjwQQf"
   );
 
+  const [{ seconds, setIsPaused, isPaused }] = useTimer(10000);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       authJWT().then((res: any) => {
         if (!res.success) {
+          if (!isPaused) {
+            setIsPaused(true);
+          }
           localStorage.removeItem("token");
+          window.dispatchEvent(new Event("loggedOut"));
         } else {
+          if (isPaused) {
+            setIsPaused(false);
+          }
         }
       });
+    } else {
+      window.dispatchEvent(new Event("loggedOut"));
+      if (!isPaused) {
+        setIsPaused(true);
+      }
+      window.addEventListener("loggedIn", () => {
+        setIsPaused(true);
+      });
+      return () => window.removeEventListener("loggedIn", () => {});
     }
-  }, []);
+  }, [seconds]);
 
   const [disableClosing, setDisableClosing] = useState<boolean>(false);
 
@@ -139,7 +158,11 @@ function App() {
                   setClickedLogin={setClickedLogin}
                   noSmallAdd={true}
                 />
-                <UserInformation type={0} setClickedLogin={setClickedLogin} setDisableClosing={setDisableClosing} />
+                <UserInformation
+                  type={0}
+                  setClickedLogin={setClickedLogin}
+                  setDisableClosing={setDisableClosing}
+                />
                 <FooterBody />
               </>
             }
@@ -152,7 +175,11 @@ function App() {
                   setClickedLogin={setClickedLogin}
                   noSmallAdd={true}
                 />
-                <UserInformation type={1} setClickedLogin={setClickedLogin}  setDisableClosing={setDisableClosing}/>
+                <UserInformation
+                  type={1}
+                  setClickedLogin={setClickedLogin}
+                  setDisableClosing={setDisableClosing}
+                />
                 <FooterBody />
               </>
             }
@@ -165,7 +192,11 @@ function App() {
                   setClickedLogin={setClickedLogin}
                   noSmallAdd={true}
                 />
-                <UserInformation type={2} setClickedLogin={setClickedLogin} setDisableClosing={setDisableClosing}/>{" "}
+                <UserInformation
+                  type={2}
+                  setClickedLogin={setClickedLogin}
+                  setDisableClosing={setDisableClosing}
+                />{" "}
                 <FooterBody />
               </>
             }
