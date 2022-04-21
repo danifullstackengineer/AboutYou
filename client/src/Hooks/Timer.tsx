@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-const useTimer = (time:number): [{
+const useTimer = (
+  time: number
+): [
+  {
     toggle: () => void;
     reset: () => void;
     seconds: number;
@@ -9,7 +12,8 @@ const useTimer = (time:number): [{
     setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
     setIsPaused: React.Dispatch<React.SetStateAction<boolean>>;
     setSeconds: React.Dispatch<React.SetStateAction<number>>;
-}] => {
+  }
+] => {
   const [seconds, setSeconds] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(true);
   const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -24,21 +28,25 @@ const useTimer = (time:number): [{
 
   useEffect(() => {
     var interval = setInterval(() => {
-      setSeconds((seconds) => seconds+1)
-    }, time)
-    return () => clearInterval(interval)
+      setSeconds((seconds) => seconds + 1);
+    }, time);
+    return () => {
+      clearInterval(interval);
+    };
   }, [isActive, seconds, isPaused]);
 
-    return [{
-        toggle,
-        reset,
-        seconds,
-        isActive,
-        isPaused,
-        setIsActive,
-        setIsPaused,
-        setSeconds,
-    }];
+  return [
+    {
+      toggle,
+      reset,
+      seconds,
+      isActive,
+      isPaused,
+      setIsActive,
+      setIsPaused,
+      setSeconds,
+    },
+  ];
 };
 
 export default useTimer;

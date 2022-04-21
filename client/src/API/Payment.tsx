@@ -5,6 +5,7 @@ import {
 } from "../Logic/localStorage/address";
 import { getBasketItemsStorage } from "../Logic/localStorage/basket";
 import { getIdStorage } from "../Logic/localStorage/user";
+import { getVoucherStorage } from "../Logic/localStorage/voucher";
 
 const createPaypalPayment = async (): Promise<{
   success: boolean;
@@ -25,6 +26,7 @@ const createPaypalPayment = async (): Promise<{
         secondAddress: getSecondAddress(),
       },
       id: getIdStorage(),
+      discount: getVoucherStorage()
     },
   })
     .then((res: { success: boolean; message: string }) => {
@@ -77,6 +79,7 @@ const getClientSecret = async (): Promise<{
     data: {
       id: getIdStorage(),
       basket: getBasketItemsStorage(),
+      discount: getVoucherStorage()
     },
   })
     .then((res: { success: boolean; message: string; secret?: string }) => {
@@ -123,6 +126,7 @@ const calculateTotalCrypto = async (): Promise<{
     type: "POST",
     data: {
       basket: getBasketItemsStorage(),
+      discount: getVoucherStorage()
     },
   }).then((res: { success: boolean; message: string; total?: string }) => {
     result = res;
@@ -148,6 +152,7 @@ const createCoinpaymentsPayment = async (
     data: {
       basket: getBasketItemsStorage(),
       coin: coin,
+      discount: getVoucherStorage()
     },
   }).then((res: { success: boolean; message: string }) => (result = res));
 

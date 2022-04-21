@@ -3,6 +3,7 @@ import { FaShippingFast } from "react-icons/fa";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { GiMailShirt } from "react-icons/gi";
+import React from "react";
 
 function FirstFooter() {
   return (
@@ -37,4 +38,4 @@ function FirstFooter() {
   );
 }
 
-export default FirstFooter;
+export default React.memo(FirstFooter);

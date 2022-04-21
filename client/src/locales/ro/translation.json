@@ -1,0 +1,15 @@
+{
+    "Header":{
+        "Chooser":{
+            "First": "Toate produsele",
+            "Second": "Produse customizabile",
+            "Third": "Toate accesoriile"
+        },
+        "Input": "Cauta branduri, iteme, & mai multe..."
+    },
+    "Menu": {
+        "Basket": "Coş",
+        "Account": "Cont & setări",
+        "Wishlist": "Iteme dorite"
+    }
+}

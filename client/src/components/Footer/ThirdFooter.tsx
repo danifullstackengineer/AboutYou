@@ -1,13 +1,27 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { IoMdClose } from "react-icons/io";
 import InputForm from "../../Comp-Single/InputForm";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
 import "../../styles/components/Footer/ThirdFooter.css";
 
-function ThirdFooter() {
+function ThirdFooter({
+  setClosedSubscribe,
+}: {
+  setClosedSubscribe: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [selectedOption, setSelectedOption] = useState<boolean[]>([
     true,
     false,
   ]);
+
+  const [dontShowAgain, setDontShowAgain] = useState<boolean>(false);
+
+  const handleCloseSubscribe = (): void => {
+    if (dontShowAgain) {
+      localStorage.setItem("subscribe", "false");
+    }
+    setClosedSubscribe(true);
+  };
 
   return (
     <div className="thirdFooter">
@@ -39,7 +53,7 @@ function ThirdFooter() {
           </div>
         </div>
         <InputForm
-          border={[10, 0, 30, 0]}
+          border={[10, 0, 10, 0]}
           width={700}
           height={40}
           placeholder={"Your email address"}
@@ -47,7 +61,21 @@ function ThirdFooter() {
           transformAmount={-150}
           dontShowDelete={true}
         />
-        <InteractiveBtn text={"Sign up"} width={150} height={50} margin={[0,0,25,0]} type="button"/>
+        <div
+          className={`thirdFooter__dont-show ${
+            dontShowAgain ? "thirdFooter__dont-show-active" : ""
+          }`}
+          onClick={() => setDontShowAgain(!dontShowAgain)}
+        >
+          <span>Don't show again.</span>
+        </div>
+        <InteractiveBtn
+          text={"Sign up"}
+          width={150}
+          height={50}
+          margin={[0, 0, 25, 0]}
+          type="button"
+        />
         <span className="thirdFooter__sign-up-agree">
           I would like to receive email updates on current trends, offers and
           vouchers.
@@ -55,6 +83,9 @@ function ThirdFooter() {
         <span className="thirdFooter__sign-up-agree">
           Unsubscribe any time, free of charge.
         </span>
+        <div className="thirdFooter__close" onClick={handleCloseSubscribe}>
+          <IoMdClose />
+        </div>
       </footer>
     </div>
   );

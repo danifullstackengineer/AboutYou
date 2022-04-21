@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../../styles/components/Credentials/Credential.css";
 import { IoMdClose } from "react-icons/io";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
@@ -9,20 +9,25 @@ import { Link } from "react-router-dom";
 import { checkRegex } from "../../Logic/Credentials";
 import { register, login } from "../../API/Credential";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/Auth";
 
 function Credential({
   clickedLogin,
   setClickedLogin,
   disableClosing,
+  setChosenAction,
+  chosenAction,
 }: {
   clickedLogin: boolean;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   disableClosing?: boolean;
+  chosenAction: boolean[];
+  setChosenAction: React.Dispatch<React.SetStateAction<boolean[]>>;
 }) {
-  const [chosenAction, setChosenAction] = useState<boolean[]>([true, false]);
-
   const [clickedNews, setClickedNews] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const context = useContext(AuthContext);
 
   const [warning, setWarning] = useState<boolean[]>([
     false,
@@ -62,9 +67,15 @@ function Credential({
         register(input1, input2, input3, input4).then((res) => {
           if (res.success) {
             login(input3, input4).then((resLogin) => {
-              if (resLogin.success) {
+              console.log(resLogin);
+              if (resLogin.success && resLogin.userData) {
                 window.dispatchEvent(new Event("loggedIn"));
                 setClickedLogin(false);
+                context.login(
+                  resLogin.userData.uid,
+                  resLogin.userData.token,
+                  new Date(resLogin.userData.expirationDate)
+                );
               }
             });
           }
@@ -82,9 +93,14 @@ function Credential({
         setIsLoadingLogin(true);
         login(input3, input4).then((res) => {
           setTimeout(() => {
-            if (res.success) {
+            if (res.success && res.userData) {
               window.dispatchEvent(new Event("loggedIn"));
               setClickedLogin(false);
+              context.login(
+                res.userData.uid,
+                res.userData.token,
+                new Date(res.userData.expirationDate)
+              );
             }
             setIsLoadingLogin(false);
           }, 1000);

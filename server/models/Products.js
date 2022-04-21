@@ -3,12 +3,17 @@ import mongoose from "mongoose";
 const productTable = mongoose.Schema({
   backgroundImg: String,
   foregroundImg: String,
-  tags: [{ name: String, special: Boolean }],
   title: String,
-  price: String,
-  priceDiscount: {full: String, discount: String},
+  price: Number,
   colors: [String],
-  sizes: [String],
+  sizes: [Number],
+  accessoryId: [String],
+  likes: {
+    type: Number,
+    default: 0
+  },
+  isCustomizable: Boolean,
 });
 
 export default mongoose.model("Product", productTable);
+

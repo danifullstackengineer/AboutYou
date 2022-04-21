@@ -1,4 +1,4 @@
-import graphql, { GraphQLList, GraphQLNonNull } from "graphql";
+import graphql, { GraphQLBoolean, GraphQLList, GraphQLNonNull } from "graphql";
 
 import {
   GraphQLObjectType,
@@ -17,6 +17,7 @@ import Voucher from "./models/Voucher.js";
 import SliderOneProduct from "./models/SliderOne.js";
 import SliderTwoProduct from "./models/SliderTwo.js";
 import VoucherType from "./GraphQL/VoucherType.js";
+import Products from "./models/Products.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -68,6 +69,26 @@ const RootQuery = new GraphQLObjectType({
         return await Voucher.findOne({ voucher: args.voucher });
       },
     },
+    getProducts: {
+      type: new GraphQLList(ProductType),
+      args: {
+        isCustomizable: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      async resolve(par, args) {
+        return await Products.find({
+          isCustomizable: args.isCustomizable,
+        });
+      },
+    },
+    getSingleProduct: {
+      type: ProductType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      async resolve(par, args) {
+        return await Products.findById(args.id);
+      },
+    },
   },
 });
 
@@ -107,6 +128,41 @@ const Mutations = new GraphQLObjectType({
             }
           );
         }
+      },
+    },
+    modifyUserLikedProducts: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        likedId: { type: new GraphQLNonNull(GraphQLString) },
+        liked: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      async resolve(parent, args) {
+        return await User.findById(args.id).then((doc) => {
+          const likedProd = doc.likedProducts.find(
+            (product) => product === args.likedId
+          );
+          if (args.liked) {
+            if (likedProd) return doc;
+            else {
+              doc.likedProducts.push(args.likedId);
+              doc.save().then(() => {
+                return doc;
+              });
+            }
+          } else {
+            if (likedProd) {
+              doc.likedProducts = doc.likedProducts.filter((product) => {
+                if (product !== args.likedId) return product;
+              });
+              doc.save().then(() => {
+                return doc;
+              });
+            } else {
+              return doc;
+            }
+          }
+        });
       },
     },
   },

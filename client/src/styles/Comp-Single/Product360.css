@@ -1,0 +1,32 @@
+.product360 {
+  width: 100vw;
+  height: 100%;
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  animation: 300ms ease-in showProductOverlayOpacity forwards;
+}
+.product360 > img {
+  transform: translateY(125px);
+  width: 800px;
+  height: auto;
+  object-fit: cover;
+  pointer-events: none;
+}
+@keyframes showProductOverlayOpacity {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}

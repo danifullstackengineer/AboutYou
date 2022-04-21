@@ -5,8 +5,11 @@ const register = async (
   last: string,
   email: string,
   password: string
-): Promise<{ success: boolean; message: string; }> => {
-  var result = {success: false, message: "Something went wrong, please try again."}
+): Promise<{ success: boolean; message: string }> => {
+  var result = {
+    success: false,
+    message: "Something went wrong, please try again.",
+  };
   await $.ajax({
     url: "/register",
     type: "POST",
@@ -23,11 +26,22 @@ const register = async (
     .catch((err: any) => {
       result = err;
     });
-  
+
   return result;
 };
-const login = async (email: string, password: string): Promise<{ success: boolean, message: string }> => {
-  var result = {success: false, message: "Something went wrong, please try again."}
+const login = async (
+  email: string,
+  password: string
+): Promise<{
+  success: boolean;
+  message: string;
+  userData?: { uid: string; token: string; expirationDate: string };
+}> => {
+  var result = {
+    success: false,
+    message: "Something went wrong, please try again.",
+    userData : {uid: "", token: "", expirationDate: ""}
+  };
   await $.ajax({
     url: "/login",
     type: "POST",
@@ -37,10 +51,11 @@ const login = async (email: string, password: string): Promise<{ success: boolea
     },
   })
     .then((res: any) => {
+      result.success = res.success;
+      result.message = res.message;
       if (res.success) {
-        localStorage.setItem("token", res.token);
-      } 
-      result = res;
+        result.userData = {uid: res.uid, token: res.token, expirationDate: res.expirationDate }
+      }
     })
     .catch((err: any) => {
       result = err;
@@ -48,8 +63,11 @@ const login = async (email: string, password: string): Promise<{ success: boolea
   return result;
 };
 
-const authJWT = async (): Promise<{ success: boolean, message: string }> => {
-  var result = {success: false, message: "Something went wrong while authenticating."}
+const authJWT = async (): Promise<{ success: boolean; message: string }> => {
+  var result = {
+    success: false,
+    message: "Something went wrong while authenticating.",
+  };
   await $.ajax({
     url: "/isUserAuth",
     type: "GET",

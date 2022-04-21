@@ -1,0 +1,15 @@
+{
+  "Header": {
+    "Chooser": {
+      "First": "All products",
+      "Second": "Customizable products",
+      "Third": "All accessories"
+    },
+    "Input": "Search brands, items, & more..."
+  },
+  "Menu": {
+    "Basket": "Basket",
+    "Account": "Account",
+    "Wishlist": "Wishlist"
+  }
+}

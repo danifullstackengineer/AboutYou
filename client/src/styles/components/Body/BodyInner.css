@@ -1,5 +1,4 @@
 .bodyInner {
-  max-width: 90%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -14,7 +13,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
   min-width: 768px;
-}
-.bodyInner > div {
   width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }

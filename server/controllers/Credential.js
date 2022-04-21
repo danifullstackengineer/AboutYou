@@ -48,11 +48,17 @@ const login = async (req, res) => {
     await bcrypt.compare(body.password, user.password).then((resHash) => {
       if (resHash) {
         const id = user.id;
+        const expiry = 30;
         if (process.env.TOKEN_SECRET) {
           const token = jwt.sign({ id }, process.env.TOKEN_SECRET, {
-            expiresIn: 1500,
+            expiresIn: expiry * 30,
           });
-          return res.send({ ...loginGood, token });
+          return res.send({
+            ...loginGood,
+            token,
+            uid: user.id,
+            expirationDate: new Date(new Date().getTime() + expiry * 60000),
+          });
         } else {
           return res.send(loginBad);
         }
@@ -67,20 +73,27 @@ const login = async (req, res) => {
 };
 
 const verifyJWT = async (req, res, next) => {
-  const token = req.headers["x-access-token"];
-  if (!token) {
-    return res.send(loginBad);
-  }
-  if (!process.env.TOKEN_SECRET) {
-    return res.send(loginBad);
-  }
-  jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
-    if (err) {
+  try {
+    const userData = req.headers["x-access-token"];
+    if (!userData) {
       return res.send(loginBad);
     }
-    req.userId = decoded.id;
-    next();
-  });
+    if (!process.env.TOKEN_SECRET) {
+      return res.send(loginBad);
+    }
+    const user = await User.findById(userData.userId);
+    if (!user) return res.send(loginBad);
+    jwt.verify(userData.token, process.env.TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        return res.send(loginBad);
+      }
+      req.userId = decoded.id;
+      next();
+    });
+  }
+  catch (err) {
+    return res.send(loginBad);
+  }
 };
 const isAuth = async (_, res) => {
   return res.send(loginGood);

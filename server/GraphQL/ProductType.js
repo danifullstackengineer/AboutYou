@@ -1,4 +1,4 @@
-import graphql, { GraphQLNonNull } from "graphql";
+import  { GraphQLNonNull } from "graphql";
 
 import {
   GraphQLString,
@@ -6,39 +6,23 @@ import {
   GraphQLBoolean,
   GraphQLID,
   GraphQLObjectType,
+  GraphQLInt,
+  GraphQLFloat
 } from "graphql";
 
 const ProductType = new GraphQLObjectType({
   name: "ProductType",
   fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLID) },
-    backgroundImg: { type:GraphQLString },
-    foregroundImg: { type: GraphQLString },
-    tags: {
-      type: new GraphQLList(
-        new GraphQLObjectType({
-          name: "ProductTagType",
-          fields: () => ({
-            name: { type: GraphQLString },
-            special: { type: GraphQLBoolean },
-          }),
-        })
-      ),
-    },
-    title: { type: GraphQLString},
-    priceDiscount: {
-      type:
-        new GraphQLObjectType({
-          name: "ProductPriceType",
-          fields: () => ({
-            full: { type: GraphQLString },
-            discount: { type: GraphQLString },
-          }),
-        }),
-      },
-    price: {type: GraphQLString},
+    backgroundImg: { type: new GraphQLNonNull(GraphQLString) },
+    foregroundImg: { type: new GraphQLNonNull(GraphQLString) },
+    title: { type: new GraphQLNonNull(GraphQLString) },
+    price: { type: new GraphQLNonNull(GraphQLFloat) },
     colors: { type: new GraphQLList(GraphQLString) },
     sizes: { type: new GraphQLList(GraphQLString) },
+    accessoryId: { type: new GraphQLList(GraphQLString) },
+    likes: { type: new GraphQLNonNull(GraphQLInt) },
+    isCustomizable: {type: new GraphQLNonNull(GraphQLBoolean)}
   }),
 });
 

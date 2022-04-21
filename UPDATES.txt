@@ -1,0 +1,12 @@
+1. checkout warning unrefundable , after payment is made show unrefundable
+2. stanga : home icon => 
+3. fav si like button in stanga jos
+4. in loc de slidere, ai 1 produs cu 2 imagini
+5. remove story
+6. remove first footer
+7. in loc de third foorter, cand user intra pe site, sa apara o notificare de abonare
+8. la al 6-lea footer misca customer care si secure shopping la dreapta si fa logourile sociale mai mari
+9. la al 7-lea footer muta itemele la secure shopping si lasa numai anul
+10. in dreapta in header pune toate iconitile intr-una
+11. log/reg cu microsoft si android
+12. numai customizable are 360

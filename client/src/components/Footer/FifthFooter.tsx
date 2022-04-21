@@ -1,6 +1,6 @@
-import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 import "../../styles/components/Footer/FifthFooter.css";
-import { GrContact } from "react-icons/gr";
+import { RiMessage2Line } from "react-icons/ri";
+import { RiMessage2Fill } from "react-icons/ri";
 import { BsFacebook } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
 import { BsTwitter } from "react-icons/bs";
@@ -8,25 +8,41 @@ import { BsYoutube } from "react-icons/bs";
 import { BsPinterest } from "react-icons/bs";
 import { FaTiktok } from "react-icons/fa";
 import { FaExpeditedssl } from "react-icons/fa";
+import { useState } from "react";
+import NBLogo from "../../Comp-Single/NBLogo";
+import React from "react";
 
-function FifthFooter() {
+function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
+  const [isIgHovered, setIsIgHovered] = useState<boolean>(false);
+
   return (
-    <div className="fifthFooter">
+    <div
+      className={`fifthFooter ${
+        chosenMode === false ? "fifthFooter-dark" : "fifthFooter-light"
+      }`}
+    >
       <footer>
         <section>
           <div>
-            <AboutYouLogo />
+            <NBLogo chosenMode={chosenMode} size={150} />
           </div>
           <div className="fifthFooter__section1-contact">
-            <GrContact />
+            {chosenMode === false ? <RiMessage2Fill /> : <RiMessage2Line />}
             <span>Contact us</span>
           </div>
           <div className="fifthFooter__section1-social">
             <span>
               <BsFacebook />
             </span>
-            <span>
-              <BsInstagram />
+            <span
+              onMouseOver={() => setIsIgHovered(true)}
+              onMouseLeave={() => setIsIgHovered(false)}
+            >
+              {!isIgHovered ? (
+                <BsInstagram />
+              ) : (
+                <img src={"/assets/logo/ig.webp"} alt="" />
+              )}
             </span>
             <span>
               <BsTwitter />
@@ -69,4 +85,4 @@ function FifthFooter() {
   );
 }
 
-export default FifthFooter;
+export default React.memo(FifthFooter);

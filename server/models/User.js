@@ -12,6 +12,10 @@ const userTable = new mongoose.Schema({
     },
     birthDate: String,
     phoneNumber: String,
+    likedProducts: {
+        type: [String],
+        default: []
+    }
 })
 
 export default mongoose.model("User", userTable);

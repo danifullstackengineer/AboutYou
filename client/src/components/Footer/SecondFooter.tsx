@@ -1,8 +1,13 @@
 import "../../styles/components/Footer/SecondFooter.css";
+import React from "react";
 
-function SecondFooter() {
+function SecondFooter({ chosenMode }: { chosenMode: boolean | undefined }) {
   return (
-    <div className="secondFooter">
+    <div
+      className={`secondFooter ${
+        chosenMode === false ? "secondFooter-dark" : "secondFooter-light"
+      }`}
+    >
       <footer>
         <img src={"/assets/svg/card.svg"} alt="/assets/svg/card.svg" />
         <img src={"/assets/svg/paypal.svg"} alt="/assets/svg/paypal.svg" />
@@ -12,4 +17,4 @@ function SecondFooter() {
   );
 }
 
-export default SecondFooter;
+export default React.memo(SecondFooter);

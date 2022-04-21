@@ -59,9 +59,23 @@ function Checkout({
     }
   }, []);
 
+  const [changedClientSecret, setChangedClientSecret] = useState<number>(0);
+
   useEffect(() => {
     getClientSecretFunction();
-  }, []);
+    window.addEventListener("voucher", () => {
+      setChangedClientSecret(changedClientSecret + 1);
+      getClientSecretFunction();
+    });
+    window.addEventListener("basket", () => {
+      setChangedClientSecret(changedClientSecret + 1);
+      getClientSecretFunction();
+    });
+    return () => {
+      window.removeEventListener("voucher", () => {});
+      window.removeEventListener("basket", () => {});
+    };
+  }, [changedClientSecret]);
 
   const getClientSecretFunction = async () => {
     await getClientSecret().then((res) => {
@@ -85,7 +99,9 @@ function Checkout({
     if (redirectToPaymentProvider) {
       if (currentMethod[0]) {
         setVisibleProcessing(true);
-        setTitleProcessing("Processing payment through Paypal. A new window will soon open...")
+        setTitleProcessing(
+          "Processing payment through Paypal. A new window will soon open..."
+        );
         createPaypalPayment().then((res) => {
           if (res.success) {
             window.open(res.message);
@@ -155,6 +171,13 @@ function Checkout({
                 if (error.code === 4001) {
                   setTitleProcessing(
                     "You have closed Meta Mask without paying, this window will close in 3 seconds."
+                  );
+                  setTimeout(() => {
+                    setVisibleProcessing(false);
+                  }, 3000);
+                } else {
+                  setTitleProcessing(
+                    "Something went wrong while trying to process your payment, this window will close in 3 seconds."
                   );
                   setTimeout(() => {
                     setVisibleProcessing(false);

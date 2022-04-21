@@ -1,6 +1,5 @@
 .sixthFooter {
   height: 85px;
-  background-color: #f2f2f2;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -15,6 +14,14 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  transition: var(--transitionLightMode);
+}
+.sixthFooter-dark {
+  background-color: #3a3a3a;
+  color: white;
+}
+.sixthFooter-light {
+  background-color: #f2f2f2;
 }
 .sixthFooter > footer {
   display: -webkit-box;
@@ -29,5 +36,11 @@
   letter-spacing: 1px;
 }
 .sixthFooter > footer:last-child {
+  transition: var(--transitionLightMode);
+}
+.sixthFooter-light > footer:last-child {
   color: rgb(100, 100, 100);
+}
+.sixthFooter-dark > footer:last-child {
+  color: rgb(200,200,200);
 }

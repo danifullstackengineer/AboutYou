@@ -28,6 +28,9 @@ flex-direction: column;
 .checkoutBodyBasketTotal__lower > div > h3:first-child {
   text-decoration: line-through;
 }
+.checkoutBodyBasketTotal__lower > div > :nth-child(2):not(:last-child){
+  text-decoration: line-through;
+}
 .checkoutBodyBasketTotal__lower > div >h3:last-child {
   color: red;
 }

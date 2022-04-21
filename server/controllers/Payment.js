@@ -29,8 +29,7 @@ const createPaypalPaymentPage = async (req, res) => {
   try {
     const body = req.body;
     const id = body.id;
-    const total = await decideTotal(body.basket);
-    const itemArray = await createJSONItemArray(body.basket);
+    const total = await decideTotal(body.basket, body.discount);
     const address = await createJSONAddress(body.address);
     const user = await User.findById(id);
     if (!user) {
@@ -54,7 +53,6 @@ const createPaypalPaymentPage = async (req, res) => {
       transactions: [
         {
           item_list: {
-            items: itemArray,
             shipping_address: address,
           },
           description: "Thank you for purchasing items thorugh us.",
@@ -87,6 +85,7 @@ const createPaypalPaymentPage = async (req, res) => {
       }
     });
   } catch (err) {
+    console.log(err)
     return res.send({
       success: false,
       message: "There was a problem while processing payment.",
@@ -162,7 +161,7 @@ const createStripePayment = async (req, res) => {
 const createStripeSecret = async (req, res) => {
   try {
     const body = req.body;
-    const total = await decideTotal(body.basket);
+    const total = await decideTotal(body.basket, body.discount);
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.floor(total * 100),
       currency: "usd",
@@ -182,7 +181,7 @@ const createStripeSecret = async (req, res) => {
 
 const getTotalCrypto = async (req, res) => {
   try {
-    const total = await decideTotal(req.body.basket);
+    const total = await decideTotal(req.body.basket, req.body.discount);
     if (total && total > 0) {
       const ethPrice = await fetch(
         "https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=ETH"
@@ -216,7 +215,7 @@ const createCoinpaymentsPayment = async (req, res) => {
       .createTransaction({
         currency1: "USD",
         currency2: body.coin,
-        amount: await decideTotal(body.basket),
+        amount: await decideTotal(body.basket, body.discount),
         buyer_email: "danifullstack@gmail.com",
         success_url:
           process.env.NODE_ENV === "production"

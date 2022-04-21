@@ -29,6 +29,7 @@ function PaymentBodyInfoVoucher() {
       getVoucherQuery();
       setCalledQuery(true);
     }
+    window.dispatchEvent(new Event("voucher"))
   };
 
   useEffect(() => {
@@ -41,6 +42,7 @@ function PaymentBodyInfoVoucher() {
       if (data.getVoucher) {
         const valid = data.getVoucher.endDate - new Date().getTime();
         if (valid > 0) {
+          localStorage.setItem("voucher", input);
           setMessage(
             `Voucher succesfully applied. You now benefit from a ${data.getVoucher.value}% discount.`
           );

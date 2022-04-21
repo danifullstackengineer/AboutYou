@@ -9,6 +9,7 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import "./i18";
 
 const httpLink = new HttpLink({
   uri: "/graphql",
@@ -36,15 +37,12 @@ const client = new ApolloClient({
   link: from([errorLink, httpLink]),
   cache: new InMemoryCache({
     typePolicies: {
-      SliderOneType: {
-        keyFields: ["id"],
-      },
-      SliderTwoType: {
-        keyFields: ["id"],
-      },
       UserType: {
-        keyFields: []
-      }
+        keyFields: [],
+      },
+      ProductType: {
+        keyFields: ["id"],
+      },
     },
   }),
 });

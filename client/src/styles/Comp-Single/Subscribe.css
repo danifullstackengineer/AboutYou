@@ -1,0 +1,17 @@
+.subscribe {
+  width: 100vw;
+  height: 100vh;
+  min-width: 900px;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 30000;
+  overflow-y: scroll;
+}
+.subscribe__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}

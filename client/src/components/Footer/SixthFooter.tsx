@@ -1,8 +1,13 @@
+import React from "react";
 import "../../styles/components/Footer/SixthFooter.css";
 
-function SixthFooter() {
+function SixthFooter({ chosenMode }: { chosenMode: boolean | undefined }) {
   return (
-    <div className="sixthFooter">
+    <div
+      className={`sixthFooter ${
+        chosenMode === false ? "sixthFooter-dark" : "sixthFooter-light"
+      }`}
+    >
       <footer>
         <section>About us</section>
         <section>Press</section>
@@ -18,4 +23,4 @@ function SixthFooter() {
   );
 }
 
-export default SixthFooter;
+export default React.memo(SixthFooter);

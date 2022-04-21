@@ -7,7 +7,8 @@ import { BiLockAlt } from "react-icons/bi";
 import { VscSettings } from "react-icons/vsc";
 import { RiMessage2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { AuthContext } from "../../Context/Auth";
 
 function UserInformation({
   type,
@@ -19,23 +20,26 @@ function UserInformation({
   setDisableClosing: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
-
-  window.addEventListener("loggedOut", () => {
-    window.removeEventListener("loggedOut", () => {});
-    setClickedLogin(true);
-    setDisableClosing(true);
-  });
+  const context = useContext(AuthContext);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!context.isLoggedIn) {
       setClickedLogin(true);
       setDisableClosing(true);
+    } else {
+      setClickedLogin(false);
+      setDisableClosing(false);
     }
-  }, []);
+  }, [context]);
 
   return (
-    <div className="userInformation" style={{paddingLeft: type === 2 ? "0" : "300px"}}>
+    <div
+      className="userInformation"
+      style={{
+        paddingLeft: type === 2 ? "0" : "300px",
+        marginTop: type !== 2 ? "3.5em" : undefined,
+      }}
+    >
       {type !== 2 ? (
         <div className="userInformation__selection">
           <button

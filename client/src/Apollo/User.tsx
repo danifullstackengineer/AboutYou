@@ -32,4 +32,12 @@ const setUserInformation = gql`
     }
 `;
 
-export { getUserFirstName, getUserInformation, setUserInformation };
+const getUserLikedProducts = gql`
+  query($id: ID!){
+    getUserInfo(id: $id){
+      likedProducts
+    }
+  }
+`
+
+export { getUserFirstName, getUserInformation, setUserInformation, getUserLikedProducts, };
