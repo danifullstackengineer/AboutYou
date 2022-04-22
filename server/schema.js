@@ -138,7 +138,8 @@ const Mutations = new GraphQLObjectType({
         liked: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       async resolve(parent, args) {
-        return await User.findById(args.id).then((doc) => {
+        return await User.findById(args.id).then(async (doc) => {
+          const prod = await Products.findById(args.likedId);
           const likedProd = doc.likedProducts.find(
             (product) => product === args.likedId
           );
@@ -146,8 +147,10 @@ const Mutations = new GraphQLObjectType({
             if (likedProd) return doc;
             else {
               doc.likedProducts.push(args.likedId);
-              doc.save().then(() => {
-                return doc;
+              prod.likes++;
+              await prod.save();
+              await doc.save().then((docSaved) => {
+                return docSaved;
               });
             }
           } else {
@@ -155,7 +158,9 @@ const Mutations = new GraphQLObjectType({
               doc.likedProducts = doc.likedProducts.filter((product) => {
                 if (product !== args.likedId) return product;
               });
-              doc.save().then(() => {
+              prod.likes--;
+              await prod.save();
+              await doc.save().then(() => {
                 return doc;
               });
             } else {

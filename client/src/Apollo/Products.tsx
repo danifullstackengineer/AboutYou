@@ -17,4 +17,12 @@ const getAllProductsMain = gql`
   }
 `;
 
-export { getAllProductsMain };
+const setLikedProduct = gql`
+  mutation($id: ID!, $likedId: String!, $liked: Boolean!){
+    modifyUserLikedProducts(id: $id, likedId: $likedId, liked: $liked){
+      likedProducts
+    }
+  }
+`
+
+export { getAllProductsMain, setLikedProduct };

@@ -99,6 +99,8 @@ function BodyInner({
                     ? dataL.getUserInfo.likedProducts.find(
                         (id: string) => id === product.id
                       )
+                      ? true
+                      : false
                     : false
                 }
                 type={"normal"}
@@ -128,6 +130,8 @@ function BodyInner({
                     ? dataL.getUserInfo.likedProducts.find(
                         (id: string) => id === product.id
                       )
+                      ? true
+                      : false
                     : false
                 }
                 type="360"

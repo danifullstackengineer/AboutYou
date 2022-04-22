@@ -8,6 +8,8 @@ import { BasketContext } from "../Context/Basket";
 import { AuthContext } from "../Context/Auth";
 import { ProductType } from "../types/Product";
 import { WishlistContext } from "../Context/Wishlist";
+import { useMutation } from "@apollo/client";
+import { setLikedProduct } from "../Apollo/Products";
 function Product({
   type,
   chosenMode,
@@ -22,7 +24,7 @@ function Product({
   setClickedLanguage,
   handleOpening,
   clickedBasket,
-  clickedWishlist
+  clickedWishlist,
 }: {
   type: string;
   chosenMode?: boolean | undefined;
@@ -47,10 +49,22 @@ function Product({
   const navigate = useNavigate();
 
   const [currentWay, setCurrentWay] = useState<boolean>(false);
-  const [saved, setSaved] = useState<boolean>(false);
+
+  const [likedAmount, setLikedAmount] = useState<number>(product.likes);
 
   const [currentImageOne, setCurrentImageOne] = useState<string>("1.jpg");
   const [currentImageTwo, setCurrentImageTwo] = useState<string>("10.jpg");
+
+  const [likedMutation, { loading, data, error }] = useMutation(
+    setLikedProduct,
+    {
+      variables: {
+        id: aContext.userId,
+        likedId: product.id,
+        liked: !liked,
+      },
+    }
+  );
 
   useEffect(() => {
     if (width < 1000) {
@@ -117,25 +131,32 @@ function Product({
     }
   };
 
+  const [heartSrc, setHeartSrc] = useState<string>(
+    "/assets/svg/heart-half.svg"
+  );
+
+  useEffect(() => {
+    if (liked) {
+      setHeartSrc("/assets/svg/heart.svg");
+    } else {
+      setHeartSrc("/assets/svg/heart-half.svg");
+    }
+  }, [liked]);
+
+  //TODO: FIX LIKES
   const handleLikes = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
     e.stopPropagation();
-    // if (clicked) {
-    //   setClicked(false);
-    //   setLikes(likes - 1);
-    // } else {
-    //   setClicked(true);
-    //   setLikes(likes + 1);
-    // }
     if (!aContext.isLoggedIn) {
       setClickedLogin(true);
     } else {
-      if (liked) {
-      } else {
-      }
+      setClicked(!clicked);
+      likedMutation();
     }
   };
+  //TODO: Handle this error
+  useEffect(() => {}, [error]);
 
   const handleBasket = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -214,21 +235,37 @@ function Product({
         }`}
       ></button>
       <div
-        className={`product__heart ${liked ? "product__heart-clicked" : ""}`}
+        className={`product__heart ${
+          clicked && !liked
+            ? "product__heart-clicked"
+            : liked
+            ? "product__heart-liked-already"
+            : ""
+        }`}
         onClick={(e) => {
           handleLikes(e);
         }}
+        onMouseOver={() => {
+          liked
+            ? setHeartSrc("/assets/svg/heart-half.svg")
+            : setHeartSrc("/assets/svg/heart.svg");
+        }}
+        onMouseLeave={() => {
+          liked
+            ? setHeartSrc("/assets/svg/heart.svg")
+            : setHeartSrc("/assets/svg/heart-half.svg");
+        }}
       >
-        {clicked ? (
-          <img src={"/assets/svg/heart.svg"} alt="" loading={"lazy"} />
-        ) : (
-          <img src={"/assets/svg/heart-half.svg"} alt="" loading={"lazy"} />
-        )}
-        <span>{product.likes}</span>
+        <img src={heartSrc} alt="" loading={"lazy"} />
+        <span>{likedAmount}</span>
       </div>
       <div
         className={
-          !clicked ? `product__overlay-unclicked` : "product__overlay-clicked"
+          !clicked
+            ? `product__overlay-unclicked`
+            : !liked
+            ? "product__overlay-clicked"
+            : ""
         }
       ></div>
       <div className={`product__basket`} onClick={(e) => handleBasket(e)}>

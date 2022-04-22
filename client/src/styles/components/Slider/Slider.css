@@ -76,10 +76,10 @@
   min-width: 450px;
   transition: var(--transitionLightMode);
 }
-.slider-dark .slider__info {
+.slider-dark .slider__info > span{
   color: rgb(255, 174, 23);
 }
-.slider-light .slider__info {
+.slider-light .slider__info >span {
   color: white;
 }
 .slider__info > span:first-child {

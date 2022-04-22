@@ -167,6 +167,9 @@
   padding: 10px 0 10px 0;
   font-weight: 900;
 }
+.menu-dark .menu__option-option-user > a {
+  color: black;
+}
 .menu__option-option-user > button {
   width: 100%;
   border: none;
@@ -182,7 +185,7 @@
   color: rgb(255, 174, 23);
 }
 .menu-dark .menu__option-option-user > a:hover {
-  color: black;
+  color: rgb(200,100,100);
 }
 .menu-dark .menu__option-option-user > button:hover {
   color: rgb(200, 100, 100);

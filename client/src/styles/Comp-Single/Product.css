@@ -102,7 +102,6 @@
   width: 30px;
   height: 30px;
   cursor: pointer;
-  opacity: 0.5;
 }
 .product__basket > img {
   left: 0;
@@ -134,9 +133,6 @@
 .product-dark .product__basket:hover::before {
   box-shadow: rgba(100, 200, 200, 0.8) 0px 0px 3px 3px;
   border: 2px solid white;
-}
-.product__heart:hover > img {
-  opacity: 1;
 }
 .product__heart-clicked {
   top: calc(50% - 15px);
@@ -200,7 +196,7 @@
   right: 5%;
 }
 .product__img-special-360 {
-  width: 70%!important;
+  width: 70% !important;
   max-width: 700px !important;
 }
 .product__img-special-no360 {
