@@ -2,326 +2,224 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  height: calc(100% - 150px - 4px);
   top: 150px;
-  right: -302px;
-  width: 300px;
+  right: -400px;
+  width: 400px;
   z-index: 3000;
-  transition: var(--transitionLightMode);
-  background-color: rgba(0, 0, 0, 0.4);
+  transition: var(--transitionLightMode), border 1ms;
   user-select: none;
+  max-height: calc(100vh - 250px);
+}
+.menu-light:not(.menu-inactive) {
+  background-color: white;
+  box-shadow: -10px 10px 50px black;
+  color: black;
+}
+.menu-dark:not(.menu-inactive) {
+  background-color: rgb(100, 200, 100);
+  color: white;
+  box-shadow: -10px 10px 50px rgb(100, 200, 200);
+}
+.menu-light a {
+  color: black;
+}
+.menu-dark button {
+  color: white;
 }
 .menu-active {
   right: 0;
 }
-.menu-light {
-  border-top: 2px solid rgb(100, 200, 100);
-  border-bottom: 2px solid rgb(100, 200, 100);
-  border-left: 2px solid rgb(100, 200, 100);
-}
-.menu-dark {
-  border-top: 2px solid rgb(255, 174, 23);
-  border-bottom: 2px solid rgb(255, 174, 23);
-  border-left: 2px solid rgb(255, 174, 23);
-}
 .menu__option {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: calc(100vh - 250px - 5rem - 50px);
 }
-.menu__option__name {
+.menu__option > h3 {
   font-size: 1.25rem;
-  color: white;
-  cursor: pointer;
+  padding: 10px 0 10px 0;
   width: 100%;
-  height: 65px;
+  text-align: center;
+  align-self: center;
+  cursor: pointer;
+}
+.menu__option-option {
+  -moz-transition: height 250ms;
+  -ms-transition: height 250ms;
+  -o-transition: height 250ms;
+  -webkit-transition: height 250ms;
+  transition: height 250ms;
+  height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+.menu__option-option-product:not(:last-child) {
+  border-bottom: 2px solid black;
+}
+.menu-dark .menu__option > h3 {
+  background-color: black;
+  color: white;
+}
+.menu-light .menu__option > h3 {
+  background-color: black;
+  color: white;
+}
+.menu__option-option-wrapper > h4 {
+  font-size: 1.15rem;
+  padding: 10px 0 10px 0;
+  text-align: center;
+}
+.menu__option-option-product {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+  background-color: rgb(245, 245, 245);
+  padding: 10px 0 10px 0;
 }
-.menu__option__name > span:first-child {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-.menu__option__name > span:last-child {
-  position: absolute;
-  right: 20px;
-}
-.menu-light .menu__option:not(.menu__option-lang) {
-  border-bottom: 2px solid rgb(100, 200, 100);
-}
-.menu-dark .menu__option:not(.menu__option-lang) {
-  border-bottom: 2px solid rgb(255, 174, 23);
-}
-.menu__option__dropdown {
-  height: 0;
+.menu__option-option-product-left {
+  flex: 0.65;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.menu__option__dropdown > div {
-  align-items: center;
-  display: flex;
-  align-items: center;
+.menu__option-option-product-left > h5 {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  text-decoration: underline;
   cursor: pointer;
-  padding-left: 0.5em;
-  font-size: 1.25rem;
-  position: relative;
-  transition: all 150ms ease-in;
 }
-.menu-light .menu__option__dropdown > div {
-  background-color: white;
-  color: black;
+.menu__option-option-product-left > h5:hover a {
+  color: rgb(200, 100, 100);
 }
-.menu-dark .menu__option__dropdown > div {
-  background-color: black;
-  color: white;
-}
-.menu-light .menu__option__dropdown > div:not(:last-child) {
-  border-bottom: 0.5px solid rgb(100, 100, 100);
-}
-.menu-light .menu__option__dropdown > div:not(:first-child) {
-  border-top: 0.5px solid rgb(100, 100, 100);
-}
-.menu-dark .menu__option__dropdown > div:not(:last-child) {
-  border-bottom: 0.5px solid rgb(200, 200, 200);
-}
-.menu-dark .menu__option__dropdown > div:not(:first-child) {
-  border-top: 0.5px solid rgb(200, 200, 200);
-}
-.menu-light
-  .menu__option__dropdown
-  > div:not(.menu__option__dropdown-basket-empty):hover {
-  background-color: black;
-  color: white;
-}
-.menu-dark
-  .menu__option__dropdown
-  > div:not(.menu__option__dropdown-basket-empty):hover {
-  background-color: white;
-  color: black;
-}
-.menu__option__dropdown {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 300ms ease-in, visibility 300ms ease-in,
-    height 300ms ease-in;
-}
-.menu__option__dropdown-active-basket:not(.menu__option__dropdown-basket-yes) {
+.menu__option-option-product-left > img {
+  width: 250px;
   height: 150px;
+  object-fit: cover;
+  object-position: 0 60%;
 }
-.menu__option__dropdown-active-basket:not(.menu__option__dropdown-basket-no){
-  height: 50px;
+.menu__option-option-product-right {
+  flex: 0.35;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.05rem;
+  justify-content: center;
 }
-.menu__option__dropdown-active-user:not(.menu__option__dropdown-user-no){
-  height: 200px;
+.menu__option-option-product-right > span {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px 0 5px 0;
 }
-.menu__option__dropdown-active-user:not(.menu__option__dropdown-user-yes){
-  height: 100px;
+.menu__option-option-product-right-btns {
+  display: flex;
+  flex-direction: row;
+  width: 125px;
+  margin: 10px 0 10px 0;
 }
-.menu__option__dropdown-active-wishlist:not(.menu__option__dropdown-wishlist-no){
-  height: 100px;
-}
-.menu__option__dropdown-active-wishlist:not(.menu__option__dropdown-wishlist-yes){
-  height: 50px;
-}
-.menu__option__dropdown-active,
-.menu__option__dropdown-active-basket {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 500ms ease-in, visibility 500ms ease-in,
-    height 300ms ease-in;
-}
-.menu__option__name::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  right: calc(100% + 2px);
-  background: -moz-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(128, 186, 232, 0) 99%,
-    rgba(125, 185, 232, 0) 100%
-  ); /* FF3.6+ */
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(0%, rgba(255, 255, 255, 0)),
-    color-stop(50%, rgba(255, 255, 255, 0.8)),
-    color-stop(99%, rgba(128, 186, 232, 0)),
-    color-stop(100%, rgba(125, 185, 232, 0))
-  ); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(128, 186, 232, 0) 99%,
-    rgba(125, 185, 232, 0) 100%
-  ); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(128, 186, 232, 0) 99%,
-    rgba(125, 185, 232, 0) 100%
-  ); /* Opera 11.10+ */
-  background: -ms-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(128, 186, 232, 0) 99%,
-    rgba(125, 185, 232, 0) 100%
-  ); /* IE10+ */
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(128, 186, 232, 0) 99%,
-    rgba(125, 185, 232, 0) 100%
-  ); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
-  z-index: 4;
-}
-.menu__option__name > span {
-  z-index: 4;
-}
-.menu-light .menu__option__name::after {
+.menu__option-option-product-right-btns > button {
+  width: calc(30% + 0.125rem);
+  height: 20px;
   background-color: rgb(100, 200, 100);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-weight: 900;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.menu-dark .menu__option__name::after {
-  background-color: rgb(255, 174, 23);
+.menu__option-option-product-right-btns > button:first-child {
+  margin-right: 20px;
 }
-.menu-dark .menu__option-active .menu__option__name {
+.menu__option-option-product-right-btns-remove {
+  display: flex;
+  width: 125px;
+  display: flex;
+}
+.menu__option-option-product-right-btns-remove > button {
+  width: 80%;
+  height: 30px;
+  background-color: rgb(100, 200, 100);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-weight: 900;
+  font-size: 1rem;
+}
+.menu__option-option-scrollber {
+  position: absolute;
+}
+.menu__option-option-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menu__option-option-user > a {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 10px 0 10px 0;
+  font-weight: 900;
+}
+.menu__option-option-user > button {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 10px 0 10px 0;
+  font-weight: 900;
+  cursor: pointer;
+}
+.menu-light .menu__option-option-user > a:hover {
+  color: rgb(255, 174, 23);
+}
+.menu-dark .menu__option-option-user > a:hover {
   color: black;
 }
-.menu__option__name::after {
-  content: "";
-  position: absolute;
+.menu-dark .menu__option-option-user > button:hover {
+  color: rgb(200, 100, 100);
+}
+.menu-light .menu__option-option-user > button:hover {
+  color: rgb(255, 174, 23);
+}
+.menu-dark .menu__option-option-product h5,
+span {
+  color: black;
+}
+.menu__option-option-language {
   width: 100%;
-  height: 100%;
-  z-index: 3;
-  right: 0;
-}
-.menu__option:not(.menu__option-active) .menu__option__name:hover::before {
-  animation: 300ms ease-in shinyBackgroundAnim forwards;
-}
-.menu__option:not(.menu__option-active)
-  .menu__option__name:not(:hover)::before {
-  animation: 300ms ease-in shinyBackgroundAnimBefore forwards;
-}
-.menu-light .menu__option__name:hover::after {
-  animation: 300ms ease-in doBackground forwards;
-}
-.menu-light .menu__option__name:not(:hover)::after {
-  animation: 300ms ease-in doBackgroundBefore forwards;
-}
-.menu-light .menu__option-active .menu__option__name {
-  background-color: rgb(100, 200, 100);
-}
-.menu-dark .menu__option__name:hover::after {
-  animation: 300ms ease-in doBackgroundBlack forwards;
-}
-.menu-dark .menu__option__name:not(:hover)::after {
-  animation: 300ms ease-in doBackgroundBlackBefore forwards;
-}
-.menu-dark .menu__option-active .menu__option__name {
-  background-color: rgb(255, 174, 23);
-}
-
-.menu__option__dropdown > div {
-  height: 50px !important;
-}
-.menu__option__dropdown-basket-empty {
-  cursor: default !important;
-  font-size: 1rem !important;
-  background-color: rgb(200, 200, 200) !important;
-}
-.menu__option-lang {
-  flex-direction: row;
+  display: flex;
   justify-content: space-evenly;
-  margin: 2em 0 2em 0;
+  align-items: center;
+  height: 75px;
 }
-.menu__option > button {
+.menu__option-option-language > button {
   width: 40%;
   border: none;
-  height: 40px;
+  outline: none;
   cursor: pointer;
-  transition: var(--transitionLightMode);
-  font-weight: 600;
+  border: 2px solid black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 900;
+  font-size: 1rem;
 }
-.menu-light .menu__option > button:not(.menu__option-lang-active) {
-  background-color: white;
+.menu__option-option-language
+  > button:not(.menu__option-option-language-active) {
+  background-color: transparent;
 }
-.menu-light .menu__option-lang-active {
-  background-color: rgb(100, 200, 100);
-}
-.menu-dark .menu__option > button:not(.menu__option-lang-active) {
-  background-color: rgb(200, 200, 200);
-}
-.menu-dark .menu__option-lang-active {
+.menu__option-option-language-active {
   background-color: rgb(255, 174, 23);
 }
-.menu-light .menu__option > button:hover {
-  background-color: rgb(100, 200, 100);
-}
-.menu-dark .menu__option > button:hover {
-  background-color: rgb(255, 174, 23);
-}
-@keyframes shinyBackgroundAnim {
-  0% {
-    right: calc(100% + 2px);
-  }
-  100% {
-    right: calc(-100% + 2px);
-  }
-}
-@keyframes shinyBackgroundAnimBefore {
-  0% {
-    right: calc(-100% + 2px);
-  }
-  100% {
-    right: calc(100% + 2px);
-  }
-}
-@keyframes doBackground {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgb(100, 200, 100);
-  }
-}
-@keyframes doBackgroundBefore {
-  0% {
-    background-color: rgb(100, 200, 100);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-@keyframes doBackgroundBlack {
-  0% {
-    background-color: transparent;
-  }
-  100% {
-    background-color: rgb(255, 174, 23);
-  }
-}
-@keyframes doBackgroundBlackBefore {
-  0% {
-    background-color: rgb(255, 174, 23);
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-@media screen and (max-width: 325px) {
-  .menu {
-    position: sticky;
-    height: 100vh;
-  }
+.menu__option-option-language
+  > button:not(.menu__option-option-language-active):hover {
+  background-color: rgba(255, 174, 23, 0.5);
 }

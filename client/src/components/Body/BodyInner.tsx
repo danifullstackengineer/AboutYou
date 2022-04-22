@@ -11,10 +11,28 @@ function BodyInner({
   setClickedLogin,
   currentOption,
   chosenMode,
+  setClickedMenu,
+  clickedMenu,
+  setClickedBasket,
+  setClickedWishlist,
+  setClickedUser,
+  setClickedLanguage,
+  handleOpening,
+  clickedBasket,
+  clickedWishlist,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   currentOption: boolean[];
   chosenMode: boolean | undefined;
+  setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedMenu: boolean;
+  setClickedBasket: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedWishlist: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedLanguage: React.Dispatch<React.SetStateAction<boolean>>;
+  handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+  clickedBasket: boolean;
+  clickedWishlist: boolean;
 }) {
   const aContext = useContext(AuthContext);
 
@@ -86,6 +104,15 @@ function BodyInner({
                 type={"normal"}
                 product={product}
                 setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
               />
             );
           })}
@@ -107,6 +134,15 @@ function BodyInner({
                 chosenMode={chosenMode}
                 product={product}
                 setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
               />
             );
           })}

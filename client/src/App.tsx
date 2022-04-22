@@ -143,6 +143,19 @@ function App() {
     [basket]
   );
 
+  const decrementProduct: BasketContextType["decrementProduct"] = useCallback(
+    (id) => {
+      setBasket([
+        ...basket.filter((product) =>
+          product.id === id && product.quantity > 1
+            ? product.quantity--
+            : product
+        ),
+      ]);
+    },
+    [basket]
+  );
+
   /* Wishlist */
   const [wishlist, setWishlist] = useState<WishlistContextType["product"]>([]);
 
@@ -249,6 +262,84 @@ function App() {
     window.history.scrollRestoration = "manual";
   }, []);
 
+  /* Menu */
+  const [clickedBasket, setClickedBasket] = useState<boolean>(false);
+  const [clickedWishlist, setClickedWishlist] = useState<boolean>(false);
+  const [clickedUser, setClickedUser] = useState<boolean>(false);
+  const [clickedLanguage, setClickedLanguage] = useState<boolean>(false);
+
+  const handleOpening = useCallback(
+    (type: "basket" | "user" | "wishlist" | "language"): void => {
+      switch (type) {
+        case "basket":
+          if (clickedBasket) {
+            setClickedBasket(!clickedBasket);
+          } else {
+            setClickedLanguage(false);
+            setClickedUser(false);
+            setClickedWishlist(false);
+            if (clickedUser || clickedLanguage || clickedWishlist) {
+              setTimeout(() => {
+                setClickedBasket(!clickedBasket);
+              }, 250);
+            } else {
+              setClickedBasket(!clickedBasket);
+            }
+          }
+          break;
+        case "wishlist":
+          if (clickedWishlist) {
+            setClickedWishlist(!clickedWishlist);
+          } else {
+            setClickedLanguage(false);
+            setClickedUser(false);
+            setClickedBasket(false);
+            if (clickedUser || clickedLanguage || clickedBasket) {
+              setTimeout(() => {
+                setClickedWishlist(!clickedWishlist);
+              }, 250);
+            } else {
+              setClickedWishlist(!clickedWishlist);
+            }
+          }
+          break;
+        case "user":
+          if (clickedUser) {
+            setClickedUser(!clickedUser);
+          } else {
+            setClickedLanguage(false);
+            setClickedWishlist(false);
+            setClickedBasket(false);
+            if (clickedWishlist || clickedLanguage || clickedBasket) {
+              setTimeout(() => {
+                setClickedUser(!clickedUser);
+              }, 250);
+            } else {
+              setClickedUser(!clickedUser);
+            }
+          }
+          break;
+        case "language":
+          if (clickedLanguage) {
+            setClickedLanguage(!clickedLanguage);
+          } else {
+            setClickedUser(false);
+            setClickedWishlist(false);
+            setClickedBasket(false);
+            if (clickedWishlist || clickedUser || clickedBasket) {
+              setTimeout(() => {
+                setClickedLanguage(!clickedLanguage);
+              }, 250);
+            } else {
+              setClickedLanguage(!clickedLanguage);
+            }
+          }
+          break;
+      }
+    },
+    [clickedBasket, clickedLanguage, clickedUser, clickedWishlist]
+  );
+
   return (
     <div
       className="main"
@@ -273,6 +364,7 @@ function App() {
             removeFromBasket: removeFromBasket,
             getTotalPrice: getTotalPrice,
             isInBasket: isInBasket,
+            decrementProduct: decrementProduct,
           }}
         >
           <AuthContext.Provider
@@ -291,6 +383,15 @@ function App() {
                 setClickedLogin={setClickedLogin}
                 setChosenAction={setChosenAction}
                 height={height}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
+                clickedUser={clickedUser}
+                clickedLanguage={clickedLanguage}
+                handleOpening={handleOpening}
               />
               <Credential
                 chosenAction={chosenAction}
@@ -326,6 +427,15 @@ function App() {
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         currentOption={currentOption}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedBasket={setClickedBasket}
+                        setClickedWishlist={setClickedWishlist}
+                        setClickedUser={setClickedUser}
+                        setClickedLanguage={setClickedLanguage}
+                        handleOpening={handleOpening}
+                        clickedWishlist={clickedWishlist}
+                        clickedBasket={clickedBasket}
                       />
                       <FooterBody chosenMode={chosenMode} />
                     </>

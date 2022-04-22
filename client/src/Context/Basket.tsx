@@ -7,6 +7,7 @@ export declare type BasketContextType = {
   removeFromBasket: (id: ProductType["id"]) => void;
   getTotalPrice: () => number;
   isInBasket: (id: ProductType["id"]) => boolean;
+  decrementProduct: (id: ProductType['id']) => void;
 };
 
 export const BasketContext = createContext<BasketContextType>({
@@ -19,6 +20,7 @@ export const BasketContext = createContext<BasketContextType>({
   isInBasket: () => {
     return false;
   },
+  decrementProduct: () => {}
 });
 export type ExtendedProductType = ProductType & {
   quantity: number;

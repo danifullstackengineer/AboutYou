@@ -13,13 +13,31 @@ function Product({
   chosenMode,
   product,
   setClickedLogin,
-  liked
+  setClickedMenu,
+  liked,
+  clickedMenu,
+  setClickedBasket,
+  setClickedWishlist,
+  setClickedUser,
+  setClickedLanguage,
+  handleOpening,
+  clickedBasket,
+  clickedWishlist
 }: {
   type: string;
   chosenMode?: boolean | undefined;
   product: ProductType;
-    setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
-    liked: boolean;
+  setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  liked: boolean;
+  setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedMenu: boolean;
+  setClickedBasket: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedWishlist: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedUser: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedLanguage: React.Dispatch<React.SetStateAction<boolean>>;
+  handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+  clickedBasket: boolean;
+  clickedWishlist: boolean;
 }) {
   const { width } = useWindowDimensions();
   const bContext = useContext(BasketContext);
@@ -81,11 +99,20 @@ function Product({
     if (!aContext.isLoggedIn) {
       setClickedLogin(true);
     } else {
-      // setSaved(!saved);
       if (wContext.isInWishlist(product.id)) {
         wContext.removeFromWishlist(product.id);
       } else {
         wContext.addToWishlist(product);
+      }
+      if (!clickedMenu) {
+        setClickedMenu(true);
+        setTimeout(() => {
+          setClickedWishlist(true);
+        }, 150);
+      } else {
+        if (!clickedWishlist) {
+          handleOpening("wishlist");
+        }
       }
     }
   };
@@ -102,12 +129,10 @@ function Product({
     //   setLikes(likes + 1);
     // }
     if (!aContext.isLoggedIn) {
-      setClickedLogin(true)
+      setClickedLogin(true);
     } else {
       if (liked) {
-        
       } else {
-        
       }
     }
   };
@@ -120,6 +145,16 @@ function Product({
       bContext.removeFromBasket(product.id);
     } else {
       bContext.addToBasket(product);
+    }
+    if (!clickedMenu) {
+      setClickedMenu(true);
+      setTimeout(() => {
+        setClickedBasket(true);
+      }, 150);
+    } else {
+      if (!clickedBasket) {
+        handleOpening("basket");
+      }
     }
   };
 
@@ -207,7 +242,7 @@ function Product({
           />
         )}
       </div>
-      <button type="button" onClick={() => navigate("/product/id")}>
+      <button type="button" onClick={() => navigate(`/product/${product.id}`)}>
         <IoIosArrowForward />
       </button>
     </div>
