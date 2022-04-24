@@ -1,6 +1,12 @@
 import "../styles/Comp-Single/Product.css";
 import { useWindowDimensions } from "../Hooks/Viewport";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import useMouse from "@react-hook/mouse-position";
 import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +16,7 @@ import { ProductType } from "../types/Product";
 import { WishlistContext } from "../Context/Wishlist";
 import { useMutation } from "@apollo/client";
 import { setLikedProduct } from "../Apollo/Products";
+import LazyLoad from "react-lazyload";
 function Product({
   type,
   chosenMode,
@@ -89,22 +96,25 @@ function Product({
 
   const [isViewing360, setIsViewing360] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (isViewing360 && divRef.current && mouse.clientX) {
-      const amount = (
-        mouse.clientX /
-        (divRef.current.offsetWidth / 50)
-      ).toFixed(0);
-      if (parseInt(amount) > 51) {
-        setCurrentImageOne("51.jpg");
+  useEffect(
+    useCallback(() => {
+      if (isViewing360 && divRef.current && mouse.clientX) {
+        const amount = (
+          mouse.clientX /
+          (divRef.current.offsetWidth / 50)
+        ).toFixed(0);
+        if (parseInt(amount) > 51) {
+          setCurrentImageOne("51.jpg");
+        } else {
+          setCurrentImageOne(amount + ".jpg");
+        }
       } else {
-        setCurrentImageOne(amount + ".jpg");
+        setCurrentImageOne("1.jpg");
+        setIsViewing360(false);
       }
-    } else {
-      setCurrentImageOne("1.jpg");
-      setIsViewing360(false);
-    }
-  }, [isViewing360, mouse]);
+    }, [isViewing360, mouse]),
+    [isViewing360, mouse]
+  );
 
   const handleWishlist = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -197,36 +207,46 @@ function Product({
       <div className="product-cursor"></div>
       {type === "360" ? (
         <div className={`product__360`}>
-          <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"} />
+          <LazyLoad height={1}>
+            <img
+              src={"/assets/cursor/360-icon.svg"}
+              alt={""}
+              loading={"lazy"}
+            />
+          </LazyLoad>
         </div>
       ) : (
         ""
       )}
       <div className="product__title">{product.title}</div>
-      <img
-        src={
-          type === "360"
-            ? product.backgroundImg + currentImageOne
-            : product.backgroundImg
-        }
-        alt={""}
-        className={`${currentWay ? "product__img-special-bg" : ""} ${
-          isViewing360 ? "product__img-special-360" : ""
-        }`}
-        loading={"lazy"}
-      />
-      <img
-        src={
-          type === "360"
-            ? product.foregroundImg + currentImageTwo
-            : product.foregroundImg
-        }
-        alt={""}
-        className={`${currentWay ? "product__img-special" : ""} ${
-          isViewing360 ? "product__img-special-no360" : ""
-        }`}
-        loading={"lazy"}
-      />
+      <LazyLoad height={600} offset={-100} once={true}>
+        <img
+          src={
+            type === "360"
+              ? product.backgroundImg + currentImageOne
+              : product.backgroundImg
+          }
+          alt={""}
+          className={`product__img-img ${
+            currentWay ? "product__img-special-bg" : ""
+          } ${isViewing360 ? "product__img-special-360" : ""}`}
+          loading={"lazy"}
+        />
+      </LazyLoad>
+      <LazyLoad height={600} offset={-100} once={true}>
+        <img
+          src={
+            type === "360"
+              ? product.foregroundImg + currentImageTwo
+              : product.foregroundImg
+          }
+          alt={""}
+          className={`product__img-img ${
+            currentWay ? "product__img-special" : ""
+          } ${isViewing360 ? "product__img-special-no360" : ""}`}
+          loading={"lazy"}
+        />
+      </LazyLoad>
       <button
         type="button"
         onClick={handleWishlist}

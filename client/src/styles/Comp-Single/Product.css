@@ -38,6 +38,14 @@
   transition: all 300ms ease-in;
   pointer-events: none;
 }
+.product__img-img {
+  max-height: 600px;
+  height: auto;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transition: all 300ms ease-in;
+  pointer-events: none;
+}
 .product-360 > img {
   object-fit: contain;
 }
