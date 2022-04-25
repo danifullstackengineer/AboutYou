@@ -12,7 +12,6 @@ const productTable = mongoose.Schema({
     type: Number,
     default: 0
   },
-  isCustomizable: Boolean,
 });
 
 export default mongoose.model("Product", productTable);
