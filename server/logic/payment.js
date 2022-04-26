@@ -1,5 +1,3 @@
-import SliderTwoProduct from "../models/SliderTwo.js";
-import Voucher from "../models/Voucher.js";
 
 const decideTotal = async (basket, discount) => {
   var discountVar = 0;

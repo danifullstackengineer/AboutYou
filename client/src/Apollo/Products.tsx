@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const getAllProductsMain = gql`
-  query ($isCustomizable: Boolean!) {
-    getProducts(isCustomizable: $isCustomizable) {
+  query {
+    getProducts {
       id
       backgroundImg
       foregroundImg
@@ -12,7 +12,6 @@ const getAllProductsMain = gql`
       sizes
       accessoryId
       likes
-      isCustomizable
     }
   }
 `;
