@@ -64,6 +64,7 @@
   },
   "devDependencies": {
     "@types/jwt-decode": "^3.1.0",
+    "@types/lodash": "^4.14.182",
     "@types/radium": "^0.24.4",
     "@types/react-calendar": "^3.5.0",
     "@types/react-currency-format": "^1.0.0",

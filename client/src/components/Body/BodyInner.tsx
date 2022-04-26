@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../../styles/components/Body/BodyInner.css";
 import Product from "../../Comp-Single/Product";
 import { useLazyQuery } from "@apollo/client";
@@ -6,10 +6,10 @@ import { getAllProductsMain } from "../../Apollo/Products";
 import { ProductType } from "../../types/Product";
 import { AuthContext } from "../../Context/Auth";
 import { getUserLikedProducts } from "../../Apollo/User";
+import shuffle from "../../Logic/randomize";
 
 function BodyInner({
   setClickedLogin,
-  currentOption,
   chosenMode,
   setClickedMenu,
   clickedMenu,
@@ -20,9 +20,10 @@ function BodyInner({
   handleOpening,
   clickedBasket,
   clickedWishlist,
+  custom,
+  accessories
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
-  currentOption: boolean[];
   chosenMode: boolean | undefined;
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   clickedMenu: boolean;
@@ -33,8 +34,12 @@ function BodyInner({
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
+  custom?:boolean;
+  accessories?:boolean;
 }) {
   const aContext = useContext(AuthContext);
+
+  const [randomProd, setRandomProd] = useState<ProductType[]>();
 
   const [
     getAllProductsNonCustomizableQuery,
@@ -45,13 +50,6 @@ function BodyInner({
     },
   });
 
-  const [getAllProductsCustomizableQuery, { loading, data, error }] =
-    useLazyQuery(getAllProductsMain, {
-      variables: {
-        isCustomizable: true,
-      },
-    });
-
   const [
     getUserLikedProductsQuery,
     { loading: loadingL, data: dataL, error: errorL },
@@ -61,14 +59,30 @@ function BodyInner({
     },
   });
 
-  useEffect(() => {
-    if (currentOption[0]) {
+  useEffect(()=>{
+    if(!accessories && !dataNon){
       getAllProductsNonCustomizableQuery();
-    } else if (currentOption[1]) {
-      getAllProductsCustomizableQuery();
-    } else if (currentOption[2]) {
     }
-  }, [currentOption]);
+  }, [window.location.pathname])
+
+  useEffect(()=>{
+    if(dataNon && custom && !randomProd){
+      //todo: change when got first 50 pics
+      // setRandomProd(shuffle(dataNon.getProducts));
+      setRandomProd(dataNon.getProducts);
+    }
+  }, [dataNon, custom])
+
+  useEffect(()=>{
+    if(dataNon){
+      console.log(dataNon)
+    }
+  }, [dataNon])
+
+  //todo: remove after you got 50 pics for each product
+
+
+
 
   useEffect(() => {
     if (aContext.isLoggedIn) {
@@ -76,165 +90,61 @@ function BodyInner({
     }
   }, [aContext]);
 
-  useEffect(() => {
-    //TODO: Handle errors
-    if (errorNon) {
-    }
-    if (error) {
-    }
-    if (errorL) {
-    }
-  }, [errorNon, error, errorL]);
+  // useEffect(() => {
+  //   //TODO: Handle errors
+  //   if (errorNon) {
+  //   }
+  //   if (error) {
+  //   }
+  //   if (errorL) {
+  //   }
+  // }, [errorNon, error, errorL]);
 
   return (
     <div className="bodyInner">
-      {currentOption[0] && dataNon ? (
-        <>
-          {dataNon.getProducts.map((product: ProductType, i: number) => {
-            return (
-              <Product
-                key={i}
-                liked={
-                  dataL
-                    ? dataL.getUserInfo.likedProducts.find(
-                        (id: string) => id === product.id
-                      )
-                      ? true
-                      : false
-                    : false
-                }
-                type={"normal"}
-                product={product}
-                setClickedLogin={setClickedLogin}
-                setClickedMenu={setClickedMenu}
-                clickedMenu={clickedMenu}
-                setClickedBasket={setClickedBasket}
-                setClickedWishlist={setClickedWishlist}
-                setClickedUser={setClickedUser}
-                setClickedLanguage={setClickedLanguage}
-                handleOpening={handleOpening}
-                clickedBasket={clickedBasket}
-                clickedWishlist={clickedWishlist}
-              />
-            );
-          })}
-        </>
-      ) : currentOption[1] && data ? (
-        <>
-          {data.getProducts.map((product: ProductType, i: number) => {
-            return (
-              <>
-              <Product
-                key={i}
-                liked={
-                  dataL
-                    ? dataL.getUserInfo.likedProducts.find(
-                        (id: string) => id === product.id
-                      )
-                      ? true
-                      : false
-                    : false
-                }
-                type="360"
-                chosenMode={chosenMode}
-                product={product}
-                setClickedLogin={setClickedLogin}
-                setClickedMenu={setClickedMenu}
-                clickedMenu={clickedMenu}
-                setClickedBasket={setClickedBasket}
-                setClickedWishlist={setClickedWishlist}
-                setClickedUser={setClickedUser}
-                setClickedLanguage={setClickedLanguage}
-                handleOpening={handleOpening}
-                clickedBasket={clickedBasket}
-                clickedWishlist={clickedWishlist}
-              />
-              <Product
-                key={i}
-                liked={
-                  dataL
-                    ? dataL.getUserInfo.likedProducts.find(
-                        (id: string) => id === product.id
-                      )
-                      ? true
-                      : false
-                    : false
-                }
-                type="360"
-                chosenMode={chosenMode}
-                product={product}
-                setClickedLogin={setClickedLogin}
-                setClickedMenu={setClickedMenu}
-                clickedMenu={clickedMenu}
-                setClickedBasket={setClickedBasket}
-                setClickedWishlist={setClickedWishlist}
-                setClickedUser={setClickedUser}
-                setClickedLanguage={setClickedLanguage}
-                handleOpening={handleOpening}
-                clickedBasket={clickedBasket}
-                clickedWishlist={clickedWishlist}
-              />
-              <Product
-                key={i}
-                liked={
-                  dataL
-                    ? dataL.getUserInfo.likedProducts.find(
-                        (id: string) => id === product.id
-                      )
-                      ? true
-                      : false
-                    : false
-                }
-                type="360"
-                chosenMode={chosenMode}
-                product={product}
-                setClickedLogin={setClickedLogin}
-                setClickedMenu={setClickedMenu}
-                clickedMenu={clickedMenu}
-                setClickedBasket={setClickedBasket}
-                setClickedWishlist={setClickedWishlist}
-                setClickedUser={setClickedUser}
-                setClickedLanguage={setClickedLanguage}
-                handleOpening={handleOpening}
-                clickedBasket={clickedBasket}
-                clickedWishlist={clickedWishlist}
-              />
-              <Product
-                key={i}
-                liked={
-                  dataL
-                    ? dataL.getUserInfo.likedProducts.find(
-                        (id: string) => id === product.id
-                      )
-                      ? true
-                      : false
-                    : false
-                }
-                type="360"
-                chosenMode={chosenMode}
-                product={product}
-                setClickedLogin={setClickedLogin}
-                setClickedMenu={setClickedMenu}
-                clickedMenu={clickedMenu}
-                setClickedBasket={setClickedBasket}
-                setClickedWishlist={setClickedWishlist}
-                setClickedUser={setClickedUser}
-                setClickedLanguage={setClickedLanguage}
-                handleOpening={handleOpening}
-                clickedBasket={clickedBasket}
-                clickedWishlist={clickedWishlist}
-              /></>
-            );
-          })}
-        </>
-      ) : // <Product type={"360"} />
-      currentOption[2] ? (
-        ""
-      ) : (
-        // <Product type={"normal"} />
-        ""
-      )}
-    </div>
+      {dataNon && !custom && !accessories ? 
+      dataNon.getProducts.map((product:ProductType) => {
+        return <Product key={product.id}
+        chosenMode={chosenMode}
+        product={product}
+        setClickedLogin={setClickedLogin}
+        setClickedMenu={setClickedMenu}
+        liked={true}
+        clickedMenu={clickedMenu}
+        setClickedBasket={setClickedBasket}
+        setClickedWishlist={setClickedWishlist}
+        handleOpening={handleOpening}
+        clickedBasket={clickedBasket}
+        clickedWishlist={clickedWishlist}
+        />
+      }) : ""  
+    }
+    {
+      randomProd && custom? 
+      randomProd.map((product: ProductType, i:number) => {
+        if(product.id === "626153ac8b26eced2ce17eb1" || product.id === "6267c0266583c7fb140f3843"){
+        return (
+          <Product key={product.id}
+          chosenMode={chosenMode}
+          product={product}
+          setClickedLogin={setClickedLogin}
+          setClickedMenu={setClickedMenu}
+          liked={true}
+          clickedMenu={clickedMenu}
+          setClickedBasket={setClickedBasket}
+          setClickedWishlist={setClickedWishlist}
+          handleOpening={handleOpening}
+          clickedBasket={clickedBasket}
+          clickedWishlist={clickedWishlist}
+          //todo: change when got first 50 pics
+          firstProduct={product.id === "626153ac8b26eced2ce17eb1"}
+          type="360"
+          />
+        )
+        }
+      })
+    : ""}
+      </div>
   );
 }
 

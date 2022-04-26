@@ -6,7 +6,6 @@ import BodyInner from "./Body/BodyInner";
 function Body({
   setClickedLogin,
   chosenMode,
-  currentOption,
   setHeight,
   setClickedMenu,
   clickedMenu,
@@ -17,10 +16,11 @@ function Body({
   handleOpening,
   clickedBasket,
   clickedWishlist,
+  custom,
+  accessories
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
-  currentOption: boolean[];
   setHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   clickedMenu: boolean;
@@ -31,6 +31,8 @@ function Body({
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
+  custom?:boolean;
+  accessories?:boolean;
 }) {
   useEffect(() => {
     setHeight(250);
@@ -41,7 +43,6 @@ function Body({
       <SliderComp chosenMode={chosenMode} />
       <BodyInner
         setClickedLogin={setClickedLogin}
-        currentOption={currentOption}
         chosenMode={chosenMode}
         setClickedMenu={setClickedMenu}
         clickedMenu={clickedMenu}
@@ -52,6 +53,8 @@ function Body({
         handleOpening={handleOpening}
         clickedBasket={clickedBasket}
         clickedWishlist={clickedWishlist}
+        custom={custom}
+        accessories={accessories}
       />
     </div>
   );

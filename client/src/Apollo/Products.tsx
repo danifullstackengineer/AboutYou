@@ -24,4 +24,5 @@ const setLikedProduct = gql`
   }
 `
 
-export { getAllProductsMain, setLikedProduct };
+
+export { getAllProductsMain, setLikedProduct};

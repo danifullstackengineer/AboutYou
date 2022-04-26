@@ -8,7 +8,6 @@ import React, {
   useState,
 } from "react";
 import useMouse from "@react-hook/mouse-position";
-import { IoIosArrowForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { BasketContext } from "../Context/Basket";
 import { AuthContext } from "../Context/Auth";
@@ -17,6 +16,8 @@ import { WishlistContext } from "../Context/Wishlist";
 import { useMutation } from "@apollo/client";
 import { setLikedProduct } from "../Apollo/Products";
 import LazyLoad from "react-lazyload";
+
+
 function Product({
   type,
   chosenMode,
@@ -27,13 +28,12 @@ function Product({
   clickedMenu,
   setClickedBasket,
   setClickedWishlist,
-  setClickedUser,
-  setClickedLanguage,
   handleOpening,
   clickedBasket,
   clickedWishlist,
+  firstProduct
 }: {
-  type: string;
+  type?: string;
   chosenMode?: boolean | undefined;
   product: ProductType;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,11 +42,10 @@ function Product({
   clickedMenu: boolean;
   setClickedBasket: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedWishlist: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedUser: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedLanguage: React.Dispatch<React.SetStateAction<boolean>>;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
+  firstProduct?:boolean;
 }) {
   const { width } = useWindowDimensions();
   const bContext = useContext(BasketContext);
@@ -59,9 +58,23 @@ function Product({
 
   const [likedAmount, setLikedAmount] = useState<number>(product.likes);
 
+  const [images, setImages] = useState<{src: string; active: boolean}[]>();
+
   const [currentImageOne, setCurrentImageOne] = useState<string>("1.jpg");
   const [currentImageTwo, setCurrentImageTwo] = useState<string>("10.jpg");
 
+  const imgFunc = useCallback(():{src: string;active: boolean}[]=> {
+    var arr = []
+    for (let i= 1; i< 52 ; i++){
+      if( i===10){
+        arr.push({src: "/assets/Product/360/" + i + ".jpg", active: true});
+      }
+      else{
+      arr.push({src: "/assets/Product/360/" + i + ".jpg", active: false});
+      }
+    }
+    return arr;
+  }, [])
   const [likedMutation, { loading, data, error }] = useMutation(
     setLikedProduct,
     {
@@ -93,28 +106,7 @@ function Product({
     enterDelay: 0,
     leaveDelay: 0,
   });
-
   const [isViewing360, setIsViewing360] = useState<boolean>(false);
-
-  useEffect(
-    useCallback(() => {
-      if (isViewing360 && divRef.current && mouse.clientX) {
-        const amount = (
-          mouse.clientX /
-          (divRef.current.offsetWidth / 50)
-        ).toFixed(0);
-        if (parseInt(amount) > 51) {
-          setCurrentImageOne("51.jpg");
-        } else {
-          setCurrentImageOne(amount + ".jpg");
-        }
-      } else {
-        setCurrentImageOne("1.jpg");
-        setIsViewing360(false);
-      }
-    }, [isViewing360, mouse]),
-    [isViewing360, mouse]
-  );
 
   const handleWishlist = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -189,23 +181,61 @@ function Product({
     }
   };
 
+
+
+    useEffect(
+    useCallback(() => {
+      if (isViewing360 && divRef.current && mouse.clientX) {
+        if(!images){
+
+        }
+        setImages(imgFunc())
+        const amount = (
+          mouse.clientX /
+          (divRef.current.offsetWidth / 50)
+        ).toFixed(0);
+        if(parseInt(amount) > 51){
+          setCurrentImageOne("51.jpg");
+          setIsViewing360(false);
+        }else{
+          if(images){
+            setImages([...images.filter((img, i)=>{
+              if(i===parseInt(amount)){
+                img.active = true;
+              }
+              else{
+                img.active = false;
+              }
+              return img;
+            })])
+          }
+        }
+      }else{
+        setCurrentImageOne("1.jpg");
+        setIsViewing360(false);
+      }
+    }, [isViewing360, mouse]),
+    [isViewing360, mouse]
+  );
+
+
   return (
     <div
       className={`product ${chosenMode === false ? "product-dark" : ""} ${
         type === "360" ? "product-360" : ""
       }`}
       style={{
-        cursor: isViewing360
+        cursor: isViewing360 && firstProduct
           ? `url("../../../assets/cursor/cursor.svg"), auto`
           : "pointer",
       }}
       ref={divRef}
       onClick={() =>
-        type === "360" ? setIsViewing360(!isViewing360) : undefined
+        type === "360" && firstProduct ? setIsViewing360(!isViewing360) : undefined
       }
     >
       <div className="product-cursor"></div>
-      {type === "360" ? (
+      {firstProduct ? (
         <div className={`product__360`}>
           <LazyLoad height={1}>
             <img
@@ -219,11 +249,10 @@ function Product({
         ""
       )}
       <div className="product__title">{product.title}</div>
-      <LazyLoad height={600} offset={-100} once={true}>
         <img
           src={
             type === "360"
-              ? product.backgroundImg + currentImageOne
+              ?  isViewing360 && images ? images.filter(img=> img.active ? img : "")[0].src : product.backgroundImg + currentImageOne
               : product.backgroundImg
           }
           alt={""}
@@ -232,8 +261,6 @@ function Product({
           } ${isViewing360 ? "product__img-special-360" : ""}`}
           loading={"lazy"}
         />
-      </LazyLoad>
-      <LazyLoad height={600} offset={-100} once={true}>
         <img
           src={
             type === "360"
@@ -246,8 +273,7 @@ function Product({
           } ${isViewing360 ? "product__img-special-no360" : ""}`}
           loading={"lazy"}
         />
-      </LazyLoad>
-      <button
+      {firstProduct ?<> <button
         type="button"
         onClick={handleWishlist}
         className={`${
@@ -298,10 +324,7 @@ function Product({
             loading={"lazy"}
           />
         )}
-      </div>
-      <button type="button" onClick={() => navigate(`/product/${product.id}`)}>
-        <IoIosArrowForward />
-      </button>
+      </div></> : ""}
     </div>
   );
 }

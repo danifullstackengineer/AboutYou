@@ -35,9 +35,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
       },
       async resolve(par, args) {
-        return await Products.find({
-          isCustomizable: args.isCustomizable,
-        });
+        return await Products.find({})
       },
     },
     getSingleProduct: {

@@ -9,21 +9,21 @@ function Header({
   chosenMode,
   setChosenMode,
   setClickedMenu,
-  currentOption,
-  setCurrentOption,
   headerRef,
   clickedMenu,
   hideMode,
+  custom,
+  accessories
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
   setChosenMode: React.Dispatch<React.SetStateAction<boolean | undefined>>;
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  currentOption: boolean[];
-  setCurrentOption: React.Dispatch<React.SetStateAction<boolean[]>>;
   headerRef: React.RefObject<HTMLDivElement>;
   clickedMenu: boolean;
   hideMode?: boolean;
+  custom?:boolean;
+  accessories?:boolean;
 }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -41,11 +41,12 @@ function Header({
 
   useEffect(() => {
     if (chosenMode !== undefined) {
-      if (currentOption[0] || currentOption[2]) {
+      if (!custom) {
         setChosenMode(true);
       }
+     
     }
-  }, [currentOption, chosenMode, setChosenMode]);
+  }, [chosenMode, setChosenMode, custom]);
 
   const [clickedSearch, setClickedSearch] = useState<boolean>();
   
@@ -84,15 +85,15 @@ function Header({
         <div className="header__bottom-btns">
           <button
             type="button"
-            className={currentOption[0] ? "header__bottom-btns-active" : ""}
-            onClick={() => setCurrentOption([true, false, false])}
+            className={!accessories && !custom ? "header__bottom-btns-active" : ""}
+            onClick={() => navigate('/')}
           >
             <Trans i18nKey={"Header.Chooser.First"}>All products</Trans>
           </button>
           <button
             type="button"
-            className={currentOption[1] ? "header__bottom-btns-active" : ""}
-            onClick={() => setCurrentOption([false, true, false])}
+            className={custom ? "header__bottom-btns-active" : ""}
+            onClick={() => navigate("/custom")}
           >
             <Trans i18nKey={"Header.Chooser.Second"}>
               Customizable products
@@ -100,15 +101,15 @@ function Header({
           </button>
           <button
             type="button"
-            className={currentOption[2] ? "header__bottom-btns-active" : ""}
-            onClick={() => setCurrentOption([false, false, true])}
+            className={accessories ? "header__bottom-btns-active" : ""}
+            onClick={() => navigate("/accessories")}
           >
             <Trans i18nKey={"Header.Chooser.Third"}>All accessories</Trans>
           </button>
         </div>
         <div
           className={`header__bottom-mode ${
-            currentOption[1] ? "header__bottom-mode-active" : ""
+            custom ? "header__bottom-mode-active" : ""
           }`}
         >
           <div

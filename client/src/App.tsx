@@ -242,19 +242,7 @@ function App() {
 
   const [clickedMenu, setClickedMenu] = useState<boolean>(false);
 
-  const [currentOption, setCurrentOption] = useState<boolean[]>([
-    true,
-    false,
-    false,
-  ]);
-
   const headerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (mainRef.current) {
-      mainRef.current.scrollIntoView();
-    }
-  }, [currentOption, mainRef]);
 
   const [height, setHeight] = useState<number>();
 
@@ -414,8 +402,6 @@ function App() {
                       <HeaderSticky hideMode={false} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedLogin={setClickedLogin}
@@ -426,7 +412,6 @@ function App() {
                         setHeight={setHeight}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
-                        currentOption={currentOption}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedBasket={setClickedBasket}
@@ -442,14 +427,78 @@ function App() {
                   }
                 />
                 <Route
+                  path="/custom"
+                  element={
+                    <>
+                      <HeaderSticky hideMode={false} setHeight={setHeight} />
+                      <HeaderBody
+                        headerRef={headerRef}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setChosenMode={setChosenMode}
+                        custom={true}
+                      />
+                      <Body
+                        setHeight={setHeight}
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedBasket={setClickedBasket}
+                        setClickedWishlist={setClickedWishlist}
+                        setClickedUser={setClickedUser}
+                        setClickedLanguage={setClickedLanguage}
+                        handleOpening={handleOpening}
+                        clickedWishlist={clickedWishlist}
+                        clickedBasket={clickedBasket}
+                        custom={true}
+                      />
+                      <FooterBody chosenMode={chosenMode} />
+                    </>
+                  }
+                />
+                <Route
+                  path="/accessories"
+                  element={
+                    <>
+                      <HeaderSticky hideMode={false} setHeight={setHeight} />
+                      <HeaderBody
+                        headerRef={headerRef}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setChosenMode={setChosenMode}
+                        accessories={true}
+                      />
+                      <Body
+                        setHeight={setHeight}
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedBasket={setClickedBasket}
+                        setClickedWishlist={setClickedWishlist}
+                        setClickedUser={setClickedUser}
+                        setClickedLanguage={setClickedLanguage}
+                        handleOpening={handleOpening}
+                        clickedWishlist={clickedWishlist}
+                        clickedBasket={clickedBasket}
+                        accessories={true}
+                      />
+                      <FooterBody chosenMode={chosenMode} />
+                    </>
+                  }
+                />
+                <Route
                   path="/wishlist"
                   element={
                     <>
                       <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedLogin={setClickedLogin}
@@ -497,8 +546,6 @@ function App() {
                       <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedLogin={setClickedLogin}
@@ -548,8 +595,6 @@ function App() {
                       <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         chosenMode={chosenMode}
@@ -573,8 +618,6 @@ function App() {
                       <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         chosenMode={chosenMode}
                         clickedMenu={clickedMenu}
@@ -598,8 +641,6 @@ function App() {
                       <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
                         headerRef={headerRef}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         setClickedMenu={setClickedMenu}
                         chosenMode={chosenMode}
                         clickedMenu={clickedMenu}
@@ -628,10 +669,8 @@ function App() {
                         chosenMode={chosenMode}
                         setChosenMode={setChosenMode}
                         setClickedMenu={setClickedMenu}
-                        currentOption={currentOption}
-                        setCurrentOption={setCurrentOption}
                         clickedMenu={clickedMenu}
-                      />
+                                          />
                       <ProductBody />
                       <FooterBody />
                     </>
