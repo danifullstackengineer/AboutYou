@@ -194,7 +194,7 @@ function Product({
           mouse.clientX /
           (divRef.current.offsetWidth / 50)
         ).toFixed(0);
-        if(parseInt(amount) > 51){
+        if(parseInt(amount) > 50){
           setCurrentImageOne("51.jpg");
           setIsViewing360(false);
         }else{
@@ -325,6 +325,11 @@ function Product({
           />
         )}
       </div></> : ""}
+      {firstProduct ? 
+      <div className={"product__right"}>
+        
+      </div> : ""  
+    }
     </div>
   );
 }

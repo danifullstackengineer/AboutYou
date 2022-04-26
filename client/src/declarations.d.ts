@@ -5,4 +5,3 @@ declare module '*.webp';
 declare module 'jquery';
 declare module 'sass';
 declare module '*.eps';
-declare module 'lodash';

@@ -15,9 +15,9 @@
 2.0.0
 LIGHT_MODE=
 -settings in drept cu logourile
--bug 360 face mai mic
+-bug 360 face mai mic -- solved
 -slider nu merge pe ecrane mai mici
--primul produs random din 360
+-primul produs random din 360 -- solved (mai trebuie niste modificari odata ce am pozele!)
 -dupa daca dai click pe urmatoarele produse, primul se inlocuieste cu cel pe care ai dat click
 si celalalt se duce sus si devine 360
 -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
