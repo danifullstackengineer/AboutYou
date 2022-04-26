@@ -123,6 +123,7 @@ function BodyInner({
         <>
           {data.getProducts.map((product: ProductType, i: number) => {
             return (
+              <>
               <Product
                 key={i}
                 liked={
@@ -148,6 +149,81 @@ function BodyInner({
                 clickedBasket={clickedBasket}
                 clickedWishlist={clickedWishlist}
               />
+              <Product
+                key={i}
+                liked={
+                  dataL
+                    ? dataL.getUserInfo.likedProducts.find(
+                        (id: string) => id === product.id
+                      )
+                      ? true
+                      : false
+                    : false
+                }
+                type="360"
+                chosenMode={chosenMode}
+                product={product}
+                setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
+              />
+              <Product
+                key={i}
+                liked={
+                  dataL
+                    ? dataL.getUserInfo.likedProducts.find(
+                        (id: string) => id === product.id
+                      )
+                      ? true
+                      : false
+                    : false
+                }
+                type="360"
+                chosenMode={chosenMode}
+                product={product}
+                setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
+              />
+              <Product
+                key={i}
+                liked={
+                  dataL
+                    ? dataL.getUserInfo.likedProducts.find(
+                        (id: string) => id === product.id
+                      )
+                      ? true
+                      : false
+                    : false
+                }
+                type="360"
+                chosenMode={chosenMode}
+                product={product}
+                setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                setClickedUser={setClickedUser}
+                setClickedLanguage={setClickedLanguage}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
+              /></>
             );
           })}
         </>

@@ -1,13 +1,14 @@
 {
-  "name": "e-commerce",
+  "name": "cristi-about-you",
   "version": "1.0.0",
-  "description": "",
+  "description": "about-you-app",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run-client": "cd client && npm start && cd ..",
     "run-server": "cd server && npm start && cd ..",
     "run-server-dev": "cd server && npm run startdev && cd ..",
+    "dev-install": "cd server && npm install && cd .. && cd client && npm install",
     "startdev": "concurrently \"npm run run-client\" \"npm run run-server-dev\"",
     "build": "cd client && npm run build && cd ..",
     "install-client": "cd client && npm install",
