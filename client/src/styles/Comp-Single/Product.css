@@ -9,7 +9,9 @@
   position: relative;
   margin-bottom: 50px;
   user-select: none;
-  transform: translateX(var(--trackbarWidthTransform));
+  /* transform: translateX(var(--trackbarWidthTransform)); */
+  transform: translateX(calc(5vw + var(--trackbarWidthTransform)));
+  justify-self: center;
 }
 .product:not(.product-360) {
   background-color: rgb(245, 245, 245);

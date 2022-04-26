@@ -325,11 +325,6 @@ function Product({
           />
         )}
       </div></> : ""}
-      {firstProduct ? 
-      <div className={"product__right"}>
-        
-      </div> : ""  
-    }
     </div>
   );
 }

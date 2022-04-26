@@ -7,6 +7,7 @@ import { ProductType } from "../../types/Product";
 import { AuthContext } from "../../Context/Auth";
 import { getUserLikedProducts } from "../../Apollo/User";
 import shuffle from "../../Logic/randomize";
+import ProductCustom from "../../Comp-Single/ProductCustom";
 
 function BodyInner({
   setClickedLogin,
@@ -124,6 +125,7 @@ function BodyInner({
       randomProd.map((product: ProductType, i:number) => {
         if(product.id === "626153ac8b26eced2ce17eb1" || product.id === "6267c0266583c7fb140f3843"){
         return (
+          <>
           <Product key={product.id}
           chosenMode={chosenMode}
           product={product}
@@ -140,6 +142,8 @@ function BodyInner({
           firstProduct={product.id === "626153ac8b26eced2ce17eb1"}
           type="360"
           />
+          {product.id === "626153ac8b26eced2ce17eb1" ? <ProductCustom productId={product.id}/> : ""}
+          </>
         )
         }
       })
