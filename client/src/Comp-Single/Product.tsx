@@ -222,8 +222,7 @@ function Product({
   return (
     <div
       className={`product ${chosenMode === false ? "product-dark" : ""} ${
-        type === "360" ? "product-360" : ""
-      }`}
+        type === "360" ? "product-360" : ""} ${firstProduct ? "product-first" : ""}`}
       style={{
         cursor: isViewing360 && firstProduct
           ? `url("../../../assets/cursor/cursor.svg"), auto`
@@ -234,6 +233,7 @@ function Product({
         type === "360" && firstProduct ? setIsViewing360(!isViewing360) : undefined
       }
     >
+      <div className="product__left">
       <div className="product-cursor"></div>
       {firstProduct ? (
         <div className={`product__360`}>
@@ -325,6 +325,11 @@ function Product({
           />
         )}
       </div></> : ""}
+      </div>
+      {firstProduct ? <div className="product__right">
+        <div className="product__right-custom"></div>
+        <div className="product__right-image"></div>
+      </div> : ""}
     </div>
   );
 }

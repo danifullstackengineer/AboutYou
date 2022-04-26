@@ -142,8 +142,8 @@ function BodyInner({
           firstProduct={product.id === "626153ac8b26eced2ce17eb1"}
           type="360"
           />
-          {product.id === "626153ac8b26eced2ce17eb1" ? <ProductCustom productId={product.id}/> : ""}
-          </>
+          {/* {product.id === "626153ac8b26eced2ce17eb1" ? <ProductCustom productId={product.id}/> : ""}
+          </> */} </>
         )
         }
       })

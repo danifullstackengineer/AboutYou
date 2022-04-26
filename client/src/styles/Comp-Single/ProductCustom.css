@@ -1,5 +1,16 @@
 .productCustom {
-    width: 300px;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 50px;
+    user-select: none;
+    /* transform: translateX(var(--trackbarWidthTransform)); */
+    transform: translateX(calc(5vw + var(--trackbarWidthTransform)));
+    justify-self: center;
+    width: 25vw;
+    height: auto;
     background-color: red;
 }
