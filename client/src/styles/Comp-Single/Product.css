@@ -30,7 +30,7 @@
   box-shadow: 0px 15px 75px rgb(100, 200, 100);
 }
 .product > img {
-  max-height: 600px;
+  max-height: 480px;
   height: auto;
   object-fit: cover;
   object-position: 50% 50%;
@@ -38,7 +38,7 @@
   pointer-events: none;
 }
 .product__img-img {
-  max-height: 600px;
+  max-height: 480px;
   height: auto;
   object-fit: cover;
   object-position: 50% 50%;
@@ -67,7 +67,7 @@
   border: none;
   cursor: pointer;
   top: 90%;
-  z-index: 100;
+  z-index: 200;
   transition: all 150ms ease-in;
 }
 .product > button:not(.product__saved) {
@@ -272,13 +272,18 @@
   align-items: center;
   flex-direction: row;
   min-width: 768px;
-  max-height: 600px;
-  width: 70vw;
+  max-height: 480px;
   margin-bottom: 50px;
   user-select: none;
   justify-self: center;
   overflow: hidden;
   position: relative;
+}
+.product-first .product__left {
+  width: 70vw;
+}
+.product:not(.product-first) .product__left {
+  width: 100%;
 }
 .product__right {
   width: 25vw;

@@ -259,7 +259,6 @@ function Product({
           className={`product__img-img ${
             currentWay ? "product__img-special-bg" : ""
           } ${isViewing360 ? "product__img-special-360" : ""}`}
-          loading={"lazy"}
         />
         <img
           src={
@@ -273,7 +272,7 @@ function Product({
           } ${isViewing360 ? "product__img-special-no360" : ""}`}
           loading={"lazy"}
         />
-      {firstProduct ?<> <button
+      {firstProduct ? <> <button
         type="button"
         onClick={handleWishlist}
         className={`${
