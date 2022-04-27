@@ -24,6 +24,7 @@ const RootQuery = new GraphQLObjectType({
       async resolve(par, args) {
         const user = await User.findById(args.id);
         if (user) {
+          console.log("user was: ", user)
           return user;
         } else {
           return undefined;
@@ -118,8 +119,8 @@ const Mutations = new GraphQLObjectType({
               });
               prod.likes--;
               await prod.save();
-              await doc.save().then(() => {
-                return doc;
+              await doc.save().then((docSaved) => {
+                return docSaved;
               });
             } else {
               return doc;

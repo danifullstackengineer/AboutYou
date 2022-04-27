@@ -10,6 +10,7 @@ import { checkRegex } from "../../Logic/Credentials";
 import { register, login } from "../../API/Credential";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth";
+import { MobileContext } from "../../Context/Mobile";
 
 function Credential({
   clickedLogin,
@@ -28,6 +29,7 @@ function Credential({
   const navigate = useNavigate();
 
   const context = useContext(AuthContext);
+  const mContext = useContext(MobileContext);
 
   const [warning, setWarning] = useState<boolean[]>([
     false,
@@ -128,11 +130,11 @@ function Credential({
     <div
       className={`credential ${
         clickedLogin ? "credential__show" : "credential__hide"
-      }`}
+      } ${mContext.isMobile ? "credential-mobile" : ""}`}
     >
       <div className="credential__container">
         <div className="credential__container-top">
-          <h2>Log in</h2>
+          <h2>{chosenAction[0] ? "Register" : "Log In"}</h2>
           <div
             className={`credential__container-close`}
             onClick={() => {
@@ -197,6 +199,30 @@ function Credential({
                 color={"black"}
                 border={"1px solid rgb(200,200,200)"}
                 icon={<AiFillApple />}
+                isLoading={false}
+                type="button"
+              />
+              <InteractiveBtn
+                onClick={() => {
+                  console.log("clicked fb");
+                }}
+                text={"Facebook"}
+                width={250}
+                height={50}
+                bgColor={"#1878F2"}
+                icon={<FaFacebookF />}
+                isLoading={false}
+                type="button"
+              />
+              <InteractiveBtn
+                onClick={() => {
+                  console.log("clicked fb");
+                }}
+                text={"Facebook"}
+                width={250}
+                height={50}
+                bgColor={"#1878F2"}
+                icon={<FaFacebookF />}
                 isLoading={false}
                 type="button"
               />

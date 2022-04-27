@@ -2,13 +2,10 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 150px;
-  right: -400px;
-  width: 400px;
   z-index: 3000;
+  right: -450px;
+  width: 400px;
   transition: var(--transitionLightMode), border 1ms;
-  user-select: none;
-  max-height: calc(100vh - 250px);
 }
 .menu-light:not(.menu-inactive) {
   background-color: white;
@@ -34,7 +31,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-height: calc(100vh - 250px - 5rem - 50px);
+  overflow-y: hidden;
+  max-height: calc(100vh - 250px - 135px);
 }
 .menu__option > h3 {
   font-size: 1.25rem;
@@ -51,8 +49,8 @@
   -webkit-transition: height 250ms;
   transition: height 250ms;
   height: 0;
-  overflow: hidden;
   width: 100%;
+   overflow-y: auto;
 }
 .menu__option-option-product:not(:last-child) {
   border-bottom: 2px solid black;
@@ -206,7 +204,6 @@ span {
 }
 .menu__option-option-language > button {
   width: 40%;
-  border: none;
   outline: none;
   cursor: pointer;
   border: 2px solid black;
@@ -234,4 +231,14 @@ span {
   .menu__option-option-language
   > button:not(.menu__option-option-language-active):hover {
   background-color: rgb(50, 50, 50);
+}
+@media screen and (min-height: 481px){
+  .menu {
+    top: 250px;
+  }
+}
+@media screen and (max-height:480px){
+  .menu {
+    top: 100px;
+  }
 }

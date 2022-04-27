@@ -9,7 +9,6 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import Checkout from "./components/Checkout/Checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import { authJWT } from "./API/Credential";
 import Basket from "./components/Basket/Basket";
 import UserInformation from "./components/UserInformation/UserInformation";
 import Menu from "./Comp-Single/Menu";
@@ -20,8 +19,15 @@ import ScrollIntoViewComponent from "./Comp-Single/ScrollIntoViewComponent";
 import { AuthContext } from "./Context/Auth";
 import { BasketContext, BasketContextType } from "./Context/Basket";
 import { WishlistContext, WishlistContextType } from "./Context/Wishlist";
-
+import mobileCheck from "./Logic/mobilecheck";
+import { MobileContext } from "./Context/Mobile";
+import MenuPhone from "./Comp-Single/MenuPhone";
+import { useWindowDimensions } from "./Hooks/Viewport";
 var logoutTimer: NodeJS.Timeout;
+
+const promise = loadStripe(
+  "pk_test_51KXAUxDelfvIQhggA3tpu3fek1HqAwqYU7SAxvQJtBhcD2ULDWuzvd0KouPGX7HrgJ8xKZbqk49L1HTL5Vwh01nj00LQLjwQQf"
+);
 
 function App() {
   const [clickedLogin, setClickedLogin] = useState<boolean>(false);
@@ -193,9 +199,6 @@ function App() {
     [wishlist]
   );
 
-  const promise = loadStripe(
-    "pk_test_51KXAUxDelfvIQhggA3tpu3fek1HqAwqYU7SAxvQJtBhcD2ULDWuzvd0KouPGX7HrgJ8xKZbqk49L1HTL5Vwh01nj00LQLjwQQf"
-  );
 
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -328,6 +331,34 @@ function App() {
     [clickedBasket, clickedLanguage, clickedUser, clickedWishlist]
   );
 
+  //todo: modify this to false
+    const [isMobile, setIsMobile] = useState<boolean>(true);
+
+
+    //todo: uncomment this
+    // useEffect(()=>{
+    //  setIsMobile(mobileCheck())
+    // }, [])
+
+    const [isViewport620, setIsViewport620] = useState<boolean>(true);
+    const [hasChecked, setHasChecked] = useState<boolean>(false);
+
+    useEffect(()=>{
+      if(isMobile){
+      window.addEventListener("resize", ()=> {
+        setIsViewport620(window.innerHeight > 620);
+      })
+    }
+    if(!hasChecked){
+      setHasChecked(true);
+      setIsViewport620(window.innerHeight > 620);
+    }
+
+      return () => window.removeEventListener("resize", () => {})
+    }
+    , [isMobile, hasChecked,])
+    
+
   return (
     <div
       className="main"
@@ -363,14 +394,14 @@ function App() {
               login: login,
               logout: logout,
             }}
-          >
+          >      
+          <MobileContext.Provider value={{isMobile:false}}>        
             <Router>
-              <Menu
+              {isViewport620 ? <Menu
                 clickedMenu={clickedMenu}
                 chosenMode={chosenMode}
                 setClickedLogin={setClickedLogin}
                 setChosenAction={setChosenAction}
-                height={height}
                 setClickedBasket={setClickedBasket}
                 setClickedWishlist={setClickedWishlist}
                 setClickedUser={setClickedUser}
@@ -380,7 +411,21 @@ function App() {
                 clickedUser={clickedUser}
                 clickedLanguage={clickedLanguage}
                 handleOpening={handleOpening}
-              />
+              /> : <MenuPhone
+              clickedMenu={clickedMenu}
+              chosenMode={chosenMode}
+              setClickedLogin={setClickedLogin}
+              setChosenAction={setChosenAction}
+              setClickedBasket={setClickedBasket}
+              setClickedWishlist={setClickedWishlist}
+              setClickedUser={setClickedUser}
+              setClickedLanguage={setClickedLanguage}
+              clickedBasket={clickedBasket}
+              clickedWishlist={clickedWishlist}
+              clickedUser={clickedUser}
+              clickedLanguage={clickedLanguage}
+              handleOpening={handleOpening}
+              />}
               <Credential
                 chosenAction={chosenAction}
                 setChosenAction={setChosenAction}
@@ -394,13 +439,14 @@ function App() {
                 ""
               )}
               <ScrollIntoViewComponent mainRef={mainRef} />
+              <HeaderSticky close={!isViewport620 && clickedMenu}/>
               <Routes>
                 <Route
                   path="/*"
                   element={
                     <>
-                      <HeaderSticky hideMode={false} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620 && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
@@ -409,15 +455,12 @@ function App() {
                         setChosenMode={setChosenMode}
                       />
                       <Body
-                        setHeight={setHeight}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedBasket={setClickedBasket}
                         setClickedWishlist={setClickedWishlist}
-                        setClickedUser={setClickedUser}
-                        setClickedLanguage={setClickedLanguage}
                         handleOpening={handleOpening}
                         clickedWishlist={clickedWishlist}
                         clickedBasket={clickedBasket}
@@ -430,8 +473,8 @@ function App() {
                   path="/custom"
                   element={
                     <>
-                      <HeaderSticky hideMode={false} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
@@ -441,15 +484,12 @@ function App() {
                         custom={true}
                       />
                       <Body
-                        setHeight={setHeight}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedBasket={setClickedBasket}
                         setClickedWishlist={setClickedWishlist}
-                        setClickedUser={setClickedUser}
-                        setClickedLanguage={setClickedLanguage}
                         handleOpening={handleOpening}
                         clickedWishlist={clickedWishlist}
                         clickedBasket={clickedBasket}
@@ -463,8 +503,8 @@ function App() {
                   path="/accessories"
                   element={
                     <>
-                      <HeaderSticky hideMode={false} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
@@ -474,15 +514,12 @@ function App() {
                         accessories={true}
                       />
                       <Body
-                        setHeight={setHeight}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedBasket={setClickedBasket}
                         setClickedWishlist={setClickedWishlist}
-                        setClickedUser={setClickedUser}
-                        setClickedLanguage={setClickedLanguage}
                         handleOpening={handleOpening}
                         clickedWishlist={clickedWishlist}
                         clickedBasket={clickedBasket}
@@ -496,15 +533,14 @@ function App() {
                   path="/wishlist"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         setChosenMode={setChosenMode}
-                        hideMode={true}
                       />
                       <Wishlist />
                       <FooterBody />
@@ -543,15 +579,14 @@ function App() {
                   path="/basket"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
                         setChosenMode={setChosenMode}
-                        hideMode={true}
                       />{" "}
                       <Basket />
                       <FooterBody />
@@ -592,15 +627,15 @@ function App() {
                   path="/orders"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
+
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         clickedMenu={clickedMenu}
                         chosenMode={chosenMode}
                         setChosenMode={setChosenMode}
                         setClickedLogin={setClickedLogin}
-                        hideMode={true}
                       />
                       <UserInformation
                         type={0}
@@ -615,15 +650,14 @@ function App() {
                   path="/profile"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         chosenMode={chosenMode}
                         clickedMenu={clickedMenu}
                         setChosenMode={setChosenMode}
                         setClickedLogin={setClickedLogin}
-                        hideMode={true}
                       />
                       <UserInformation
                         type={1}
@@ -638,15 +672,14 @@ function App() {
                   path="/help"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedMenu={setClickedMenu}
                         chosenMode={chosenMode}
                         clickedMenu={clickedMenu}
                         setChosenMode={setChosenMode}
                         setClickedLogin={setClickedLogin}
-                        hideMode={true}
                       />
                       <UserInformation
                         type={2}
@@ -661,9 +694,8 @@ function App() {
                   path="/product/:id"
                   element={
                     <>
-                      <HeaderSticky hideMode={true} setHeight={setHeight} />
                       <HeaderBody
-                        hideMode={true}
+                      close={!isViewport620  && clickedMenu}
                         headerRef={headerRef}
                         setClickedLogin={setClickedLogin}
                         chosenMode={chosenMode}
@@ -678,6 +710,7 @@ function App() {
                 />
               </Routes>
             </Router>
+            </MobileContext.Provider>
           </AuthContext.Provider>
         </BasketContext.Provider>
       </WishlistContext.Provider>

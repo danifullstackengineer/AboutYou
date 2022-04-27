@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../../styles/components/Body/BodyInner.css";
-import Product from "../../Comp-Single/Product";
 import { useLazyQuery } from "@apollo/client";
 import { getAllProductsMain } from "../../Apollo/Products";
 import { ProductType } from "../../types/Product";
@@ -8,6 +7,7 @@ import { AuthContext } from "../../Context/Auth";
 import { getUserLikedProducts } from "../../Apollo/User";
 import shuffle from "../../Logic/randomize";
 import ProductCustom from "../../Comp-Single/ProductCustom";
+import Product from "../../Comp-Single/Product";
 
 function BodyInner({
   setClickedLogin,
@@ -16,8 +16,6 @@ function BodyInner({
   clickedMenu,
   setClickedBasket,
   setClickedWishlist,
-  setClickedUser,
-  setClickedLanguage,
   handleOpening,
   clickedBasket,
   clickedWishlist,
@@ -30,8 +28,6 @@ function BodyInner({
   clickedMenu: boolean;
   setClickedBasket: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedWishlist: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedUser: React.Dispatch<React.SetStateAction<boolean>>;
-  setClickedLanguage: React.Dispatch<React.SetStateAction<boolean>>;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
@@ -74,22 +70,20 @@ function BodyInner({
     }
   }, [dataNon, custom])
 
-  useEffect(()=>{
-    if(dataNon){
-      console.log(dataNon)
-    }
-  }, [dataNon])
 
   //todo: remove after you got 50 pics for each product
 
 
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
 
   useEffect(() => {
-    if (aContext.isLoggedIn) {
+    if (aContext.isLoggedIn && !isMounted) {
+      setIsMounted(true);
       getUserLikedProductsQuery();
     }
   }, [aContext]);
+
 
   // useEffect(() => {
   //   //TODO: Handle errors
@@ -100,17 +94,17 @@ function BodyInner({
   //   if (errorL) {
   //   }
   // }, [errorNon, error, errorL]);
+  
 
   return (
     <div className="bodyInner">
       {dataNon && !custom && !accessories ? 
       dataNon.getProducts.map((product:ProductType) => {
         return <Product key={product.id}
-        chosenMode={chosenMode}
         product={product}
         setClickedLogin={setClickedLogin}
         setClickedMenu={setClickedMenu}
-        liked={true}
+        liked={dataL ? dataL.getUserInfo.likedProducts.filter((productL:string) => productL === product.id ? product : undefined).length > 0 : false}
         clickedMenu={clickedMenu}
         setClickedBasket={setClickedBasket}
         setClickedWishlist={setClickedWishlist}
@@ -122,32 +116,7 @@ function BodyInner({
     }
     {
       randomProd && custom? 
-      randomProd.map((product: ProductType, i:number) => {
-        if(product.id === "626153ac8b26eced2ce17eb1" || product.id === "6267c0266583c7fb140f3843"){
-        return (
-          <>
-          <Product key={product.id}
-          chosenMode={chosenMode}
-          product={product}
-          setClickedLogin={setClickedLogin}
-          setClickedMenu={setClickedMenu}
-          liked={true}
-          clickedMenu={clickedMenu}
-          setClickedBasket={setClickedBasket}
-          setClickedWishlist={setClickedWishlist}
-          handleOpening={handleOpening}
-          clickedBasket={clickedBasket}
-          clickedWishlist={clickedWishlist}
-          //todo: change when got first 50 pics
-          firstProduct={product.id === "626153ac8b26eced2ce17eb1"}
-          type="360"
-          />
-          {/* {product.id === "626153ac8b26eced2ce17eb1" ? <ProductCustom productId={product.id}/> : ""}
-          </> */} </>
-        )
-        }
-      })
-    : ""}
+      randomProd.map((product: ProductType, i:number) => {}) : ""}
       </div>
   );
 }

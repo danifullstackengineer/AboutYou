@@ -9,9 +9,9 @@ function HeaderBody({
   setClickedMenu,
   headerRef,
   clickedMenu,
-  hideMode,
   custom,
-  accessories
+  accessories,
+  close
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -19,9 +19,9 @@ function HeaderBody({
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   headerRef: React.RefObject<HTMLDivElement>;
   clickedMenu: boolean;
-  hideMode?: boolean;
   custom?: boolean;
   accessories?:boolean;
+  close:boolean;
 }) {
 
   return (
@@ -33,9 +33,9 @@ function HeaderBody({
         setChosenMode={setChosenMode}
         headerRef={headerRef}
         clickedMenu={clickedMenu}
-        hideMode={hideMode}
         custom={custom}
         accessories={accessories}
+        close={close}
       />
     </div>
   );

@@ -22,3 +22,6 @@ LIGHT_MODE=
 si celalalt se duce sus si devine 360
 -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
 -imagini cate 3 in dark mode si accesorii
+
+//todo:
+fix likes

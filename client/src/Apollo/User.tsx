@@ -1,12 +1,5 @@
 import { gql } from "@apollo/client";
 
-const getUserFirstName = gql`
-  query ($id: ID!) {
-    getUserInfo(id: $id) {
-      first
-    }
-  }
-`;
 
 const getUserInformation = gql`
   query ($id: ID!) {
@@ -40,4 +33,4 @@ const getUserLikedProducts = gql`
   }
 `
 
-export { getUserFirstName, getUserInformation, setUserInformation, getUserLikedProducts, };
+export {getUserInformation, setUserInformation, getUserLikedProducts, };

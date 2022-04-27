@@ -1,6 +1,5 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { getVoucher } from "../../../../Apollo/Voucher";
 import "../../../../styles/components/Checkout/CheckoutBody/Basket/CheckoutBodyBasketTotal.css";
 
 function CheckoutBodyBasketTotal({
@@ -54,10 +53,9 @@ function CheckoutBodyBasketTotal({
       var total = 0;
       for (let i = 0; i < basket.length; i++) {
         if (basket[i].price) {
-          if (isValidVoucher && discount) {
+          if (discount) {
             total +=
-              ((basket[i].quantity * parseFloat(basket[i].price)) / 100) *
-              (100 - data.getVoucher.value);
+              ((basket[i].quantity * parseFloat(basket[i].price)) / 100) * 100
           } else {
             total += basket[i].quantity * parseFloat(basket[i].price);
           }
@@ -109,49 +107,11 @@ function CheckoutBodyBasketTotal({
     }
   };
 
-  const [voucher, setVoucher] = useState<string>();
-  const [voucherChanged, setVoucherChanged] = useState<number>(0);
-
-  const [getVoucherQuery, { data, error }] = useLazyQuery(getVoucher, {
-    variables: {
-      voucher: voucher,
-    },
-  });
-
-  useEffect(() => {
-    const voucher = localStorage.getItem("voucher");
-    if (voucher) {
-      setVoucher(voucher);
-    }
-    window.addEventListener("voucher", () => {
-      setVoucherChanged(voucherChanged + 1);
-    });
-    return () => window.removeEventListener("voucher", () => {});
-  }, [voucherChanged]);
-
-  useEffect(() => {
-    if (voucher) {
-      getVoucherQuery();
-    }
-  }, [voucher]);
-  useEffect(() => {
-    if (data) {
-      const isValid = data.getVoucher.endDate - new Date().getTime();
-      if (isValid > 0) {
-        setIsValidVoucher(true);
-      } else {
-        setIsValidVoucher(false);
-      }
-    }
-  }, [data]);
-
   useEffect(() => {
     if (basket && setAmount) {
       setAmount(getTotalAfterDiscount(basket));
     }
   }, [basket, setAmount]);
-
-  const [isValidVoucher, setIsValidVoucher] = useState<boolean>(false);
 
   return (
     <div className="checkoutBodyBasketTotal">
@@ -161,7 +121,7 @@ function CheckoutBodyBasketTotal({
       </div>
       <div className="checkoutBodyBasketTotal__lower">
         <h3>Total sum</h3>
-        {isValidVoucher ? (
+        {/* {isValidVoucher ? (
           <>
             <h3>Voucher: `{voucher}`</h3>
           </>
@@ -179,7 +139,7 @@ function CheckoutBodyBasketTotal({
             <h3>$ {getTotalNoDiscount(basket)}</h3>
             <h3>$ {getTotalAfterDiscount(basket)} </h3>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

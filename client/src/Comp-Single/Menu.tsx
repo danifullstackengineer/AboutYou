@@ -7,13 +7,14 @@ import { useContext } from "react";
 import { AuthContext } from "../Context/Auth";
 import { BasketContext } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
+import { MobileContext } from "../Context/Mobile";
+import { useWindowDimensions } from "../Hooks/Viewport";
 
 function Menu({
   clickedMenu,
   chosenMode,
   setClickedLogin,
   setChosenAction,
-  height,
   setClickedBasket,
   setClickedWishlist,
   setClickedUser,
@@ -36,11 +37,12 @@ function Menu({
   clickedWishlist: boolean;
   clickedUser: boolean;
   clickedLanguage: boolean;
-  height?: number;
   handleOpening: (type: "basket" | "wishlist" | "user" | "language") => void;
 }) {
   const [activeLang, setActiveLang] = useState<boolean[]>([true, false]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
+
+  const mContext = useContext(MobileContext);
 
   const basketRef = useRef<HTMLDivElement>(null);
   const wishlistRef = useRef<HTMLDivElement>(null);
@@ -128,14 +130,11 @@ function Menu({
   return (
     <div
       ref={mainRef}
-      style={{
-        top: height ? height : undefined,
-      }}
       className={`menu ${chosenMode === false ? "menu-dark" : "menu-light"} ${
         clickedMenu ? "menu-active" : "menu-inactive"
-      }`}
+      } ${mContext.isMobile ? "menu-mobile" : ""}`}
     >
-      <div className="menu__option">
+      <div className={`menu__option`}>
         <h3 onClick={() => handleOpening("basket")}>Basket</h3>
         <div
           ref={basketRef}
@@ -145,7 +144,6 @@ function Menu({
               : "menu__option-option-inactive"
           }`}
         >
-          <div className="menu__option-option-scroller"></div>
           <div className="menu__option-option-wrapper" ref={basketWrapperRef}>
             {bContext.product.length === 0 ? (
               <h4>Your basket is empty.</h4>
@@ -201,7 +199,6 @@ function Menu({
               })
             )}
           </div>
-          <div className="menu__option-option-scroller"></div>
         </div>
       </div>
       <div className="menu__option">
@@ -353,4 +350,4 @@ function Menu({
   );
 }
 
-export default Menu;
+export default React.memo(Menu);

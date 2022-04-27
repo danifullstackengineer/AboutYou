@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import AboutYouLogo from "../../Comp-Single/AboutYouLogo";
 import "../../styles/components/Checkout/HeaderCheckout.css";
 
 function HeaderCheckout() {
@@ -7,7 +6,6 @@ function HeaderCheckout() {
     <div className="headerCheckout">
       <div>
         <Link to="/">Continue shopping</Link>
-        <AboutYouLogo />
         <div className="headerCheckout__options">
           <Link to="/profile">My account</Link>
           <Link to="/orders">Orders</Link>

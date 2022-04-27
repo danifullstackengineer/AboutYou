@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../styles/components/Slider/Slider.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import useTimer from "../../Hooks/Timer";
 import React from "react";
+import { MobileContext } from "../../Context/Mobile";
 
 function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   const [{ seconds, reset }] = useTimer(1000);
 
   const [isSliding, setIsSliding] = useState<boolean>(false);
+
+  const mContext = useContext(MobileContext);
 
   const [info] = useState<
     {
@@ -100,6 +103,12 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   }, [currentQueue]);
 
   const handlePrev = (): void => {
+    if(mContext.isMobile){
+    setButtonAnim1("slider-btn-animated-mobile")
+    setTimeout(()=>{
+      setButtonAnim1("");
+    }, 250)
+  }
     if (!isSliding) {
       setIsSliding(true);
       setAnim("slider__slide-anim-backwards-initial");
@@ -139,6 +148,12 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   };
 
   const handleNext = (): void => {
+    if(mContext.isMobile){
+      setButtonAnim2("slider-btn-animated-mobile")
+      setTimeout(()=>{
+        setButtonAnim2("");
+      }, 250)
+    }
     if (!isSliding) {
       setIsSliding(true);
       var animName = "slider__slide-anim-forwards";
@@ -206,11 +221,14 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
     }
   };
 
+  const [buttonAnim1, setButtonAnim1] = useState<string>();
+  const [buttonAnim2, setButtonAnim2] = useState<string>();
+
   return (
     <div
       className={`slider ${
         chosenMode === false ? "slider-dark" : "slider-light"
-      }`}
+      } ${mContext.isMobile ? "slider-mobile" : ""}`}
     >
       <div className={`slider__slide ${anim}`}>
         <img src={currentQueue[0]} alt="" />
@@ -252,11 +270,11 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
           <button>Story</button>
         </div>
       </div>
-      <button type="button" className="slider__prev" onClick={handlePrev}>
-        <IoIosArrowBack />
+      <button type="button" className={`slider__prev ${buttonAnim1}`} onClick={handlePrev}>
+        <IoIosArrowBack style={{zIndex: "2"}}/>
       </button>
-      <button type="button" className="slider__next" onClick={handleNext}>
-        <IoIosArrowForward />
+      <button type="button" className={`slider__next ${buttonAnim2}`} onClick={handleNext}>
+        <IoIosArrowForward style={{zIndex: "2"}}/>
       </button>
       <div className="slider__dots">
         <div

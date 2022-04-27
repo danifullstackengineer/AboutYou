@@ -12,15 +12,25 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-width: 768px;
-  height: 250px;
-  transition: var(--transitionLightMode);
+  transition: var(--transitionLightMode), opacity 500ms ease-in, height;
   position: fixed;
   top: 0;
   z-index: 9999;
+  min-width: 350px;
 }
-.header-no-chooser {
-  height: 150px;
+.header:not(.header-close){
+  height: 250px;
+}
+.header-close {
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+.header-close * {
+  pointer-events: none;
+}
+.header-close-finished {
+  display: none!important;
 }
 .header-light {
   background-color: white;
@@ -47,10 +57,6 @@
   -ms-flex-direction: row;
   flex-direction: row;
   margin-bottom: 12.5px;
-}
-.header-no-chooser .header__top {
-  height: 100%!important;
-  margin-bottom: 0;
 }
 .header__bottom {
   display: -webkit-box;
@@ -161,11 +167,11 @@
 .header__bottom-mode-switch::before {
   position: absolute;
   content: "";
-  top: 0;
+  top: -2px;
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  left: 0;
+  left: -2px;
   background-color: rgb(226, 250, 11);
 }
 .header__bottom-mode-switch-dark::before {
@@ -227,70 +233,61 @@
 .header__top-logo {
   margin-top: 4.5em;
 }
-.header-no-chooser .header__top-logo {
-  margin-top: 0;
-}
 .header__dropdown {
   position: absolute;
-  right: 35px;
-  margin-top: 8em;
+  right: 50px;
+  margin-top: 1.5em;
+  cursor: pointer;
 }
-.header-no-chooser .header__dropdown {
-  margin-top: 4em;
+.header__dropdown::before {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  right: 10px;
+  margin-top: 0.8em;
+  transition: var(--transitionLightMode);
+}
+.header-dark .header__dropdown::before {
+  border: 3px solid white;
+}
+.header-light .header__dropdown::before {
+  border: 3px solid black;
 }
 .header__dropdown > img {
-  width: 75px;
-  right: 0;
-  height: 75px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
-  cursor: pointer;
   transition: var(--transitionLightMode);
 }
 .header__dropdown-active > img {
-  transform: rotate(180deg);
-}
-.header-no-chooser .header__bottom {
-  display: none;
+  transform: rotate(180deg) translateY(0px) translateX(0px);
 }
 .header__input {
   position: absolute;
   left: 35px;
   margin-top: calc(4em + 40px);
 }
-@keyframes slideTextInDropdown {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(250%);
-  }
-}
-@keyframes slideTextOutDropdown {
-  0% {
-    transform: translateX(250%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
 @keyframes slideTheSliderDark {
   0% {
-    left: 0;
+    left: -2px;
     background-color: rgb(226, 250, 11);
   }
   100% {
-    left: calc(100% - 20px);
+    left: calc(100% - 18px);
     background-color: black;
   }
 }
 @keyframes slideTheSliderLight {
   0% {
-    left: calc(100% - 20px);
+    left: calc(100% - 18px);
   }
   100% {
-    left: 0;
+    left: -2px;
   }
 }
+
 @media screen and (max-width: 1600px){
   .header__dropdown {
     right: 25px;
@@ -318,5 +315,61 @@
   }
   .header__bottom-input-clicked > span {
     left: calc(15% + 215px);
+  }
+}
+@media screen and (max-width: 768px) {
+  .header__bottom-btns > button {
+    min-width: 30px;
+    min-height: 30px;
+    font-size: 0.75rem;
+  }
+}
+@media screen and (max-width: 600px){
+  .header__bottom-btns > button {
+    font-size: 0.75rem;
+    padding: 0;
+    margin: 0;
+    width: 33.333%;
+  }
+  .header__bottom-btns {
+    width: 80%;
+  }
+}
+@media screen and (max-height: 480px) {
+  .header:not(.header-close) {
+    height: 100px;
+  }
+  .header-close {
+    height: 0!important;
+  }
+  .header__top {
+    display: none;
+  }
+  .header__bottom {
+    max-height: 100px;
+  }
+  .header__bottom-btns {
+    margin-top: 30px;
+  }
+  .header__bottom-mode {
+    margin-top: 1em;
+  }
+  .header__dropdown {
+    margin-top: 0;
+  }
+}
+@media screen and (max-height: 480px) and (max-width: 600px){
+  .header__dropdown > img {
+    height: 40px;
+    width: 20px;
+    transform: translateY(5px) translateX(-10px);
+  }
+  .header__dropdown-active > img {
+    transform: rotate(180deg) translateY(-5px) translateX(10px);
+  }
+  .header__dropdown::before {
+    width: 15px;
+    height: 15px;
+    margin-top: 1.2em;
   }
 }

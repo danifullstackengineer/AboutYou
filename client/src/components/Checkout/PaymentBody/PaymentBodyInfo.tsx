@@ -4,8 +4,6 @@ import PaymentBodyInfoAddress from "./PaymentBodyInfo/PaymentBodyInfoAddress";
 import PaymentBodyInfoCardPayment from "./PaymentBodyInfo/PaymentBodyInfoCardPayment";
 import PaymentBodyInfoPhoneNumber from "./PaymentBodyInfo/PaymentBodyInfoPhoneNumber";
 import PaymentBodyInfoSubscribe from "./PaymentBodyInfo/PaymentBodyInfoSubscribe";
-import PaymentBodyInfoSum from "./PaymentBodyInfo/PaymentBodyInfoSum";
-import PaymentBodyInfoVoucher from "./PaymentBodyInfo/PaymentBodyInfoVoucher";
 import { StripeCardElement } from "@stripe/stripe-js";
 import { getBasketItemsStorage } from "../../../Logic/localStorage/basket";
 import CheckoutBodyBasketOrder from "../CheckoutBody/Basket/CheckoutBodyBasketOrder";
@@ -62,7 +60,6 @@ function PaymentBodyInfo({
         basket={basket}
         setAmount={setAmount}
       />
-      <PaymentBodyInfoVoucher />
       <PaymentBodyInfoPhoneNumber />
       <PaymentBodyInfoSubscribe />
       {isCardPayment ? (

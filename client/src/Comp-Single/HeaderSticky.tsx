@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
+import '../styles/Comp-Single/HeaderSticky.css';
 
-function HeaderSticky({
-  hideMode,
-  setHeight,
-}: {
-  hideMode: boolean;
-  setHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
-  }) {
-  
-  useEffect(() => {
-    if (hideMode) {
-      setHeight(150);
-    } else {
-      setHeight(250);
-    }
-  }, [hideMode])
+function HeaderSticky({close} : {close: boolean}){
+
   
   return (
     <div
+    className={`headerSticky ${close ? "headerSticky-close" : ""}`}
       style={{
         zIndex: 1,
-        height: hideMode ? "150px" : "250px",
+        height: close ? "0" : "250px",
         width: "100%",
       }}
     ></div>

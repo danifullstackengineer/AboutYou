@@ -4,6 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 import NBLogo from "../../Comp-Single/NBLogo";
+import { useWindowDimensions } from "../../Hooks/Viewport";
 
 function Header({
   chosenMode,
@@ -11,9 +12,9 @@ function Header({
   setClickedMenu,
   headerRef,
   clickedMenu,
-  hideMode,
   custom,
-  accessories
+  accessories,
+  close
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -21,9 +22,9 @@ function Header({
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   headerRef: React.RefObject<HTMLDivElement>;
   clickedMenu: boolean;
-  hideMode?: boolean;
   custom?:boolean;
   accessories?:boolean;
+  close:boolean;
 }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -31,13 +32,6 @@ function Header({
 
   const [search, setSearch] = useState<string>();
 
-  useEffect(() => {
-    if (hideMode) {
-      setChosenMode(true);
-    }
-  }, [hideMode, setChosenMode]);
-
-  const [clickedDropdown, setClickedDropdown] = useState<boolean>();
 
   useEffect(() => {
     if (chosenMode !== undefined) {
@@ -49,13 +43,27 @@ function Header({
   }, [chosenMode, setChosenMode, custom]);
 
   const [clickedSearch, setClickedSearch] = useState<boolean>();
-  
+
+  const {width} = useWindowDimensions();
+
+  const [closedFinished, setClosedFinished] = useState<boolean>(false);
+
+  useEffect(()=>{
+    if(close){
+      const timeout = setTimeout(()=>{
+        setClosedFinished(true);
+      }, 500)
+      return () => clearTimeout(timeout);
+    }
+  }, [close])
+
   return (
     <div
       className={`header ${
         chosenMode || chosenMode === undefined ? "header-light" : "header-dark"
-      } ${hideMode ? "header-no-chooser" : ""}`}
+      } ${close ? "header-close" : ""}`}
       ref={headerRef}
+      style={{display: closedFinished ? "none" : "flex"}}
     >
       <div className="header__top">
         <div className="header__top-logo">
@@ -64,11 +72,10 @@ function Header({
       </div>
       <div
         className={`header__dropdown ${
-          clickedDropdown ? "header__dropdown-active" : ""
+         clickedMenu ? "header__dropdown-active" : ""
         }`}
         onClick={() => {
           setClickedMenu(!clickedMenu);
-          setClickedDropdown(!clickedDropdown);
         }}
       >
         {chosenMode === undefined || chosenMode ? (
@@ -88,15 +95,15 @@ function Header({
             className={!accessories && !custom ? "header__bottom-btns-active" : ""}
             onClick={() => navigate('/')}
           >
-            <Trans i18nKey={"Header.Chooser.First"}>All products</Trans>
+            <Trans i18nKey={width <= 600 ? "Header.Chooser.First.cut" : "Header.Chooser.First"}>{width <= 600 ? "Products" :"All products"}</Trans>
           </button>
           <button
             type="button"
             className={custom ? "header__bottom-btns-active" : ""}
             onClick={() => navigate("/custom")}
           >
-            <Trans i18nKey={"Header.Chooser.Second"}>
-              Customizable products
+            <Trans i18nKey={width <= 600 ? "Header.Chooser.Second.cut" : "Header.Chooser.Second"}>
+              {width <= 600 ? "Customizable" : "Customizable products"}
             </Trans>
           </button>
           <button
@@ -104,7 +111,7 @@ function Header({
             className={accessories ? "header__bottom-btns-active" : ""}
             onClick={() => navigate("/accessories")}
           >
-            <Trans i18nKey={"Header.Chooser.Third"}>All accessories</Trans>
+            <Trans i18nKey={width <= 600 ? "Header.Chooser.Third.cut" :"Header.Chooser.Third"}>{width <= 600 ? "Accessories" :"All accessories"}</Trans>
           </button>
         </div>
         <div
@@ -159,37 +166,8 @@ function Header({
           </div>
         </div>
       </div>
-      {hideMode ? (
-        <div className="header__input">
-          <div
-            className={`header__bottom-input ${
-              clickedSearch
-                ? "header__bottom-input-clicked"
-                : "header__bottom-input-unclicked"
-            }`}
-          >
-            <span
-              onClick={() =>
-                setClickedSearch(
-                  clickedSearch === undefined ? true : !clickedSearch
-                )
-              }
-            >
-              <AiOutlineSearch />
-            </span>
-            <input
-              placeholder={t("Header.Input")}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 }
 
-export default Header;
+export default React.memo(Header);

@@ -1,0 +1,12 @@
+.headerSticky {
+  transition: height 500ms ease-in;
+}
+.headerSticky-close {
+  height: 0!important;
+}
+
+@media screen and (max-height: 480px) {
+    .headerSticky:not(.headerSticky-close) {
+      height: 100px!important;
+    }
+  }

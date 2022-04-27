@@ -4,27 +4,31 @@
   --btnWithExtended: 45px;
 }
 .slider {
-  display: inline-block;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   overflow: hidden;
-  width: 100%;
-  display: flex;
-  min-width: 768px;
+  max-width: 100vw;
+  width: 100vw;
+  height: auto;
+  align-items: flex-start;
+  justify-content: flex-start;
   position: relative;
-  overflow: hidden;
-  transform: translateX(var(--trackbarWidthTransform));
+  min-width: 350px;
 }
 .slider__slide {
-  display: block;
-  height: 650px;
-  max-height: 60vh;
-  min-width: 100vw;
   position: relative;
+  height: 600px;
 }
 .slider__slide > img {
-  max-height: 650px;
-  width: auto;
-  min-width: 100vw;
+  width: 100vw;
+  min-height: 600px;
+  max-height: 600px;
+  overflow: hidden;
+  height: auto;
   object-fit: cover;
+  object-position: 50% 50%;
+  min-width: 350px;
 }
 .slider > button {
   position: absolute;
@@ -48,13 +52,29 @@
   color: white;
 }
 .slider__prev {
-  left: var(--trackbarWidth);
+  left: 0;
 }
 .slider__next {
   right: 0;
 }
-.slider > button:hover {
+.slider:not(.slider-mobile) > button:hover {
   width: var(--btnWithExtended);
+}
+.slider-mobile > button::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0;
+  z-index: 1;
+}
+.slider-light > button::before {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.slider-dark > button::before {
+  background-color: rgba(255, 174, 23, 0.9);
+}
+.slider-mobile .slider-btn-animated-mobile::before {
+  animation: 250ms ease-in doButtonMobileAnimation;
 }
 .slider__info {
   position: absolute;
@@ -63,7 +83,7 @@
   display: flex;
   -webkit-box-pack: start;
   -ms-flex-pack: start;
-  justify-content: flex-start;
+  justify-content: center;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -71,10 +91,19 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  top: 70%;
+  top: 0;
   left: 5%;
-  min-width: 450px;
+  overflow: hidden;
   transition: var(--transitionLightMode);
+  width: 100%;
+  height: 600px;
+}
+.slider__info > span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .slider-dark .slider__info > span{
   color: rgb(255, 174, 23);
@@ -84,6 +113,7 @@
 }
 .slider__info > span:first-child {
   font-size: 1.3rem;
+  margin-top: 250px;
 }
 .slider__info > span:nth-child(2) {
   font-size: 2.25rem;
@@ -180,13 +210,79 @@
     transform: translateX(-100%);
   }
 }
-@media screen and (max-width: 2970px) {
-  .slider__info {
-    top: 60%;
+@keyframes doButtonMobileAnimation {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
   }
 }
-@media screen and (max-width: 3960px) {
+@media screen and (max-width: 768px) , (max-height: 768px){
+  .slider > button:hover {
+    width: var(--btnWidth);
+  }
+  .slider__info  {
+    top: 0;
+    left: 0;
+  }
+  .slider__info  > span , .slider__info > button{
+    position: absolute;
+  }
+  .slider__info > span {
+    align-self: center;
+  }
+  .slider__info > span:first-child {
+    font-size: 1.3rem;
+    top: -100px;
+  }
+  .slider__info > span:nth-child(2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+   bottom: 350px;
+  }
+  .slider__info > button {
+    width: 300px;
+    justify-self: center;
+    align-self: center;
+    height: 40px;
+    bottom: 75px;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: var(--transitionLightMode);
+  }
+}
+@media screen and (max-width: 480px){
+  .slider .slider__slide {
+    height: 300px;
+  }
+  .slider .slider__slide > img {
+    min-height: 300px;
+    max-height: 300px;
+  }
   .slider__info {
-    top: 50%;
+    height: 300px;
+  }
+  .slider__info > span:nth-child(1){
+    top: -200px;
+  }
+  .slider__info > span:nth-child(2){
+    bottom: 250px;
+  }
+}
+@media screen and (max-height: 480px) and (max-width: 960px){
+  .slider .slider__slide {
+    height: 200px;
+  }
+  .slider .slider__slide > img {
+    min-height: 200px;
+    max-height: 200px;
+  }
+  .slider__info {
+    height: 200px;
+  }
+  .slider__info > span:nth-child(1), .slider__info > span:nth-child(2){
+    display: none;
   }
 }
