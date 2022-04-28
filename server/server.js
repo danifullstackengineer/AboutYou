@@ -11,6 +11,7 @@ import { fileURLToPath } from "url";
 import expressStaticGzip from "express-static-gzip";
 import compression from "compression";
 import Coinpayments from "coinpayments";
+import helmet from 'helmet';
 dotenv.config();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
@@ -25,6 +26,7 @@ const coinpaymentsClient = new Coinpayments({
 });
 
 app.use(compression());
+app.use(helmet())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {

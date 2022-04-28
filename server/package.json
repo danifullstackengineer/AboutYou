@@ -28,6 +28,7 @@
     "express-static-gzip": "^2.1.5",
     "graphql": "^15.8.0",
     "graphql-express": "^2.0.5",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.7",
     "node-fetch": "^3.2.3",
