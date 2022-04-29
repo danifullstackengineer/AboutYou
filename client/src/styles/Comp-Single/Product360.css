@@ -291,16 +291,16 @@
 .product360__left-spinner > span {
 
 }
-.product360__left-img-active {
-    width: 100%;
+.product360__left-360 > .product360__left-spinner {
+    display: none;
+}
+.product__left-360-img-active {
+    width: 90vw!important;
     max-height: 600px;
     z-index: 101;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    object-fit: contain;
 }
-.product__left-360-img-inactive{
+.product__left-360-img-inactive {
     display: none;
 }
 @media screen and (max-width: 1450px){

@@ -6,6 +6,7 @@ import { AccessoryType } from "../types/Accessory";
 import { ProductType } from "../types/Product";
 import useMousePosition from "../Hooks/MousePosition";
 import useOutsideAlerter from "../Hooks/OutsideAlerter";
+import { useWindowDimensions } from "../Hooks/Viewport";
 
 function Product360({
   product
@@ -105,20 +106,7 @@ function Product360({
 
     const [perc, setPerc] = useState<number>(0);
 
-    const [activeArray, setActiveArray] = useState<boolean[]>()
-
-    const handle360 = ():void => {
-      setClicked(!clicked);
-      var arr:boolean[] = []
-      for(let i=1; i<52; i++){
-        if(i===1){
-          arr.push(true)
-        }else{
-          arr.push(false);
-        }
-      }
-      setActiveArray(arr);
-    }
+    const [activeIndex, setActiveIndex] = useState<number>(0);
 
     const [mouseX, setMouseX] = useState<number>();
     const {x, setToggleRemove, toggleRemove} = useMousePosition();
@@ -130,9 +118,6 @@ function Product360({
     
     const [width, setWidth] = useState<number>();
     const [refX, setRefX] = useState<number>();
-    const [percentage, setPercentage] = useState<number>();
-    const [xPercentage, setXPercentage] = useState<number>();
-    const imageAmount = 51;
 
     useEffect(()=>{
       if(mainRef.current && refX && width){
@@ -144,37 +129,43 @@ function Product360({
       }
     } ,[x, mainRef])
 
+    const {width:widthScreen} = useWindowDimensions();
+
     useEffect(()=>{
       if(mainRef.current){
         const {x: refX, width} = mainRef.current.getBoundingClientRect();
         setWidth(width);
         setRefX(refX);
-        setPercentage(width / imageAmount | 0);
       }
-    }, [mainRef])
+    }, [mainRef, widthScreen])
 
     useEffect(()=>{
-      if(mouseX){
-        setXPercentage(2 * mouseX / imageAmount | 0);
+      if(mouseX && width){
+        const idx = Math.ceil((((mouseX / width) * 100 | 0) + 1)/2);
+        if(activeIndex !== idx){
+        if(idx < 0){
+          setActiveIndex(0);
+        }else if(idx > 50){
+          setActiveIndex(50);
+        }
+        else{
+          setActiveIndex(idx);
+        }
       }
-    }, [mouseX])
-
-    useEffect(()=>{
-      if(xPercentage && xPercentage >= 1 && xPercentage <= 51){
-        setActiveArray((prevState) => prevState?.map((_, i) => i=== xPercentage + 1 ? true : false));
       }
-    }, [xPercentage])
+    }, [mouseX, width])
 
 
   return (
     <div className="product360" ref={mainRef}>
-      <div className={`product360__left ${clicked ? "product360__left-360" : "product360__left-360-inactive"}`} onClick={handle360}>
+      <div className={`product360__left ${clicked ? "product360__left-360" : "product360__left-360-inactive"}`} onClick={()=>setClicked(!clicked)}>
       {!clicked ? <><img src={product.backgroundImg + "1.jpg"} alt={""} loading={"eager"}/>
       <img src={product.foregroundImg + "10.jpg"} alt={""} loading={"eager"}/></> : 
-        activeArray ? activeArray.map((active, i)=>{
-          return <img key={i + 1} src={product.backgroundImg + `${i + 1}.jpg`} alt={""} loading={"eager"} className={active ? "product360__left-img-active" : "product__left-360-img-inactive"}/>
-        }) 
-      : ""}
+   Array.from(Array(51).keys()).map((i) => {
+    return (
+      <img src={product.backgroundImg + `${i+1}.jpg`} alt={""} key={i + 1} className={activeIndex === i ? "product__left-360-img-active" : "product__left-360-img-inactive"} loading={activeIndex === i ? "eager" : "lazy"}/>
+    )
+   })}
       {clicked ? <div className="product360__left-spinner">
         <span>{perc}</span>
       </div> : "" }
@@ -239,7 +230,7 @@ function Product360({
         </div>
       </div>
       :""}
-      <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"}/>
+      {!clicked ? <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"}/> : ""}
     </div>
   );
 }
