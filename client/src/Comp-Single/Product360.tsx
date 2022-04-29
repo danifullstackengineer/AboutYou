@@ -119,6 +119,7 @@ function Product360({
     const [width, setWidth] = useState<number>();
     const [refX, setRefX] = useState<number>();
 
+
     useEffect(()=>{
       if(mainRef.current && refX && width){
         if(x - refX <= 0 || (x-refX) >= width){
@@ -143,8 +144,9 @@ function Product360({
       if(mouseX && width){
         const idx = Math.ceil((((mouseX / width) * 100 | 0) + 1)/2);
         if(activeIndex !== idx){
-        if(idx < 0){
-          setActiveIndex(0);
+          console.log(idx);
+        if(idx < 1){
+          setActiveIndex(1);
         }else if(idx > 50){
           setActiveIndex(50);
         }
@@ -161,9 +163,9 @@ function Product360({
       <div className={`product360__left ${clicked ? "product360__left-360" : "product360__left-360-inactive"}`} onClick={()=>setClicked(!clicked)}>
       {!clicked ? <><img src={product.backgroundImg + "1.jpg"} alt={""} loading={"eager"}/>
       <img src={product.foregroundImg + "10.jpg"} alt={""} loading={"eager"}/></> : 
-   Array.from(Array(51).keys()).map((i) => {
+   Array.from(Array(50).keys()).map((i) => {
     return (
-      <img src={product.backgroundImg + `${i+1}.jpg`} alt={""} key={i + 1} className={activeIndex === i ? "product__left-360-img-active" : "product__left-360-img-inactive"} loading={activeIndex === i ? "eager" : "lazy"}/>
+      <img src={product.backgroundImg + `${i + 1 }.jpg`} alt={""} key={i + 1} className={activeIndex === i + 1 ? "product__left-360-img-active" : "product__left-360-img-inactive"} loading={activeIndex === i ? "eager" : "eager"}/>
     )
    })}
       {clicked ? <div className="product360__left-spinner">

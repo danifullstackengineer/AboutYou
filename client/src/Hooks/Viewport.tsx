@@ -22,3 +22,4 @@ export const useWindowDimensions = (): { width: number; height: number } => {
 
   return windowDimensions;
 };
+

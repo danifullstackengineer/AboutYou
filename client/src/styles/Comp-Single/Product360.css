@@ -289,16 +289,17 @@
     width: 100%;
 }
 .product360__left-spinner > span {
-
+    width: 100%;
 }
 .product360__left-360 > .product360__left-spinner {
     display: none;
 }
 .product__left-360-img-active {
-    width: 90vw!important;
+    width: 100%!important;
     max-height: 600px;
     z-index: 101;
     object-fit: contain;
+    background-color: red;
 }
 .product__left-360-img-inactive {
     display: none;
