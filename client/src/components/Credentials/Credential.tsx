@@ -288,15 +288,6 @@ function Credential({
             ""
           )}
           {chosenAction[0] ? (
-            <div className="credential__address">
-              <span className="credential__address-text">
-                How should we address you?
-              </span>
-            </div>
-          ) : (
-            ""
-          )}
-          {chosenAction[0] ? (
             <div
               className="credential__asking-permission"
               onClick={() => setClickedNews(!clickedNews)}

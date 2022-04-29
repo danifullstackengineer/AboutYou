@@ -395,7 +395,7 @@ function App() {
               logout: logout,
             }}
           >      
-          <MobileContext.Provider value={{isMobile:false}}>        
+          <MobileContext.Provider value={{isMobile:true}}>        
             <Router>
               {isViewport620 ? <Menu
                 clickedMenu={clickedMenu}

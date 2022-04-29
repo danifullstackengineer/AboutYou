@@ -6,10 +6,11 @@
     margin-bottom: 50px;
     user-select: none;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    background-color: rgb(245,245,245);
+    background-color: white;
     cursor: pointer;
     min-width: 350px;
     max-height: 600px;
+    min-height: 600px;
     position: relative;
     justify-self: center;
     align-self: center;
@@ -91,6 +92,7 @@
 @media screen and (max-width: 1250px){
     .product {
         max-height: 450px;
+        min-height: 450px;
     }
     .product__img > img{
         max-height: 450px;
@@ -121,6 +123,7 @@
 @media screen and (max-width: 500px){
     .product {
         max-height: 300px;
+        min-height: 300px;
     }
     .product__img > img {
         object-position: 50% 80%;
@@ -149,12 +152,13 @@
 }
 @media screen and (max-width:480px){
     .product__img > img {
-        width: 350px;
+        width: 100%;
     }
 }
 @media screen and (max-height: 480px) and (max-width: 960px){
     .product {
         max-height: 150px;
+        min-height: 150px;
     }
     .product__img {
         max-height: 150px;

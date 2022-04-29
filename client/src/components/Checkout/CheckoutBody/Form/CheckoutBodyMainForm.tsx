@@ -2,12 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import "../../../../styles/components/Checkout/CheckoutBody/Form/CheckoutBodyMainForm.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
-import germanyFlag from "../../../../assets/country-flags/de.svg";
-import romaniaFlag from "../../../../assets/country-flags/ro.svg";
-import serbiaFlag from "../../../../assets/country-flags/rs.svg";
-import russianFlag from "../../../../assets/country-flags/ru.svg";
-import netherlandsFlag from "../../../../assets/country-flags/nl.svg";
-import japaneseFlag from "../../../../assets/country-flags/jp.svg";
 import useOutsideAlerter from "../../../../Hooks/OutsideAlerter";
 import InputFormCheckout from "../../../../Comp-Single/InputFormCheckout";
 import IAddress from "../../../../types/address";
@@ -66,47 +60,21 @@ function CheckoutBodyMainForm({
     }
   }, [newAddress]);
 
-  const [languages] = useState<{ name: string; flag: string }[]>([
-    {
-      name: "Germany",
-      flag: germanyFlag,
-    },
-    {
-      name: "Romania",
-      flag: romaniaFlag,
-    },
-    {
-      name: "Serbia",
-      flag: serbiaFlag,
-    },
-    {
-      name: "Netherlands",
-      flag: netherlandsFlag,
-    },
-    {
-      name: "Russia",
-      flag: russianFlag,
-    },
-    {
-      name: "Japan",
-      flag: japaneseFlag,
-    },
-  ]);
-  useEffect(() => {
-    if (address) {
-      setSelectedCountry(
-        languages.filter((language) => language.name === address.country)[0]
-      );
-      setActiveFormality(
-        address.formality === "Mrs." ? [false, true] : [true, false]
-      );
-    }
-  }, [address, languages]);
+  // useEffect(() => {
+  //   if (address) {
+  //     setSelectedCountry(
+  //       languages.filter((language) => language.name === address.country)[0]
+  //     );
+  //     setActiveFormality(
+  //       address.formality === "Mrs." ? [false, true] : [true, false]
+  //     );
+  //   }
+  // }, [address, languages]);
 
-  const handleCountryChange = (index: number): void => {
-    setSelectedCountry(languages[index]);
-    setToggleCountry(false);
-  };
+  // const handleCountryChange = (index: number): void => {
+  //   setSelectedCountry(languages[index]);
+  //   setToggleCountry(false);
+  // };
 
   const [isGoodFirst, setIsGoodFirst] = useState<boolean>(false);
   const [isGoodLast, setIsGoodLast] = useState<boolean>(false);
@@ -344,7 +312,7 @@ function CheckoutBodyMainForm({
                 </span>
                 <input type="text" />
               </div>
-              {languages.map((language, i) => {
+              {/* {languages.map((language, i) => {
                 return (
                   <div
                     onClick={() => handleCountryChange(i)}
@@ -355,7 +323,7 @@ function CheckoutBodyMainForm({
                     <span>{language.name}</span>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
         </div>

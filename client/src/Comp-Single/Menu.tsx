@@ -160,9 +160,7 @@ function Menu({
                       <img
                         alt=""
                         src={
-                          product.isCustomizable
-                            ? product.backgroundImg + "1.jpg"
-                            : product.backgroundImg
+                          product.backgroundImg + "1.jpg"
                         }
                       />
                     </div>

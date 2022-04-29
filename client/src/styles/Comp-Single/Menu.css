@@ -71,7 +71,7 @@
 .menu__option-option-product {
   display: flex;
   flex-direction: row;
-  background-color: rgb(245, 245, 245);
+  background-color: white;
   padding: 10px 0 10px 0;
 }
 .menu__option-option-product-left {

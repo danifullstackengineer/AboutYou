@@ -8,6 +8,7 @@ import { getUserLikedProducts } from "../../Apollo/User";
 import shuffle from "../../Logic/randomize";
 import ProductCustom from "../../Comp-Single/ProductCustom";
 import Product from "../../Comp-Single/Product";
+import Product360 from "../../Comp-Single/Product360";
 
 function BodyInner({
   setClickedLogin,
@@ -65,8 +66,8 @@ function BodyInner({
   useEffect(()=>{
     if(dataNon && custom && !randomProd){
       //todo: change when got first 50 pics
-      // setRandomProd(shuffle(dataNon.getProducts));
-      setRandomProd(dataNon.getProducts);
+      setRandomProd(shuffle(dataNon.getProducts));
+      // setRandomProd(dataNon.getProducts);
     }
   }, [dataNon, custom])
 
@@ -115,8 +116,15 @@ function BodyInner({
       }) : ""  
     }
     {
-      randomProd && custom? 
-      randomProd.map((product: ProductType, i:number) => {}) : ""}
+      randomProd  && custom? 
+      <><Product360 product={randomProd[0]}/>
+      {randomProd.map((product:ProductType, i:number)=> {
+        if(i> 0){
+          return <ProductCustom product={product} key={i}/>
+        }
+      })}
+      </>
+      : ""}
       </div>
   );
 }

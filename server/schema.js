@@ -12,6 +12,8 @@ import ProductType from "./GraphQL/ProductType.js";
 import UserType from "./GraphQL/UserType.js";
 import User from "./models/User.js";
 import Products from "./models/Products.js";
+import Accessories from './models/Accessories.js';
+import AccessoryType from "./GraphQL/AccessoryType.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -24,7 +26,6 @@ const RootQuery = new GraphQLObjectType({
       async resolve(par, args) {
         const user = await User.findById(args.id);
         if (user) {
-          console.log("user was: ", user)
           return user;
         } else {
           return undefined;
@@ -48,6 +49,15 @@ const RootQuery = new GraphQLObjectType({
         return await Products.findById(args.id);
       },
     },
+    getAccessoriesBasedOnParent: {
+      type: new GraphQLList(AccessoryType),
+      args: {
+        parentId: {type: new GraphQLNonNull(GraphQLID)}
+      },
+      async resolve(par, args){
+        return await Accessories.find({parentId: args.parentId});
+      }
+    }
   },
 });
 

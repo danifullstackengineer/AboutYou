@@ -1,0 +1,264 @@
+.product360 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90vw;
+    margin-bottom: 50px;
+    user-select: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: white;
+    cursor: pointer;
+    min-width: 350px;
+    min-height: 600px;
+    position: relative;
+    transition: var(--transitionLightMode)
+}
+.product360:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.product360__left {
+    width: 70%;
+    max-height: 600px;
+    min-width: 350px;
+}
+.product360__left > img {
+    max-height: 600px;
+    height: auto;
+    object-fit: cover;
+    object-position: 50% 60%;
+    transition: all 300ms ease-in;
+    pointer-events: none;
+    width: 50%;
+}
+.product360__right {
+    width: 30%;
+    min-height: 600px;
+    min-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    cursor:default;
+}
+.product360__right-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    align-self: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.product360__right-top > div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.product360__right-top > div:not(.product360__right-price) > span {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px 0 10px 0;
+    text-decoration: underline;
+}
+.product360__right-top ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-wrap: wrap;
+}
+.product360__right-top li {
+    list-style: none;
+    width: 25%;
+    font-size: 1rem;
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+}
+.product360__right-top > div:not(.product360__right-custom) li {
+    border: 2px solid rgb(100,100,100);
+    cursor: pointer;
+} 
+.product360__right-custom ul {
+    overflow: hidden;
+    justify-content: center;
+    background-color: rgb(245,245,245);
+}
+.product360__right-custom li {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    position: relative;
+}
+.product360__right-custom li:not(:last-child){
+    border-bottom: 1px solid rgb(200,200,200);
+}
+.product360__right-custom-info {
+    display: flex;
+    flex-direction: column;
+    flex: 0.7;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+.product360__right-custom ul img {
+    width: 20%;
+    max-height: 60px;
+    object-fit: cover;
+    flex: 0.2;
+    z-index: 1;
+}
+.product360__right-custom-checker {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border: 1px solid rgb(200,200,200);
+    background-color: white;
+    z-index: 2;
+    right: 5px;
+    top: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.product360__right-custom-checker::before {
+    position: absolute;
+    content: "";
+    height: 12.5px;
+    width: 2px;
+    top: 3px;
+    background-color: darkgreen;
+    transform: rotate(30deg);
+    border-bottom-right-radius: 50%;
+    opacity: 0;
+}
+.product360__right-custom-checker::after{
+    position: absolute;
+    content: "";
+    height: 5px;
+    width: 2px;
+    top: 9.5px;
+    left: 5.25px;
+    background-color: darkgreen;
+    border-bottom-left-radius: 50%;
+    transform: rotate(-30deg);
+    opacity: 0;
+}
+.product360__right-custom-checker-active {
+    border: 1px solid darkgreen;
+    background-color: rgb(100,255,100);
+}
+.product360__right-custom-checker-active::before, .product360__right-custom-checker-active::after {
+    opacity: 1;
+}
+.product360__right-colors-selected, .product360__right-sizes-selected {
+    background-color: rgb(100,255,100);
+    border: 2px solid darkgreen!important;
+}
+.product360__right-price {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 50px;
+    font-size: 1rem;
+}
+.product360__right-price > span:last-child {
+    color: rgb(255,100,100);
+    font-weight: 900;
+}
+.product360__right-bottom {
+    flex: 0.3;
+    width: 80%;
+   align-self: center;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+   flex-direction: column;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.product360__right-bottom > span {
+    padding: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.product360__right-top:hover, .product360__right-bottom:hover {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.product360__right-bottom-upload {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.product360__right-bottom-info > div > label {
+    width: 50%;
+    min-height: 30px;
+    background-color: rgb(245,245,245);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.product360__right-bottom-info > div > input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.product360__right-bottom-upload-uploaded {
+    width: 70%;
+    flex-direction: column;
+}
+.product360__right-bottom-info > img {
+    width: 50%;
+    max-height: 100px;
+    object-fit: contain;
+    object-position: 50% 50%;
+    margin: 10px;
+}
+.product360__right-bottom-info {
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.product360__right-bottom-upload > label {
+    margin: 10px 0 10px 0;
+}
+.product360__right-bottom-upload-uploaded > label, .product360__right-bottom-upload-uploaded > input {
+    margin: 10px 0 10px 0;
+}
+.product360__right-bottom-upload-uploaded > button {
+    width: 50%;
+    height: 30px;
+    border: none;
+    background-color: rgb(245,245,245);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.product360__right-bottom-upload > label:hover , .product360__right-bottom-upload-uploaded > button:hover {
+    background-color: rgb(100,255,100);
+}
+@media screen and (max-width: 1450px){
+    .product360__left > img {
+        width: 100%;
+    }
+    .product360__left > img:last-child {
+        display: none;
+    }
+}
+@media screen and (max-width: 800px){
+    .product360 {
+        flex-direction: column;
+    }
+    .product360 > div {
+        width: 100%;
+    }
+}
