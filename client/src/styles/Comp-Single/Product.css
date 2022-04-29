@@ -28,7 +28,7 @@
 .product__img > img {
     max-height: 600px;  
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
   object-position: 50% 60%;
   transition: all 300ms ease-in;
   pointer-events: none;

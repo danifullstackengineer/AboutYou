@@ -4,6 +4,8 @@ import { getAccessoriesBasedOnParent } from "../Apollo/Accessory";
 import "../styles/Comp-Single/Product360.css";
 import { AccessoryType } from "../types/Accessory";
 import { ProductType } from "../types/Product";
+import useMousePosition from "../Hooks/MousePosition";
+import useOutsideAlerter from "../Hooks/OutsideAlerter";
 
 function Product360({
   product
@@ -22,6 +24,8 @@ function Product360({
       const [selectedSize, setSelectedSize] = useState<boolean[]>(product.sizes.map(() => false));
       const [selectedColor, setSelectedColor] = useState<boolean[]>(product.colors.map(() => false));
       const [accIndex, setAccIndex] = useState<number>();
+
+      const mainRef = useRef<HTMLDivElement>(null);
 
       //todo: handle error
     useEffect(()=>{
@@ -97,17 +101,85 @@ function Product360({
       }
     }
 
+    const [clicked, setClicked] = useState<boolean>(false);
+
+    const [perc, setPerc] = useState<number>(0);
+
+    const [activeArray, setActiveArray] = useState<boolean[]>()
+
+    const handle360 = ():void => {
+      setClicked(!clicked);
+      var arr:boolean[] = []
+      for(let i=1; i<52; i++){
+        if(i===1){
+          arr.push(true)
+        }else{
+          arr.push(false);
+        }
+      }
+      setActiveArray(arr);
+    }
+
+    const [mouseX, setMouseX] = useState<number>();
+    const {x, setToggleRemove, toggleRemove} = useMousePosition();
+
     useEffect(()=>{
-      console.log(file)
-    }, [file])
+      setToggleRemove(!clicked);
+    }, [clicked])
+
+    
+    const [width, setWidth] = useState<number>();
+    const [refX, setRefX] = useState<number>();
+    const [percentage, setPercentage] = useState<number>();
+    const [xPercentage, setXPercentage] = useState<number>();
+    const imageAmount = 51;
+
+    useEffect(()=>{
+      if(mainRef.current && refX && width){
+        if(x - refX <= 0 || (x-refX) >= width){
+          setMouseX(0);
+        }else{
+          setMouseX(x-refX);
+        }
+      }
+    } ,[x, mainRef])
+
+    useEffect(()=>{
+      if(mainRef.current){
+        const {x: refX, width} = mainRef.current.getBoundingClientRect();
+        setWidth(width);
+        setRefX(refX);
+        setPercentage(width / imageAmount | 0);
+      }
+    }, [mainRef])
+
+    useEffect(()=>{
+      if(mouseX){
+        setXPercentage(2 * mouseX / imageAmount | 0);
+      }
+    }, [mouseX])
+
+    useEffect(()=>{
+      if(xPercentage && xPercentage >= 1 && xPercentage <= 51){
+        setActiveArray((prevState) => prevState?.map((_, i) => i=== xPercentage + 1 ? true : false));
+      }
+    }, [xPercentage])
+
 
   return (
-    <div className="product360">
-      <div className="product360__left">
-      <img src={product.backgroundImg + "1.jpg"} alt={""}/>
-      <img src={product.foregroundImg + "10.jpg"} alt={""}/>
+    <div className="product360" ref={mainRef}>
+      <div className={`product360__left ${clicked ? "product360__left-360" : "product360__left-360-inactive"}`} onClick={handle360}>
+      {!clicked ? <><img src={product.backgroundImg + "1.jpg"} alt={""} loading={"eager"}/>
+      <img src={product.foregroundImg + "10.jpg"} alt={""} loading={"eager"}/></> : 
+        activeArray ? activeArray.map((active, i)=>{
+          return <img key={i + 1} src={product.backgroundImg + `${i + 1}.jpg`} alt={""} loading={"eager"} className={active ? "product360__left-img-active" : "product__left-360-img-inactive"}/>
+        }) 
+      : ""}
+      {clicked ? <div className="product360__left-spinner">
+        <span>{perc}</span>
+      </div> : "" }
       </div>
-      <div className="product360__right">
+      {!clicked ? <div className="product360__right">
         <div className="product360__right-top">
           <div className="product360__right-sizes">
             <span>Available Sizes</span>
@@ -154,18 +226,20 @@ function Product360({
             <span>Total:</span> <span>${total}</span>
           </div>
         </div>
-        <div className="product360__right-bottom">
+        <div className={`product360__right-bottom ${accIndex!==undefined ? "product360__right-bottom-disabled" : ""}`}>
           <span>Your custom style</span>
           <div className="product360__right-bottom-info">
-          {file ? <img src={URL.createObjectURL(file)} alt={"Retry"} loading="eager"/> : ""}
-          <div className={`product360__right-bottom-upload ${file ? "product360__right-bottom-upload-uploaded" : ""}`}>
-          <label htmlFor="upload-photo">Upload</label>
-          <input type="file" name="photo" multiple={false} accept="image/*" id="upload-photo" onChange={(e) => handleFileChange(e)}/>
-          {file ? <button type="button" onClick={()=> setFile(undefined)}>Remove</button> : ""}
+          {file && accIndex === undefined ? <img src={URL.createObjectURL(file)} alt={"Retry"} loading="eager"/> : ""}
+          <div className={`product360__right-bottom-upload ${file && accIndex === undefined ? "product360__right-bottom-upload-uploaded" : ""}`}>
+          <label htmlFor="upload-photo">{accIndex !== undefined ? "Not available." : "Upload"}</label>
+          <input type="file" name="photo" multiple={false} accept="image/*" id="upload-photo" onChange={(e) => handleFileChange(e)} disabled={accIndex !== undefined ? true : false}/>
+          {file && accIndex === undefined ? <button type="button" onClick={()=> setFile(undefined)}>Remove</button> : ""}
           </div>
           </div>
         </div>
       </div>
+      :""}
+      <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"}/>
     </div>
   );
 }
