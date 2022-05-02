@@ -239,25 +239,9 @@
   margin-top: 1.5em;
   cursor: pointer;
 }
-.header__dropdown::before {
-  content: "";
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  right: 10px;
-  margin-top: 0.8em;
-  transition: var(--transitionLightMode);
-}
-.header-dark .header__dropdown::before {
-  border: 3px solid white;
-}
-.header-light .header__dropdown::before {
-  border: 3px solid black;
-}
 .header__dropdown > img {
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
   object-fit: cover;
   transition: var(--transitionLightMode);
 }

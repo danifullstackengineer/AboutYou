@@ -115,16 +115,28 @@ function BodyInner({
         />
       }) : ""  
     }
-    {
+    {/* {
       randomProd  && custom? 
       <><Product360 product={randomProd[0]}/>
-      {randomProd.map((product:ProductType, i:number)=> {
+      <div className="bodyInner-random">
+        {randomProd.map((product:ProductType, i:number)=> {
         if(i> 0){
           return <ProductCustom product={product} key={i}/>
         }
       })}
-      </>
-      : ""}
+      </div> */}
+      { randomProd && custom ?
+      <>
+        <Product360 product={randomProd[0]}/>
+        <div className="bodyInner-random">
+          {randomProd.map((product: ProductType, i:number)=> {
+            if(i>0){
+              return <ProductCustom product={product} key={i}/>
+            }
+          })}
+        </div>
+        </>
+        : ""}
       </div>
   );
 }

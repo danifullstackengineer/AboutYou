@@ -189,6 +189,7 @@ function Credential({
                 icon={<FaFacebookF />}
                 isLoading={false}
                 type="button"
+                facebook={true}
               />
               <InteractiveBtn
                 onClick={() => {}}

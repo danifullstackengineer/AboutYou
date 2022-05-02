@@ -5,19 +5,18 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  flex-direction: column;
   width: 100%;
   margin-top: 50px;
   margin-bottom: 50px;;
   min-width: 350px;
 }
-.bodyInner__row {
+.bodyInner-random {
+  width: 90%;
+  display: flex;
   flex-direction: row;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-}
-.bodyInner:not(.bodyInner__row) {
-  flex-direction: column;
   justify-content: center;
+  flex-wrap: wrap;
 }

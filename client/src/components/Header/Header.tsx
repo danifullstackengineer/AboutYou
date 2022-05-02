@@ -79,10 +79,10 @@ function Header({
         }}
       >
         {chosenMode === undefined || chosenMode ? (
-          <img src={"/assets/svg/dropdown.svg"} loading={"eager"} alt={""} />
+          <img src={"/assets/png/dropdown-light.png"} loading={"eager"} alt={""} />
         ) : (
           <img
-            src={"/assets/svg/dropdown-dark.svg"}
+            src={"/assets/png/dropdown-dark.png"}
             loading={"eager"}
             alt={""}
           />

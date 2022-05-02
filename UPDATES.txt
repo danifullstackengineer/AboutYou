@@ -25,3 +25,8 @@ si celalalt se duce sus si devine 360
 
 //todo:
 fix likes
+on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image.
+
+
+// solved:
+made 1st footer responsive on all screens.

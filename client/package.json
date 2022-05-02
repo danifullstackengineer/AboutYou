@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@apollo/client": "^3.5.10",
+    "@greatsumini/react-facebook-login": "^3.2.0",
     "@reduxjs/toolkit": "^1.8.0",
     "@stripe/react-stripe-js": "^1.7.0",
     "@stripe/stripe-js": "^1.26.0",

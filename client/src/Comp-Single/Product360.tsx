@@ -128,7 +128,7 @@ function Product360({
           setMouseX(x-refX);
         }
       }
-    } ,[x, mainRef])
+    } ,[x, mainRef, width])
 
     const {width:widthScreen} = useWindowDimensions();
 
@@ -142,9 +142,9 @@ function Product360({
 
     useEffect(()=>{
       if(mouseX && width){
-        const idx = Math.ceil((((mouseX / width) * 100 | 0) + 1)/2);
+        const idx = 3;
         if(activeIndex !== idx){
-          console.log(idx);
+          // console.log(idx);
         if(idx < 1){
           setActiveIndex(1);
         }else if(idx > 50){

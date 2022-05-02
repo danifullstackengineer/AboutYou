@@ -99,8 +99,8 @@ const Product = ({product, setClickedLogin, setClickedMenu, liked, clickedMenu, 
   return (
     <div className={`product`}>
         <div className={`product__img`}>
-            <img src={product.backgroundImg + "1.jpg"}/>
-            <img src={product.foregroundImg + "10.jpg"}/>
+            <img src={product.backgroundImg + "1.jpg"} alt={""} loading={"lazy"}/>
+            <img src={product.foregroundImg + "10.jpg"} alt={""} loading={"lazy"}/>
         </div>
         <h3>{product.title}</h3>
         <div className="product__btns">

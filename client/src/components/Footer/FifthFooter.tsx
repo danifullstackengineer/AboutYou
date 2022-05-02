@@ -71,7 +71,8 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
           <h3>SECURE SHOPPING</h3>
           <ul>
             <li>
-              <FaExpeditedssl /> Your data is secure with us
+              <img src={"/assets/png/ssl.png"} alt={""} loading={"lazy"}/>
+               Your data is secure with us
             </li>
           </ul>
         </section>

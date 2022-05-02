@@ -103,7 +103,7 @@ function App() {
     (item) => {
       const duplicate = (): boolean | undefined => {
         for (let i = 0; i < basket.length; i++) {
-          if (basket[i].id == item.id) return true;
+          if (basket[i].id === item.id) return true;
           else continue;
         }
       };
@@ -169,7 +169,7 @@ function App() {
     (item) => {
       const duplicate = (): boolean | undefined => {
         for (let i = 0; i < wishlist.length; i++) {
-          if (wishlist[i].id == item.id) return true;
+          if (wishlist[i].id === item.id) return true;
           else continue;
         }
       };

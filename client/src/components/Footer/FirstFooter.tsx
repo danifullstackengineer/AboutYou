@@ -13,25 +13,25 @@ function FirstFooter() {
           <span>
             <FaShippingFast />
           </span>{" "}
-          FREE SHIPPING
+          <span>FREE SHIPPING</span>
         </div>
         <div className="firstFooter__option">
           <span>
             <BsArrowLeftRight />
           </span>{" "}
-          30 DAY RETURN POLICY
+          <span>30 DAY RETURN POLICY</span>
         </div>
         <div className="firstFooter__option">
           <span>
             <RiSecurePaymentLine />
           </span>{" "}
-          SECURE PAYMENTS
+          <span>SECURE PAYMENTS</span>
         </div>
         <div className="firstFooter__option">
           <span>
             <GiMailShirt />
           </span>{" "}
-          MORE THAN 500 BRANDS
+          <span>MORE THAN 500 BRANDS</span>
         </div>
       </footer>
     </div>

@@ -178,6 +178,11 @@
   -ms-flex-align: center;
   align-items: center;
 }
+.fifthFooter > footer > section:nth-child(3) li > img {
+ height: 45px;
+ width: 45px;
+ object-fit: contain;
+}
 @media screen and (max-width: 800px) {
   .fifthFooter {
     transform: translateX(0);

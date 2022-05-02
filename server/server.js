@@ -12,6 +12,7 @@ import expressStaticGzip from "express-static-gzip";
 import compression from "compression";
 import Coinpayments from "coinpayments";
 import helmet from 'helmet';
+import https from 'https';
 dotenv.config();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
@@ -37,7 +38,7 @@ if (!(process.env.NODE_ENV === "production")) {
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
-  app.get("*", (req, res) => {
+  app.get("*", (_, res) => {
     res.sendFile(
       path.resolve(__dirname, "..", "client", "build", "index.html")
     );
