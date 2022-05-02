@@ -34,9 +34,8 @@ function UserInformation({
 
   return (
     <div
-      className="userInformation"
+      className={`userInformation ${type !== 2 ? "userInformation-padding" : ""}`}
       style={{
-        paddingLeft: type === 2 ? "0" : "300px",
         marginTop: type !== 2 ? "3.5em" : undefined,
       }}
     >

@@ -13,6 +13,7 @@
     padding: 0 2em 0 2em;
     font-size: .9rem;
     cursor: pointer;
+    width: 100%;
 }
 .helpFaq:hover a{
     text-decoration: underline;

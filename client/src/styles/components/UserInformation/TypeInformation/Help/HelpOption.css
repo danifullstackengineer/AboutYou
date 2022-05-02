@@ -12,14 +12,15 @@
     margin-right: 9px;
     margin-top: 1em;
     margin-bottom: 1em;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 .helpOption > img {
     width: 75px;
     height: 75px;
     object-fit: cover;
     cursor: pointer;
-    padding: 2em 0 2em 1em;
-    padding-right: calc(100% - 75px - 1em);
+    margin: 1em 0 1em 2em;
 }
 .helpOption > h3 {
     font-size: 1.5rem;
@@ -79,25 +80,12 @@
     padding: 0 .5em 0 .5em;
     max-width: 740px;
 }
-@media screen and (max-width: 1300px){
+@media screen and (max-width: 450px){
     .helpOption {
-        width: 45%;
+        width: 300px;
     }
-}
-@media screen and (max-width: 768px){
     .helpOption > img {
-        width: 25px;
-        height: 25px;
-    }
-    .helpOption__option {
-        display: none;
-    }
-    .helpOption > h3 {
-        font-size: 1rem;
-        margin: 0 0 0 12.5px;
-    }
-    .helpOption { 
-        height: 100px;
-        width: 45%;
+        height: 50px;
+        width: 50px;
     }
 }

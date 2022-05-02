@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../styles/components/Header/Header.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 import NBLogo from "../../Comp-Single/NBLogo";
 import { useWindowDimensions } from "../../Hooks/Viewport";
+import { MobileContext } from "../../Context/Mobile";
 
 function Header({
   chosenMode,
@@ -28,6 +29,8 @@ function Header({
 }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+
+  const mContext = useContext(MobileContext);
 
 
   const [search, setSearch] = useState<string>();
@@ -54,8 +57,23 @@ function Header({
         setClosedFinished(true);
       }, 500)
       return () => clearTimeout(timeout);
+    }else{
+      setClosedFinished(false);
     }
   }, [close])
+
+  const [scrollAmount, setScrollAmount] = useState<number>(0);
+
+
+  if (!mContext.isMobile){
+  window.onscroll = () => {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    setScrollAmount(scrolled);
+  }
+}
+
 
   return (
     <div
@@ -166,6 +184,13 @@ function Header({
           </div>
         </div>
       </div>
+      {!mContext.isMobile ? <div className="header__progress">
+        <div className="header__progress-amount"
+        style={{
+          width: scrollAmount + "%"
+        }}
+        ></div>
+      </div> : ""}
     </div>
   );
 }

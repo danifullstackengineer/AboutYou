@@ -1,5 +1,4 @@
 .sixthFooter {
-  height: 85px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -28,6 +27,8 @@
   display: -ms-flexbox;
   display: flex;
   margin: 0.5em 0 0.5em 0;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .sixthFooter > footer > section {
   cursor: pointer;
@@ -43,4 +44,9 @@
 }
 .sixthFooter-dark > footer:last-child {
   color: rgb(200,200,200);
+}
+@media screen and (max-width: 1050px){
+  .sixthFooter > footer > section  {
+    margin: .5em;
+  }
 }

@@ -31,8 +31,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: hidden;
   max-height: calc(100vh - 250px - 135px);
+  position: relative;
 }
 .menu__option > h3 {
   font-size: 1.25rem;
@@ -41,6 +41,7 @@
   text-align: center;
   align-self: center;
   cursor: pointer;
+  position: relative;
 }
 .menu__option-option {
   -moz-transition: height 250ms;
@@ -51,6 +52,23 @@
   height: 0;
   width: 100%;
    overflow-y: auto;
+}
+.menu__option-option-scroll {
+  height: calc(100% - 1.25rem - 25px);
+  width: 5px;
+  background-color: rgb(240,200,200);
+  position: absolute;
+  top: calc(1.25rem + 25px);
+}
+.menu__option-option-scroll-thumb {
+  width: 100%;
+  height: 0%;
+}
+.menu-dark .menu__option-option-scroll-thumb {
+  background-color: rgb(255, 174, 23);
+}
+.menu-light .menu__option-option-scroll-thumb {
+  background-color: rgb(100,200,100);
 }
 .menu__option-option-product:not(:last-child) {
   border-bottom: 2px solid black;
@@ -137,7 +155,6 @@
 .menu__option-option-product-right-btns-remove {
   display: flex;
   width: 125px;
-  display: flex;
 }
 .menu__option-option-product-right-btns-remove > button {
   width: 80%;

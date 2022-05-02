@@ -1,9 +1,13 @@
 .userInformation {
     display: flex;
     align-items: flex-start;
-    flex-direction: flex-start;
     min-height: 80vh;
+    min-width: 350px;
     width: 100%;
+    position: relative;
+}
+.userInformation-padding {
+    padding-left: 10%;
 }
 .userInformation__selection {
     display: flex;
@@ -46,8 +50,11 @@
     display: flex;
     flex-direction: column;
 }
-@media screen and (max-width: 1000px){
-    .userInformation {
-        padding-left: 0;
+@media screen and (max-width: 900px){
+    .userInformation-padding {
+        flex-direction: column;
+    }
+    .userInformation__selection {
+        margin-bottom: 2em;
     }
 }

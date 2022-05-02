@@ -5,8 +5,8 @@ import "../styles/Comp-Single/Product360.css";
 import { AccessoryType } from "../types/Accessory";
 import { ProductType } from "../types/Product";
 import useMousePosition from "../Hooks/MousePosition";
-import useOutsideAlerter from "../Hooks/OutsideAlerter";
 import { useWindowDimensions } from "../Hooks/Viewport";
+import InteractiveBtn from "./InteractiveBtn";
 
 function Product360({
   product
@@ -22,8 +22,11 @@ function Product360({
       })
 
       const [addedAccessory, setAddedAccessory] = useState<boolean[]>();
+      const [hasSelectedAccessory, setHasSelectedAccessory] = useState<boolean>(false);
       const [selectedSize, setSelectedSize] = useState<boolean[]>(product.sizes.map(() => false));
+      const [hasSelectedSize, setHasSelectedSize] = useState<boolean>(false);
       const [selectedColor, setSelectedColor] = useState<boolean[]>(product.colors.map(() => false));
+      const [hasSelectedColor, setHasSelectedColor] = useState<boolean>(false);
       const [accIndex, setAccIndex] = useState<number>();
 
       const mainRef = useRef<HTMLDivElement>(null);
@@ -51,6 +54,7 @@ function Product360({
           }else{
             setAccIndex(i)
           }
+          setHasSelectedAccessory(!truth);
           return !truth;
         }else{
           return false;
@@ -60,15 +64,26 @@ function Product360({
     }
 
     const handleAddSize = (index: number) => {
-      setSelectedSize(prevState => prevState.map((color, i) => i === index ? !color : false));
+      setSelectedSize(prevState => prevState.map((color, i) => {
+        if (i===index){
+          setHasSelectedColor(!color);
+          return !color;
+        }
+        return false;
+      }));
     }
     const handleAddColor = (index: number) => {
-      setSelectedColor(prevState => prevState.map((size, i) => i=== index ? !size : false));
+      setSelectedColor(prevState => prevState.map((size, i) => {
+        if (i===index){
+          setHasSelectedSize(!size);
+          return !size;
+        }
+        return false;
+      }));
     }
 
     const getTotalAfterAccessory = ():number => {
       if(addedAccessory && accIndex !== undefined && data){
-        console.log("in here.")
         return (data.getAccessoriesBasedOnParent[accIndex].price + product.price).toFixed(2);
       }
       else return product.price;
@@ -157,6 +172,22 @@ function Product360({
       }
     }, [mouseX, width])
 
+    const [hasSelectedOptions, setHasSelectedOptions] = useState<boolean>(false);
+
+    useEffect(()=>{
+      console.log("added acc: ", addedAccessory, "\nselected color: ", selectedColor, "\nselected size: ", selectedSize, "\nfile: ", file);
+      if(hasSelectedColor && hasSelectedSize && (file || (hasSelectedAccessory))){
+        setHasSelectedOptions(true);
+      }
+      else{
+        setHasSelectedOptions(false);
+      }
+    }, [addedAccessory,hasSelectedColor, hasSelectedSize, file])
+
+    const handleAddToBasket = ():void => {
+      alert("You need to implement this!");
+    }
+
 
   return (
     <div className="product360" ref={mainRef}>
@@ -230,6 +261,15 @@ function Product360({
           </div>
           </div>
         </div>
+        {hasSelectedOptions ? <div className={`product360__right-basket`} onClick={handleAddToBasket}>
+                <InteractiveBtn
+                text={"Add to Basket"}
+                width={100}
+                height={50}
+                type={undefined}
+                percWidth={true}
+                />
+        </div> : ""}
       </div>
       :""}
       {!clicked ? <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"}/> : ""}

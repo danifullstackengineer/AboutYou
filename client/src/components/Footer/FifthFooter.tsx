@@ -26,10 +26,6 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
           <div>
             <NBLogo chosenMode={chosenMode} size={150} />
           </div>
-          <div className="fifthFooter__section1-contact">
-            {chosenMode === false ? <RiMessage2Fill /> : <RiMessage2Line />}
-            <span>Contact us</span>
-          </div>
           <div className="fifthFooter__section1-social">
             <span>
               <BsFacebook />

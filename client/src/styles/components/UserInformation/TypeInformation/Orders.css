@@ -35,3 +35,11 @@
 .orders__no-orders-info {
     max-width: 350px;
 }
+@media screen and (max-width: 500px){
+    .orders__no-orders > img {
+        display: none;
+    }
+    .orders .interactiveBtn {
+        width: 300px;
+    }
+}

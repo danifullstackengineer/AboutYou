@@ -66,6 +66,7 @@ function App() {
     setUserId(null);
     setIsLoggedIn(false);
     localStorage.removeItem("userData");
+    alert("You have been logged out!");
   }, []);
 
   useEffect(() => {
@@ -335,10 +336,10 @@ function App() {
     const [isMobile, setIsMobile] = useState<boolean>(true);
 
 
-    //todo: uncomment this
-    // useEffect(()=>{
-    //  setIsMobile(mobileCheck())
-    // }, [])
+    // todo: uncomment this
+    useEffect(()=>{
+     setIsMobile(mobileCheck())
+    }, [])
 
     const [isViewport620, setIsViewport620] = useState<boolean>(true);
     const [hasChecked, setHasChecked] = useState<boolean>(false);
@@ -395,7 +396,7 @@ function App() {
               logout: logout,
             }}
           >      
-          <MobileContext.Provider value={{isMobile:true}}>        
+          <MobileContext.Provider value={{isMobile:isMobile}}>        
             <Router>
               {isViewport620 ? <Menu
                 clickedMenu={clickedMenu}
@@ -425,6 +426,7 @@ function App() {
               clickedUser={clickedUser}
               clickedLanguage={clickedLanguage}
               handleOpening={handleOpening}
+              setClickedMenu={setClickedMenu}
               />}
               <Credential
                 chosenAction={chosenAction}

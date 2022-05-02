@@ -17,7 +17,8 @@ function InteractiveBtn({
   isLoading,
   onClick,
   type,
-  facebook
+  facebook,
+  percWidth
 }: {
   text: string;
   width: number;
@@ -32,7 +33,8 @@ function InteractiveBtn({
     isLoading?: boolean;
     onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
     type: "button" | "submit" | "reset" | undefined;
-    facebook?:boolean
+    facebook?:boolean,
+    percWidth?:boolean
   }) {
   
   useEffect(() => {
@@ -61,6 +63,7 @@ function InteractiveBtn({
         marginRight: margin ? margin[1] : undefined,
         marginBottom: margin ? margin[2] : undefined,
         marginLeft: margin ? margin[3] : undefined,
+        width: percWidth ? width + "%": undefined
       }}
       className="interactiveBtn"
       onClick={onClick}
@@ -70,7 +73,7 @@ function InteractiveBtn({
         type={type}
         className="interactiveBtn__btn"
         style={{
-          width: width,
+          width: percWidth ? "100%" : width,
           height: height,
           backgroundColor: bgColor ? bgColor : "black",
           color: color ? color : "white",

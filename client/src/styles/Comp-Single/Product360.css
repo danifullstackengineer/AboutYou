@@ -299,10 +299,17 @@
     max-height: 600px;
     z-index: 101;
     object-fit: contain;
-    background-color: red;
+    /* background-color: red; */
 }
 .product__left-360-img-inactive {
     display: none;
+}
+.product360__right-basket {
+    width: 80%;
+    box-shadow: rgba(100,100,111,0.2) 0px 7px 29px 0px;
+    align-self: center;
+    display: flex;
+    justify-content: space-evenly;
 }
 @media screen and (max-width: 1450px){
     .product360__left > img:nth-child(1) {

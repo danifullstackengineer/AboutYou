@@ -65,13 +65,7 @@ const MenuExtended = ({
                   <span>{product.title}</span>
                   <img
                     src={
-                      product.isCustomizable
-                        ? product.foregroundImg
-                          ? product.foregroundImg + "1.jpg"
-                          : product.backgroundImg + "1.jpg"
-                        : product.foregroundImg
-                        ? product.foregroundImg
-                        : product.backgroundImg
+                      product.backgroundImg + "1.jpg"
                     }
                     alt=""
                     loading="lazy"
@@ -117,13 +111,7 @@ const MenuExtended = ({
                   <span>{product.title}</span>
                   <img
                     src={
-                      product.isCustomizable
-                        ? product.foregroundImg
-                          ? product.foregroundImg + "1.jpg"
-                          : product.backgroundImg + "1.jpg"
-                        : product.foregroundImg
-                        ? product.foregroundImg
-                        : product.backgroundImg
+                      product.backgroundImg + "1.jpg"
                     }
                     alt=""
                     loading="lazy"

@@ -7,44 +7,47 @@
     position: fixed;
     min-width: 350px;
 }
+.menuPhone-clicked {
+    min-height: 350px;
+}
 .menuPhone:not(.menuPhone-active) {
     right: calc(-100% - 50px);
-    height: calc(100vh - 100px);
     top: 100px;
 }
-.menuPhone-light:not(.menu-inactive) {
+.menuPhone:not(.menu-inactive){
     background-color: white;
+}
+.menuPhone-light:not(.menu-inactive) {
   box-shadow: -10px 10px 50px black;
   color: black;
 }
 .menuPhone-dark:not(.menu-inactive){
-    background-color: rgb(100, 200, 100);
   color: white;
   box-shadow: -10px 10px 50px rgb(100, 200, 200);
 }
 .menuPhone-active {
     right: 0;
-    height: 100vh;
     top: 0;
 }
 .menuPhone__top {
     display: flex;
     width: 100%;
     min-height: 50px;
+    background-color: black;
 }
 .menuPhone__top > button {
-    flex: 0.225;
+    flex: 0.25;
     border: none;
     background-color: black;
     color: white;
     font-size: 1.25rem;
     cursor: pointer;
 }
-.menuPhone-dark .menuPhone__top > button:not(:last-child):hover {
+.menuPhone-dark .menuPhone__top > button:not(:last-child):hover, .menuPhone-dark .menuPhone__top-active {
     background-color: rgb(255,174,23);
     color: black;
 }
-.menuPhone-light .menuPhone__top > button:not(:last-child):hover {
+.menuPhone-light .menuPhone__top > button:not(:last-child):hover,.menuPhone-light .menuPhone__top-active {
     background-color: rgb(100, 200, 100);
 }
 .menuPhone__top > button:last-child > img {
@@ -52,11 +55,115 @@
     height: 50px;
     object-fit: cover;
     transition: var(--transitionLightMode);
+    transform: rotate(180deg);
+}
+.menuPhone-clicked .menuPhone__bottom {
+    min-height: 300px;
+    min-width: 350px;
+}
+.menuPhone__bottom__option {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+}
+.menuPhone__bottom__text {
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    min-width: 350px;
+}
+.menuPhone__bottom__option-option {
+    display: flex;
+    width: 100%;
+    height: 300px;
+    flex-direction: column;
+}
+.menuPhone__bottom__option-option:not(:last-child){
+    border-bottom: 2px solid black;
+}
+.menuPhone__bottom__option-option-top {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menuPhone__bottom__option-option-top > h5 {
+    font-size: 1.5rem;
+}
+.menuPhone__bottom__option-option-bottom {
+    width: 100%;
+    height: 250px;
+    display: flex;
+}
+.menuPhone__bottom__option-option-bottom > img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    margin-left: 100px;
+}
+.menuPhone__bottom__option-option-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin-right: 150px;
+}
+.menuPhone__bottom__option-option-right > span {
+    font-size: 1.25rem;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+.menuPhone__bottom__option-option-right-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 125px;
+    margin: .25em 0 .25em 0;
+}
+.menuPhone__bottom__option-option-right-btns > button{
+    width: calc(30% + 0.125rem);
+  height: 20px;
+  background-color: rgb(100, 200, 100);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-weight: 900;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menuPhone__bottom__option-option-right-btns > button:last-child {
+    margin-left: 20px;
+}
+.menuPhone__bottom__option-option-right-btn-remove {
+    display: flex;
+    justify-content: flex-end;
+  width: 125px;
+}
+.menuPhone__bottom__option-option-right-btn-remove  > button {
+    width: 80%;
+  height: 30px;
+  background-color: rgb(100, 200, 100);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  font-weight: 900;
+  font-size: 1rem;
 }
 @media screen and (min-height: 480px){
     .menuPhone:not(.menuPhone-active) {
       top: 250px;
-      height: calc(100vh - 250px);
     }
 }
 @media screen and (max-width: 480px){
