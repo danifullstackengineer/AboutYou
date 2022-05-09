@@ -11,17 +11,22 @@ import {
   setFirstAddress,
   setSecondAddress,
 } from "../../../../Logic/localStorage/address";
+import { useWindowDimensions } from "../../../../Hooks/Viewport";
 
 function CheckoutBodyMainForm({
   title,
   newAddress,
   setIsEveryField,
   clickedContinue,
+  firstAddrRef,
+  secondAddrRef,
 }: {
   newAddress?: boolean;
   title: string;
   setIsEveryField: React.Dispatch<React.SetStateAction<boolean>>;
   clickedContinue: boolean;
+  firstAddrRef?: React.RefObject<HTMLDivElement>;
+  secondAddrRef?: React.RefObject<HTMLDivElement>;
 }) {
   const [activeFormality, setActiveFormality] = useState<boolean[]>([
     true,
@@ -167,7 +172,7 @@ function CheckoutBodyMainForm({
     newAddress,
     selectedCountry,
     stateInput,
-    taxInput
+    taxInput,
   ]);
 
   useEffect(() => {
@@ -233,8 +238,13 @@ function CheckoutBodyMainForm({
     stateInput,
   ]);
 
+  const { width } = useWindowDimensions();
+
   return (
     <div
+      ref={
+        firstAddrRef ? firstAddrRef : secondAddrRef ? secondAddrRef : undefined
+      }
       className="checkoutBodyMainForm"
       style={{ marginBottom: newAddress ? "2em" : undefined }}
     >
@@ -305,14 +315,14 @@ function CheckoutBodyMainForm({
             className="checkoutBodyMainForm__country-selection"
             style={{ display: toggleCountry ? "flex" : "none" }}
           >
-            <div>
+            {/* <div>
               <div className="checkoutBodyMainForm__country-input">
                 <span>
                   <AiOutlineSearch />
                 </span>
                 <input type="text" />
               </div>
-              {/* {languages.map((language, i) => {
+              {languages.map((language, i) => {
                 return (
                   <div
                     onClick={() => handleCountryChange(i)}
@@ -323,101 +333,108 @@ function CheckoutBodyMainForm({
                     <span>{language.name}</span>
                   </div>
                 );
-              })} */}
-            </div>
+              })}
+            </div> */}
           </div>
         </div>
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={250}
+          width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"First name"}
           warning={"This entry cannot be left blank"}
           optional={false}
-          margin={[0, 10, 0, 0]}
+          margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
           setIsGood={setIsGoodFirst}
           initialInput={address?.firstName}
           setInputParent={setFirstInput}
+          percWidth={true}
         />
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
           height={40}
-          width={250}
+          width={width <= 650 ? 100 : 50}
           placeholder={"Last name"}
           warning={"This entry cannot be left blank"}
           optional={false}
-          margin={[0, 0, 0, 10]}
+          margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
           setIsGood={setIsGoodLast}
           initialInput={address?.lastName}
           setInputParent={setLastInput}
+          percWidth={true}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={520}
+          width={100}
           height={40}
           placeholder={"Address 1"}
           warning={"This entry cannot be left blank"}
           optional={false}
-          margin={[0, 0, 0, 0]}
+          margin={[20, 0, 20, 0]}
           setIsGood={setIsGoodAddress}
           initialInput={address?.addressOne}
           setInputParent={setAddress1Input}
+          percWidth={true}
         />
       </div>
-      <div className="checkoutBodyyMainForm__input">
+      <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={520}
+          width={100}
           height={40}
           placeholder={"Address 2 (optional)"}
           warning={""}
           optional={true}
-          margin={[0, 0, 0, 0]}
+          margin={[20, 0, 20, 0]}
           initialInput={address?.addressTwo}
           setInputParent={setAddress2Input}
+          percWidth={true}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={520}
+          width={100}
           height={40}
           placeholder={"State"}
           warning={""}
           optional={true}
-          margin={[0, 0, 0, 0]}
+          margin={[20, 0, 20, 0]}
           initialInput={address?.state}
           setInputParent={setStateInput}
+          percWidth={true}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={250}
+          width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"Postal code"}
           optional={false}
-          warning={"The postal code cannot be left blank"}
-          margin={[0, 10, 0, 0]}
+          warning={"This entry cannot be left blank"}
+          margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
           setIsGood={setIsGoodPostal}
           initialInput={address?.p_code}
           setInputParent={setCodeInput}
+          percWidth={true}
         />
         <InputFormCheckout
           bgColor="rgb(240,240,240)"
-          width={250}
+          width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"City"}
           optional={false}
           warning={"This entry cannot be left blank"}
-          margin={[0, 0, 0, 10]}
+          margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
           setIsGood={setIsGoodCity}
           initialInput={address?.city}
           setInputParent={setCityInput}
+          percWidth={true}
         />
       </div>
       {newAddress === true ? (
@@ -426,26 +443,28 @@ function CheckoutBodyMainForm({
         <div className="checkoutBodyMainForm__input">
           <InputFormCheckout
             bgColor="rgb(240,240,240)"
-            width={250}
+            width={width <= 650 ? 100 : 50}
             height={40}
             placeholder={"YYYY-MM-DD"}
             optional={false}
-            warning={"Your date of birth cannot be left blank"}
-            margin={[0, 10, 0, 0]}
+            warning={"This entry cannot be left blank"}
+            margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
             setIsGood={setIsGoodBirth}
             initialInput={address?.birth}
             setInputParent={setBirthInput}
+            percWidth={true}
           />
           <InputFormCheckout
             bgColor="rgb(240,240,240)"
-            width={250}
+            width={width <= 650 ? 100 : 50}
             height={40}
             placeholder={"Tax ID"}
             optional={true}
             warning={""}
-            margin={[0, 0, 10, 0]}
+            margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
             initialInput={address?.tax}
             setInputParent={setTaxInput}
+            percWidth={true}
           />
         </div>
       )}

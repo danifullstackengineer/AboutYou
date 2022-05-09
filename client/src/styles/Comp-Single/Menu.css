@@ -249,6 +249,26 @@ span {
   > button:not(.menu__option-option-language-active):hover {
   background-color: rgb(50, 50, 50);
 }
+.menu__option-option-product-total-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu__option-option-product-total-info {
+  display: flex;
+  justify-content: space-evenly;
+  margin: .5em 0 .5em 0;
+}
+.menu__option-option-product-total-info > span {
+  font-size: 1rem;
+  font-family: monospace;
+}
+.menu__option-option-product-total-info > span:nth-child(2){
+  color: rgb(255,100,100);
+}
+.menu__option-option-product-total-btn {
+  margin: 1em 0 1em 0;
+}
 @media screen and (min-height: 481px){
   .menu {
     top: 250px;

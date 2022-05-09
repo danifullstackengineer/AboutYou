@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 import '../styles/Comp-Single/ProductCustom.css';
 import { ProductType } from '../types/Product';
 
-const ProductCustom = ({product}: {product: ProductType}) => {
+const ProductCustom = ({product, dark}: {product: ProductType, dark?:boolean}) => {
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
 
   return (
-    <div className="productCustom" onMouseOver={()=> setIsHovering(true)} onMouseLeave={()=> setIsHovering(false)}>
+    <div className={`productCustom ${dark ? "productCustom-dark" : "productCustom-light"}`} onMouseOver={()=> setIsHovering(true)} onMouseLeave={()=> setIsHovering(false)}>
       <div className={`productCustom__img`}>
-        <img src={product.backgroundImg + "1.jpg"} alt={""} loading={"lazy"}/>
-        <img src={product.foregroundImg + "10.jpg"} alt={""} loading={"lazy"}/>
+        <img src={!dark ? product.backgroundImg + "1.jpg" : product.backgroundImg} alt={""} loading={"lazy"}/>
+        <img src={!dark ? product.foregroundImg + "10.jpg" : product.foregroundImg} alt={""} loading={"lazy"}/>
       </div>
       <h3>{product.title}</h3>
       <h4>Only: ${product.price}</h4>
@@ -19,4 +19,4 @@ const ProductCustom = ({product}: {product: ProductType}) => {
   )
 }
 
-export default ProductCustom
+export default React.memo(ProductCustom);

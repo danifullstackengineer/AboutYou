@@ -65,7 +65,7 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
       } else {
         setCurrentIndex(0);
       }
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         switch (currentIndex) {
           case 0:
             setCurrentQueue([queue[1], queue[2], queue[3], queue[4], queue[0]]);
@@ -91,6 +91,7 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
         setIsSliding(false);
         reset();
       }, 500);
+      return () => clearTimeout(timeout);
     }
   }, [seconds]);
 

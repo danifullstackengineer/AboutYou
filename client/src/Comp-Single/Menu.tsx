@@ -8,6 +8,8 @@ import { AuthContext } from "../Context/Auth";
 import { BasketContext } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
 import { MobileContext } from "../Context/Mobile";
+import InteractiveBtn from "./InteractiveBtn";
+import { getTotalBasketPrice } from "../Logic/basket";
 
 function Menu({
   clickedMenu,
@@ -23,6 +25,7 @@ function Menu({
   clickedUser,
   clickedLanguage,
   handleOpening,
+  display,
 }: {
   clickedMenu: boolean;
   chosenMode: boolean | undefined;
@@ -37,9 +40,12 @@ function Menu({
   clickedUser: boolean;
   clickedLanguage: boolean;
   handleOpening: (type: "basket" | "wishlist" | "user" | "language") => void;
+  display: string;
 }) {
   const [activeLang, setActiveLang] = useState<boolean[]>([true, false]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const mContext = useContext(MobileContext);
 
@@ -126,93 +132,99 @@ function Menu({
     setIsOpened(true);
   }, [clickedLanguage]);
 
-  const [scrollAmountBasket, setScrollAmountBasket] = useState<number>(0)
+  const [scrollAmountBasket, setScrollAmountBasket] = useState<number>(0);
   const [scrollAmountWishlist, setScrollAmountWishlist] = useState<number>(0);
 
-  const handleScroll = (type: "basket" | "wishlist"):void => {
-    if(basketRef.current){
-      
+  const handleScroll = (type: "basket" | "wishlist"): void => {
+    if (basketRef.current) {
       const bScroll = basketRef.current.scrollTop;
-      const height = basketRef.current.scrollHeight - basketRef.current.clientHeight;
+      const height =
+        basketRef.current.scrollHeight - basketRef.current.clientHeight;
       const scrolled = (bScroll / height) * 100;
       setScrollAmountBasket(scrolled);
-    } 
-    switch(type){
+    }
+    switch (type) {
       case "basket":
-        if(basketRef.current){
+        if (basketRef.current) {
           const bScroll = basketRef.current.scrollTop;
-          const height = basketRef.current.scrollHeight - basketRef.current.clientHeight;
+          const height =
+            basketRef.current.scrollHeight - basketRef.current.clientHeight;
           const scrolled = (bScroll / height) * 100;
           setScrollAmountBasket(scrolled);
         }
         break;
       case "wishlist":
-        if(wishlistRef.current){
+        if (wishlistRef.current) {
           const bScroll = wishlistRef.current.scrollTop;
-          const height = wishlistRef.current.scrollHeight - wishlistRef.current.clientHeight;
+          const height =
+            wishlistRef.current.scrollHeight - wishlistRef.current.clientHeight;
           const scrolled = (bScroll / height) * 100;
           setScrollAmountWishlist(scrolled);
         }
         break;
     }
-  }
-
-  useEffect(()=>{
-    if(wContext){
+  };
+  useEffect(() => {
+    if (wContext) {
       handleScroll("wishlist");
     }
-    if(bContext){
+    if (bContext) {
       handleScroll("basket");
     }
-  }, [wContext, bContext])
+  }, [wContext, bContext]);
 
-    const [isOverflownBasket, setIsOverflownBasket] = useState<boolean>(false);
-    const [isOverflownWishlist, setIsOverflownWishlist] = useState<boolean>(false);
+  const [isOverflownBasket, setIsOverflownBasket] = useState<boolean>(false);
+  const [isOverflownWishlist, setIsOverflownWishlist] =
+    useState<boolean>(false);
 
-  useEffect(()=>{
-    if(!clickedBasket){
-      setTimeout(()=>{
-        if(basketRef.current){
-        basketRef.current.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        })
-      }
-      } ,250)
+  useEffect(() => {
+    if (!clickedBasket) {
+      setTimeout(() => {
+        if (basketRef.current) {
+          basketRef.current.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }
+      }, 250);
     }
-    if(!clickedWishlist){
-      setTimeout(()=>{
-        if(wishlistRef.current){
+    if (!clickedWishlist) {
+      setTimeout(() => {
+        if (wishlistRef.current) {
           wishlistRef.current.scrollTo({
             top: 0,
-            behavior: "smooth"
-          })
+            behavior: "smooth",
+          });
         }
-      }, 250)
+      }, 250);
     }
-  }, [clickedBasket, clickedWishlist])
+  }, [clickedBasket, clickedWishlist]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setIsOverflownBasket(handleOverflown("basket"));
-  }, [clickedBasket])
-  useEffect(()=>{
+  }, [clickedBasket]);
+  useEffect(() => {
     setIsOverflownWishlist(handleOverflown("wishlist"));
-  }, [clickedWishlist])
+  }, [clickedWishlist]);
 
-  const handleOverflown = (type: "basket" | "wishlist"):boolean => {
-    switch(type){
+  const handleOverflown = (type: "basket" | "wishlist"): boolean => {
+    switch (type) {
       case "basket":
-        if(basketRef.current){
-          return (basketRef.current.offsetHeight <= basketRef.current.scrollHeight);
+        if (basketRef.current) {
+          return (
+            basketRef.current.offsetHeight <= basketRef.current.scrollHeight
+          );
         }
         return false;
       case "wishlist":
-        if(wishlistRef.current){
-          return (wishlistRef.current.offsetHeight < wishlistRef.current.scrollHeight);
+        if (wishlistRef.current) {
+          return (
+            wishlistRef.current.offsetHeight < wishlistRef.current.scrollHeight
+          );
         }
         return false;
     }
-  }
+  };
 
   return (
     <div
@@ -220,6 +232,7 @@ function Menu({
       className={`menu ${chosenMode === false ? "menu-dark" : "menu-light"} ${
         clickedMenu ? "menu-active" : "menu-inactive"
       } ${mContext.isMobile ? "menu-mobile" : ""}`}
+      style={{display}}
     >
       <div className={`menu__option`}>
         <h3 onClick={() => handleOpening("basket")}>Basket</h3>
@@ -230,68 +243,97 @@ function Menu({
               ? "menu__option-option-active"
               : "menu__option-option-inactive"
           }`}
-          onScroll={!mContext.isMobile ?  () => handleScroll("basket") : undefined}
+          onScroll={
+            !mContext.isMobile ? () => handleScroll("basket") : undefined
+          }
         >
           <div className="menu__option-option-wrapper" ref={basketWrapperRef}>
             {bContext.product.length === 0 ? (
               <h4>Your basket is empty.</h4>
             ) : (
-              bContext.product.map((product, i) => {
-                return (
-                  <div className="menu__option-option-product" key={i}>
-                    <div className="menu__option-option-product-left">
-                      <h5>
-                          {product.title}
-                      </h5>
-                      <img
-                        alt=""
-                        src={
-                          product.backgroundImg + "1.jpg"
-                        }
-                      />
-                    </div>
-                    <div className="menu__option-option-product-right">
-                      <span>Quantity: {product.quantity}</span>
-                      <span>
-                        Total: ${(product.price * product.quantity).toFixed(2)}
-                      </span>
-                      <div className="menu__option-option-product-right-btns">
-                        <button
-                          type="button"
-                          onClick={() => bContext.addToBasket(product)}
-                        >
-                          +
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => bContext.decrementProduct(product.id)}
-                        >
-                          -
-                        </button>
+              <>
+                {bContext.product.map((product, i) => {
+                  return (
+                    <div className="menu__option-option-product" key={i}>
+                      <div className="menu__option-option-product-left">
+                        <h5>{product.title}</h5>
+                        <img alt="" src={product.backgroundImg + "1.jpg"} />
                       </div>
-                      <div className="menu__option-option-product-right-btns-remove">
-                        <button
-                          type="button"
-                          onClick={() => bContext.removeFromBasket(product.id)}
-                        >
-                          Remove
-                        </button>
+                      <div className="menu__option-option-product-right">
+                        <span>Quantity: {product.quantity}</span>
+                        <span>
+                          Total: $
+                          {(product.price * product.quantity).toFixed(2)}
+                        </span>
+                        <div className="menu__option-option-product-right-btns">
+                          <button
+                            type="button"
+                            onClick={() => bContext.addToBasket(product)}
+                          >
+                            +
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              bContext.decrementProduct(product.id)
+                            }
+                          >
+                            -
+                          </button>
+                        </div>
+                        <div className="menu__option-option-product-right-btns-remove">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              bContext.removeFromBasket(product.id)
+                            }
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  );
+                })}
+                <div className={"menu__option-option-product-total"}>
+                  <div className={"menu__option-option-product-total-info"}>
+                    <span>Total: </span>
+                    <span>$ {getTotalBasketPrice(bContext.product)}</span>
                   </div>
-                );
-              })
+                  <div className={"menu__option-option-product-total-btn"}>
+                    <InteractiveBtn
+                      onClick={() => navigate("/checkout")}
+                      text={"Checkout"}
+                      width={80}
+                      percWidth={true}
+                      height={50}
+                      type={"button"}
+                    />
+                  </div>
+                </div>
+              </>
             )}
           </div>
-          {!mContext.isMobile && isOverflownBasket && bContext.product.length > 0 ?<div className="menu__option-option-scroll">
-          <div className="menu__option-option-scroll-thumb" style={{height: scrollAmountBasket + "%"}}></div>
-        </div> : ""}
+          {!mContext.isMobile &&
+          isOverflownBasket &&
+          bContext.product.length > 0 ? (
+            <div className="menu__option-option-scroll">
+              <div
+                className="menu__option-option-scroll-thumb"
+                style={{ height: scrollAmountBasket + "%" }}
+              ></div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="menu__option">
         <h3 onClick={() => handleOpening("wishlist")}>Wishlist</h3>
         <div
-          onScroll={!mContext.isMobile ?  () => handleScroll("wishlist") : undefined}
+          onScroll={
+            !mContext.isMobile ? () => handleScroll("wishlist") : undefined
+          }
           ref={wishlistRef}
           className={`menu__option-option ${
             clickedWishlist
@@ -307,15 +349,8 @@ function Menu({
                 return (
                   <div className="menu__option-option-product" key={i}>
                     <div className="menu__option-option-product-left">
-                      <h5>
-                          {product.title}
-                      </h5>
-                      <img
-                        alt=""
-                        src={
-                          product.backgroundImg + "1.jpg"
-                        }
-                      />
+                      <h5>{product.title}</h5>
+                      <img alt="" src={product.backgroundImg + "1.jpg"} />
                     </div>
                     <div className="menu__option-option-product-right">
                       <span style={{ visibility: "hidden", opacity: 0 }}>
@@ -347,9 +382,18 @@ function Menu({
               })
             )}
           </div>
-          {!mContext.isMobile && isOverflownWishlist && wContext.product.length > 0 ?<div className="menu__option-option-scroll">
-          <div className="menu__option-option-scroll-thumb" style={{height: scrollAmountWishlist + "%"}}></div>
-        </div> : ""}
+          {!mContext.isMobile &&
+          isOverflownWishlist &&
+          wContext.product.length > 0 ? (
+            <div className="menu__option-option-scroll">
+              <div
+                className="menu__option-option-scroll-thumb"
+                style={{ height: scrollAmountWishlist + "%" }}
+              ></div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <div className="menu__option">

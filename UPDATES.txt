@@ -23,10 +23,11 @@ si celalalt se duce sus si devine 360
 -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
 -imagini cate 3 in dark mode si accesorii
 
-//todo:
-fix likes
-on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image.
 
-
-// solved:
-made 1st footer responsive on all screens.
+TODO: fix likes - fixed
+TODO: on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. - fixed
+TODO: in checkout add countries in the dropdown
+TODO: Add form validation in checkout forms
+TODO: Add tablet responsiveness in checkout
+TODO: Fix checkout button
+TODO: Add scrolling when form input is invalid/missing

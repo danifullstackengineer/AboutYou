@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CheckoutBodyFormAdressChooser from "./Form/CheckoutBodyFormAddressChooser";
 import CheckoutBodyMainForm from "./Form/CheckoutBodyMainForm";
 
@@ -16,9 +16,18 @@ function CheckoutBodyForm({
   clickedContinue: boolean;
 }) {
   const [showNewAddress, setShowNewAddress] = useState<boolean>(false);
+
+  const firstAddrRef = useRef<HTMLDivElement>(null);
+  const secondAddrRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    if(showNewAddress){
+      secondAddrRef.current?.scrollIntoView();
+    }else{
+      firstAddrRef.current?.scrollIntoView();
+    }
     setIsNewAddress(showNewAddress);
-  }, [showNewAddress, setIsNewAddress]);
+  }, [showNewAddress, setIsNewAddress, firstAddrRef, secondAddrRef]);
 
   return (
     <div className="checkoutBodyForm">
@@ -26,14 +35,16 @@ function CheckoutBodyForm({
         title={"Your billing address"}
         setIsEveryField={setIsEveryField}
         clickedContinue={clickedContinue}
+        firstAddrRef={firstAddrRef}
       />
-      <CheckoutBodyFormAdressChooser setShowNewAddress={setShowNewAddress} />
+      <CheckoutBodyFormAdressChooser setShowNewAddress={setShowNewAddress}/>
       {showNewAddress ? (
         <CheckoutBodyMainForm
           newAddress={true}
           title={"Your delivery address"}
           setIsEveryField={setIsEveryField2}
           clickedContinue={clickedContinue}
+          secondAddrRef={secondAddrRef}
         />
       ) : (
         ""

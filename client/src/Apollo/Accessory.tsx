@@ -11,4 +11,17 @@ const getAccessoriesBasedOnParent = gql
   }
   `
 
-  export {getAccessoriesBasedOnParent}
+const getAccessories = gql`
+query {
+  getAccessories {
+    id,
+    image,
+    title,
+    price,
+    likes,
+    parentId
+  }
+}
+`
+
+  export {getAccessoriesBasedOnParent, getAccessories}

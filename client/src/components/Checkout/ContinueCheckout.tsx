@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useWindowDimensions } from "../../Hooks/Viewport";
 import "../../styles/components/Checkout/ContinueCheckout.css";
 
 function ContinueCheckout({
@@ -14,21 +15,55 @@ function ContinueCheckout({
   redirectToPaymentProvider?: boolean;
   setRedirectToPaymentProvider: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const dummyRef = useRef<HTMLDivElement>(null);
+  const [continueTop, setContinueTop] = useState<number>();
+  const {width, height} = useWindowDimensions();
+
+  useEffect(() => {
+    if (refProp && refProp.current) {
+      setContinueTop(refProp.current.offsetTop);
+    }
+  }, [refProp]);
+
+  const handleScroll = () => {
+    if (
+      dummyRef.current &&
+      refProp &&
+      refProp.current
+    ) {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      if (continueTop && continueTop + winScroll >= dummyRef.current.offsetTop) {
+        refProp.current.style.position = "relative";
+      } else {
+        refProp.current.style.position = "fixed";
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [continueTop, width, height]);
+
   return (
-    <div className="continueCheckout" ref={refProp}>
-      <button
-        onClick={() => {
-          if (redirectToPaymentProvider) {
-            setRedirectToPaymentProvider(true);
-          } else {
-            setClickedContinue(true);
-            setRedirectToPaymentProvider(false);
-          }
-        }}
-      >
-        {continueText}
-      </button>
-    </div>
+    <>
+      <div className="continueCheckout-dummy" ref={dummyRef}></div>
+      <div className="continueCheckout" ref={refProp}>
+        <button
+          onClick={() => {
+            if (redirectToPaymentProvider) {
+              setRedirectToPaymentProvider(true);
+            } else {
+              setClickedContinue(true);
+              setRedirectToPaymentProvider(false);
+            }
+          }}
+        >
+          {continueText}
+        </button>
+      </div>
+    </>
   );
 }
 

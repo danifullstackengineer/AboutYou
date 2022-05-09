@@ -23,12 +23,9 @@ function UserInformation({
   const context = useContext(AuthContext);
 
   useEffect(() => {
-    if (!context.isLoggedIn) {
+    if (!context.isLoggedIn && window.location.pathname !== "/help") {
       setClickedLogin(true);
       setDisableClosing(true);
-    } else {
-      setClickedLogin(false);
-      setDisableClosing(false);
     }
   }, [context]);
 

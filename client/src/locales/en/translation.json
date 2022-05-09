@@ -1,9 +1,18 @@
 {
   "Header": {
     "Chooser": {
-      "First": "All products",
-      "Second": "Customizable products",
-      "Third": "All accessories"
+      "First": {
+        "cut": "Products",
+        "uncut": "All Products"
+      },
+      "Second": {
+        "cut": "Customizable",
+        "uncut": "Customizable Products"
+      },
+      "Third": {
+        "cut": "Accessories",
+        "uncut": "All Accessories"
+      }
     },
     "Input": "Search brands, items, & more..."
   },

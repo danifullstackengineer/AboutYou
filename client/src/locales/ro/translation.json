@@ -1,9 +1,18 @@
 {
     "Header":{
         "Chooser":{
-            "First": "Toate produsele",
-            "Second": "Produse customizabile",
-            "Third": "Toate accesoriile"
+            "First": {
+                "cut": "Produse",
+                "uncut": "Toate Produsele"
+            },
+            "Second": {
+                "cut": "Customizabile",
+                "uncut": "Produse Customizabile"
+            },
+            "Third":  {
+                "cut": "Accessorii",
+                "uncut": "Toate Accessoriile"
+            }
         },
         "Input": "Cauta branduri, iteme, & mai multe..."
     },

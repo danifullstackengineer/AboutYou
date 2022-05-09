@@ -34,13 +34,3 @@ flex-direction: column;
 .checkoutBodyBasketTotal__lower > div >h3:last-child {
   color: red;
 }
-@media screen and (max-width: 900px){
-  .checkoutBodyBasketTotal {
-    margin-top: 0;
-  }
-}
-@media screen and (max-width: 800px){
-  .checkoutBodyBasketTotal {
-    display: none;
-  }
-}

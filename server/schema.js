@@ -35,10 +35,18 @@ const RootQuery = new GraphQLObjectType({
     getProducts: {
       type: new GraphQLList(ProductType),
       args: {
+        dark: {type: new GraphQLNonNull(GraphQLBoolean)}
       },
       async resolve(par, args) {
-        return await Products.find({})
+        return await Products.find({dark: args.dark})
       },
+    },
+    getAccessories: {
+      type: new GraphQLList(AccessoryType),
+      args: {},
+      async resolve(par, args){
+        return await Accessories.find({})
+      }
     },
     getSingleProduct: {
       type: ProductType,

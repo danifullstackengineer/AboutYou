@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useWindowDimensions } from "../../Hooks/Viewport";
 import "../../styles/components/Checkout/ProgressCheckout.css";
 
 function ProgressCheckout({ progress }: { progress?: string }) {
@@ -15,6 +16,8 @@ function ProgressCheckout({ progress }: { progress?: string }) {
       setCurrent(1);
     }
   }, [progress]);
+
+  const {width} = useWindowDimensions();
 
   return (
     <div className="progressCheckout">
@@ -71,21 +74,21 @@ function ProgressCheckout({ progress }: { progress?: string }) {
           }
           to="/checkout"
         >
-          Your information
+          {width <= 600 ? "Information" : "Your information"}
         </Link>
         <Link
           className={
             active[2] || current === 2 ? "progressCheckout__text-active" : ""
           }
-          to="/payment"
+          to={current === 2 ? "/payment" : ""}
         >
-          Your payment methods
+          {width <=600 ? "Payment" : "Your payment methods"}
         </Link>
         <Link
           className={
             active[3] || current === 3 ? "progressCheckout__text-active" : ""
           }
-          to="/order"
+          to={current === 3 ? "/orders" : ""}
         >
           Order
         </Link>

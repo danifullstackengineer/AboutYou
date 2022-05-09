@@ -5,7 +5,6 @@ import Body from "./components/Body";
 import Credential from "./components/Credentials/Credential";
 import HeaderBody from "./components/Header/HeaderBody";
 import FooterBody from "./components/Footer/FooterBody";
-import Wishlist from "./components/Wishlist/Wishlist";
 import Checkout from "./components/Checkout/Checkout";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -358,7 +357,8 @@ function App() {
       return () => window.removeEventListener("resize", () => {})
     }
     , [isMobile, hasChecked,])
-    
+
+    const [display, setDisplay] = useState<string>("");
 
   return (
     <div
@@ -412,6 +412,7 @@ function App() {
                 clickedUser={clickedUser}
                 clickedLanguage={clickedLanguage}
                 handleOpening={handleOpening}
+                display={display}
               /> : <MenuPhone
               clickedMenu={clickedMenu}
               chosenMode={chosenMode}
@@ -427,6 +428,7 @@ function App() {
               clickedLanguage={clickedLanguage}
               handleOpening={handleOpening}
               setClickedMenu={setClickedMenu}
+              display={display}
               />}
               <Credential
                 chosenAction={chosenAction}
@@ -441,7 +443,6 @@ function App() {
                 ""
               )}
               <ScrollIntoViewComponent mainRef={mainRef} />
-              <HeaderSticky close={!isViewport620 && clickedMenu}/>
               <Routes>
                 <Route
                   path="/*"
@@ -472,7 +473,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="/custom"
+                  path="/light"
                   element={
                     <>
                       <HeaderBody
@@ -501,6 +502,35 @@ function App() {
                     </>
                   }
                 />
+                <Route
+                path="/dark"
+                element={
+                  <>
+                     <HeaderBody
+                      close={!isViewport620  && clickedMenu}
+                        headerRef={headerRef}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setChosenMode={setChosenMode}
+                        custom={true}
+                      />
+                      <Body
+                        setClickedLogin={setClickedLogin}
+                        chosenMode={chosenMode}
+                        setClickedMenu={setClickedMenu}
+                        clickedMenu={clickedMenu}
+                        setClickedBasket={setClickedBasket}
+                        setClickedWishlist={setClickedWishlist}
+                        handleOpening={handleOpening}
+                        clickedWishlist={clickedWishlist}
+                        clickedBasket={clickedBasket}
+                        custom={true}
+                      />
+                      <FooterBody chosenMode={chosenMode} />
+                  </>
+                }/>
                 <Route
                   path="/accessories"
                   element={
@@ -531,50 +561,32 @@ function App() {
                     </>
                   }
                 />
-                <Route
-                  path="/wishlist"
-                  element={
-                    <>
-                      <HeaderBody
-                      close={!isViewport620  && clickedMenu}
-                        headerRef={headerRef}
-                        setClickedMenu={setClickedMenu}
-                        clickedMenu={clickedMenu}
-                        setClickedLogin={setClickedLogin}
-                        chosenMode={chosenMode}
-                        setChosenMode={setChosenMode}
-                      />
-                      <Wishlist />
-                      <FooterBody />
-                    </>
-                  }
-                />
+
                 <Route
                   path="/checkout"
                   element={
-                    <Elements stripe={promise}>
-                      {" "}
                       <Checkout
                         setAmount={setAmount}
                         checkout={true}
                         setClickedLogin={setClickedLogin}
                         setDisableClosing={setDisableClosing}
+                        setDisplay={setDisplay}
+                        setChosenAction={setChosenAction}
                       />
-                    </Elements>
                   }
                 />
                 <Route
                   path="/payment"
                   element={
-                    <Elements stripe={promise}>
-                      {" "}
+    
                       <Checkout
                         amount={amount}
                         payment={true}
                         setClickedLogin={setClickedLogin}
                         setDisableClosing={setDisableClosing}
+                        setDisplay={setDisplay}
+                        setChosenAction={setChosenAction}
                       />
-                    </Elements>
                   }
                 />
                 <Route
@@ -599,14 +611,14 @@ function App() {
                   path="/payment/success"
                   element={
                     <>
-                      <Elements stripe={promise}>
                         <Checkout
                           amount={amount}
                           paid={true}
                           setClickedLogin={setClickedLogin}
                           setDisableClosing={setDisableClosing}
+                          setDisplay={setDisplay}
+                          setChosenAction={setChosenAction}
                         />
-                      </Elements>
                     </>
                   }
                 />
@@ -614,14 +626,14 @@ function App() {
                   path="/payment/failure"
                   element={
                     <>
-                      <Elements stripe={promise}>
                         <Checkout
                           amount={amount}
                           paid={true}
                           setClickedLogin={setClickedLogin}
                           setDisableClosing={setDisableClosing}
+                          setDisplay={setDisplay}
+                          setChosenAction={setChosenAction}
                         />
-                      </Elements>
                     </>
                   }
                 />

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const getAllProductsMain = gql`
-  query {
-    getProducts {
+  query($dark: Boolean!) {
+    getProducts(dark: $dark) {
       id
       backgroundImg
       foregroundImg

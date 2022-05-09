@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     z-index: 500;
-    min-width: 800px;
+    min-width: 350px;
 }
 .continueCheckout > button {
     background-color: #66BB6A;
@@ -23,4 +23,12 @@
 }
 .continueCheckout > button:hover {
     background-color: #329637;
+}
+@media screen and (max-width: 450px) {
+    .continueCheckout > button {
+        width: 80%;
+        font-size: 0.95rem;
+        text-align: center;
+        justify-content: center;
+    }
 }

@@ -54,10 +54,9 @@ function PaymentBodyInfo({
     <div className="paymentBodyInfo">
       <PaymentBodyInfoAddress />
       <span>Delivery estimated between ??.?? - ??.??(to be changed)</span>
-      <CheckoutBodyBasketOrder basket={basket} payment={true} setChangedBasket={setChangedBasket} changedBasket={changedBasket} />
+      <CheckoutBodyBasketOrder payment={true}/>
       <CheckoutBodyBasketTotal
         payment={true}
-        basket={basket}
         setAmount={setAmount}
       />
       <PaymentBodyInfoPhoneNumber />

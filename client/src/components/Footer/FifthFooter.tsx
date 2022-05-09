@@ -11,9 +11,12 @@ import { FaExpeditedssl } from "react-icons/fa";
 import { useState } from "react";
 import NBLogo from "../../Comp-Single/NBLogo";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
   const [isIgHovered, setIsIgHovered] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -24,41 +27,43 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
       <footer>
         <section>
           <div>
-            <NBLogo chosenMode={chosenMode} size={150} />
-          </div>
-          <div className="fifthFooter__section1-social">
-            <span>
-              <BsFacebook />
-            </span>
-            <span
-              onMouseOver={() => setIsIgHovered(true)}
-              onMouseLeave={() => setIsIgHovered(false)}
-            >
-              {!isIgHovered ? (
-                <BsInstagram />
-              ) : (
-                <img src={"/assets/logo/ig.webp"} alt="" />
-              )}
-            </span>
-            <span>
-              <BsTwitter />
-            </span>
-            <span>
-              <BsYoutube />
-            </span>
-            <span>
-              <BsPinterest />
-            </span>
-            <span>
-              <FaTiktok />
-            </span>
+            <div>
+              <NBLogo chosenMode={chosenMode} size={150} />
+            </div>
+            <div className="fifthFooter__section1-social">
+              <span>
+                <BsFacebook />
+              </span>
+              <span
+                onMouseOver={() => setIsIgHovered(true)}
+                onMouseLeave={() => setIsIgHovered(false)}
+              >
+                {!isIgHovered ? (
+                  <BsInstagram />
+                ) : (
+                  <img src={"/assets/logo/ig.webp"} alt="" />
+                )}
+              </span>
+              <span>
+                <BsTwitter />
+              </span>
+              <span>
+                <BsYoutube />
+              </span>
+              <span>
+                <BsPinterest />
+              </span>
+              <span>
+                <FaTiktok />
+              </span>
+            </div>
           </div>
         </section>
         <section>
           <h3>CUSTOMER CARE</h3>
           <ul>
             <li>Contact</li>
-            <li>Help</li>
+            <li onClick={() => navigate("/help")}>Help</li>
             <li>Partner program</li>
             <li>Delivery area</li>
           </ul>
@@ -67,8 +72,8 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
           <h3>SECURE SHOPPING</h3>
           <ul>
             <li>
-              <img src={"/assets/png/ssl.png"} alt={""} loading={"lazy"}/>
-               Your data is secure with us
+              <img src={"/assets/png/ssl.png"} alt={""} loading={"lazy"} />
+              Your data is secure with us
             </li>
           </ul>
         </section>

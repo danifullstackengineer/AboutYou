@@ -54,7 +54,7 @@ function ThirdFooter({
         </div>
         <InputForm
           border={[10, 0, 10, 0]}
-          width={700}
+          width={300}
           height={40}
           placeholder={"Your email address"}
           type={"text"}

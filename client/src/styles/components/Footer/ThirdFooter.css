@@ -8,12 +8,11 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  width: 50%;
+  width: 500px;
   padding-bottom: 2rem;
   padding-top: 2rem;
   background-color: white;
   z-index: 30001;
-  min-width: 768px;
   position: relative;
 }
 .thirdFooter > footer {
@@ -112,6 +111,7 @@
   font-size: 0.8rem;
   color: rgb(200, 200, 200);
   font-weight: normal !important;
+  text-align: center;
 }
 .thirdFooter__close {
   position: absolute;
@@ -182,5 +182,18 @@
   100% {
     width: 0;
     height: 0;
+  }
+}
+@media screen and (max-width: 500px){
+  .thirdFooter {
+    max-width: 350px;
+  }
+  .thirdFooter > footer > h3 {
+    text-align: center;
+  }
+}
+@media screen and (max-height: 400px){
+  .thirdFooter {
+    max-height: 350px;
   }
 }

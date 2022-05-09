@@ -12,6 +12,10 @@ const productTable = mongoose.Schema({
     type: Number,
     default: 0
   },
+  dark: {
+    type: Boolean,
+    default: false
+  }
 });
 
 export default mongoose.model("Product", productTable);

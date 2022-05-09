@@ -5,10 +5,13 @@ import { getAllProductsMain } from "../../Apollo/Products";
 import { ProductType } from "../../types/Product";
 import { AuthContext } from "../../Context/Auth";
 import { getUserLikedProducts } from "../../Apollo/User";
-import shuffle from "../../Logic/randomize";
+import { shuffle, shuffle_acc } from "../../Logic/randomize";
 import ProductCustom from "../../Comp-Single/ProductCustom";
 import Product from "../../Comp-Single/Product";
 import Product360 from "../../Comp-Single/Product360";
+import { AccessoryType } from "../../types/Accessory";
+import { getAccessories } from "../../Apollo/Accessory";
+import Accessory from "../../Comp-Single/Accessory";
 
 function BodyInner({
   setClickedLogin,
@@ -21,7 +24,7 @@ function BodyInner({
   clickedBasket,
   clickedWishlist,
   custom,
-  accessories
+  accessories,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -32,21 +35,27 @@ function BodyInner({
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
-  custom?:boolean;
-  accessories?:boolean;
+  custom?: boolean;
+  accessories?: boolean;
 }) {
   const aContext = useContext(AuthContext);
 
   const [randomProd, setRandomProd] = useState<ProductType[]>();
+  const [randomAcc, setRandomAcc] = useState<AccessoryType[]>();
 
   const [
     getAllProductsNonCustomizableQuery,
     { loading: loadingNon, data: dataNon, error: errorNon },
   ] = useLazyQuery(getAllProductsMain, {
     variables: {
-      isCustomizable: false,
+      dark: chosenMode === undefined || chosenMode ? false : true,
     },
   });
+
+  const [
+    getAllAccessoriesQuery,
+    { loading: loadingAcc, data: dataAcc, error: errorAcc },
+  ] = useLazyQuery(getAccessories);
 
   const [
     getUserLikedProductsQuery,
@@ -57,26 +66,36 @@ function BodyInner({
     },
   });
 
-  useEffect(()=>{
-    if(!accessories && !dataNon){
+  useEffect(() => {
+    if (!accessories) {
       getAllProductsNonCustomizableQuery();
     }
-  }, [window.location.pathname])
+  }, [window.location.pathname, chosenMode]);
 
-  useEffect(()=>{
-    if(dataNon && custom && !randomProd){
-      //todo: change when got first 50 pics
-      setRandomProd(shuffle(dataNon.getProducts));
-      // setRandomProd(dataNon.getProducts);
+  useEffect(() => {
+    if (window.location.pathname === "/accessories" && !dataAcc) {
+      getAllAccessoriesQuery();
     }
-  }, [dataNon, custom])
+  }, [window.location.pathname]);
 
+  useEffect(() => {
+    if (dataNon && custom) {
+      shuffle(dataNon.getProducts).then(res=>{
+        setRandomProd(res);
+      })
+    }
+  }, [dataNon, custom]);
 
-  //todo: remove after you got 50 pics for each product
-
+  useEffect(() => {
+    if (dataAcc && accessories && !randomAcc) {
+      // setRandomAcc(shuffle_acc(dataAcc.getAccessories));
+      shuffle_acc(dataAcc.getAccessories).then(res=>{
+        setRandomAcc(res);
+      })
+    }
+  }, [dataAcc, accessories]);
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
-
 
   useEffect(() => {
     if (aContext.isLoggedIn && !isMounted) {
@@ -84,7 +103,6 @@ function BodyInner({
       getUserLikedProductsQuery();
     }
   }, [aContext]);
-
 
   // useEffect(() => {
   //   //TODO: Handle errors
@@ -94,51 +112,80 @@ function BodyInner({
   //   }
   //   if (errorL) {
   //   }
+  //   if (errorAcc){
+  //
+  // }
   // }, [errorNon, error, errorL]);
-  
 
   return (
     <div className="bodyInner">
-      {dataNon && !custom && !accessories ? 
-      dataNon.getProducts.map((product:ProductType) => {
-        return <Product key={product.id}
-        product={product}
-        setClickedLogin={setClickedLogin}
-        setClickedMenu={setClickedMenu}
-        liked={dataL ? dataL.getUserInfo.likedProducts.filter((productL:string) => productL === product.id ? product : undefined).length > 0 : false}
-        clickedMenu={clickedMenu}
-        setClickedBasket={setClickedBasket}
-        setClickedWishlist={setClickedWishlist}
-        handleOpening={handleOpening}
-        clickedBasket={clickedBasket}
-        clickedWishlist={clickedWishlist}
-        />
-      }) : ""  
-    }
-    {/* {
-      randomProd  && custom? 
-      <><Product360 product={randomProd[0]}/>
-      <div className="bodyInner-random">
-        {randomProd.map((product:ProductType, i:number)=> {
-        if(i> 0){
-          return <ProductCustom product={product} key={i}/>
-        }
-      })}
-      </div> */}
-      { randomProd && custom ?
-      <>
-        <Product360 product={randomProd[0]}/>
+      {dataNon && !custom && !accessories
+        ? dataNon.getProducts.map((product: ProductType) => {
+            return (
+              <Product
+                key={product.id}
+                product={product}
+                setClickedLogin={setClickedLogin}
+                setClickedMenu={setClickedMenu}
+                liked={
+                  dataL
+                    ? dataL.getUserInfo.likedProducts.filter(
+                        (productL: string) =>
+                          productL === product.id ? product : undefined
+                      ).length > 0
+                    : false
+                }
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedWishlist={setClickedWishlist}
+                handleOpening={handleOpening}
+                clickedBasket={clickedBasket}
+                clickedWishlist={clickedWishlist}
+              />
+            );
+          })
+        : ""}
+      {randomProd &&
+      custom &&
+      (chosenMode === undefined || chosenMode === true) &&
+      !loadingNon? (
+        <>
+          <Product360 product={randomProd[0]} />
+          <div className="bodyInner-random">
+            {randomProd.map((product: ProductType, i: number) => {
+              if (i > 0) {
+                return <ProductCustom product={product} key={i} />;
+              }
+            })}
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+      {randomProd &&
+      custom &&
+      chosenMode === false &&
+      chosenMode !== undefined &&
+      !loadingNon? (
         <div className="bodyInner-random">
-          {randomProd.map((product: ProductType, i:number)=> {
-            if(i>0){
-              return <ProductCustom product={product} key={i}/>
-            }
+          {randomProd.map((product: ProductType, i: number) => {
+            return <ProductCustom product={product} key={i} dark={true} />;
           })}
         </div>
-        </>
-        : ""}
-      </div>
+      ) : (
+        ""
+      )}
+      {randomAcc && accessories && !loadingAcc ? (
+        <div className="bodyInner-random">
+          {randomAcc.map((accessory: AccessoryType, i: number) => {
+            return <Accessory accessory={accessory} key={i} />;
+          })}
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
   );
 }
 
-export default React.memo(BodyInner);
+export default BodyInner;

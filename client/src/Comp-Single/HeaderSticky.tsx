@@ -3,7 +3,7 @@ import '../styles/Comp-Single/HeaderSticky.css';
 
 function HeaderSticky({close} : {close: boolean}){
 
-  
+
   return (
     <div
     className={`headerSticky ${close ? "headerSticky-close" : ""}`}

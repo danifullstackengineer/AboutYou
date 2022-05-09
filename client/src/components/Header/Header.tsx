@@ -15,7 +15,7 @@ function Header({
   clickedMenu,
   custom,
   accessories,
-  close
+  close,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -23,57 +23,65 @@ function Header({
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   headerRef: React.RefObject<HTMLDivElement>;
   clickedMenu: boolean;
-  custom?:boolean;
-  accessories?:boolean;
-  close:boolean;
+  custom?: boolean;
+  accessories?: boolean;
+  close: boolean;
 }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
   const mContext = useContext(MobileContext);
 
-
   const [search, setSearch] = useState<string>();
-
 
   useEffect(() => {
     if (chosenMode !== undefined) {
       if (!custom) {
         setChosenMode(true);
       }
-     
     }
   }, [chosenMode, setChosenMode, custom]);
 
   const [clickedSearch, setClickedSearch] = useState<boolean>();
 
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const [closedFinished, setClosedFinished] = useState<boolean>(false);
 
-  useEffect(()=>{
-    if(close){
-      const timeout = setTimeout(()=>{
+  useEffect(() => {
+    if (close) {
+      const timeout = setTimeout(() => {
         setClosedFinished(true);
-      }, 500)
+      }, 500);
       return () => clearTimeout(timeout);
-    }else{
+    } else {
       setClosedFinished(false);
     }
-  }, [close])
+  }, [close]);
+
+  useEffect(() => {
+    if (window.location.pathname === "/light" && chosenMode !== true) {
+      setChosenMode(true);
+    } else if (window.location.pathname === "/dark" && chosenMode !== false) {
+      setChosenMode(false);
+    }
+  }, [window.location.pathname]);
 
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
-
-  if (!mContext.isMobile){
-  window.onscroll = () => {
-    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrolled = (winScroll / height) * 100;
-    setScrollAmount(scrolled);
-  }
-}
-
+  useEffect(()=>{
+    if(!mContext.isMobile){
+      window.addEventListener("scroll", ()=> {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height * 100);
+        setScrollAmount(scrolled);
+      })
+      return () => {
+        window.removeEventListener("scroll", ()=> {});
+      }
+    }
+  }, [])
 
   return (
     <div
@@ -81,7 +89,7 @@ function Header({
         chosenMode || chosenMode === undefined ? "header-light" : "header-dark"
       } ${close ? "header-close" : ""}`}
       ref={headerRef}
-      style={{display: closedFinished ? "none" : "flex"}}
+      style={{ display: closedFinished ? "none" : "flex" }}
     >
       <div className="header__top">
         <div className="header__top-logo">
@@ -90,14 +98,18 @@ function Header({
       </div>
       <div
         className={`header__dropdown ${
-         clickedMenu ? "header__dropdown-active" : ""
+          clickedMenu ? "header__dropdown-active" : ""
         }`}
         onClick={() => {
           setClickedMenu(!clickedMenu);
         }}
       >
         {chosenMode === undefined || chosenMode ? (
-          <img src={"/assets/png/dropdown-light.png"} loading={"eager"} alt={""} />
+          <img
+            src={"/assets/png/dropdown-light.png"}
+            loading={"eager"}
+            alt={""}
+          />
         ) : (
           <img
             src={"/assets/png/dropdown-dark.png"}
@@ -110,18 +122,34 @@ function Header({
         <div className="header__bottom-btns">
           <button
             type="button"
-            className={!accessories && !custom ? "header__bottom-btns-active" : ""}
-            onClick={() => navigate('/')}
+            className={
+              !accessories && !custom ? "header__bottom-btns-active" : ""
+            }
+            onClick={() => navigate("/")}
           >
-            <Trans i18nKey={width <= 600 ? "Header.Chooser.First.cut" : "Header.Chooser.First"}>{width <= 600 ? "Products" :"All products"}</Trans>
+            <Trans
+              i18nKey={
+                width <= 600
+                  ? "Header.Chooser.First.cut"
+                  : "Header.Chooser.First.uncut"
+              }
+            >
+              {width <= 600 ? "Products" : "All Products"}
+            </Trans>
           </button>
           <button
             type="button"
             className={custom ? "header__bottom-btns-active" : ""}
-            onClick={() => navigate("/custom")}
+            onClick={() => navigate("/light")}
           >
-            <Trans i18nKey={width <= 600 ? "Header.Chooser.Second.cut" : "Header.Chooser.Second"}>
-              {width <= 600 ? "Customizable" : "Customizable products"}
+            <Trans
+              i18nKey={
+                width <= 600
+                  ? "Header.Chooser.Second.cut"
+                  : "Header.Chooser.Second.uncut"
+              }
+            >
+              {width <= 600 ? "Customizable" : "Customizable Products"}
             </Trans>
           </button>
           <button
@@ -129,7 +157,15 @@ function Header({
             className={accessories ? "header__bottom-btns-active" : ""}
             onClick={() => navigate("/accessories")}
           >
-            <Trans i18nKey={width <= 600 ? "Header.Chooser.Third.cut" :"Header.Chooser.Third"}>{width <= 600 ? "Accessories" :"All accessories"}</Trans>
+            <Trans
+              i18nKey={
+                width <= 600
+                  ? "Header.Chooser.Third.cut"
+                  : "Header.Chooser.Third.uncut"
+              }
+            >
+              {width <= 600 ? "Accessories" : "All accessories"}
+            </Trans>
           </button>
         </div>
         <div
@@ -164,12 +200,18 @@ function Header({
             <img
               src={"/assets/svg/sun.svg"}
               alt={"/assets/svg/sun.svg"}
-              onClick={() => setChosenMode(true)}
+              onClick={() => {
+                navigate("/light");
+                setChosenMode(true);
+              }}
             />
             <div
-              onClick={() =>
-                setChosenMode(chosenMode === undefined ? false : !chosenMode)
-              }
+              onClick={() => {
+                navigate(
+                  chosenMode === undefined ? "/dark" : chosenMode ? "/dark" : "/light"
+                );
+                setChosenMode(chosenMode === undefined ? false : !chosenMode);
+              }}
               className={`header__bottom-mode-switch ${
                 chosenMode === false
                   ? "header__bottom-mode-switch-dark"
@@ -179,18 +221,26 @@ function Header({
             <img
               src={"/assets/svg/moon.svg"}
               alt={"/assets/svg/moon.svg"}
-              onClick={() => setChosenMode(false)}
+              onClick={() => {
+                navigate("/dark");
+                setChosenMode(false);
+              }}
             />
           </div>
         </div>
       </div>
-      {!mContext.isMobile ? <div className="header__progress">
-        <div className="header__progress-amount"
-        style={{
-          width: scrollAmount + "%"
-        }}
-        ></div>
-      </div> : ""}
+      {!mContext.isMobile ? (
+        <div className="header__progress">
+          <div
+            className="header__progress-amount"
+            style={{
+              width: scrollAmount + "%",
+            }}
+          ></div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

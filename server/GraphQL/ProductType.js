@@ -22,6 +22,7 @@ const ProductType = new GraphQLObjectType({
     sizes: { type: new GraphQLList(GraphQLString) },
     accessoryId: { type: new GraphQLList(GraphQLString) },
     likes: { type: new GraphQLNonNull(GraphQLInt) },
+    dark: {type: new GraphQLNonNull(GraphQLBoolean)}
   }),
 });
 

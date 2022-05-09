@@ -1,4 +1,4 @@
-.productCustom {
+.accessory {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,23 +12,14 @@
     margin-left: auto;
     margin-right: auto;
     transition: var(--transitionLightMode);
-}
-.productCustom-dark {
-    background-color: transparent;
-    box-shadow: rgba(255,255,255, 0.2) 0px 7px 29px 0px;
-}
-.productCustom-light {
     background-color: white;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100,100,111,0.2) 0px 7px 29px 0;
 }
-.productCustom-light:hover {
+.accessory:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
-.productCustom-dark:hover {
-    box-shadow: -10px 10px 50px rgb(100, 200, 200);
-}
-.productCustom__img {
+.accessory__img {
     width: 100%;
     max-height: 600px;
     min-width: 350px;
@@ -38,7 +29,7 @@
     align-items: center;
     justify-content: center;
 }
-.productCustom__img > img {
+.accessory__img > img {
     max-height: 600px;
     height: auto;
     object-fit: cover;
@@ -47,10 +38,7 @@
     pointer-events: none;
     width: 100%;
 }
-.productCustom__img > img:last-child {
-    display: none;
-}
-.productCustom > h3 {
+.accessory > h3 {
     position: absolute;
     left: 0;
     top: 0;
@@ -59,15 +47,15 @@
     text-decoration: underline;
     font-weight: 900;
 }
-.productCustom-dark > h3 {
+/* .productCustom-dark > h3 {
     color: white;
     text-shadow: .5px .5px rgb(200,200,200);
 }
 .productCustom-light > h3 {
     color: black;
     text-shadow: .5px .5px rgb(100,100,100);
-}
-.productCustom > h4 {
+} */
+.accessory > h4 {
     position: absolute;
     right: 0;
     bottom: 30px;
@@ -76,7 +64,7 @@
     color: rgb(255,100,100);
     margin: 0 30px 30px 0;
 }
-.productCustom > button {
+.accessory > button {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -87,36 +75,36 @@
     padding: 5px 10px 5px 10px;
     cursor: pointer;
 }
-.productCustom > button:hover {
+.accessory > button:hover {
     transform: translateY(-10%);
 }
 @media screen and (max-height: 800px){
-    .productCustom {
+    .accessory {
         height: 40vh;
     }
 }
 @media screen and (max-height: 600px){
-    .productCustom{
+    .accessory {
         height: 50vh;
     }
 }
 @media screen and (max-height: 450px) {
-    .productCustom {
+    .accessory {
         height: 70vh;
     }
 }
 @media screen and (max-width: 1200px){
-    .productCustom {
+    .accessory {
         width: 45%;
     }
 }
 @media screen and (max-width: 800px){
-    .productCustom {
+    .accessory {
         width: 100%;
     }
 }
 @media screen and (max-width: 800px) and (min-height: 800px) and (min-width: 600px){
-    .productCustom__img > img {
+    .accessory__img > img {
         width: 50%;
         object-position: 100% 50%;
         justify-self: center;

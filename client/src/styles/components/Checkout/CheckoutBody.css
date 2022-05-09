@@ -5,8 +5,7 @@
   flex-direction: row;
   margin: 2em 0 2em 0;
   flex-direction: column;
-  min-width: inherit;
-  min-width: 1050px;
+  min-width: 350px;
 }
 .checkoutBody__items {
   display: flex;
@@ -16,10 +15,7 @@
   margin: 0 2em 0 2em;
 }
 @media screen and (max-width: 1000px){
-  .checkoutBody__items > div:first-child {
-    margin: 0 0 0 1em;
-  }
-  .checkoutBody__items > div:last-child {
-    margin: 0 1em 0 1em;
+  .checkoutBody__items {
+    flex-direction: column;
   }
 }

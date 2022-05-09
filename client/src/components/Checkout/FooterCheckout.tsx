@@ -1,6 +1,7 @@
 import "../../styles/components/Checkout/FooterCheckout.css";
 import ssl from "../../assets/ssl/ssl.png";
 import { Link } from "react-router-dom";
+import React from "react";
 
 function FooterCheckout() {
   return (
@@ -31,8 +32,14 @@ function FooterCheckout() {
           <h4>Pay securely with</h4>
           <span>
             <img src={"/assets/svg/card.svg"} alt={"/assets/svg/card.svg"} />
-            <img src={"/assets/svg/paypal.svg"} alt={"/assets/svg/paypal.svg"} />
-            <img src={"/assets/svg/bitcoin.svg"} alt={"/assets/svg/bitcoin.svg"} />
+            <img
+              src={"/assets/svg/paypal.svg"}
+              alt={"/assets/svg/paypal.svg"}
+            />
+            <img
+              src={"/assets/svg/bitcoin.svg"}
+              alt={"/assets/svg/bitcoin.svg"}
+            />
           </span>
         </section>
       </footer>

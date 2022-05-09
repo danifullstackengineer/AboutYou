@@ -8,8 +8,10 @@
   font-size: 1.25rem;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  width: 100%;
 }
 .checkoutBodyMainForm__title-country {
+  width: 100%;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   display: flex;
@@ -138,7 +140,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 2em 0 2em 0;
+  margin: .5em 0 0 0;
 }
 @keyframes slideLeftBefore {
   0% {
@@ -154,5 +156,32 @@
   }
   100% {
     left: 50%;
+  }
+}
+
+@media screen and (max-width: 650px){
+  .checkoutBodyMainForm__title-country {
+    flex-direction: column;
+  }
+  .checkoutBodyMainForm__input {
+    flex-direction: column;
+    margin: 0;
+  }
+  .checkoutBodyMainForm__country {
+    margin: 20px 0 20px 0;
+    width: 100%;
+  }
+  .checkoutBodyMainForm__country > button {
+    width: 100%;
+  }
+  .checkoutBodyMainForm__country > button > span:last-child {
+    right: -5%;
+  }
+  .checkoutBodyMainForm__title {
+    margin: 20px 0 20px 0;
+    width: 100%;
+  }
+  .checkoutBodyMainForm__title > button {
+    width: 50%;
   }
 }

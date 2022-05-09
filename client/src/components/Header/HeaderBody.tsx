@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import "../../styles/components/Header/HeaderBody.css";
+import HeaderSticky from "../../Comp-Single/HeaderSticky";
 
 function HeaderBody({
   setClickedLogin,
@@ -26,6 +27,7 @@ function HeaderBody({
 
   return (
     <div className="headerBody">
+      <HeaderSticky close={close}/>
       <Header
         setClickedMenu={setClickedMenu}
         setClickedLogin={setClickedLogin}

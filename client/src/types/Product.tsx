@@ -8,5 +8,4 @@ export type ProductType = {
     sizes: number[];
     accessoryId?: string[];
     likes: number;
-    isCustomizable: boolean;
 }

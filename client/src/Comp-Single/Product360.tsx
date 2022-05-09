@@ -7,6 +7,7 @@ import { ProductType } from "../types/Product";
 import useMousePosition from "../Hooks/MousePosition";
 import { useWindowDimensions } from "../Hooks/Viewport";
 import InteractiveBtn from "./InteractiveBtn";
+import { IoIosClose } from "react-icons/io";
 
 function Product360({ product }: { product: ProductType }) {
   const { loading, error, data } = useQuery(getAccessoriesBasedOnParent, {
@@ -126,22 +127,12 @@ function Product360({ product }: { product: ProductType }) {
   const [hasSelectedOptions, setHasSelectedOptions] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(
-      "added acc: ",
-      addedAccessory,
-      "\nselected color: ",
-      selectedColor,
-      "\nselected size: ",
-      selectedSize,
-      "\nfile: ",
-      file
-    );
-    if (hasSelectedColor && hasSelectedSize && (file || hasSelectedAccessory)) {
+    if (hasSelectedColor && hasSelectedSize) {
       setHasSelectedOptions(true);
     } else {
       setHasSelectedOptions(false);
     }
-  }, [addedAccessory, hasSelectedColor, hasSelectedSize, file]);
+  }, [ hasSelectedColor, hasSelectedSize]);
 
   const handleAddToBasket = (): void => {
     alert("You need to implement this!");
@@ -169,7 +160,7 @@ function Product360({ product }: { product: ProductType }) {
           <img
             src={product.backgroundImg + "1.jpg"}
             alt={""}
-            loading={"eager"}
+            loading={"lazy"}
           />
         ) : (
           ""
@@ -178,7 +169,7 @@ function Product360({ product }: { product: ProductType }) {
           <img
             src={product.foregroundImg + "10.jpg"}
             alt={""}
-            loading={"eager"}
+            loading={"lazy"}
           />
         ) : (
           ""
@@ -194,7 +185,7 @@ function Product360({ product }: { product: ProductType }) {
           ""
         )}
       </div>
-      <div className="product360__right">
+      <div className="product360__right" onClick={()=> setClicked(false)}>
         <div className="product360__right-top">
           <div className="product360__right-sizes">
             <span>Available Sizes</span>
@@ -356,4 +347,4 @@ function Product360({ product }: { product: ProductType }) {
   );
 }
 
-export default Product360;
+export default React.memo(Product360);

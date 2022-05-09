@@ -7,13 +7,16 @@
   height: 170px;
 }
 .checkoutBodyFormAddressChooser__option {
-  width: 47.5%;
+  width: 50%;
+  height: 100%;
   background-color: white;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+  padding: 1em;
+  margin: 0 5px 0 5px;
 }
 .checkoutBodyFormAddressChooser__option > h3 {
   margin: 1em 0 1em 0;
@@ -23,41 +26,50 @@
   font-size: 0.7rem;
   color: rgb(100, 100, 100);
   font-weight: normal;
+  margin-bottom: 2.5em;
 }
 .checkoutBodyFormAddressChooser__option > button {
-  margin-top: 3.5em;
   border: 1px solid black;
   padding: 0.5em 2em 0.5em 2em;
   cursor: pointer;
   background-color: white;
 }
+.checkoutBodyFormAddressChooser__option:hover button {
+ background-color: rgb(100,255,100);
+}
 .checkoutBodyFormAddressChooser__option > span {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background-color: green;
-  margin-top: 3.5em;
+  background-color: rgb(55,255,55);
   position: relative;
+  min-width: 30px;
+  min-height: 30px;
 }
 .checkoutBodyFormAddressChooser__option > span::before {
     position: absolute;
     content: "";
     width: 15px;
     height: 1px;
-    background-color: white;
+    background-color: black;
     z-index: 3;
     top: 50%;
     left:calc(50% - 5px);
     transform: rotate(-45deg);
+    border-bottom-left-radius: 5px;
 }
 .checkoutBodyFormAddressChooser__option > span::after{
     position: absolute;
     content: "";
-    width: 10px;
+    width: 7.5px;
     height: 1px;
-    background-color: white;
+    background-color: black;
     z-index: 3;
-    top:55%;
-    left:14%;
+    top: 59%;
+    left: 20%;
     transform: rotate(45deg);
+    border-bottom-right-radius: 5px;
+}
+@media screen and (max-width: 500px){
+
 }

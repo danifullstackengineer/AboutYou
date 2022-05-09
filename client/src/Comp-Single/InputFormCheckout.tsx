@@ -13,6 +13,7 @@ function InputFormCheckout({
   setIsGood,
   initialInput,
   setInputParent,
+  percWidth
 }: {
   width: number;
   height: number;
@@ -24,6 +25,7 @@ function InputFormCheckout({
   setIsGood?: React.Dispatch<React.SetStateAction<boolean>>;
   initialInput?: string;
   setInputParent: React.Dispatch<React.SetStateAction<string>>;
+  percWidth?:boolean
 }) {
   const [selectedInput, setSelectedInput] = useState<boolean>(false);
   const parentRef = useRef<HTMLDivElement>(null);
@@ -78,7 +80,7 @@ function InputFormCheckout({
       ref={parentRef}
       className="inputFormCheckout"
       style={{
-        width: width,
+        width: percWidth ? width + "%" : "px",
         height: height + "px",
         backgroundColor: bgColor,
         marginTop: margin[0] + "px",

@@ -14,7 +14,6 @@
     position: relative;
     justify-self: center;
     align-self: center;
-    /* transform: translateX(var(--trackbarWidthTransform)); */
 }
 .product:hover {
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
