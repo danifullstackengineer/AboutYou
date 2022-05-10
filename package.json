@@ -8,7 +8,7 @@
     "run-client": "cd client && npm start && cd ..",
     "run-server": "cd server && npm start && cd ..",
     "run-server-dev": "cd server && npm run startdev && cd ..",
-    "dev-install": "cd server && npm install && cd .. && cd client && npm install",
+    "dev-install": "npm i && cd server && npm install && cd .. && cd client && npm install",
     "startdev": "concurrently \"npm run run-client\" \"npm run run-server-dev\"",
     "build": "cd client && npm run build && cd ..",
     "install-client": "cd client && npm install",
