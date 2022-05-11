@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex: 0.1;
+  margin-right: 2em;
 }
 .paymentBodyMethod > div:not(:last-child) {
   border-bottom: 1px solid rgb(200, 200, 200);
@@ -11,18 +13,18 @@
   width: 100%;
   background-color: rgb(240, 240, 240);
   position: relative;
-  display: flex;
   justify-content: flex-end;
   align-items: flex-start;
   max-height: 250px;
   overflow-x: hidden;
-  padding-top: 0.5em;
+  padding-top: 0;
   user-select: none;
   height: 0;
   transition: all 200ms ease-in;
 }
 .paymentBodyMethod__manual-dropdown-show {
  height: 250px;
+ padding-top: 0.5em;
 }
 .paymentBodyMethod__manual-dropdown > div {
   display: flex;
@@ -65,11 +67,12 @@
   font-size: 1rem;
   margin-left: 1em;
 }
-@keyframes showDropdownCoins {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 250px;
+@media screen and (max-width: 1200px){
+  .paymentBodyMethod {
+    margin: 0 2em 2em 2em;
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+    width: calc(100% - 4em);
   }
 }

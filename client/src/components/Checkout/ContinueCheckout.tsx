@@ -8,12 +8,14 @@ function ContinueCheckout({
   continueText,
   redirectToPaymentProvider,
   setRedirectToPaymentProvider,
+  isGoodInputPhoneNumber
 }: {
   refProp?: React.RefObject<HTMLDivElement>;
   setClickedContinue: React.Dispatch<React.SetStateAction<boolean>>;
   continueText: string;
   redirectToPaymentProvider?: boolean;
   setRedirectToPaymentProvider: React.Dispatch<React.SetStateAction<boolean>>;
+  isGoodInputPhoneNumber?: boolean;
 }) {
   const dummyRef = useRef<HTMLDivElement>(null);
   const [continueTop, setContinueTop] = useState<number>();
@@ -52,7 +54,7 @@ function ContinueCheckout({
       <div className="continueCheckout" ref={refProp}>
         <button
           onClick={() => {
-            if (redirectToPaymentProvider) {
+            if (redirectToPaymentProvider && isGoodInputPhoneNumber) {
               setRedirectToPaymentProvider(true);
             } else {
               setClickedContinue(true);

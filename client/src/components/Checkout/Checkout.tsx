@@ -50,6 +50,9 @@ function Checkout({
 
   const [clickedContinue, setClickedContinue] = useState<boolean>(false);
 
+  const [isGoodInputPhoneNumber, setIsGoodInputPhoneNumber] =
+    useState<boolean>(false);
+
   const [redirectToPaymentProvider, setRedirectToPaymentProvider] =
     useState<boolean>(false);
 
@@ -228,7 +231,9 @@ function Checkout({
       {checkout ? (
         <ProgressCheckout progress="checkout" />
       ) : payment ? (
-        <ProgressCheckout progress="payment" />
+        <ProgressCheckout
+          progress="payment"
+        />
       ) : (
         ""
       )}
@@ -240,6 +245,8 @@ function Checkout({
         />
       ) : paid === undefined ? (
         <PaymentBody
+          isGoodInputPhoneNumber={isGoodInputPhoneNumber}
+          setIsGoodInputPhoneNumber={setIsGoodInputPhoneNumber}
           setCurrentCoin={setCurrentCoin}
           currentMethod={currentMethod}
           setCurrentMethod={setCurrentMethod}
@@ -268,6 +275,7 @@ function Checkout({
             continueText={"Order and pay now"}
             redirectToPaymentProvider={true}
             setRedirectToPaymentProvider={setRedirectToPaymentProvider}
+            isGoodInputPhoneNumber={isGoodInputPhoneNumber}
           />
         )
       ) : (

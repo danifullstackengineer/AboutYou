@@ -24,11 +24,13 @@ si celalalt se duce sus si devine 360
 -imagini cate 3 in dark mode si accesorii
 
 
-TODO: fix likes - fixed
-TODO: on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. - fixed
-TODO: in checkout add countries in the dropdown - fixed(changed to no dropdown)
-TODO: Add form validation in checkout forms - fixed
+TODO: --- fix likes --- fixed
+TODO: --- on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. --- fixed
+TODO: --- in checkout add countries in the dropdown --- fixed(changed to no dropdown)
+TODO: --- Add form validation in checkout forms --- fixed
 TODO: Add tablet responsiveness in checkout
-TODO: Fix checkout button
+TODO: Fix checkout button -- partially fixed --- need to work on payment button
 TODO: Add scrolling when form input is invalid/missing
-TODO: In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method.
+TODO: --- In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method. --- fixed
+TODO: --- Change warning in payment method to be responsive. --- fixed
+TODO: --- In checkout page on the inputs, make sure there's some padding on the right side. --- fixed

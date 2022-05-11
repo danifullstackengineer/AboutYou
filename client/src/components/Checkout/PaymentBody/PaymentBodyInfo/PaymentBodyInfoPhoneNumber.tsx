@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useWindowDimensions } from "../../../../Hooks/Viewport";
 import "../../../../styles/components/Checkout/PaymentBody/PaymentBodyInfo/PaymentBodyInfoPhoneNumber.css";
 
-
-function PaymentBodyInfoPhoneNumber() {
+function PaymentBodyInfoPhoneNumber({
+  isGoodInputPhoneNumber,
+  setIsGoodInputPhoneNumber,
+}: {
+  isGoodInputPhoneNumber: boolean;
+  setIsGoodInputPhoneNumber: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [input, setInput] = useState<string>("");
-
-  const [isGoodInput, setIsGoodInput] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const regex = /^([+]?[0-9]{0,15})$/;
@@ -14,7 +18,6 @@ function PaymentBodyInfoPhoneNumber() {
     }
   };
 
-
   const decideToShowMark = (): void => {
     var regexCompleted;
     if (input[0] === "+") {
@@ -22,31 +25,40 @@ function PaymentBodyInfoPhoneNumber() {
     } else {
       regexCompleted = /^([0-9]{4,15})$/;
     }
-    setIsGoodInput(regexCompleted.test(input));
+    setIsGoodInputPhoneNumber(regexCompleted.test(input));
   };
-  
+
+  console.log(isGoodInputPhoneNumber);
+  const { width } = useWindowDimensions();
 
   return (
     <div className="paymentBodyInfoPhoneNumber">
       <span>Phone number</span>
       <div className="paymentBodyInfoPhoneNumber__content">
         <input
+          className={
+            isGoodInputPhoneNumber
+              ? ""
+              : "paymentBodyInfoPhoneNumber__content-bad-phone"
+          }
           type="text"
           value={input}
           onChange={handleChange}
           placeholder="Phone number"
-          onFocus={() => setIsGoodInput(false)}
           onBlur={decideToShowMark}
         />
         <div
           className={`paymentBodyInfoPhoneNumber__mark ${
-            isGoodInput ? "paymentBodyInfoPhoneNumber__mark-show" : ""
+            isGoodInputPhoneNumber
+              ? "paymentBodyInfoPhoneNumber__mark-show"
+              : ""
           }`}
         ></div>
         <div className="paymentBodyInfoPhoneNumber__content-message">
           <span>
-            Enter your mobile phone number so the courier can get in touch with
-            you.
+            {width <= 1500 && width > 1200
+              ? "Phone nr. for courier"
+              : "Enter your mobile phone number so the courier can get in touch with you."}
           </span>
         </div>
       </div>
@@ -54,4 +66,4 @@ function PaymentBodyInfoPhoneNumber() {
   );
 }
 
-export default PaymentBodyInfoPhoneNumber;
+export default React.memo(PaymentBodyInfoPhoneNumber);

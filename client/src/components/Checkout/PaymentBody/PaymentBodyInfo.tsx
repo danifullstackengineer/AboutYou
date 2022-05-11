@@ -5,7 +5,6 @@ import PaymentBodyInfoCardPayment from "./PaymentBodyInfo/PaymentBodyInfoCardPay
 import PaymentBodyInfoPhoneNumber from "./PaymentBodyInfo/PaymentBodyInfoPhoneNumber";
 import PaymentBodyInfoSubscribe from "./PaymentBodyInfo/PaymentBodyInfoSubscribe";
 import { StripeCardElement } from "@stripe/stripe-js";
-import { getBasketItemsStorage } from "../../../Logic/localStorage/basket";
 import CheckoutBodyBasketOrder from "../CheckoutBody/Basket/CheckoutBodyBasketOrder";
 import CheckoutBodyBasketTotal from "../CheckoutBody/Basket/CheckoutBodyBasketTotal";
 
@@ -13,53 +12,27 @@ function PaymentBodyInfo({
   isCardPayment,
   setCardElement,
   setAmount,
+  isGoodInputPhoneNumber,
+  setIsGoodInputPhoneNumber,
 }: {
   isCardPayment: boolean;
   setCardElement: React.Dispatch<
     React.SetStateAction<StripeCardElement | null | undefined>
   >;
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
+  isGoodInputPhoneNumber: boolean;
+  setIsGoodInputPhoneNumber: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [basket, setBasket] = useState<
-    {
-      backgroundImg: string;
-      foregroundImg?: string | undefined;
-      tags?:
-        | {
-            name: string;
-            special?: boolean | undefined;
-          }[]
-        | undefined;
-      title: string;
-      price: string;
-      priceDiscount: { full: string; discount: string };
-      colors: string[];
-      sizes?: string[] | undefined;
-      id: string;
-      quantity: number;
-    }[]
-  >();
-
-  const [changedBasket, setChangedBasket] = useState<number>(1);
-
-  useEffect(() => {
-    const items = getBasketItemsStorage();
-    if (items) {
-      setBasket(items);
-    }
-    return () => setBasket(basket);
-  }, [changedBasket]);
-
   return (
     <div className="paymentBodyInfo">
       <PaymentBodyInfoAddress />
       <span>Delivery estimated between ??.?? - ??.??(to be changed)</span>
-      <CheckoutBodyBasketOrder payment={true}/>
-      <CheckoutBodyBasketTotal
-        payment={true}
-        setAmount={setAmount}
+      <CheckoutBodyBasketOrder payment={true} />
+      <CheckoutBodyBasketTotal payment={true} setAmount={setAmount} />
+      <PaymentBodyInfoPhoneNumber
+        isGoodInputPhoneNumber={isGoodInputPhoneNumber}
+        setIsGoodInputPhoneNumber={setIsGoodInputPhoneNumber}
       />
-      <PaymentBodyInfoPhoneNumber />
       <PaymentBodyInfoSubscribe />
       {isCardPayment ? (
         <PaymentBodyInfoCardPayment setCardElement={setCardElement} />
@@ -70,4 +43,4 @@ function PaymentBodyInfo({
   );
 }
 
-export default PaymentBodyInfo;
+export default React.memo(PaymentBodyInfo);

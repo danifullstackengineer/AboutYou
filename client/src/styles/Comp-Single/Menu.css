@@ -51,12 +51,12 @@
   transition: height 250ms;
   height: 0;
   width: 100%;
-   overflow-y: auto;
+  overflow-y: auto;
 }
 .menu__option-option-scroll {
   height: calc(100% - 1.25rem - 25px);
   width: 5px;
-  background-color: rgb(240,200,200);
+  background-color: rgb(240, 200, 200);
   position: absolute;
   top: calc(1.25rem + 25px);
 }
@@ -68,7 +68,7 @@
   background-color: rgb(255, 174, 23);
 }
 .menu-light .menu__option-option-scroll-thumb {
-  background-color: rgb(100,200,100);
+  background-color: rgb(100, 200, 100);
 }
 .menu__option-option-product:not(:last-child) {
   border-bottom: 2px solid black;
@@ -209,7 +209,7 @@
   color: rgb(255, 174, 23);
 }
 .menu-dark .menu__option-option-product h5,
-span {
+.menu-dark .menu__option-option-product span {
   color: black;
 }
 .menu__option-option-language {
@@ -257,24 +257,24 @@ span {
 .menu__option-option-product-total-info {
   display: flex;
   justify-content: space-evenly;
-  margin: .5em 0 .5em 0;
+  margin: 0.5em 0 0.5em 0;
 }
 .menu__option-option-product-total-info > span {
   font-size: 1rem;
   font-family: monospace;
 }
-.menu__option-option-product-total-info > span:nth-child(2){
-  color: rgb(255,100,100);
+.menu__option-option-product-total-info > span:nth-child(2) {
+  color: rgb(255, 100, 100);
 }
 .menu__option-option-product-total-btn {
   margin: 1em 0 1em 0;
 }
-@media screen and (min-height: 481px){
+@media screen and (min-height: 481px) {
   .menu {
     top: 250px;
   }
 }
-@media screen and (max-height:480px){
+@media screen and (max-height: 480px) {
   .menu {
     top: 100px;
   }

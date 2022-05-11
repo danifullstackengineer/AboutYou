@@ -3,9 +3,6 @@
   flex-direction: column;
   background-color: white;
 }
-.checkoutBodyBasketOrder-payment {
-  padding: 1.5em 0 1.5em 1.5em;
-}
 .checkoutBodyBasketOrder > h2 {
   display: flex;
   justify-content: center;
@@ -222,7 +219,7 @@
     flex-direction: column;
   }
   .checkoutBodyBasketOrder img {
-    width: 300px;
+    width: 250px;
     height: auto;
   }
 }

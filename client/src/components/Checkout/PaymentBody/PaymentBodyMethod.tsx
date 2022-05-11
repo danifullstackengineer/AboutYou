@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PaymentMethod from "../../../Comp-Single/PaymentMethod";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBodyMethod.css";
 
@@ -50,6 +50,22 @@ function PaymentBodyMethod({
     }
     setCurrency(newCur);
   };
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (currentMethod[4]) {
+      if (dropdownRef.current) {
+        dropdownRef.current.style.visibility = "visible";
+      }
+    } else {
+      setTimeout(() => {
+        if (dropdownRef.current) {
+          dropdownRef.current.style.visibility = "hidden"
+        }
+      }, 200);
+    }
+  }, [currentMethod, dropdownRef]);
 
   return (
     <div className="paymentBodyMethod">
@@ -111,6 +127,7 @@ function PaymentBodyMethod({
         className={`paymentBodyMethod__manual-dropdown ${
           currentMethod[4] ? "paymentBodyMethod__manual-dropdown-show" : ""
         }`}
+        ref={dropdownRef}
       >
         <div>
           {currency.map((cur, i) => {

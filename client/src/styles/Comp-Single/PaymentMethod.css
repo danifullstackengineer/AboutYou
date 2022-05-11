@@ -125,3 +125,8 @@
   right: 72.5px;
   bottom: 100%;
 }
+@media screen and (max-width: 1200px) {
+  .paymentMethod {
+    width: 100%;
+  }
+}

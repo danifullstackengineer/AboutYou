@@ -25,4 +25,4 @@ function PaymentBodyInfoCardPayment({
   );
 }
 
-export default PaymentBodyInfoCardPayment;
+export default React.memo(PaymentBodyInfoCardPayment);

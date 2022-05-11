@@ -167,24 +167,25 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack:center;
-  -ms-flex-pack:center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-
 }
 .fifthFooter > footer > section:nth-child(3) li > img {
- height: 45px;
- width: 45px;
- object-fit: contain;
+  height: 45px;
+  width: 45px;
+  object-fit: contain;
 }
-@media screen and (max-width: 850px){
+@media screen and (max-width: 850px) {
   .fifthFooter > footer {
     flex-direction: column;
   }
-  .fifthFooter > footer > section:first-child, :nth-child(2), :nth-child(3) {
+  .fifthFooter > footer > section:first-child,
+  .fifthFooter > footer > section:nth-child(2),
+  .fifthFooter > footer > section:nth-child(3) {
     align-items: center;
   }
   .fifthFooter__section1-social {

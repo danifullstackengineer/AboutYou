@@ -21,9 +21,9 @@ function CheckoutBodyForm({
   const secondAddrRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(showNewAddress){
+    if (showNewAddress) {
       secondAddrRef.current?.scrollIntoView();
-    }else{
+    } else {
       firstAddrRef.current?.scrollIntoView();
     }
     setIsNewAddress(showNewAddress);
@@ -37,7 +37,7 @@ function CheckoutBodyForm({
         clickedContinue={clickedContinue}
         firstAddrRef={firstAddrRef}
       />
-      <CheckoutBodyFormAdressChooser setShowNewAddress={setShowNewAddress}/>
+      <CheckoutBodyFormAdressChooser setShowNewAddress={setShowNewAddress} />
       {showNewAddress ? (
         <CheckoutBodyMainForm
           newAddress={true}

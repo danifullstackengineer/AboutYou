@@ -1,11 +1,12 @@
 .checkoutBodyBasketTotal {
-  padding: 2em;
+  padding: 1.5em;
   background-color: white;
   margin: 2em 0 2em 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 .checkoutBodyBasketTotal__upper,
 .checkoutBodyBasketTotal__lower {

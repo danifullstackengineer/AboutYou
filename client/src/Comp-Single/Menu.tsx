@@ -232,7 +232,7 @@ function Menu({
       className={`menu ${chosenMode === false ? "menu-dark" : "menu-light"} ${
         clickedMenu ? "menu-active" : "menu-inactive"
       } ${mContext.isMobile ? "menu-mobile" : ""}`}
-      style={{display}}
+      style={{ display }}
     >
       <div className={`menu__option`}>
         <h3 onClick={() => handleOpening("basket")}>Basket</h3>
@@ -413,7 +413,13 @@ function Menu({
                 <Link to="/profile">Profile &amp; Security</Link>
                 <Link to="/settings">Settings</Link>
                 <Link to="/help">Help</Link>
-                <Link to="/logout" onClick={() => aContext.logout()}>
+                <Link
+                  to="/logout"
+                  onClick={() => {
+                    aContext.logout();
+                    navigate("/");
+                  }}
+                >
                   Log Out
                 </Link>
               </div>

@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   padding: 2em;
+  width: 100%;
 }
 .checkoutBodyMainForm > h1 {
   font-size: 1.25rem;

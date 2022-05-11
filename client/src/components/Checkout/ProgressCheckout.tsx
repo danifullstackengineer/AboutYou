@@ -1,9 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useWindowDimensions } from "../../Hooks/Viewport";
 import "../../styles/components/Checkout/ProgressCheckout.css";
 
-function ProgressCheckout({ progress }: { progress?: string }) {
+function ProgressCheckout({
+  progress,
+}: {
+  progress?: string;
+}) {
   const [active, setActive] = useState<boolean[]>([true, false, false, false]);
   const [current, setCurrent] = useState<number>(1);
 
@@ -17,7 +22,7 @@ function ProgressCheckout({ progress }: { progress?: string }) {
     }
   }, [progress]);
 
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <div className="progressCheckout">
@@ -82,7 +87,7 @@ function ProgressCheckout({ progress }: { progress?: string }) {
           }
           to={current === 2 ? "/payment" : ""}
         >
-          {width <=600 ? "Payment" : "Your payment methods"}
+          {width <= 600 ? "Payment" : "Your payment methods"}
         </Link>
         <Link
           className={
@@ -97,4 +102,4 @@ function ProgressCheckout({ progress }: { progress?: string }) {
   );
 }
 
-export default ProgressCheckout;
+export default React.memo(ProgressCheckout);

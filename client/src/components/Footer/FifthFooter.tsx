@@ -1,6 +1,4 @@
 import "../../styles/components/Footer/FifthFooter.css";
-import { RiMessage2Line } from "react-icons/ri";
-import { RiMessage2Fill } from "react-icons/ri";
 import { BsFacebook } from "react-icons/bs";
 import { BsInstagram } from "react-icons/bs";
 import { BsTwitter } from "react-icons/bs";

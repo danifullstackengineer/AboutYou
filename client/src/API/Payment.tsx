@@ -3,9 +3,7 @@ import {
   getFirstAddress,
   getSecondAddress,
 } from "../Logic/localStorage/address";
-import { getBasketItemsStorage } from "../Logic/localStorage/basket";
 import { getIdStorage } from "../Logic/localStorage/user";
-import { getVoucherStorage } from "../Logic/localStorage/voucher";
 
 const createPaypalPayment = async (): Promise<{
   success: boolean;
@@ -20,13 +18,13 @@ const createPaypalPayment = async (): Promise<{
     url: "/createPaypalPayment",
     type: "POST",
     data: {
-      basket: getBasketItemsStorage(),
+      // basket: getBasketItemsStorage(),
       address: {
         firstAddress: getFirstAddress(),
         secondAddress: getSecondAddress(),
       },
       id: getIdStorage(),
-      discount: getVoucherStorage()
+      // discount: getVoucherStorage()
     },
   })
     .then((res: { success: boolean; message: string }) => {
@@ -78,8 +76,8 @@ const getClientSecret = async (): Promise<{
     url: "/createStripeSecret",
     data: {
       id: getIdStorage(),
-      basket: getBasketItemsStorage(),
-      discount: getVoucherStorage()
+      // basket: getBasketItemsStorage(),
+      // discount: getVoucherStorage()
     },
   })
     .then((res: { success: boolean; message: string; secret?: string }) => {
@@ -103,7 +101,7 @@ const saveCardPaymentDB = async (
     type: "POST",
     data: {
       id: getIdStorage(),
-      basket: getBasketItemsStorage(),
+      // basket: getBasketItemsStorage(),
       paymentIntent: paymentIntent,
     },
   }).then((res: { success: boolean; message: string }) => {
@@ -125,8 +123,8 @@ const calculateTotalCrypto = async (): Promise<{
     url: "/getTotalCrypto",
     type: "POST",
     data: {
-      basket: getBasketItemsStorage(),
-      discount: getVoucherStorage()
+      // basket: getBasketItemsStorage(),
+      // discount: getVoucherStorage()
     },
   }).then((res: { success: boolean; message: string; total?: string }) => {
     result = res;
@@ -150,9 +148,9 @@ const createCoinpaymentsPayment = async (
     url: "/createCoinpaymentsPayment",
     type: "POST",
     data: {
-      basket: getBasketItemsStorage(),
+      // basket: getBasketItemsStorage(),
       coin: coin,
-      discount: getVoucherStorage()
+      // discount: getVoucherStorage()
     },
   }).then((res: { success: boolean; message: string }) => (result = res));
 
