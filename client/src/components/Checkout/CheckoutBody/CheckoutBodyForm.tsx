@@ -53,4 +53,4 @@ function CheckoutBodyForm({
   );
 }
 
-export default CheckoutBodyForm;
+export default React.memo(CheckoutBodyForm);

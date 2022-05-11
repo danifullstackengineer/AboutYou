@@ -38,4 +38,4 @@ function CheckoutBodyFormAddressChooser({
   );
 }
 
-export default CheckoutBodyFormAddressChooser;
+export default React.memo(CheckoutBodyFormAddressChooser);

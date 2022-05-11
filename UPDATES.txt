@@ -26,8 +26,9 @@ si celalalt se duce sus si devine 360
 
 TODO: fix likes - fixed
 TODO: on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. - fixed
-TODO: in checkout add countries in the dropdown
-TODO: Add form validation in checkout forms
+TODO: in checkout add countries in the dropdown - fixed(changed to no dropdown)
+TODO: Add form validation in checkout forms - fixed
 TODO: Add tablet responsiveness in checkout
 TODO: Fix checkout button
 TODO: Add scrolling when form input is invalid/missing
+TODO: In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method.

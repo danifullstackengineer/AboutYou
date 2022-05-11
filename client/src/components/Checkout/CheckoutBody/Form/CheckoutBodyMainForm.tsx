@@ -1,8 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../../../styles/components/Checkout/CheckoutBody/Form/CheckoutBodyMainForm.css";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { AiOutlineSearch } from "react-icons/ai";
-import useOutsideAlerter from "../../../../Hooks/OutsideAlerter";
 import InputFormCheckout from "../../../../Comp-Single/InputFormCheckout";
 import IAddress from "../../../../types/address";
 import {
@@ -34,22 +31,7 @@ function CheckoutBodyMainForm({
   ]);
   const [transition, setTransition] = useState<boolean[]>([false, false]);
 
-  const [toggleCountry, setToggleCountry] = useState<boolean>(false);
-  const countryRef = useRef<HTMLDivElement>(null);
-  const [selectedCountry, setSelectedCountry] = useState<{
-    name: string;
-    flag: string;
-  }>();
-
-  const outside = useOutsideAlerter(countryRef);
-
   const [address, setAddress] = useState<IAddress>();
-
-  useEffect(() => {
-    if (outside) {
-      setToggleCountry(false);
-    }
-  }, [outside]);
 
   useEffect(() => {
     if (newAddress) {
@@ -65,37 +47,16 @@ function CheckoutBodyMainForm({
     }
   }, [newAddress]);
 
-  // useEffect(() => {
-  //   if (address) {
-  //     setSelectedCountry(
-  //       languages.filter((language) => language.name === address.country)[0]
-  //     );
-  //     setActiveFormality(
-  //       address.formality === "Mrs." ? [false, true] : [true, false]
-  //     );
-  //   }
-  // }, [address, languages]);
-
-  // const handleCountryChange = (index: number): void => {
-  //   setSelectedCountry(languages[index]);
-  //   setToggleCountry(false);
-  // };
-
   const [isGoodFirst, setIsGoodFirst] = useState<boolean>(false);
   const [isGoodLast, setIsGoodLast] = useState<boolean>(false);
   const [isGoodAddress, setIsGoodAddress] = useState<boolean>(false);
+  const [isGoodSecondAddress, setIsGoodSecondAddress] = useState<boolean>(true);
+  const [isGoodState, setIsGoodState] = useState<boolean>(true);
+  const [isGoodTax, setIsGoodTax] = useState<boolean>(true);
   const [isGoodPostal, setIsGoodPostal] = useState<boolean>(false);
   const [isGoodCity, setIsGoodCity] = useState<boolean>(false);
   const [isGoodBirth, setIsGoodBirth] = useState<boolean>(false);
   const [isGoodCountry, setIsGoodCountry] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (selectedCountry) {
-      setIsGoodCountry(true);
-    } else {
-      setIsGoodCountry(false);
-    }
-  }, [selectedCountry]);
 
   const [firstInput, setFirstInput] = useState<string>("");
   const [lastInput, setLastInput] = useState<string>("");
@@ -106,6 +67,7 @@ function CheckoutBodyMainForm({
   const [cityInput, setCityInput] = useState<string>("");
   const [birthInput, setBirthInput] = useState<string>("");
   const [taxInput, setTaxInput] = useState<string>("");
+  const [countryInput, setCountryInput] = useState<string>("");
 
   useEffect(() => {
     if (newAddress) {
@@ -115,18 +77,20 @@ function CheckoutBodyMainForm({
         isGoodAddress &&
         isGoodPostal &&
         isGoodCity &&
-        isGoodCountry
+        isGoodCountry &&
+        isGoodSecondAddress &&
+        isGoodState
       ) {
         setSecondAddress({
           formality: activeFormality[0] ? "Ms." : "Mrs.",
-          country: selectedCountry ? selectedCountry.name : "",
-          firstName: firstInput,
-          lastName: lastInput,
-          addressOne: addres1Input,
-          addressTwo: address2Input,
-          state: stateInput,
-          p_code: codeInput,
-          city: cityInput,
+          country: countryInput.trim(),
+          firstName: firstInput.trim(),
+          lastName: lastInput.trim(),
+          addressOne: addres1Input.trim(),
+          addressTwo: address2Input.trim(),
+          state: stateInput.trim(),
+          p_code: codeInput.trim(),
+          city: cityInput.trim(),
         });
       }
     } else if (
@@ -136,20 +100,23 @@ function CheckoutBodyMainForm({
       isGoodPostal &&
       isGoodCity &&
       isGoodBirth &&
-      isGoodCountry
+      isGoodCountry &&
+      isGoodSecondAddress &&
+      isGoodState &&
+      isGoodTax
     ) {
       setFirstAddress({
         formality: activeFormality[0] ? "Ms." : "Mrs.",
-        country: selectedCountry ? selectedCountry.name : "",
-        firstName: firstInput,
-        lastName: lastInput,
-        addressOne: addres1Input,
-        addressTwo: address2Input,
-        state: stateInput,
-        p_code: codeInput,
-        city: cityInput,
-        birth: birthInput,
-        tax: taxInput,
+        country: countryInput.trim(),
+        firstName: firstInput.trim(),
+        lastName: lastInput.trim(),
+        addressOne: addres1Input.trim(),
+        addressTwo: address2Input.trim(),
+        state: stateInput.trim(),
+        p_code: codeInput.trim(),
+        city: cityInput.trim(),
+        birth: birthInput.trim(),
+        tax: taxInput.trim(),
       });
     }
   }, [
@@ -168,9 +135,12 @@ function CheckoutBodyMainForm({
     isGoodFirst,
     isGoodLast,
     isGoodPostal,
+    isGoodSecondAddress,
+    isGoodTax,
+    isGoodState,
     lastInput,
     newAddress,
-    selectedCountry,
+    countryInput,
     stateInput,
     taxInput,
   ]);
@@ -183,20 +153,22 @@ function CheckoutBodyMainForm({
         isGoodAddress &&
         isGoodPostal &&
         isGoodCity &&
-        isGoodCountry
+        isGoodCountry &&
+        isGoodSecondAddress &&
+        isGoodState
       ) {
         setIsEveryField(true);
         // Address Input For Main Address is different from Billing Addresss
         setSecondAddress({
           formality: activeFormality[0] ? "Ms." : "Mrs.",
-          country: selectedCountry ? selectedCountry.name : "",
-          firstName: firstInput,
-          lastName: lastInput,
-          addressOne: addres1Input,
-          addressTwo: address2Input,
-          state: stateInput,
-          p_code: codeInput,
-          city: cityInput,
+          country: countryInput.trim(),
+          firstName: firstInput.trim(),
+          lastName: lastInput.trim(),
+          addressOne: addres1Input.trim(),
+          addressTwo: address2Input.trim(),
+          state: stateInput.trim(),
+          p_code: codeInput.trim(),
+          city: cityInput.trim(),
         });
       } else {
         setIsEveryField(false);
@@ -206,6 +178,9 @@ function CheckoutBodyMainForm({
         isGoodFirst &&
         isGoodLast &&
         isGoodAddress &&
+        isGoodSecondAddress &&
+        isGoodTax &&
+        isGoodState &&
         isGoodPostal &&
         isGoodCity &&
         isGoodBirth &&
@@ -221,6 +196,9 @@ function CheckoutBodyMainForm({
     isGoodFirst,
     isGoodLast,
     isGoodAddress,
+    isGoodSecondAddress,
+    isGoodTax,
+    isGoodState,
     isGoodPostal,
     isGoodCity,
     isGoodBirth,
@@ -233,12 +211,46 @@ function CheckoutBodyMainForm({
     firstInput,
     lastInput,
     newAddress,
-    selectedCountry,
+    countryInput,
     setIsEveryField,
     stateInput,
   ]);
 
+  const countryRef = useRef<HTMLDivElement>(null);
+  const firstRef = useRef<HTMLDivElement>(null);
+  const secondRef = useRef<HTMLDivElement>(null);
+  const addressRef = useRef<HTMLDivElement>(null);
+  const postalRef = useRef<HTMLDivElement>(null);
+  const cityRef = useRef<HTMLDivElement>(null);
+  const birthRef = useRef<HTMLDivElement>(null);
+  const country2Ref = useRef<HTMLDivElement>(null);
+  const first2Ref = useRef<HTMLDivElement>(null);
+  const second2Ref = useRef<HTMLDivElement>(null);
+  const address2Ref = useRef<HTMLDivElement>(null);
+  const postal2Ref = useRef<HTMLDivElement>(null);
+  const city2Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isGoodCountry) {
+      countryRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodFirst) {
+      firstRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodLast) {
+      secondRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodAddress) {
+      addressRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodPostal) {
+      postalRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodCity) {
+      cityRef.current?.scrollIntoView({ block: "center" });
+    } else if (!isGoodBirth) {
+      birthRef.current?.scrollIntoView({ block: "center" });
+    }
+  }, [clickedContinue, newAddress]);
+
   const { width } = useWindowDimensions();
+
+  console.log(isGoodSecondAddress);
 
   return (
     <div
@@ -250,135 +262,106 @@ function CheckoutBodyMainForm({
     >
       <h1>{title}</h1>
       <div className="checkoutBodyMainForm__title-country">
-        <div
-          className={`checkoutBodyMainForm__title ${
-            transition[0]
-              ? "checkoutBodyMainForm__title-transition-right"
-              : transition[1]
-              ? "checkoutBodyMainForm__title-transition-left"
-              : ""
-          }`}
-        >
-          <button
-            className={
-              activeFormality[1] ? "checkoutBodyMainForm__active-btn" : ""
-            }
-            onClick={() => {
-              setTransition([false, true]);
-              setActiveFormality([true, false]);
-            }}
-          >
-            Ms.
-          </button>
-          <button
-            className={
-              activeFormality[0] ? "checkoutBodyMainForm__active-btn" : ""
-            }
-            onClick={() => {
-              setTransition([true, false]);
-              setActiveFormality([false, true]);
-            }}
-          >
-            Mrs.
-          </button>
-        </div>
-        <div
-          className={`checkoutBodyMainForm__country ${
-            toggleCountry ? "checkoutBodyMainForm__country-clicked" : ""
-          }`}
-          ref={countryRef}
-        >
-          <span
-            className="checkoutBodyMainForm__country-warn"
-            style={{ display: selectedCountry ? "none" : "block" }}
-          >
-            Country selection is mandatory
-          </span>
-          <button
-            onClick={() => setToggleCountry(!toggleCountry)}
-            style={{
-              border: selectedCountry
-                ? "1px solid black"
-                : "1px solid rgb(200, 200, 200)",
-            }}
-          >
-            <span
-              style={{ color: selectedCountry ? "black" : "rgb(200,200,200)" }}
-            >
-              {selectedCountry ? selectedCountry.name : "Select country"}
-            </span>
-            <span>
-              <RiArrowDropDownLine />
-            </span>
-          </button>
+        <div className="checkoutBodyMainForm__input">
           <div
-            className="checkoutBodyMainForm__country-selection"
-            style={{ display: toggleCountry ? "flex" : "none" }}
+            className={`checkoutBodyMainForm__title ${
+              transition[0]
+                ? "checkoutBodyMainForm__title-transition-right"
+                : transition[1]
+                ? "checkoutBodyMainForm__title-transition-left"
+                : ""
+            }`}
           >
-            {/* <div>
-              <div className="checkoutBodyMainForm__country-input">
-                <span>
-                  <AiOutlineSearch />
-                </span>
-                <input type="text" />
-              </div>
-              {languages.map((language, i) => {
-                return (
-                  <div
-                    onClick={() => handleCountryChange(i)}
-                    key={i}
-                    className="checkoutBodyMainForm__country-selection-sel"
-                  >
-                    <img src={language.flag} alt={language.flag} />
-                    <span>{language.name}</span>
-                  </div>
-                );
-              })}
-            </div> */}
+            <button
+              className={
+                activeFormality[1] ? "checkoutBodyMainForm__active-btn" : ""
+              }
+              onClick={() => {
+                setTransition([false, true]);
+                setActiveFormality([true, false]);
+              }}
+            >
+              Ms.
+            </button>
+            <button
+              className={
+                activeFormality[0] ? "checkoutBodyMainForm__active-btn" : ""
+              }
+              onClick={() => {
+                setTransition([true, false]);
+                setActiveFormality([false, true]);
+              }}
+            >
+              Mrs.
+            </button>
           </div>
+          <InputFormCheckout
+            inputRef={newAddress ? country2Ref : countryRef}
+            bgColor="rgb(240,240,240)"
+            width={100}
+            height={40}
+            placeholder={"Country"}
+            optional={false}
+            margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 0]}
+            setIsGood={setIsGoodCountry}
+            initialInput={address?.country}
+            setInputParent={setCountryInput}
+            percWidth={true}
+            widthWithoutMargin={width <= 650 ? undefined : "calc(50% - 10px)"}
+            regex={/^[a-zA-Z ]{2,100}$/i}
+            regexWarning={"Please use a valid country."}
+          />
         </div>
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
+          inputRef={newAddress ? first2Ref : firstRef}
           bgColor="rgb(240,240,240)"
           width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"First name"}
-          warning={"This entry cannot be left blank"}
           optional={false}
           margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
           setIsGood={setIsGoodFirst}
           initialInput={address?.firstName}
           setInputParent={setFirstInput}
           percWidth={true}
+          regex={/^[a-zA-Z ]{2,100}$/i}
+          regexWarning={"Please use a valid first name."}
         />
         <InputFormCheckout
+          inputRef={newAddress ? second2Ref : secondRef}
           bgColor="rgb(240,240,240)"
           height={40}
           width={width <= 650 ? 100 : 50}
           placeholder={"Last name"}
-          warning={"This entry cannot be left blank"}
           optional={false}
           margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
           setIsGood={setIsGoodLast}
           initialInput={address?.lastName}
           setInputParent={setLastInput}
           percWidth={true}
+          regex={/^[a-zA-Z ]{2,100}$/i}
+          regexWarning={"Please use a valid last name."}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
+          inputRef={newAddress ? address2Ref : addressRef}
           bgColor="rgb(240,240,240)"
           width={100}
           height={40}
           placeholder={"Address 1"}
-          warning={"This entry cannot be left blank"}
           optional={false}
           margin={[20, 0, 20, 0]}
           setIsGood={setIsGoodAddress}
           initialInput={address?.addressOne}
           setInputParent={setAddress1Input}
           percWidth={true}
+          regex={/^[\w .-]{2,100}$/i}
+          regexWarning={
+            "Please use a valid address. Only '.' and '-' are allowed."
+          }
         />
       </div>
       <div className="checkoutBodyMainForm__input">
@@ -387,12 +370,16 @@ function CheckoutBodyMainForm({
           width={100}
           height={40}
           placeholder={"Address 2 (optional)"}
-          warning={""}
           optional={true}
           margin={[20, 0, 20, 0]}
           initialInput={address?.addressTwo}
           setInputParent={setAddress2Input}
+          setIsGood={setIsGoodSecondAddress}
           percWidth={true}
+          regex={/^[\w .-]{2,100}$/i}
+          regexWarning={
+            "Please use a valid address. Only '.' and '-' are allowed."
+          }
         />
       </div>
       <div className="checkoutBodyMainForm__input">
@@ -401,40 +388,46 @@ function CheckoutBodyMainForm({
           width={100}
           height={40}
           placeholder={"State"}
-          warning={""}
           optional={true}
           margin={[20, 0, 20, 0]}
           initialInput={address?.state}
           setInputParent={setStateInput}
           percWidth={true}
+          setIsGood={setIsGoodState}
+          regex={/^[a-zA-Z ]{2,100}$/i}
+          regexWarning={"Please use a valid city."}
         />
       </div>
       <div className="checkoutBodyMainForm__input">
         <InputFormCheckout
+          inputRef={newAddress ? postal2Ref : postalRef}
           bgColor="rgb(240,240,240)"
           width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"Postal code"}
           optional={false}
-          warning={"This entry cannot be left blank"}
           margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
           setIsGood={setIsGoodPostal}
           initialInput={address?.p_code}
           setInputParent={setCodeInput}
           percWidth={true}
+          regex={/^[\w ]{2,100}$/i}
+          regexWarning={"Please use a valid postal code."}
         />
         <InputFormCheckout
+          inputRef={newAddress ? city2Ref : cityRef}
           bgColor="rgb(240,240,240)"
           width={width <= 650 ? 100 : 50}
           height={40}
           placeholder={"City"}
           optional={false}
-          warning={"This entry cannot be left blank"}
           margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
           setIsGood={setIsGoodCity}
           initialInput={address?.city}
           setInputParent={setCityInput}
           percWidth={true}
+          regex={/^[a-zA-Z ]{2,100}$/i}
+          regexWarning={"Please use a valid city."}
         />
       </div>
       {newAddress === true ? (
@@ -442,17 +435,22 @@ function CheckoutBodyMainForm({
       ) : (
         <div className="checkoutBodyMainForm__input">
           <InputFormCheckout
+            inputRef={birthRef}
             bgColor="rgb(240,240,240)"
             width={width <= 650 ? 100 : 50}
             height={40}
             placeholder={"YYYY-MM-DD"}
             optional={false}
-            warning={"This entry cannot be left blank"}
             margin={width <= 650 ? [20, 0, 20, 0] : [20, 10, 20, 0]}
             setIsGood={setIsGoodBirth}
             initialInput={address?.birth}
             setInputParent={setBirthInput}
             percWidth={true}
+            birth={true}
+            regex={
+              /^(19[0-9][0-9])|(20[0-2][0-2])\/((0[1-9])|(1[0-2]))\/((0[1-9])|(1[0-9])|(2[0-9])|(3[0-1]))$/
+            }
+            regexWarning={"From 1900/01/01 up to 2022/12/31"}
           />
           <InputFormCheckout
             bgColor="rgb(240,240,240)"
@@ -460,11 +458,13 @@ function CheckoutBodyMainForm({
             height={40}
             placeholder={"Tax ID"}
             optional={true}
-            warning={""}
             margin={width <= 650 ? [20, 0, 20, 0] : [20, 0, 20, 10]}
             initialInput={address?.tax}
             setInputParent={setTaxInput}
+            setIsGood={setIsGoodTax}
             percWidth={true}
+            regex={/^[\d]{2,100}$/i}
+            regexWarning={"Please use a valid Tax ID."}
           />
         </div>
       )}
@@ -472,4 +472,4 @@ function CheckoutBodyMainForm({
   );
 }
 
-export default CheckoutBodyMainForm;
+export default React.memo(CheckoutBodyMainForm);

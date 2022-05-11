@@ -28,10 +28,10 @@
   margin-right: 2em;
 }
 .inputFormCheckout__warn-icon {
-  background-color: red;
+  background-color: rgb(255,100,100);
 }
 .inputFormCheckout__good-icon {
-  background-color:green;
+  background-color:rgb(100,255,100);
 }
 .inputFormCheckout__warn-icon::before {
   position: absolute;

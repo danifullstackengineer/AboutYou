@@ -39,4 +39,4 @@ function PaymentBody({
   );
 }
 
-export default PaymentBody;
+export default React.memo(PaymentBody);

@@ -5,7 +5,6 @@ import useOutsideAlerter from "../Hooks/OutsideAlerter";
 function InputFormCheckout({
   width,
   placeholder,
-  warning,
   optional,
   height,
   bgColor,
@@ -13,29 +12,49 @@ function InputFormCheckout({
   setIsGood,
   initialInput,
   setInputParent,
-  percWidth
+  percWidth,
+  widthWithoutMargin,
+  inputRef,
+  birth,
+  regex,
+  regexWarning,
 }: {
   width: number;
   height: number;
   placeholder: string;
-  warning: string;
   optional: boolean;
   bgColor: string;
   margin: number[];
-  setIsGood?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsGood: React.Dispatch<React.SetStateAction<boolean>>;
   initialInput?: string;
   setInputParent: React.Dispatch<React.SetStateAction<string>>;
-  percWidth?:boolean
+  percWidth?: boolean;
+  widthWithoutMargin?: string;
+  inputRef?: React.RefObject<HTMLDivElement>;
+  birth?: boolean;
+  regex?: RegExp;
+  regexWarning: string;
 }) {
   const [selectedInput, setSelectedInput] = useState<boolean>(false);
   const parentRef = useRef<HTMLDivElement>(null);
   const outside = useOutsideAlerter(parentRef);
   const [showWarn, setShowWarn] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
+  const [warning, setWarning] = useState<string>(
+    "This entry cannot be left blank"
+  );
 
   useEffect(() => {
     if (!input) {
+      if (!optional) {
+        setShowWarn(true);
+        setWarning("This entry cannot be left blank");
+      } else {
+        setShowWarn(false);
+      }
+    } else if (!regex?.test(input)) {
       setShowWarn(true);
+      setWarning(regexWarning);
     } else {
       setShowWarn(false);
     }
@@ -59,7 +78,7 @@ function InputFormCheckout({
   }, [initialInput, setInputParent]);
 
   const getIcon = (): JSX.Element => {
-    if (showWarn && !optional) {
+    if (showWarn) {
       return <span className="inputFormCheckout__warn-icon"></span>;
     } else {
       return <span className="inputFormCheckout__good-icon"></span>;
@@ -67,7 +86,7 @@ function InputFormCheckout({
   };
   useEffect(() => {
     if (setIsGood) {
-      if (showWarn && !optional) {
+      if (showWarn) {
         setIsGood(false);
       } else {
         setIsGood(true);
@@ -75,12 +94,18 @@ function InputFormCheckout({
     }
   }, [showWarn, optional, setIsGood]);
 
+  const [leadingSlash, setLeadingSlash] = useState<boolean>(false);
+
   return (
     <div
-      ref={parentRef}
+      ref={inputRef}
       className="inputFormCheckout"
       style={{
-        width: percWidth ? width + "%" : "px",
+        width: widthWithoutMargin
+          ? widthWithoutMargin
+          : percWidth
+          ? width + "%"
+          : "px",
         height: height + "px",
         backgroundColor: bgColor,
         marginTop: margin[0] + "px",
@@ -103,8 +128,28 @@ function InputFormCheckout({
         onClick={handleInputClick}
         value={input}
         onChange={(e) => {
-          setInput(e.target.value);
-          setInputParent(e.target.value);
+          if (birth) {
+            const regex = /^([0-9]{1,4})(\/([0-9]{1,2})?)?(\/([0-9]{1,2})?)?$/;
+            if (regex.test(e.target.value)) {
+              if (
+                (e.target.value.length === 4 || e.target.value.length === 7) &&
+                !leadingSlash
+              ) {
+                setInput(e.target.value + "/");
+                setInputParent(e.target.value + "/");
+                setLeadingSlash(true);
+              } else {
+                setInput(e.target.value);
+                setInputParent(e.target.value);
+                setLeadingSlash(false);
+              }
+            } else {
+              e.preventDefault();
+            }
+          } else {
+            setInput(e.target.value);
+            setInputParent(e.target.value);
+          }
         }}
       />
       {getIcon()}
@@ -112,4 +157,4 @@ function InputFormCheckout({
   );
 }
 
-export default InputFormCheckout;
+export default React.memo(InputFormCheckout);

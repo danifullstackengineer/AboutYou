@@ -10,7 +10,7 @@ function ProgressCheckout({ progress }: { progress?: string }) {
   useEffect(() => {
     if (progress === "payment") {
       setActive([true, true, true, false]);
-      setCurrent(3);
+      setCurrent(2);
     } else if (progress === "checkout") {
       setActive([true, false, false, false]);
       setCurrent(1);

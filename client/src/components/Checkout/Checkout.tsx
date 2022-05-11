@@ -64,16 +64,11 @@ function Checkout({
 
   useEffect(() => {
     getClientSecretFunction();
-    window.addEventListener("voucher", () => {
-      setChangedClientSecret(changedClientSecret + 1);
-      getClientSecretFunction();
-    });
     window.addEventListener("basket", () => {
       setChangedClientSecret(changedClientSecret + 1);
       getClientSecretFunction();
     });
     return () => {
-      window.removeEventListener("voucher", () => {});
       window.removeEventListener("basket", () => {});
     };
   }, [changedClientSecret]);
