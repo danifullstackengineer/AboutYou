@@ -80,18 +80,18 @@ function BodyInner({
 
   useEffect(() => {
     if (dataNon && custom) {
-      shuffle(dataNon.getProducts).then(res=>{
+      shuffle(dataNon.getProducts).then((res) => {
         setRandomProd(res);
-      })
+      });
     }
   }, [dataNon, custom]);
 
   useEffect(() => {
     if (dataAcc && accessories && !randomAcc) {
       // setRandomAcc(shuffle_acc(dataAcc.getAccessories));
-      shuffle_acc(dataAcc.getAccessories).then(res=>{
+      shuffle_acc(dataAcc.getAccessories).then((res) => {
         setRandomAcc(res);
-      })
+      });
     }
   }, [dataAcc, accessories]);
 
@@ -148,9 +148,16 @@ function BodyInner({
       {randomProd &&
       custom &&
       (chosenMode === undefined || chosenMode === true) &&
-      !loadingNon? (
+      !loadingNon ? (
         <>
-          <Product360 product={randomProd[0]} />
+          <Product360
+            product={randomProd[0]}
+            clickedBasket={clickedBasket}
+            clickedMenu={clickedMenu}
+            setClickedBasket={setClickedBasket}
+            setClickedMenu={setClickedMenu}
+            handleOpening={handleOpening}
+          />
           <div className="bodyInner-random">
             {randomProd.map((product: ProductType, i: number) => {
               if (i > 0) {
@@ -166,7 +173,7 @@ function BodyInner({
       custom &&
       chosenMode === false &&
       chosenMode !== undefined &&
-      !loadingNon? (
+      !loadingNon ? (
         <div className="bodyInner-random">
           {randomProd.map((product: ProductType, i: number) => {
             return <ProductCustom product={product} key={i} dark={true} />;

@@ -1,43 +1,48 @@
-const addToWishlistStorage = (item: any) => {
-  const wishlist = localStorage.getItem("wishlist");
-  const newItem = { ...item, quantity: 1 };
-  if (!wishlist) {
-    localStorage.setItem("wishlist", JSON.stringify([newItem]));
-  } else {
-    const wishlistP = JSON.parse(wishlist);
-    const exists = wishlistP.filter((oldItem: any) => oldItem.id === item.id);
-    if (exists.length === 0) {
-      const newWishlist = [...wishlistP, newItem];
-      localStorage.removeItem("wishlist");
-      localStorage.setItem("wishlist", JSON.stringify(newWishlist));
-    } else {
-      wishlistP.map((oldItem: any) =>
-        oldItem.id === item.id ? oldItem.quantity++ : oldItem
-      );
-      localStorage.removeItem("wishlist");
-      localStorage.setItem("wishlist", JSON.stringify(wishlistP));
+import { cloneDeep } from "lodash";
+import { ExtendedProductType } from "../../Context/Basket";
+import { ProductType } from "../../types/Product";
+
+const addToWishlistStorageAndContext = (
+  item: ProductType,
+  wishlist: ExtendedProductType[],
+  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[]>>
+) => {
+  const duplicate = (): boolean | undefined => {
+    for (let i = 0; i < wishlist.length; i++) {
+      if (wishlist[i].id === item.id) return true;
+      else continue;
     }
-    }
-    window.dispatchEvent(new Event("wishlist"))
+  };
+  if (!duplicate()) {
+    var wishlist_clone = cloneDeep(wishlist);
+    wishlist_clone = [...wishlist, { ...item, quantity: 1 }];
+    setWishlist(wishlist_clone);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist_clone));
+  }
+};
+const removeFromWishlistStorageAndContext = (
+  id: string,
+  wishlist: ExtendedProductType[],
+  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[]>>
+): void => {
+  var wishlist_clone = cloneDeep(wishlist);
+  wishlist_clone = wishlist_clone.filter(
+    (product: ExtendedProductType) => product.id !== id
+  );
+  setWishlist(wishlist_clone);
+  localStorage.setItem("wishlist", JSON.stringify(wishlist_clone));
+};
+const isProductInWishlist = (id: string, wishlist: ExtendedProductType[]) => {
+  var isIn = false;
+  wishlist.forEach((product) =>
+    product.id === id ? (isIn = true) : undefined
+  );
+
+  return isIn;
 };
 
-const getWishlistItemsStorage = ():| {
-    backgroundImg: string;
-    foregroundImg?: string;
-    tags?: { name: string; special?: boolean }[];
-    title: string;
-    price: string;
-    priceDiscount: { full: string; discount: string };
-    colors: string[];
-    sizes?: string[];
-    id: string;
-    quantity: number;
-  }[]
-    | undefined => {
-    const wishlist = localStorage.getItem("wishlist")
-    if (!wishlist) return undefined;
-    const wishlistP = JSON.parse(wishlist);
-    return wishlistP;
-}
-
-export { addToWishlistStorage, getWishlistItemsStorage };
+export {
+  addToWishlistStorageAndContext,
+  removeFromWishlistStorageAndContext,
+  isProductInWishlist,
+};

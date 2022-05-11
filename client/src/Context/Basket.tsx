@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import { ProductType } from "../types/Product";
+import { ProductType, ProductTypeBasket } from "../types/Product";
 
 export declare type BasketContextType = {
-  product: ExtendedProductType[];
-  addToBasket: (item: ProductType) => void;
+  product: ExtendedProductType[] | ProductTypeBasket[];
+  addToBasket: (item: ProductType | ProductTypeBasket) => void;
   removeFromBasket: (id: ProductType["id"]) => void;
   getTotalPrice: () => number;
   isInBasket: (id: ProductType["id"]) => boolean;

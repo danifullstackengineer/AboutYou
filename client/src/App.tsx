@@ -27,6 +27,12 @@ import {
   isProductInBasket,
   removeFromBasketStorageAndContext,
 } from "./Logic/localStorage/basket";
+import { loginLogic, logoutLogic } from "./Logic/localStorage/user";
+import {
+  addToWishlistStorageAndContext,
+  isProductInWishlist,
+  removeFromWishlistStorageAndContext,
+} from "./Logic/localStorage/wishlist";
 var logoutTimer: NodeJS.Timeout;
 
 const promise = loadStripe(
@@ -46,30 +52,20 @@ function App() {
 
   const login = useCallback(
     (uid: string, token: string, expirationDate: Date): void => {
-      setToken(token);
-      setUserId(uid);
-      const tokenExpirationDate = expirationDate
-        ? new Date(expirationDate)
-        : new Date(new Date().getTime() + 1000 * 60 * 60);
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          userId: uid,
-          token: token,
-          expiration: tokenExpirationDate.toISOString(),
-        })
+      loginLogic(
+        uid,
+        token,
+        expirationDate,
+        setToken,
+        setUserId,
+        setIsLoggedIn
       );
-      setIsLoggedIn(true);
     },
     []
   );
 
-  const logout = useCallback(async () => {
-    setToken(null);
-    setTokenExpirationDate(null);
-    setUserId(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem("userData");
+  const logout = useCallback(() => {
+    logoutLogic(setToken, setUserId, setTokenExpirationDate, setIsLoggedIn);
   }, []);
 
   useEffect(() => {
@@ -145,36 +141,30 @@ function App() {
   /* Wishlist */
   const [wishlist, setWishlist] = useState<WishlistContextType["product"]>([]);
 
+  useEffect(() => {
+    const wishlist_storage = localStorage.getItem("wishlist");
+    if (wishlist_storage) {
+      setWishlist(JSON.parse(wishlist_storage));
+    }
+  }, []);
+
   const addToWishlist: WishlistContextType["addToWishlist"] = useCallback(
     (item) => {
-      const duplicate = (): boolean | undefined => {
-        for (let i = 0; i < wishlist.length; i++) {
-          if (wishlist[i].id === item.id) return true;
-          else continue;
-        }
-      };
-      if (duplicate() !== false) {
-        setWishlist([...wishlist, { ...item, quantity: 1 }]);
-      }
+      addToWishlistStorageAndContext(item, wishlist, setWishlist);
     },
     [wishlist]
   );
 
   const removeFromWishlist = useCallback(
     (id: string): void => {
-      setWishlist([...wishlist.filter((product) => product.id !== id)]);
+      removeFromWishlistStorageAndContext(id, wishlist, setWishlist);
     },
     [wishlist]
   );
 
   const isInWishlist: WishlistContextType["isInWishlist"] = useCallback(
     (id) => {
-      for (let i = 0; i < wishlist.length; i++) {
-        if (wishlist[i].id === id) {
-          return true;
-        }
-      }
-      return false;
+      return isProductInWishlist(id, wishlist);
     },
     [wishlist]
   );
@@ -225,8 +215,6 @@ function App() {
   const [clickedMenu, setClickedMenu] = useState<boolean>(false);
 
   const headerRef = useRef<HTMLDivElement>(null);
-
-  const [height, setHeight] = useState<number>();
 
   useEffect(() => {
     window.history.scrollRestoration = "manual";

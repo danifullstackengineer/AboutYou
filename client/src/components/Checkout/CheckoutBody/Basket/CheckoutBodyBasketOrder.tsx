@@ -3,7 +3,7 @@ import "../../../../styles/components/Checkout/CheckoutBody/Basket/CheckoutBodyB
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoMdArrowDropdown } from "react-icons/io";
 import React, { useContext, useEffect, useState } from "react";
-import { BasketContext } from "../../../../Context/Basket";
+import { BasketContext, ExtendedProductType } from "../../../../Context/Basket";
 
 function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
   const [changedAmount, setChangedAmount] = useState<boolean[]>();
@@ -57,58 +57,32 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
                         <div>
                           <span>{item.quantity}</span>
                           <div>
-                            <span>
-                              {/* <span onClick={() => handleItemIncrease(item, i)}> */}
+                            <span onClick={() => bContext.addToBasket(item)}>
                               <IoMdArrowDropup />
                             </span>
-                            <span>
-                              {/* <span onClick={() => handleItemDecrease(item, i)}> */}
+                            <span
+                              onClick={() => bContext.decrementProduct(item.id)}
+                            >
                               <IoMdArrowDropdown />
                             </span>
                           </div>
                         </div>
                       </div>
-                      <button>
-                        {/* <button onClick={() => removeItemFromBasketStorage(item)}> */}
+                      <button
+                        onClick={() => bContext.removeFromBasket(item.id)}
+                      >
                         Remove item
                       </button>
                     </div>
                   )}
                 </div>
-                {/* <div className="checkoutBodyBasketOrder__info-lower">
-                {item.price ? (
-                  <>
-                    <span></span>
-                    <span></span>
-                    <span className="checkoutBodyBasketOrder__info-lower-nored">
-                      $ {(item.quantity * parseFloat(item.price)).toFixed(2)}
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span>
-                      ${" "}
-                      {(
-                        parseFloat(item.priceDiscount.full) * item.quantity
-                      ).toFixed(2)}
-                    </span>
-                    <span>
-                      - ${" "}
-                      {(
-                        item.quantity *
-                        (parseFloat(item.priceDiscount.full) -
-                          parseFloat(item.priceDiscount.discount))
-                      ).toFixed(2)}
-                    </span>
-                    <span>
-                      ${" "}
-                      {(
-                        item.quantity * parseFloat(item.priceDiscount.discount)
-                      ).toFixed(2)}
-                    </span>
-                  </>
-                )}
-              </div> */}
+                <div className="checkoutBodyBasketOrder__info-lower">
+                  <span></span>
+                  <span></span>
+                  <span className="checkoutBodyBasketOrder__info-lower-nored">
+                    $ {(item.quantity * item.price).toFixed(2)}
+                  </span>
+                </div>
               </div>
             </div>
           );

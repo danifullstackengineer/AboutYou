@@ -34,3 +34,8 @@ TODO: Add scrolling when form input is invalid/missing
 TODO: --- In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method. --- fixed
 TODO: --- Change warning in payment method to be responsive. --- fixed
 TODO: --- In checkout page on the inputs, make sure there's some padding on the right side. --- fixed
+TODO: Handle error in Product360
+TODO: Sometimes in 360 product you can't select all sizes or all colors.
+TODO: Handle errors in BodyInner;
+TODO: --- When adding to basket in Product360 it doesn't open the menu. --- fixed
+TODO: Make it so that when user adds the same product but with different sizes/colors/accesories/custom, it appears as a separate item and not the same.

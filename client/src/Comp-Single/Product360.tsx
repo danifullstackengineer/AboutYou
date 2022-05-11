@@ -1,15 +1,29 @@
 import { useQuery } from "@apollo/client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { getAccessoriesBasedOnParent } from "../Apollo/Accessory";
 import "../styles/Comp-Single/Product360.css";
 import { AccessoryType } from "../types/Accessory";
 import { ProductType } from "../types/Product";
-import useMousePosition from "../Hooks/MousePosition";
-import { useWindowDimensions } from "../Hooks/Viewport";
 import InteractiveBtn from "./InteractiveBtn";
-import { IoIosClose } from "react-icons/io";
+import { BasketContext } from "../Context/Basket";
 
-function Product360({ product }: { product: ProductType }) {
+function Product360({
+  product,
+  clickedMenu,
+  setClickedMenu,
+  setClickedBasket,
+  clickedBasket,
+  handleOpening,
+}: {
+  product: ProductType;
+  clickedMenu: boolean;
+  setClickedBasket: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedBasket: boolean;
+  handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+}) {
+  const bContext = useContext(BasketContext);
+
   const { loading, error, data } = useQuery(getAccessoriesBasedOnParent, {
     variables: {
       parentId: product.id,
@@ -23,10 +37,12 @@ function Product360({ product }: { product: ProductType }) {
     product.sizes.map(() => false)
   );
   const [hasSelectedSize, setHasSelectedSize] = useState<boolean>(false);
+  const [sizeIdx, setSizeIdx] = useState<number>();
   const [selectedColor, setSelectedColor] = useState<boolean[]>(
     product.colors.map(() => false)
   );
   const [hasSelectedColor, setHasSelectedColor] = useState<boolean>(false);
+  const [colorIdx, setColorIdx] = useState<number>();
   const [accIndex, setAccIndex] = useState<number>();
 
   const mainRef = useRef<HTMLDivElement>(null);
@@ -75,6 +91,7 @@ function Product360({ product }: { product: ProductType }) {
         return false;
       })
     );
+    setSizeIdx(index);
   };
   const handleAddColor = (index: number) => {
     setSelectedColor((prevState) =>
@@ -86,6 +103,7 @@ function Product360({ product }: { product: ProductType }) {
         return false;
       })
     );
+    setColorIdx(index);
   };
 
   const getTotalAfterAccessory = (): number => {
@@ -132,20 +150,50 @@ function Product360({ product }: { product: ProductType }) {
     } else {
       setHasSelectedOptions(false);
     }
-  }, [ hasSelectedColor, hasSelectedSize]);
+  }, [hasSelectedColor, hasSelectedSize]);
 
   const handleAddToBasket = (): void => {
-    alert("You need to implement this!");
+    if (sizeIdx && colorIdx) {
+      bContext.addToBasket({
+        ...product,
+        selectedSize: product.sizes[sizeIdx],
+        selectedColor: product.colors[colorIdx],
+        selectedAccessory: accIndex
+          ? data.getAccessoriesBasedOnParent[accIndex]
+          : undefined,
+        customStyle: file,
+      });
+    }
+    if (!clickedMenu) {
+      setClickedMenu(true);
+      setTimeout(() => {
+        setClickedBasket(true);
+      }, 150);
+    } else {
+      console.log("true clicked menu!");
+      if (!clickedBasket) {
+        handleOpening("basket");
+      }
+    }
   };
-  ///
+
+  const handleRemoveFromBasket = ():void => {
+
+  }
+
+  useEffect(()=>{
+    console.log("menu is changing..." , clickedMenu);
+  }, [clickedMenu])
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(()=>{
-    if(clicked){
-      document.dispatchEvent(new CustomEvent("clicked360", {detail: product.backgroundImg}));
+  useEffect(() => {
+    if (clicked) {
+      document.dispatchEvent(
+        new CustomEvent("clicked360", { detail: product.backgroundImg })
+      );
     }
-  }, [clicked])
+  }, [clicked]);
 
   return (
     <div className="product360" ref={mainRef}>
@@ -176,16 +224,16 @@ function Product360({ product }: { product: ProductType }) {
         )}
         {clicked ? (
           <div id="product360__threesixty">
-          <div id="product360__spinner">
-            <span>0%</span>
+            <div id="product360__spinner">
+              <span>0%</span>
+            </div>
+            <ol id="product360__threesixty_images"></ol>
           </div>
-          <ol id="product360__threesixty_images"></ol>
-        </div>
         ) : (
           ""
         )}
       </div>
-      <div className="product360__right" onClick={()=> setClicked(false)}>
+      <div className="product360__right" onClick={() => setClicked(false)}>
         <div className="product360__right-top">
           <div className="product360__right-sizes">
             <span>Available Sizes</span>
