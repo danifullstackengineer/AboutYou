@@ -7,7 +7,6 @@
     user-select: none;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     background-color: white;
-    cursor: pointer;
     min-width: 350px;
     max-height: 600px;
     min-height: 600px;
@@ -56,6 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 .product__btns-heart {
     left: 50px;
@@ -81,6 +81,7 @@
     transform: translateX(100px);
     cursor: pointer;
     outline: none;
+    border-radius: 10px;
 }
 .product__btns > button:nth-child(2):not(.product__btns-wishlist-clicked){
     background-color: white;

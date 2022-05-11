@@ -65,7 +65,7 @@ const MenuExtended = ({
                   <span>{product.title}</span>
                   <img
                     src={
-                      product.backgroundImg + "1.jpg"
+                      product.dark ? product.backgroundImg : product.backgroundImg + "1.jpg"
                     }
                     alt=""
                     loading="lazy"
@@ -111,7 +111,7 @@ const MenuExtended = ({
                   <span>{product.title}</span>
                   <img
                     src={
-                      product.backgroundImg + "1.jpg"
+                      product.dark ? product.backgroundImg : product.backgroundImg + "1.jpg"
                     }
                     alt=""
                     loading="lazy"

@@ -1,4 +1,3 @@
-import { IoMdArrowDropdown } from "react-icons/io";
 import "../styles/Comp-Single/Menu.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -226,6 +225,7 @@ function Menu({
     }
   };
 
+
   return (
     <div
       ref={mainRef}
@@ -257,7 +257,14 @@ function Menu({
                     <div className="menu__option-option-product" key={i}>
                       <div className="menu__option-option-product-left">
                         <h5>{product.title}</h5>
-                        <img alt="" src={product.backgroundImg + "1.jpg"} />
+                        <img
+                          alt=""
+                          src={
+                            product.dark
+                              ? product.backgroundImg
+                              : product.backgroundImg + "1.jpg"
+                          }
+                        />
                       </div>
                       <div className="menu__option-option-product-right">
                         <span>Quantity: {product.quantity}</span>
@@ -350,7 +357,14 @@ function Menu({
                   <div className="menu__option-option-product" key={i}>
                     <div className="menu__option-option-product-left">
                       <h5>{product.title}</h5>
-                      <img alt="" src={product.backgroundImg + "1.jpg"} />
+                      <img
+                        alt=""
+                        src={
+                          product.dark
+                            ? product.backgroundImg
+                            : product.backgroundImg + "1.jpg"
+                        }
+                      />
                     </div>
                     <div className="menu__option-option-product-right">
                       <span style={{ visibility: "hidden", opacity: 0 }}>

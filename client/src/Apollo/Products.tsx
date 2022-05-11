@@ -12,6 +12,7 @@ const getAllProductsMain = gql`
       sizes
       accessoryId
       likes
+      dark
     }
   }
 `;

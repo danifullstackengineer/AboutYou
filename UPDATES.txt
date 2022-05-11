@@ -39,3 +39,7 @@ TODO: Sometimes in 360 product you can't select all sizes or all colors.
 TODO: Handle errors in BodyInner;
 TODO: --- When adding to basket in Product360 it doesn't open the menu. --- fixed
 TODO: Make it so that when user adds the same product but with different sizes/colors/accesories/custom, it appears as a separate item and not the same.
+TODO: If name is too big for the color in product 360, it overflows;
+TODO: On smaller screens, the scrollintoview for 360 products doesn't show everything.
+TODO: On mobile while the 360 img is loading, it creates an empty space.
+TODO: Add react.lazy and custom suspense/error handling to some components

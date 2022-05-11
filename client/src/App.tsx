@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/index.css";
 import Body from "./components/Body";
@@ -10,7 +17,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Basket from "./components/Basket/Basket";
 import UserInformation from "./components/UserInformation/UserInformation";
-import Menu from "./Comp-Single/Menu";
 import ProductBody from "./components/Product/ProductBody";
 import Subscribe from "./Comp-Single/Subscribe";
 import ScrollIntoViewComponent from "./Comp-Single/ScrollIntoViewComponent";
@@ -20,6 +26,7 @@ import { WishlistContext, WishlistContextType } from "./Context/Wishlist";
 import mobileCheck from "./Logic/mobilecheck";
 import { MobileContext } from "./Context/Mobile";
 import MenuPhone from "./Comp-Single/MenuPhone";
+import Menu from "./Comp-Single/Menu";
 import {
   addToBasketStorageAndContext,
   decrementProductStorage,
@@ -33,6 +40,8 @@ import {
   isProductInWishlist,
   removeFromWishlistStorageAndContext,
 } from "./Logic/localStorage/wishlist";
+import React from "react";
+
 var logoutTimer: NodeJS.Timeout;
 
 const promise = loadStripe(
@@ -299,7 +308,7 @@ function App() {
   );
 
   //todo: modify this to false
-  const [isMobile, setIsMobile] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   // todo: uncomment this
   useEffect(() => {
@@ -364,22 +373,23 @@ function App() {
             <MobileContext.Provider value={{ isMobile: isMobile }}>
               <Router>
                 {isViewport620 ? (
-                  <Menu
-                    clickedMenu={clickedMenu}
-                    chosenMode={chosenMode}
-                    setClickedLogin={setClickedLogin}
-                    setChosenAction={setChosenAction}
-                    setClickedBasket={setClickedBasket}
-                    setClickedWishlist={setClickedWishlist}
-                    setClickedUser={setClickedUser}
-                    setClickedLanguage={setClickedLanguage}
-                    clickedBasket={clickedBasket}
-                    clickedWishlist={clickedWishlist}
-                    clickedUser={clickedUser}
-                    clickedLanguage={clickedLanguage}
-                    handleOpening={handleOpening}
-                    display={display}
-                  />
+
+                    <Menu
+                      clickedMenu={clickedMenu}
+                      chosenMode={chosenMode}
+                      setClickedLogin={setClickedLogin}
+                      setChosenAction={setChosenAction}
+                      setClickedBasket={setClickedBasket}
+                      setClickedWishlist={setClickedWishlist}
+                      setClickedUser={setClickedUser}
+                      setClickedLanguage={setClickedLanguage}
+                      clickedBasket={clickedBasket}
+                      clickedWishlist={clickedWishlist}
+                      clickedUser={clickedUser}
+                      clickedLanguage={clickedLanguage}
+                      handleOpening={handleOpening}
+                      display={display}
+                    />
                 ) : (
                   <MenuPhone
                     clickedMenu={clickedMenu}

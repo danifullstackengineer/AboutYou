@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../styles/components/Body/BodyInner.css";
 import { useLazyQuery } from "@apollo/client";
 import { getAllProductsMain } from "../../Apollo/Products";
@@ -104,6 +104,33 @@ function BodyInner({
     }
   }, [aContext]);
 
+  const ref360 = useRef<HTMLDivElement>(null);
+
+  const [hasClicked, setHasClicked] = useState<boolean>(false);
+
+  const handleChangeProduct360 = (product: ProductType): void => {
+    if (randomProd) {
+      const current = Object.assign({}, randomProd[0]);
+      setRandomProd((prevState) =>
+        prevState?.map((inner_prod, i) =>
+          i === 0
+            ? product
+            : inner_prod.id === product.id
+            ? current
+            : inner_prod
+        )
+      );
+      setHasClicked(true);
+    }
+  };
+
+  useEffect(()=>{
+    if(ref360.current && hasClicked){
+      setHasClicked(false);
+      ref360.current.scrollIntoView({block:"end"});
+    }
+  }, [hasClicked, ref360])
+
   // useEffect(() => {
   //   //TODO: Handle errors
   //   if (errorNon) {
@@ -151,6 +178,7 @@ function BodyInner({
       !loadingNon ? (
         <>
           <Product360
+          ref360={ref360}
             product={randomProd[0]}
             clickedBasket={clickedBasket}
             clickedMenu={clickedMenu}
@@ -161,7 +189,13 @@ function BodyInner({
           <div className="bodyInner-random">
             {randomProd.map((product: ProductType, i: number) => {
               if (i > 0) {
-                return <ProductCustom product={product} key={i} />;
+                return (
+                  <ProductCustom
+                    product={product}
+                    key={i}
+                    handleChangeProduct360={handleChangeProduct360}
+                  />
+                );
               }
             })}
           </div>

@@ -93,7 +93,6 @@ const Product = ({
     }
   };
 
-  const handleLoadingLike = () => {};
 
   useEffect(() => {
     if (liked !== undefined) {

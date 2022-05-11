@@ -36,7 +36,7 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
               }`}
             >
               <img
-                src={item.backgroundImg + "1.jpg"}
+                src={item.dark ? item.backgroundImg : item.backgroundImg + "1.jpg"}
                 alt={""}
                 loading={"lazy"}
               />

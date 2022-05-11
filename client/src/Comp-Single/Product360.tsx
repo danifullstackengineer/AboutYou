@@ -1,5 +1,11 @@
 import { useQuery } from "@apollo/client";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getAccessoriesBasedOnParent } from "../Apollo/Accessory";
 import "../styles/Comp-Single/Product360.css";
 import { AccessoryType } from "../types/Accessory";
@@ -14,6 +20,7 @@ function Product360({
   setClickedBasket,
   clickedBasket,
   handleOpening,
+  ref360,
 }: {
   product: ProductType;
   clickedMenu: boolean;
@@ -21,6 +28,7 @@ function Product360({
   setClickedMenu: React.Dispatch<React.SetStateAction<boolean>>;
   clickedBasket: boolean;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+  ref360: React.RefObject<HTMLDivElement>;
 }) {
   const bContext = useContext(BasketContext);
 
@@ -31,8 +39,6 @@ function Product360({
   });
 
   const [addedAccessory, setAddedAccessory] = useState<boolean[]>();
-  const [hasSelectedAccessory, setHasSelectedAccessory] =
-    useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<boolean[]>(
     product.sizes.map(() => false)
   );
@@ -71,7 +77,6 @@ function Product360({
           } else {
             setAccIndex(i);
           }
-          setHasSelectedAccessory(!truth);
           return !truth;
         } else {
           return false;
@@ -106,19 +111,21 @@ function Product360({
     setColorIdx(index);
   };
 
-  const getTotalAfterAccessory = (): number => {
+  const getTotalAfterAccessory = useCallback((): number => {
     if (addedAccessory && accIndex !== undefined && data) {
-      return (
-        data.getAccessoriesBasedOnParent[accIndex].price + product.price
-      ).toFixed(2);
+      try{
+        return (data.getAccessoriesBasedOnParent[accIndex].price + product.price).toFixed(2);
+      }catch(err){
+        return product.price;
+      }
     } else return product.price;
-  };
+  }, [product, accIndex]);
 
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
     setTotal(getTotalAfterAccessory());
-  }, [accIndex]);
+  }, [accIndex, product.price]);
 
   const [file, setFile] = useState<any>();
 
@@ -177,14 +184,6 @@ function Product360({
     }
   };
 
-  const handleRemoveFromBasket = ():void => {
-
-  }
-
-  useEffect(()=>{
-    console.log("menu is changing..." , clickedMenu);
-  }, [clickedMenu])
-
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -196,7 +195,7 @@ function Product360({
   }, [clicked]);
 
   return (
-    <div className="product360" ref={mainRef}>
+    <div className="product360" ref={ref360}>
       <div
         className={`product360__left ${
           clicked ? "product360__left-360" : "product360__left-360-inactive"
@@ -299,7 +298,7 @@ function Product360({
                           />
                           <div className="product360__right-custom-info">
                             <span>{accessory.title}</span>
-                            <span>${accessory.price}</span>
+                            <span>$ {accessory.price}</span>
                           </div>
                           <div
                             className={`product360__right-custom-checker ${
@@ -321,7 +320,7 @@ function Product360({
             )}
           </div>
           <div className="product360__right-price">
-            <span>Total:</span> <span>${total}</span>
+            <span>Total:</span> <span>$ {total}</span>
           </div>
         </div>
         <div
@@ -395,4 +394,4 @@ function Product360({
   );
 }
 
-export default React.memo(Product360);
+export default Product360;

@@ -10,6 +10,7 @@ export type ProductType = {
     sizes: number[];
     accessoryId?: string[];
     likes: number;
+    dark?: boolean;
 }
 
 export type ProductTypeBasket = ExtendedProductType & {

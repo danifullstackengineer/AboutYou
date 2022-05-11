@@ -161,7 +161,7 @@ const MenuPhone = ({
           : ""
       }`}
       ref={mainRef}
-      style={{display}}
+      style={{ display }}
     >
       <div className={`menuPhone__top`}>
         <button
@@ -207,7 +207,14 @@ const MenuPhone = ({
                       <h5>{product.title}</h5>
                     </div>
                     <div className="menuPhone__bottom__option-option-bottom">
-                      <img alt="" src={product.backgroundImg + "1.jpg"} />
+                      <img
+                        alt=""
+                        src={
+                          product.dark
+                            ? product.backgroundImg
+                            : product.backgroundImg + "1.jpg"
+                        }
+                      />
                       <div className="menuPhone__bottom__option-option-right">
                         <span>Quantity: {product.quantity}</span>
                         <span>
@@ -266,7 +273,14 @@ const MenuPhone = ({
                       <h5>{product.title}</h5>
                     </div>
                     <div className="menuPhone__bottom__option-option-bottom">
-                      <img alt="" src={product.backgroundImg + "1.jpg"} />
+                      <img
+                        alt=""
+                        src={
+                          product.dark
+                            ? product.backgroundImg
+                            : product.backgroundImg + "1.jpg"
+                        }
+                      />
                       <div
                         className="menuPhone__bottom__option-option-right"
                         style={{ opacity: 0, visibility: "hidden" }}
