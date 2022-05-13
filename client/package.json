@@ -71,7 +71,6 @@
     "@types/react-image-gallery": "^1.0.5",
     "@types/react-lazyload": "^3.2.0",
     "@types/react-slick": "^0.23.8",
-    "cross-env": "^7.0.3",
     "lodash": "^4.17.21"
   }
 }
