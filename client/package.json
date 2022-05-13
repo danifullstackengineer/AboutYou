@@ -39,7 +39,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build && gzip build/static/js/*.js && gzip build/static/css/*.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -71,6 +71,7 @@
     "@types/react-image-gallery": "^1.0.5",
     "@types/react-lazyload": "^3.2.0",
     "@types/react-slick": "^0.23.8",
+    "cross-env": "^7.0.3",
     "lodash": "^4.17.21"
   }
 }
