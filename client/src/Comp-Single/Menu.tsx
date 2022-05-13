@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../Context/Auth";
-import { BasketContext } from "../Context/Basket";
+import { BasketContext, ExtendedProductType } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
 import { MobileContext } from "../Context/Mobile";
 import InteractiveBtn from "./InteractiveBtn";
@@ -225,6 +225,10 @@ function Menu({
     }
   };
 
+  const handleAddToBasketFromWishlist = (product: ExtendedProductType) => {
+    wContext.removeFromWishlist(product.id);
+    bContext.addToBasket(product);
+  };
 
   return (
     <div
@@ -367,7 +371,7 @@ function Menu({
                       />
                     </div>
                     <div className="menu__option-option-product-right">
-                      <span style={{ visibility: "hidden", opacity: 0 }}>
+                      <span style={{ display: "none" }}>
                         Quantity: {product.quantity}
                       </span>
                       <span>
@@ -388,6 +392,14 @@ function Menu({
                           }
                         >
                           Remove
+                        </button>
+                      </div>
+                      <div className="menu__option-option-product-right-btns-add">
+                        <button
+                          type="button"
+                          onClick={() => handleAddToBasketFromWishlist(product)}
+                        >
+                          Basket
                         </button>
                       </div>
                     </div>
@@ -429,9 +441,17 @@ function Menu({
                 <Link to="/help">Help</Link>
                 <Link
                   to="/logout"
-                  onClick={() => {
+                  onClick={(e) => {
                     aContext.logout();
-                    navigate("/");
+                    if (
+                      window.location.pathname === "/" ||
+                      window.location.pathname === "/dark" ||
+                      window.location.pathname === "/light" ||
+                      window.location.pathname === "/accessories"
+                    ) {
+                      // disable link going through.
+                      e.preventDefault();
+                    }
                   }}
                 >
                   Log Out

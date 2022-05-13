@@ -12,8 +12,9 @@ import ProductType from "./GraphQL/ProductType.js";
 import UserType from "./GraphQL/UserType.js";
 import User from "./models/User.js";
 import Products from "./models/Products.js";
-import Accessories from './models/Accessories.js';
+import Accessories from "./models/Accessories.js";
 import AccessoryType from "./GraphQL/AccessoryType.js";
+import { LikedAndTotalLikes } from "./GraphQL/CustomType.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -35,18 +36,18 @@ const RootQuery = new GraphQLObjectType({
     getProducts: {
       type: new GraphQLList(ProductType),
       args: {
-        dark: {type: new GraphQLNonNull(GraphQLBoolean)}
+        dark: { type: new GraphQLNonNull(GraphQLBoolean) },
       },
       async resolve(par, args) {
-        return await Products.find({dark: args.dark})
+        return await Products.find({ dark: args.dark });
       },
     },
     getAccessories: {
       type: new GraphQLList(AccessoryType),
       args: {},
-      async resolve(par, args){
-        return await Accessories.find({})
-      }
+      async resolve(par, args) {
+        return await Accessories.find({});
+      },
     },
     getSingleProduct: {
       type: ProductType,
@@ -60,12 +61,38 @@ const RootQuery = new GraphQLObjectType({
     getAccessoriesBasedOnParent: {
       type: new GraphQLList(AccessoryType),
       args: {
-        parentId: {type: new GraphQLNonNull(GraphQLID)}
+        parentId: { type: new GraphQLNonNull(GraphQLID) },
       },
-      async resolve(par, args){
-        return await Accessories.find({parentId: args.parentId});
-      }
-    }
+      async resolve(par, args) {
+        return await Accessories.find({ parentId: args.parentId });
+      },
+    },
+    getIfLikedProductByUserAndTotalLikes: {
+      type: LikedAndTotalLikes,
+      args: {
+        id: { type: GraphQLID },
+        product_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      async resolve(par, args) {
+        var res = { likes: 0, liked: false };
+        const product = await Products.findById(args.product_id);
+        if (product) {
+          res.likes = product.likes;
+          if (args.id) {
+            const user = await User.findById(args.id);
+            if (user) {
+              user.likedProducts.forEach((prod) => {
+                if (prod === args.product_id) {
+                  res.liked = true;
+                  return;
+                }
+              });
+            }
+          }
+        }
+        return res;
+      },
+    },
   },
 });
 

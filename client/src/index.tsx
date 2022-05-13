@@ -24,10 +24,26 @@ const errorLink =
       })
     : onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
-          graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            )
+          graphQLErrors.forEach(
+            ({
+              message,
+              locations,
+              path,
+              source,
+              positions,
+              nodes,
+              originalError,
+              extensions,
+            }) =>
+              console.log(
+                `[GraphQL error]: Message: ${message}\nLocation: ${
+                  locations
+                    ? locations.map((location, i) => {
+                        return `\nLocation #${i}: Line - ${location.line}, Column - ${location.column}`;
+                      })
+                    : undefined
+                }\nPath: ${path}\nSource: ${source}\nPositions: ${positions}\nNodes: ${nodes}\nOriginal Error: ${originalError}\nExtensions: ${extensions}`
+              )
           );
 
         if (networkError) console.log(`[Network error]: ${networkError}`);

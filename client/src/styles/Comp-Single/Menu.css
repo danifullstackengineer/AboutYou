@@ -154,7 +154,7 @@
   align-items: center;
 }
 .menu-light .menu__option-option-product-right-btns > button {
-  background-color: rgb(100,200,100);
+  background-color: rgb(100, 200, 100);
 }
 .menu-dark .menu__option-option-product-right-btns > button {
   background-color: rgb(255, 174, 23);
@@ -162,11 +162,17 @@
 .menu__option-option-product-right-btns > button:first-child {
   margin-right: 20px;
 }
-.menu__option-option-product-right-btns-remove {
+.menu__option-option-product-right-btns-add {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.menu__option-option-product-right-btns-remove,
+.menu__option-option-product-right-btns-add {
   display: flex;
   width: 125px;
 }
-.menu__option-option-product-right-btns-remove > button {
+.menu__option-option-product-right-btns-remove > button,
+.menu__option-option-product-right-btns-add > button {
   width: 80%;
   height: 30px;
   cursor: pointer;
@@ -175,10 +181,12 @@
   font-weight: 900;
   font-size: 1rem;
 }
-.menu-light .menu__option-option-product-right-btns-remove > button {
+.menu-light .menu__option-option-product-right-btns-remove > button,
+.menu-light .menu__option-option-product-right-btns-add > button {
   background-color: rgb(100, 200, 100);
 }
-.menu-dark .menu__option-option-product-right-btns-remove > button {
+.menu-dark .menu__option-option-product-right-btns-remove > button,
+.menu-dark .menu__option-option-product-right-btns-add > button {
   background-color: rgb(255, 174, 23);
 }
 .menu__option-option-scrollber {
@@ -279,10 +287,10 @@
   font-family: monospace;
 }
 
-.menu-light .menu__option-option-product-total-info > span:nth-child(2){
-  color: rgb(255,100,100);
+.menu-light .menu__option-option-product-total-info > span:nth-child(2) {
+  color: rgb(255, 100, 100);
 }
-.menu-dark .menu__option-option-product-total-info > span:nth-child(2){
+.menu-dark .menu__option-option-product-total-info > span:nth-child(2) {
   color: white;
 }
 .menu__option-option-product-total-btn {

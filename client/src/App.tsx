@@ -40,7 +40,8 @@ import {
   isProductInWishlist,
   removeFromWishlistStorageAndContext,
 } from "./Logic/localStorage/wishlist";
-import React from "react";
+import Admin from "./components/Admin/Admin";
+import { AccessLevel, AdminContext } from "./Context/Admin";
 
 var logoutTimer: NodeJS.Timeout;
 
@@ -104,6 +105,10 @@ function App() {
       }
     }
   }, [login]);
+
+  /* Admin Authentication */
+  const [isLoggedInAdmin, setIsLoggedInAdmin] = useState<boolean>(false);
+  const [accessLevel, setAccessLevel] = useState<AccessLevel>();
 
   /* Basket */
   const [basket, setBasket] = useState<BasketContextType["product"]>([]);
@@ -373,23 +378,22 @@ function App() {
             <MobileContext.Provider value={{ isMobile: isMobile }}>
               <Router>
                 {isViewport620 ? (
-
-                    <Menu
-                      clickedMenu={clickedMenu}
-                      chosenMode={chosenMode}
-                      setClickedLogin={setClickedLogin}
-                      setChosenAction={setChosenAction}
-                      setClickedBasket={setClickedBasket}
-                      setClickedWishlist={setClickedWishlist}
-                      setClickedUser={setClickedUser}
-                      setClickedLanguage={setClickedLanguage}
-                      clickedBasket={clickedBasket}
-                      clickedWishlist={clickedWishlist}
-                      clickedUser={clickedUser}
-                      clickedLanguage={clickedLanguage}
-                      handleOpening={handleOpening}
-                      display={display}
-                    />
+                  <Menu
+                    clickedMenu={clickedMenu}
+                    chosenMode={chosenMode}
+                    setClickedLogin={setClickedLogin}
+                    setChosenAction={setChosenAction}
+                    setClickedBasket={setClickedBasket}
+                    setClickedWishlist={setClickedWishlist}
+                    setClickedUser={setClickedUser}
+                    setClickedLanguage={setClickedLanguage}
+                    clickedBasket={clickedBasket}
+                    clickedWishlist={clickedWishlist}
+                    clickedUser={clickedUser}
+                    clickedLanguage={clickedLanguage}
+                    handleOpening={handleOpening}
+                    display={display}
+                  />
                 ) : (
                   <MenuPhone
                     clickedMenu={clickedMenu}
@@ -700,6 +704,20 @@ function App() {
                       </>
                     }
                   />
+
+                  <Route
+                    path="/admin"
+                    element={
+                      <AdminContext.Provider
+                        value={{
+                          isLoggedIn: isLoggedInAdmin,
+                          accessLevel: accessLevel,
+                        }}
+                      >
+                        <Admin />
+                      </AdminContext.Provider>
+                    }
+                  ></Route>
                 </Routes>
               </Router>
             </MobileContext.Provider>

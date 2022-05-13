@@ -88,7 +88,6 @@ function BodyInner({
 
   useEffect(() => {
     if (dataAcc && accessories && !randomAcc) {
-      // setRandomAcc(shuffle_acc(dataAcc.getAccessories));
       shuffle_acc(dataAcc.getAccessories).then((res) => {
         setRandomAcc(res);
       });
@@ -124,12 +123,12 @@ function BodyInner({
     }
   };
 
-  useEffect(()=>{
-    if(ref360.current && hasClicked){
+  useEffect(() => {
+    if (ref360.current && hasClicked) {
       setHasClicked(false);
-      ref360.current.scrollIntoView({block:"end"});
+      ref360.current.scrollIntoView({ block: "end" });
     }
-  }, [hasClicked, ref360])
+  }, [hasClicked, ref360]);
 
   // useEffect(() => {
   //   //TODO: Handle errors
@@ -178,7 +177,7 @@ function BodyInner({
       !loadingNon ? (
         <>
           <Product360
-          ref360={ref360}
+            ref360={ref360}
             product={randomProd[0]}
             clickedBasket={clickedBasket}
             clickedMenu={clickedMenu}
@@ -210,7 +209,21 @@ function BodyInner({
       !loadingNon ? (
         <div className="bodyInner-random">
           {randomProd.map((product: ProductType, i: number) => {
-            return <ProductCustom product={product} key={i} dark={true} />;
+            return (
+              <ProductCustom
+                product={product}
+                key={i}
+                dark={true}
+                clickedMenu={clickedMenu}
+                setClickedBasket={setClickedBasket}
+                setClickedMenu={setClickedMenu}
+                clickedBasket={clickedBasket}
+                handleOpening={handleOpening}
+                setClickedLogin={setClickedLogin}
+                setClickedWishlist={setClickedWishlist}
+                clickedWishlist={clickedWishlist}
+              />
+            );
           })}
         </div>
       ) : (

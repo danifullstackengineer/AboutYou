@@ -1,4 +1,9 @@
-import React, { useContext, useState } from "react";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  getIfLikedProductByUserAndTotalLikes,
+  setLikedProduct,
+} from "../Apollo/Products";
 import { AuthContext } from "../Context/Auth";
 import { BasketContext } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
@@ -9,12 +14,27 @@ const ProductCustom = ({
   product,
   dark,
   handleChangeProduct360,
+  clickedMenu,
+  setClickedMenu,
+  setClickedBasket,
+  clickedBasket,
+  handleOpening,
+  setClickedLogin,
+  setClickedWishlist,
+  clickedWishlist,
 }: {
   product: ProductType;
   dark?: boolean;
   handleChangeProduct360?: (product: ProductType) => void;
+  clickedMenu?: boolean;
+  setClickedBasket?: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedMenu?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedBasket?: boolean;
+  handleOpening?: (type: "user" | "wishlist" | "basket" | "language") => void;
+  setClickedLogin?: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedWishlist?: React.Dispatch<React.SetStateAction<boolean>>;
+  clickedWishlist?: boolean;
 }) => {
-
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
 
@@ -22,17 +42,109 @@ const ProductCustom = ({
   const aContext = useContext(AuthContext);
   const wContext = useContext(WishlistContext);
 
-  const handleLike = (): void => {};
-  const handleWishlist = (): void => {};
-  const handleBasket = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+  const [
+    getLikesAndIfLiked,
+    { data: dataL, error: errorL, loading: loadingL },
+  ] = useLazyQuery(getIfLikedProductByUserAndTotalLikes, {
+    variables: {
+      id: aContext.userId,
+      product_id: product.id,
+    },
+  });
+
+  useEffect(() => {
+    if (product.id && dark) {
+      getLikesAndIfLiked();
+    }
+  }, [aContext, product.id, dark]);
+
+  useEffect(() => {
+    if (dataL) {
+      setLikes(dataL.getIfLikedProductByUserAndTotalLikes.likes);
+      setLikedInner(dataL.getIfLikedProductByUserAndTotalLikes.liked);
+    }
+  }, [dataL]);
+
+  const [likedMutation, { loading, data, error }] = useMutation(
+    setLikedProduct,
+    {
+      variables: {
+        id: aContext.userId,
+        likedId: product.id,
+        liked: !likedInner,
+      },
+    }
+  );
+
+  const handleLike = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    if (!loading) {
+      e.stopPropagation();
+      if (!aContext.isLoggedIn && setClickedLogin) {
+        setClickedLogin(true);
+      } else {
+        likedMutation().then(() => {
+          if (!loading) {
+            if (likedInner) {
+              setLikes(likes - 1);
+            } else {
+              setLikes(likes + 1);
+            }
+            setLikedInner(!likedInner);
+          }
+        });
+      }
+    }
+  };
+  const handleWishlist = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
     e.stopPropagation();
-    if(bContext.isInBasket(product.id)) {
+    if (!aContext.isLoggedIn && setClickedLogin) {
+      setClickedLogin(true);
+    } else {
+      if (wContext.isInWishlist(product.id)) {
+        wContext.removeFromWishlist(product.id);
+      } else {
+        wContext.addToWishlist(product);
+      }
+      if (!clickedMenu && setClickedMenu && setClickedWishlist) {
+        setClickedMenu(true);
+        setTimeout(() => {
+          setClickedWishlist(true);
+        }, 150);
+      } else {
+        if (!clickedWishlist && handleOpening) {
+          handleOpening("wishlist");
+        }
+      }
+    }
+  };
+  const handleBasket = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.stopPropagation();
+    if (bContext.isInBasket(product.id)) {
       bContext.removeFromBasket(product.id);
-    }else{
+    } else {
       bContext.addToBasket(product);
+    }
+    if (!clickedMenu && setClickedBasket && setClickedMenu) {
+      setClickedMenu(true);
+      setTimeout(() => {
+        setClickedBasket(true);
+      }, 150);
+    } else {
+      if (!clickedBasket && handleOpening) {
+        handleOpening("basket");
+      }
     }
   };
 
+  useEffect(() => {
+    //TODO: handle errors;
+  }, [errorL]);
 
   return (
     <div
@@ -62,7 +174,10 @@ const ProductCustom = ({
         ""
       )}
       {dark ? (
-        <button className={"productCustom__heart-btn"} onClick={handleLike}>
+        <button
+          className={"productCustom__heart-btn"}
+          onClick={(e) => handleLike(e)}
+        >
           <img
             src={
               likedInner

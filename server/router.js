@@ -1,4 +1,5 @@
 import express from "express";
+import { loginAdmin } from "./controllers/Admin.js";
 import {
   register,
   login,
@@ -39,5 +40,8 @@ router.post("/createCoinpaymentsPayment", verifyJWT, createCoinpaymentsPayment);
 if (process.env.NODE_ENV !== "production") {
   // router.get("/singleUse/createProducts", createProducts);
 }
+
+// Admin only
+router.post("/admin/api/login", loginAdmin)
 
 export default router;

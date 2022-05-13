@@ -11,14 +11,18 @@ import { fileURLToPath } from "url";
 import expressStaticGzip from "express-static-gzip";
 import compression from "compression";
 import Coinpayments from "coinpayments";
-import helmet from 'helmet';
-import https from 'https';
+import helmet from "helmet";
+import https from "https";
+import spdy from "spdy";
 dotenv.config();
 import Stripe from "stripe";
+import fs from "fs";
+import { promisify } from "util";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const readFile = promisify(fs.readFile);
 const app = express();
 
 const coinpaymentsClient = new Coinpayments({
@@ -27,9 +31,11 @@ const coinpaymentsClient = new Coinpayments({
 });
 
 app.use(compression());
-app.use(helmet({
-  contentSecurityPolicy: false
-}))
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
@@ -38,10 +44,12 @@ if (!(process.env.NODE_ENV === "production")) {
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
-  app.get("*", (_, res) => {
-    res.sendFile(
-      path.resolve(__dirname, "..", "client", "build", "index.html")
-    );
+  app.get("*", async (_, res) => {
+    if (res.push) {
+      res.sendFile(
+        path.resolve(__dirname, "..", "client", "build", "index.html")
+      );
+    }
   });
 }
 const PORT = process.env.PORT || 5000;
@@ -50,6 +58,13 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to database...");
+    spdy.createServer(
+      {
+        key: fs.readFileSync("./cert/server.key"),
+        cert: fs.readFileSync("./cert/server.crt"),
+      },
+      app
+    );
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
   })
   .catch((err) => {

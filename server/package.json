@@ -33,6 +33,7 @@
     "mongoose": "^6.2.7",
     "node-fetch": "^3.2.3",
     "paypal-rest-sdk": "^1.8.1",
+    "spdy": "^4.0.2",
     "stripe": "^8.215.0",
     "web3": "^1.7.1"
   }

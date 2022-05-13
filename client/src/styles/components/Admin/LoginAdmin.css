@@ -1,0 +1,31 @@
+.loginAdmin {
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    padding: 20px;   
+    position: relative;
+}
+.loginAdmin > span {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+.loginAdmin > input {
+    margin-bottom: 5px;
+}
+.loginAdmin__message {
+    position: absolute;
+    top: -50px;
+    background-color: orange;
+    color: white;
+    width: 400px;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    left: calc(50%);
+    transform: translateX(-50%);
+}
+@media screen and (max-width: 400px){
+    .loginAdmin__message {
+        width: 350px;
+        top: -100px;
+    }
+}
