@@ -30,7 +30,7 @@ const Accessory = ({ accessory }: { accessory: AccessoryType }) => {
       </div>
       <h3>{accessory.title}</h3>
       <h4>Only: $ {accessory.price}</h4>
-      <button className={"accessory__heart-btn"} onClick={(e) => handleLike(e)}>
+      <button className={"accessory__heart-btn"} onClick={(e) => handleLike(e)} aria-label="Like Accessory">
         <img
           src={
             likedInner
@@ -44,11 +44,12 @@ const Accessory = ({ accessory }: { accessory: AccessoryType }) => {
       </button>
 
       <button
+      aria-label="Add to Wishlist"
         onClick={handleWishlist}
         className={"accessory__wishlist-btn"}
       ></button>
 
-      <button onClick={handleBasket} className={"accessory__basket-btn"}>
+      <button onClick={handleBasket} className={"accessory__basket-btn"} aria-label="Add to Basket">
         <img
           src={
             bContext.isInBasket(accessory.id)

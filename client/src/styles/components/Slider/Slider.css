@@ -136,7 +136,7 @@
 .slider-dark .slider__info > button {
   background-color: rgb(255, 174, 23);
   border: 1px solid rgba(255, 174, 23, 0.7);
-  color: white;
+  color: black;
 }
 .slider__dots {
   position: absolute;

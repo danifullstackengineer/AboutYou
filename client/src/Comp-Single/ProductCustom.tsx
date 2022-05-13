@@ -175,6 +175,7 @@ const ProductCustom = ({
       )}
       {dark ? (
         <button
+          aria-label="Like Product"
           className={"productCustom__heart-btn"}
           onClick={(e) => handleLike(e)}
         >
@@ -194,6 +195,7 @@ const ProductCustom = ({
       )}
       {dark ? (
         <button
+          aria-label="Add to Wishlist"
           onClick={handleWishlist}
           className={"productCustom__wishlist-btn"}
         ></button>
@@ -201,7 +203,11 @@ const ProductCustom = ({
         ""
       )}
       {dark ? (
-        <button onClick={handleBasket} className={"productCustom__basket-btn"}>
+        <button
+          onClick={handleBasket}
+          className={"productCustom__basket-btn"}
+          aria-label="Add to Basket"
+        >
           <img
             src={
               bContext.isInBasket(product.id)

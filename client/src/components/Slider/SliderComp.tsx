@@ -271,10 +271,10 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
           <button>Story</button>
         </div>
       </div>
-      <button type="button" className={`slider__prev ${buttonAnim1}`} onClick={handlePrev}>
+      <button type="button" className={`slider__prev ${buttonAnim1}`} onClick={handlePrev} aria-label="Previous Image Slider">
         <IoIosArrowBack style={{zIndex: "2"}}/>
       </button>
-      <button type="button" className={`slider__next ${buttonAnim2}`} onClick={handleNext}>
+      <button type="button" className={`slider__next ${buttonAnim2}`} onClick={handleNext} aria-label="Next Image Slider">
         <IoIosArrowForward style={{zIndex: "2"}}/>
       </button>
       <div className="slider__dots">

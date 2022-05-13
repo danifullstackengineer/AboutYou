@@ -159,9 +159,14 @@
   align-items: center;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  color: rgb(200, 200, 200);
   font-weight: bold;
   text-align: center;
+}
+.fifthFooter-light > span {
+  color: rgb(100, 100, 100);
+}
+.fifthFooter-dark > span {
+  color: rgb(120, 120, 120);
 }
 .fifthFooter > footer > section:nth-child(3) li {
   display: -webkit-box;

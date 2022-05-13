@@ -144,6 +144,7 @@ const Product = ({
           <span>{likes}</span>
         </div>
         <button
+        aria-label="Add to Wishlist"
           onClick={(e) => handleWishlist(e)}
           className={
             wContext.isInWishlist(product.id)
