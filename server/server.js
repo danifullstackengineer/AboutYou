@@ -56,8 +56,7 @@ if (!(process.env.NODE_ENV === "production")) {
 }
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
-  // app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
-  app.use(express.static(path.join(__dirname, "..", "client", "build")))
+  app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
   app.get("*", async (_, res) => {
     res.sendFile(
       path.resolve(__dirname, "..", "client", "build", "index.html")
@@ -72,8 +71,8 @@ mongoose
     console.log("Connected to database...");
     spdy.createServer(
       {
-        key: fs.readFileSync("./cert/server.key"),
-        cert: fs.readFileSync("./cert/server.crt"),
+        key: fs.readFileSync(path.join(__dirname, "cert" ,"server.key")),
+        cert: fs.readFileSync(path.join(__dirname, "cert", "server.crt")),
         spdy: {
           protocols: ["h2"],
         },
