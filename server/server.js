@@ -48,11 +48,9 @@ app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
   app.get("*", async (_, res) => {
-    if (res.push) {
       res.sendFile(
         path.resolve(__dirname, "..", "client", "build", "index.html")
       );
-    }
   });
 }
 const PORT = process.env.PORT || 5000;
