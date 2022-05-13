@@ -50,8 +50,8 @@ app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
   spdy.createServer({
-    key: fs.readFileSync(__dirname + "./cert/server.key"),
-    cert: fs.readFileSync(__dirname + "./cert/server.cert")
+    key: fs.readFileSync("./cert/server.key"),
+    cert: fs.readFileSync("./cert/server.crt")
   }, app);
   app.get("*", async (_, res) => {
       res.sendFile(
