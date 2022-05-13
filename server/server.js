@@ -32,9 +32,7 @@ const coinpaymentsClient = new Coinpayments({
 });
 
 app.use(compression());
-app.use(helmet({
-  contentSecurityPolicy: false
-}))
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
@@ -51,6 +49,10 @@ if (!(process.env.NODE_ENV === "production")) {
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
+  spdy.createServer({
+    key: fs.readFileSync(__dirname + "./cert/server.key"),
+    cert: fs.readFileSync(__dirname + "./cert/server.cert")
+  }, app);
   app.get("*", async (_, res) => {
       res.sendFile(
         path.resolve(__dirname, "..", "client", "build", "index.html")
