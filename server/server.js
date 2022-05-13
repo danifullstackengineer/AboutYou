@@ -38,7 +38,14 @@ app.use(helmet({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
+  // Handle app on development
   app.use(cors());
+}else{
+  app.use((req,res,next) => {
+    // Handle app in production
+    res.set('Access-Control-Allow-Origin: http://js.stripe.com/')
+    next();
+  })
 }
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
@@ -55,13 +62,16 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to database...");
-    // spdy.createServer(
-    //   {
-    //     key: fs.readFileSync("./cert/server.key"),
-    //     cert: fs.readFileSync("./cert/server.crt"),
-    //   },
-    //   app
-    // );
+    spdy.createServer(
+      {
+        key: fs.readFileSync("./cert/server.key"),
+        cert: fs.readFileSync("./cert/server.crt"),
+        spdy: {
+          protocols: ['h2', 'http/1.1', 'spdy/3.1', 'spdy/3']
+        }
+      },
+      app
+    );
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
   })
   .catch((err) => {
