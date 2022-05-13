@@ -49,10 +49,6 @@ if (!(process.env.NODE_ENV === "production")) {
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
-  spdy.createServer({
-    key: fs.readFileSync("./cert/server.key"),
-    cert: fs.readFileSync("./cert/server.crt")
-  }, app);
   app.get("*", async (_, res) => {
       res.sendFile(
         path.resolve(__dirname, "..", "client", "build", "index.html")
@@ -70,7 +66,7 @@ mongoose
         key: fs.readFileSync("./cert/server.key"),
         cert: fs.readFileSync("./cert/server.crt"),
         spdy: {
-          protocols: ['h2', 'http/1.1', 'spdy/3.1', 'spdy/3']
+          protocols: ['h2']
         }
       },
       app
