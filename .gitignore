@@ -3,3 +3,4 @@
 /client/.env
 /.vscode
 /.git
+/server/cert
