@@ -32,6 +32,7 @@ const coinpaymentsClient = new Coinpayments({
 });
 
 app.use(compression());
+// TODO: fix this, it still gives csp errors.
 app.use(
   helmet(
     helmet.contentSecurityPolicy({
@@ -55,7 +56,8 @@ if (!(process.env.NODE_ENV === "production")) {
 }
 app.use("/", router);
 if (process.env.NODE_ENV === "production") {
-  app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
+  // app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
+  app.use(express.static(path.join(__dirname, "..", "client", "build")))
   app.get("*", async (_, res) => {
     res.sendFile(
       path.resolve(__dirname, "..", "client", "build", "index.html")

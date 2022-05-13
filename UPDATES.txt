@@ -51,3 +51,4 @@ TODO: Crate regex for access code for admin login
 TODO: Make token secrets secure in .env file
 TODO: Switch from jquery to apollo
 TODO: Make menu have max-width: 350px
+TODO: Fix CSP
