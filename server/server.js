@@ -39,9 +39,9 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: [
           "'self'",
-          "https://unpkg.com/react/umd/react.production.min.js",
-          "https://unpkg.com/react-dom/umd/react-dom.production.min.js",
-          "https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js",
+          "unpkg.com/react/umd/react.production.min.js",
+          "unpkg.com/react-dom/umd/react-dom.production.min.js",
+          "unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js",
         ],
       },
     })
