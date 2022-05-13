@@ -49,3 +49,4 @@ TODO: Add form validation for register/login
 TODO: Add login/register support for 3rd party(fb, apple, microsoft)
 TODO: Crate regex for access code for admin login
 TODO: Make token secrets secure in .env file
+TODO: Switch from jquery to apollo
