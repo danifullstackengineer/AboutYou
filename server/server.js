@@ -18,6 +18,7 @@ dotenv.config();
 import Stripe from "stripe";
 import fs from "fs";
 import { promisify } from "util";
+import http2 from 'http2';
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,7 +32,9 @@ const coinpaymentsClient = new Coinpayments({
 });
 
 app.use(compression());
-app.use(helmet())
+app.use(helmet({
+  contentSecurityPolicy: false
+}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
