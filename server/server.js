@@ -38,13 +38,10 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-<<<<<<< HEAD
 app.use((req, res, next)=> {
   res.set('Cache-Control', 'must-revalidate, max-age: 86400');
   next();
 })
-=======
->>>>>>> parent of 9946991 (fied heroku bug)
 if (!(process.env.NODE_ENV === "production")) {
   app.use(cors());
 }
