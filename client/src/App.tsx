@@ -185,7 +185,7 @@ function App() {
 
   const mainRef = useRef<HTMLDivElement>(null);
 
-  const [chosenMode, setChosenMode] = useState<boolean>();
+    const [chosenMode, setChosenMode] = useState<boolean>();
 
   useEffect(() => {
     if (chosenMode === false) {

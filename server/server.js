@@ -55,13 +55,13 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to database...");
-    spdy.createServer(
-      {
-        key: fs.readFileSync("./cert/server.key"),
-        cert: fs.readFileSync("./cert/server.crt"),
-      },
-      app
-    );
+    // spdy.createServer(
+    //   {
+    //     key: fs.readFileSync("./cert/server.key"),
+    //     cert: fs.readFileSync("./cert/server.crt"),
+    //   },
+    //   app
+    // );
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}...`));
   })
   .catch((err) => {
