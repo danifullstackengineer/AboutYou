@@ -31,6 +31,8 @@ const coinpaymentsClient = new Coinpayments({
   secret: process.env.COIN_PAYMENTS_PRIVATE,
 });
 
+
+
 app.use(compression());
 app.use(helmet());
 app.use(bodyParser.json());
@@ -41,8 +43,8 @@ if (!(process.env.NODE_ENV === "production")) {
 }else{
   app.use((req,res,next) => {
     // Handle app in production
-    res.set('Access-Control-Allow-Origin: http://js.stripe.com/');
-    res.set("Content-Security-Policy", "script-src 'self' https://stripe.com");
+    // res.set('Access-Control-Allow-Origin: http://js.stripe.com/');
+    // res.set("Content-Security-Policy", "script-src 'self' https://stripe.com");
     next();
   })
 }
