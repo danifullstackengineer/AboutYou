@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 import expressStaticGzip from "express-static-gzip";
 import compression from "compression";
 import Coinpayments from "coinpayments";
-import helmet from "helmet";
+import helmet, { contentSecurityPolicy } from "helmet";
 import spdy from "spdy";
 dotenv.config();
 import Stripe from "stripe";
@@ -30,22 +30,27 @@ const coinpaymentsClient = new Coinpayments({
 
 app.use(compression());
 // TODO: fix this, it still gives csp errors.
-app.use(
-  helmet(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "https://unpkg.com",
-          "https://js.stripe.com",
-          "https://connect.facebook.net",
-        ],
-      },
-    })
-  )
-);
-// app.use(helmet());
+// app.use(
+//   helmet(
+//     helmet.contentSecurityPolicy({
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         scriptSrc: [
+//           "'self'",
+//           "https://unpkg.com",
+//           "https://js.stripe.com",
+//           "https://connect.facebook.net",
+//         ],
+//       },
+//     })
+//   )
+// );
+app.use(helmet({ contentSecurityPolicy: false }));
+// manually set up csp since helmet's csp doesn't seem to work properly
+app.use((req, res, next) => {
+  res.set("Content-Security-Policy", "default-src 'self'");
+  next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {

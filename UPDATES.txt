@@ -63,3 +63,4 @@ TODO: DONE: Make menu have max-width: 350px
 TODO: Fix CSP
 TODO: When implementing regex checking use the safe-regex lib
 TODO: Reset fields when changing 360 product
+TODO: Handle Cookies blocked by client
