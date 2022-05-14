@@ -41,6 +41,7 @@ import {
 } from "./Logic/localStorage/wishlist";
 import Admin from "./components/Admin/Admin";
 import { AccessLevel, AdminContext } from "./Context/Admin";
+import CustomerCare from "./components/CustomerCare/CustomerCare";
 
 var logoutTimer: NodeJS.Timeout;
 
@@ -688,7 +689,24 @@ function App() {
                         <Admin />
                       </AdminContext.Provider>
                     }
-                  ></Route>
+                  />
+                  <Route
+                    path="/customer-care/:type"
+                    element={
+                      <>
+                        <HeaderBody
+                          headerRef={headerRef}
+                          setClickedLogin={setClickedLogin}
+                          chosenMode={chosenMode}
+                          setChosenMode={setChosenMode}
+                          setClickedMenu={setClickedMenu}
+                          clickedMenu={clickedMenu}
+                        />
+                        <CustomerCare />
+                        <FooterBody />
+                      </>
+                    }
+                  />
                 </Routes>
               </Router>
             </MobileContext.Provider>

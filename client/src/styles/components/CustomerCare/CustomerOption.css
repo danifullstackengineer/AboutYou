@@ -1,0 +1,17 @@
+.customerOption {
+  display: flex;
+  flex-direction: column;
+}
+.customerOption__option {
+  margin: 0.5em 0 0.5em 0;
+}
+.customerOption__option > h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.25em;
+}
+.customerOption__option > h5 {
+  font-size: 0.9rem;
+}
+.customerOption > a {
+  color: black;
+}

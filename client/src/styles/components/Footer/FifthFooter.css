@@ -9,7 +9,7 @@
   -ms-flex-align: center;
   align-items: center;
   width: 100%;
-  padding: 4em 0 4em 0;
+  padding: 2em 0 1em 0;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -150,26 +150,6 @@
   list-style-type: none;
   cursor: pointer;
   margin-bottom: 0.25em;
-}
-.fifthFooter > span {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  font-weight: bold;
-  text-align: center;
-}
-.fifthFooter-light > span {
-  color: rgb(100, 100, 100);
-}
-.fifthFooter-dark > span {
-  color: rgb(120, 120, 120);
 }
 .fifthFooter > footer > section:nth-child(3) li {
   display: -webkit-box;

@@ -1,0 +1,20 @@
+.customerCare {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2em 0 2em 0;
+  min-height: 50vh;
+}
+.customerCare__btns {
+  flex: 0.2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.customerCare__btns > div {
+  margin: 0.5em 0 0.5em 0;
+}
+.customerCare__content {
+  flex: 0.6;
+  margin: 2em 0 2em 0;
+}

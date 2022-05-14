@@ -59,10 +59,10 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
         <section>
           <h3>CUSTOMER CARE</h3>
           <ul>
-            <li>Contact</li>
+            <li onClick={() => navigate("/customer-care/contact")}>Contact</li>
             <li onClick={() => navigate("/help")}>Help</li>
-            <li>Partner program</li>
-            <li>Delivery area</li>
+            <li onClick={() => navigate("/customer-care/partner-program")}>Partner program</li>
+            <li onClick={()=> navigate("/customer-care/delivery-area")}>Delivery area</li>
           </ul>
         </section>
         <section>
@@ -75,11 +75,6 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
           </ul>
         </section>
       </footer>
-      <span>
-        5) This sales promotion runs until 30/04/2022 (11:59pm CET). Further
-        promotional conditions under
-        https://www.aboutyou.com/campaign-conditions
-      </span>
     </div>
   );
 }
