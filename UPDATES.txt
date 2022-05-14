@@ -23,6 +23,13 @@ si celalalt se duce sus si devine 360
 -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
 -imagini cate 3 in dark mode si accesorii
 
+3.0.0
+slider pe light mode si dark mode sa dispara
+header sa fie responsive
+search sa fie numai pe pagina respectiva, adica daca esti pe toate produsele sa iti caute in toate produsele etc... si sa te duca prin scroll la produsul respectiv
+pe toate ecranele sa fie cate 3 produse.
+imaginile nu merg pe anumite calculatoare
+
 
 TODO: --- fix likes --- fixed
 TODO: --- on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. --- fixed

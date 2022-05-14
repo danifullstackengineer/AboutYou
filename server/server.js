@@ -17,13 +17,12 @@ import spdy from "spdy";
 dotenv.config();
 import Stripe from "stripe";
 import fs from "fs";
-import { promisify } from "util";
+
 import http2 from "http2";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const readFile = promisify(fs.readFile);
 const app = express();
 
 const coinpaymentsClient = new Coinpayments({
@@ -33,21 +32,24 @@ const coinpaymentsClient = new Coinpayments({
 
 app.use(compression());
 // TODO: fix this, it still gives csp errors.
-app.use(
-  helmet(
-    helmet.contentSecurityPolicy({
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "unpkg.com/react/umd/react.production.min.js",
-          "unpkg.com/react-dom/umd/react-dom.production.min.js",
-          "unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js",
-        ],
-      },
-    })
-  )
-);
+// app.use(
+//   helmet(
+//     helmet.contentSecurityPolicy({
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         scriptSrc: [
+//           "'self'",
+//           "unpkg.com/react/umd/react.production.min.js",
+//           "unpkg.com/react-dom/umd/react-dom.production.min.js",
+//           "unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js",
+//         ],
+//       },
+//     })
+//   )
+// );
+app.use(helmet({
+  contentSecurityPolicy: false
+}))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
