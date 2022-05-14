@@ -59,6 +59,7 @@ TODO: Add login/register support for 3rd party(fb, apple, microsoft)
 TODO: Crate regex for access code for admin login
 TODO: Make token secrets secure in .env file
 TODO: Switch from jquery to apollo
-TODO: Make menu have max-width: 350px
+TODO: DONE: Make menu have max-width: 350px
 TODO: Fix CSP
 TODO: When implementing regex checking use the safe-regex lib
+TODO: Reset fields when changing 360 product

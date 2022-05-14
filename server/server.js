@@ -30,22 +30,22 @@ const coinpaymentsClient = new Coinpayments({
 
 app.use(compression());
 // TODO: fix this, it still gives csp errors.
-// app.use(
-//   helmet(
-//     helmet.contentSecurityPolicy({
-//       directives: {
-//         defaultSrc: ["'self'"],
-//         scriptSrc: [
-//           "'self'",
-//           "unpkg.com/react/umd/react.production.min.js",
-//           "unpkg.com/react-dom/umd/react-dom.production.min.js",
-//           "unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js",
-//         ],
-//       },
-//     })
-//   )
-// );
-app.use(helmet());
+app.use(
+  helmet(
+    helmet.contentSecurityPolicy({
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://unpkg.com",
+          "https://js.stripe.com",
+          "https://connect.facebook.net",
+        ],
+      },
+    })
+  )
+);
+// app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
