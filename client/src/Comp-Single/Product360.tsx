@@ -113,9 +113,11 @@ function Product360({
 
   const getTotalAfterAccessory = useCallback((): number => {
     if (addedAccessory && accIndex !== undefined && data) {
-      try{
-        return (data.getAccessoriesBasedOnParent[accIndex].price + product.price).toFixed(2);
-      }catch(err){
+      try {
+        return (
+          data.getAccessoriesBasedOnParent[accIndex].price + product.price
+        ).toFixed(2);
+      } catch (err) {
         return product.price;
       }
     } else return product.price;
@@ -292,7 +294,7 @@ function Product360({
                           }
                         >
                           <img
-                            src={accessory.image}
+                            src={accessory.backgroundImg}
                             alt={""}
                             loading={"lazy"}
                           />
@@ -394,4 +396,4 @@ function Product360({
   );
 }
 
-export default Product360;
+export default React.memo(Product360);

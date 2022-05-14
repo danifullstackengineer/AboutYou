@@ -14,37 +14,39 @@
 
 2.0.0
 LIGHT_MODE=
--settings in drept cu logourile
--bug 360 face mai mic -- solved
--slider nu merge pe ecrane mai mici
--primul produs random din 360 -- solved (mai trebuie niste modificari odata ce am pozele!)
--dupa daca dai click pe urmatoarele produse, primul se inlocuieste cu cel pe care ai dat click
+DONE: -settings in drept cu logourile --
+-bug 360 face mai mic --
+DONE: -slider nu merge pe ecrane mai mici
+DONE: -primul produs random din 360 --
+DONE: -dupa daca dai click pe urmatoarele produse, primul se inlocuieste cu cel pe care ai dat click
 si celalalt se duce sus si devine 360
--in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
+DEPRECATED: -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
 -imagini cate 3 in dark mode si accesorii
 
 3.0.0
-slider pe light mode si dark mode sa dispara
-header sa fie responsive
+DONE: slider pe light mode si dark mode sa dispara
+DONE: header sa fie responsive
 search sa fie numai pe pagina respectiva, adica daca esti pe toate produsele sa iti caute in toate produsele etc... si sa te duca prin scroll la produsul respectiv
-pe toate ecranele sa fie cate 3 produse.
-imaginile nu merg pe anumite calculatoare
+DONE: pe toate ecranele sa fie cate 3 produse.
+imaginile nu merg pe anumite calculatoare -- because of csp
+logare cu FACEBOOK, INSTAGRAM, TWITTER, APPLE, GMAIL
+la 360 butoanele nu sunt destul de mari - culori, marimi
 
 
-TODO: --- fix likes --- fixed
-TODO: --- on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. --- fixed
+TODO: DONE: --- fix likes --- fixed
+TODO: DONE: --- on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. --- fixed
 TODO: --- in checkout add countries in the dropdown --- fixed(changed to no dropdown)
-TODO: --- Add form validation in checkout forms --- fixed
+TODO: DONE:--- Add form validation in checkout forms --- fixed
 TODO: Add tablet responsiveness in checkout
 TODO: Fix checkout button -- partially fixed --- need to work on payment button
 TODO: Add scrolling when form input is invalid/missing
-TODO: --- In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method. --- fixed
-TODO: --- Change warning in payment method to be responsive. --- fixed
-TODO: --- In checkout page on the inputs, make sure there's some padding on the right side. --- fixed
+TODO: DONE: --- In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method. --- fixed
+TODO: DONE: --- Change warning in payment method to be responsive. --- fixed
+TODO: DONE: --- In checkout page on the inputs, make sure there's some padding on the right side. --- fixed
 TODO: Handle error in Product360
 TODO: Sometimes in 360 product you can't select all sizes or all colors.
 TODO: Handle errors in BodyInner;
-TODO: --- When adding to basket in Product360 it doesn't open the menu. --- fixed
+TODO: DONE: --- When adding to basket in Product360 it doesn't open the menu. --- fixed
 TODO: Make it so that when user adds the same product but with different sizes/colors/accesories/custom, it appears as a separate item and not the same.
 TODO: If name is too big for the color in product 360, it overflows;
 TODO: On smaller screens, the scrollintoview for 360 products doesn't show everything.
@@ -59,3 +61,4 @@ TODO: Make token secrets secure in .env file
 TODO: Switch from jquery to apollo
 TODO: Make menu have max-width: 350px
 TODO: Fix CSP
+TODO: When implementing regex checking use the safe-regex lib

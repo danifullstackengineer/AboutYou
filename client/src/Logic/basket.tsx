@@ -1,7 +1,7 @@
-import { ExtendedProductType } from "../Context/Basket";
+import { ExtendedAccessoryType, ExtendedProductType } from "../Context/Basket";
 
 const getTotalBasketPrice = (
-  basket: ExtendedProductType[]
+  basket: ExtendedProductType[] | ExtendedAccessoryType[]
 ): string => {
   var total = 0;
   for (let i = 0; i < basket.length; i++) {

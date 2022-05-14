@@ -11,6 +11,7 @@
   margin-left: auto;
   margin-right: auto;
   transition: var(--transitionLightMode);
+  cursor: pointer;
 }
 .productCustom-dark {
   background-color: transparent;
@@ -35,8 +36,8 @@
 .productCustom__img > img {
   max-height: 600px;
   height: auto;
-  object-fit: cover;
-  object-position: 50% 60%;
+  object-fit: contain;
+  object-position: 50% 50%;
   transition: all 300ms ease-in;
   pointer-events: none;
   width: 100%;
@@ -45,10 +46,11 @@
   position: absolute;
   left: 0;
   top: 0;
-  margin: 20px 0 0 20px;
   font-size: 1.5rem;
   text-decoration: underline;
   font-weight: 900;
+  width: 100%;
+  text-align: left;
 }
 .productCustom-dark > h3 {
   color: white;
@@ -64,7 +66,7 @@
   bottom: 30px;
   font-size: 1rem;
   font-weight: 900;
-  color: rgb(235,0,0);
+  color: rgb(235, 0, 0);
   margin: 0 30px 30px 0;
 }
 .productCustom-dark > h4 {
@@ -85,21 +87,21 @@
   transform: translateY(-10%);
 }
 .productCustom-dark button {
-    position: absolute;
-    bottom: 0;
-    cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
 }
 .productCustom__heart-btn {
-    width: 35px;
-    height: 35px;
-    background-color: transparent;
-    left: 0;
-    margin: 0 0 10px 10px;
-    border: none;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  left: 0;
+  margin: 0 0 10px 10px;
+  border: none;
 }
 .productCustom__heart-btn > img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 .productCustom__heart-btn > span {
   position: absolute;
@@ -117,7 +119,7 @@
   left: 65px;
   margin: 0 0 10px 0;
   border-radius: 10px;
-  border: 2px solid rgb(100,255,100);
+  border: 2px solid rgb(100, 255, 100);
 }
 .productCustom__basket-btn {
   width: 35px;
@@ -131,36 +133,61 @@
   width: 100%;
   height: 100%;
 }
-@media screen and (max-height: 800px) {
-  .productCustom {
-    height: 40vh;
-  }
+.productCustom__options {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: -40px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-@media screen and (max-height: 600px) {
-  .productCustom {
-    height: 50vh;
-  }
+.productCustom__options button {
+  margin: 0 !important;
+  position: relative;
+  left: 0;
+  top: 0;
 }
-@media screen and (max-height: 450px) {
-  .productCustom {
-    height: 70vh;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .productCustom {
-    width: 45%;
+@media screen and (max-width: 1100px) {
+  .productCustom-dark
+    button:not(.productCustom__customize-btn, .productCustom__options button) {
+    display: none;
   }
 }
 @media screen and (max-width: 800px) {
-  .productCustom {
-    width: 100%;
+  .productCustom > h3 {
+    font-size: 1.25rem;
+    text-align: center;
   }
 }
-@media screen and (max-width: 800px) and (min-height: 800px) and (min-width: 600px) {
-  .productCustom__img > img {
-    width: 50%;
-    object-position: 100% 50%;
-    justify-self: center;
-    align-self: center;
+@media screen and (max-width: 600px) {
+  .productCustom > h3 {
+    font-size: 0.75rem;
+  }
+  .productCustom > h4 > span {
+    display: none;
+  }
+  .productCustom__customize-btn {
+    display: none;
+  }
+  .productCustom > h4 {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    bottom: 15px;
+  }
+  .productCustom__options button {
+    width: 27.5px;
+    height: 27.5px;
+  }
+}
+@media screen and (max-width: 600px) and (min-height: 600px) {
+  .productCustom {
+    height: 25vh;
+  }
+}
+@media screen and (max-height: 600px) and (min-width: 1000px) {
+  .productCustom {
+    height: 50vh;
   }
 }

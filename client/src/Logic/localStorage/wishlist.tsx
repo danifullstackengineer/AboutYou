@@ -1,11 +1,12 @@
 import { cloneDeep } from "lodash";
-import { ExtendedProductType } from "../../Context/Basket";
+import { ExtendedAccessoryType, ExtendedProductType } from "../../Context/Basket";
+import { AccessoryType } from "../../types/Accessory";
 import { ProductType } from "../../types/Product";
 
 const addToWishlistStorageAndContext = (
-  item: ProductType,
-  wishlist: ExtendedProductType[],
-  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[]>>
+  item: ProductType | AccessoryType,
+  wishlist: ExtendedProductType[] | ExtendedAccessoryType[],
+  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[] | ExtendedAccessoryType[]>>
 ) => {
   const duplicate = (): boolean | undefined => {
     for (let i = 0; i < wishlist.length; i++) {
@@ -22,17 +23,17 @@ const addToWishlistStorageAndContext = (
 };
 const removeFromWishlistStorageAndContext = (
   id: string,
-  wishlist: ExtendedProductType[],
-  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[]>>
+  wishlist: ExtendedProductType[] | ExtendedAccessoryType[],
+  setWishlist: React.Dispatch<React.SetStateAction<ExtendedProductType[] | ExtendedAccessoryType[]>>
 ): void => {
   var wishlist_clone = cloneDeep(wishlist);
   wishlist_clone = wishlist_clone.filter(
-    (product: ExtendedProductType) => product.id !== id
+    (product: ExtendedProductType | ExtendedAccessoryType) => product.id !== id
   );
   setWishlist(wishlist_clone);
   localStorage.setItem("wishlist", JSON.stringify(wishlist_clone));
 };
-const isProductInWishlist = (id: string, wishlist: ExtendedProductType[]) => {
+const isProductInWishlist = (id: string, wishlist: ExtendedProductType[] | ExtendedAccessoryType[]) => {
   var isIn = false;
   wishlist.forEach((product) =>
     product.id === id ? (isIn = true) : undefined

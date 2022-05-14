@@ -1,12 +1,13 @@
 import { createContext } from "react";
+import { AccessoryType } from "../types/Accessory";
 import { ProductType } from "../types/Product";
-import { ExtendedProductType } from "./Basket";
+import { ExtendedAccessoryType, ExtendedProductType } from "./Basket";
 
 export declare type WishlistContextType = {
-  product: ExtendedProductType[];
-  addToWishlist: (item: ProductType) => void;
-  removeFromWishlist: (id: ProductType["id"]) => void;
-  isInWishlist: (id: ProductType["id"]) => boolean;
+  product: ExtendedProductType[] | ExtendedAccessoryType[];
+  addToWishlist: (item: ProductType | AccessoryType) => void;
+  removeFromWishlist: (id: ProductType["id"] | AccessoryType['id']) => void;
+  isInWishlist: (id: ProductType["id"] | AccessoryType['id']) => boolean;
 };
 
 export const WishlistContext = createContext<WishlistContextType>({

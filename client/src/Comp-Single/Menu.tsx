@@ -1,14 +1,19 @@
 import "../styles/Comp-Single/Menu.css";
 import React, { useEffect, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../Context/Auth";
-import { BasketContext, ExtendedProductType } from "../Context/Basket";
+import {
+  BasketContext,
+  ExtendedAccessoryType,
+  ExtendedProductType,
+} from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
 import { MobileContext } from "../Context/Mobile";
 import InteractiveBtn from "./InteractiveBtn";
 import { getTotalBasketPrice } from "../Logic/basket";
+import { useWindowDimensions } from "../Hooks/Viewport";
 
 function Menu({
   clickedMenu,
@@ -25,6 +30,7 @@ function Menu({
   clickedLanguage,
   handleOpening,
   display,
+  headerRef,
 }: {
   clickedMenu: boolean;
   chosenMode: boolean | undefined;
@@ -40,11 +46,13 @@ function Menu({
   clickedLanguage: boolean;
   handleOpening: (type: "basket" | "wishlist" | "user" | "language") => void;
   display: string;
+  headerRef: React.RefObject<HTMLDivElement>;
 }) {
   const [activeLang, setActiveLang] = useState<boolean[]>([true, false]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const mContext = useContext(MobileContext);
 
@@ -225,10 +233,23 @@ function Menu({
     }
   };
 
-  const handleAddToBasketFromWishlist = (product: ExtendedProductType) => {
+  const handleAddToBasketFromWishlist = (
+    product: ExtendedProductType | ExtendedAccessoryType
+  ) => {
     wContext.removeFromWishlist(product.id);
     bContext.addToBasket(product);
   };
+
+  const { height, width } = useWindowDimensions();
+
+  const menuOptionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (headerRef.current && mainRef.current && menuOptionRef.current) {
+      mainRef.current.style.top = headerRef.current.offsetHeight + "px";
+      mainRef.current.style.maxHeight = "calc(100vh - " + headerRef.current.offsetHeight + "px)";
+    }
+  }, [headerRef, mainRef, width, height, location, menuOptionRef]);
 
   return (
     <div
@@ -238,7 +259,7 @@ function Menu({
       } ${mContext.isMobile ? "menu-mobile" : ""}`}
       style={{ display }}
     >
-      <div className={`menu__option`}>
+      <div className={`menu__option`} ref={menuOptionRef}>
         <h3 onClick={() => handleOpening("basket")}>Basket</h3>
         <div
           ref={basketRef}
@@ -273,7 +294,7 @@ function Menu({
                       <div className="menu__option-option-product-right">
                         <span>Quantity: {product.quantity}</span>
                         <span>
-                          Total: $
+                          <span>Total: </span>$
                           {(product.price * product.quantity).toFixed(2)}
                         </span>
                         <div className="menu__option-option-product-right-btns">
@@ -339,7 +360,7 @@ function Menu({
           )}
         </div>
       </div>
-      <div className="menu__option">
+      <div className="menu__option"  ref={menuOptionRef}>
         <h3 onClick={() => handleOpening("wishlist")}>Wishlist</h3>
         <div
           onScroll={
@@ -375,7 +396,8 @@ function Menu({
                         Quantity: {product.quantity}
                       </span>
                       <span>
-                        Price: ${(product.price * product.quantity).toFixed(2)}
+                        Price: $
+                        {(product.price * product.quantity).toFixed(2)}
                       </span>
                       <div
                         className="menu__option-option-product-right-btns"

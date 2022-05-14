@@ -1,13 +1,4 @@
 .headerSticky {
-  height: 250px;
   z-index: -1;
   width: 100%;
 }
-.headerSticky-close {
-  height: 0;
-}
-@media screen and (max-height: 480px) {
-    .headerSticky:not(.headerSticky-close) {
-      height: 100px;
-    }
-  }

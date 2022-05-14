@@ -1,13 +1,17 @@
 import { createContext } from "react";
 import { ProductType, ProductTypeBasket } from "../types/Product";
+import { AccessoryType } from "../types/Accessory";
 
 export declare type BasketContextType = {
-  product: ExtendedProductType[] | ProductTypeBasket[];
-  addToBasket: (item: ProductType | ProductTypeBasket) => void;
-  removeFromBasket: (id: ProductType["id"]) => void;
+  product:
+    | ExtendedProductType[]
+    | ProductTypeBasket[]
+    | ExtendedAccessoryType[];
+  addToBasket: (item: ProductType | ProductTypeBasket | AccessoryType) => void;
+  removeFromBasket: (id: ProductType["id"] | AccessoryType["id"]) => void;
   getTotalPrice: () => number;
-  isInBasket: (id: ProductType["id"]) => boolean;
-  decrementProduct: (id: ProductType['id']) => void;
+  isInBasket: (id: ProductType["id"] | AccessoryType["id"]) => boolean;
+  decrementProduct: (id: ProductType["id"] | AccessoryType["id"]) => void;
 };
 
 export const BasketContext = createContext<BasketContextType>({
@@ -20,8 +24,11 @@ export const BasketContext = createContext<BasketContextType>({
   isInBasket: () => {
     return false;
   },
-  decrementProduct: () => {}
+  decrementProduct: () => {},
 });
 export type ExtendedProductType = ProductType & {
+  quantity: number;
+};
+export type ExtendedAccessoryType = AccessoryType & {
   quantity: number;
 };

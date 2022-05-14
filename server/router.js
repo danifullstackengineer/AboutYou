@@ -1,5 +1,6 @@
 import express from "express";
 import { loginAdmin } from "./controllers/Admin.js";
+import rateLimit from "express-rate-limit";
 import {
   register,
   login,
@@ -16,25 +17,47 @@ import {
 } from "./controllers/Payment.js";
 import { createProducts } from "./controllers/SingleUse.js";
 
+const apiLimited = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const router = express.Router();
 
-router.post("/register", register);
-router.post("/login", login);
-router.get("/isUserAuth", verifyJWT, isAuth);
+router.post("/register", apiLimited, register);
+router.post("/login", apiLimited, login);
+router.get("/isUserAuth", apiLimited, verifyJWT, isAuth);
 
 //PAYPAL
-router.post("/createPaypalPayment", verifyJWT, createPaypalPaymentPage);
-router.get("/executePaypalPayment", verifyJWT, handlePaypalSuccessPayment);
+router.post(
+  "/createPaypalPayment",
+  apiLimited,
+  verifyJWT,
+  createPaypalPaymentPage
+);
+router.get(
+  "/executePaypalPayment",
+  apiLimited,
+  verifyJWT,
+  handlePaypalSuccessPayment
+);
 
 //Stripe
-router.post("/createStripeSecret", verifyJWT, createStripeSecret);
-router.post("/createStripePayment", verifyJWT, createStripePayment);
+router.post("/createStripeSecret", apiLimited, verifyJWT, createStripeSecret);
+router.post("/createStripePayment", apiLimited, verifyJWT, createStripePayment);
 
 //Crypto
-router.post("/getTotalCrypto", verifyJWT, getTotalCrypto);
+router.post("/getTotalCrypto", apiLimited, verifyJWT, getTotalCrypto);
 
 //Coinpayments
-router.post("/createCoinpaymentsPayment", verifyJWT, createCoinpaymentsPayment);
+router.post(
+  "/createCoinpaymentsPayment",
+  apiLimited,
+  verifyJWT,
+  createCoinpaymentsPayment
+);
 
 //Dev only
 if (process.env.NODE_ENV !== "production") {
@@ -42,6 +65,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // Admin only
-router.post("/admin/api/login", loginAdmin)
+router.post("/admin/api/login", apiLimited, loginAdmin);
 
 export default router;

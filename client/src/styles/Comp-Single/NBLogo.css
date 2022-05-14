@@ -2,8 +2,8 @@
     position: relative;
 }
 .nbLogo > img {
-    width: 200px;
-    height: auto;
+    height: 10vh;
+    width: auto;
     object-fit: cover;
     cursor: pointer;
 }

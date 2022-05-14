@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import SliderComp from "./Slider/SliderComp";
 import "../styles/components/Body.css";
 import BodyInner from "./Body/BodyInner";
+import { useNavigate } from "react-router-dom";
 
 function Body({
   setClickedLogin,
@@ -14,7 +15,7 @@ function Body({
   clickedBasket,
   clickedWishlist,
   custom,
-  accessories
+  accessories,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -25,13 +26,17 @@ function Body({
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
   clickedBasket: boolean;
   clickedWishlist: boolean;
-  custom?:boolean;
-  accessories?:boolean;
+  custom?: boolean;
+  accessories?: boolean;
 }) {
-
   return (
     <div className="body">
-      <SliderComp chosenMode={chosenMode} />
+      {window.location.pathname !== "/dark" &&
+      window.location.pathname !== "/light" ? (
+        <SliderComp chosenMode={chosenMode} />
+      ) : (
+        ""
+      )}
       <BodyInner
         setClickedLogin={setClickedLogin}
         chosenMode={chosenMode}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../../styles/components/Header/Header.css";
-import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 import NBLogo from "../../Comp-Single/NBLogo";
@@ -15,7 +14,6 @@ function Header({
   clickedMenu,
   custom,
   accessories,
-  close,
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -25,7 +23,6 @@ function Header({
   clickedMenu: boolean;
   custom?: boolean;
   accessories?: boolean;
-  close: boolean;
 }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -42,22 +39,7 @@ function Header({
     }
   }, [chosenMode, setChosenMode, custom]);
 
-  const [clickedSearch, setClickedSearch] = useState<boolean>();
-
   const { width } = useWindowDimensions();
-
-  const [closedFinished, setClosedFinished] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (close) {
-      const timeout = setTimeout(() => {
-        setClosedFinished(true);
-      }, 500);
-      return () => clearTimeout(timeout);
-    } else {
-      setClosedFinished(false);
-    }
-  }, [close]);
 
   useEffect(() => {
     if (window.location.pathname === "/light" && chosenMode !== true) {
@@ -69,27 +51,29 @@ function Header({
 
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
-  useEffect(()=>{
-    if(!mContext.isMobile){
-      window.addEventListener("scroll", ()=> {
-        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        var scrolled = (winScroll / height * 100);
+  useEffect(() => {
+    if (!mContext.isMobile) {
+      window.addEventListener("scroll", () => {
+        var winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        var height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
         setScrollAmount(scrolled);
-      })
+      });
       return () => {
-        window.removeEventListener("scroll", ()=> {});
-      }
+        window.removeEventListener("scroll", () => {});
+      };
     }
-  }, [])
+  }, []);
 
   return (
     <div
       className={`header ${
         chosenMode || chosenMode === undefined ? "header-light" : "header-dark"
-      } ${close ? "header-close" : ""}`}
+      }`}
       ref={headerRef}
-      style={{ display: closedFinished ? "none" : "flex" }}
     >
       <div className="header__top">
         <div className="header__top-logo">
@@ -118,7 +102,16 @@ function Header({
           />
         )}
       </div>
-      <div className="header__bottom">
+      <div
+        className="header__bottom"
+        style={{
+          marginBottom:
+            window.location.pathname != "/light" &&
+            window.location.pathname != "/dark"
+              ? "1.5em"
+              : "",
+        }}
+      >
         <div className="header__bottom-btns">
           <button
             type="button"
@@ -168,66 +161,52 @@ function Header({
             </Trans>
           </button>
         </div>
-        <div
-          className={`header__bottom-mode ${
-            custom ? "header__bottom-mode-active" : ""
-          }`}
-        >
+        {window.location.pathname === "/light" ||
+        window.location.pathname === "/dark" ? (
           <div
-            className={`header__bottom-input ${
-              clickedSearch
-                ? "header__bottom-input-clicked"
-                : "header__bottom-input-unclicked"
+            className={`header__bottom-mode ${
+              custom ? "header__bottom-mode-active" : ""
             }`}
           >
-            <span
-              onClick={() =>
-                setClickedSearch(
-                  clickedSearch === undefined ? true : !clickedSearch
-                )
-              }
-            >
-              <AiOutlineSearch />
-            </span>
-            <input
-              placeholder={t("Header.Input")}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <div>
+              <img
+                src={"/assets/svg/sun.svg"}
+                alt={"/assets/svg/sun.svg"}
+                onClick={() => {
+                  navigate("/light");
+                  setChosenMode(true);
+                }}
+              />
+              <div
+                onClick={() => {
+                  navigate(
+                    chosenMode === undefined
+                      ? "/dark"
+                      : chosenMode
+                      ? "/dark"
+                      : "/light"
+                  );
+                  setChosenMode(chosenMode === undefined ? false : !chosenMode);
+                }}
+                className={`header__bottom-mode-switch ${
+                  chosenMode === false
+                    ? "header__bottom-mode-switch-dark"
+                    : "header__bottom-mode-switch-light"
+                }`}
+              ></div>
+              <img
+                src={"/assets/svg/moon.svg"}
+                alt={"/assets/svg/moon.svg"}
+                onClick={() => {
+                  navigate("/dark");
+                  setChosenMode(false);
+                }}
+              />
+            </div>
           </div>
-          <div>
-            <img
-              src={"/assets/svg/sun.svg"}
-              alt={"/assets/svg/sun.svg"}
-              onClick={() => {
-                navigate("/light");
-                setChosenMode(true);
-              }}
-            />
-            <div
-              onClick={() => {
-                navigate(
-                  chosenMode === undefined ? "/dark" : chosenMode ? "/dark" : "/light"
-                );
-                setChosenMode(chosenMode === undefined ? false : !chosenMode);
-              }}
-              className={`header__bottom-mode-switch ${
-                chosenMode === false
-                  ? "header__bottom-mode-switch-dark"
-                  : "header__bottom-mode-switch-light"
-              }`}
-            ></div>
-            <img
-              src={"/assets/svg/moon.svg"}
-              alt={"/assets/svg/moon.svg"}
-              onClick={() => {
-                navigate("/dark");
-                setChosenMode(false);
-              }}
-            />
-          </div>
-        </div>
+        ) : (
+          ""
+        )}
       </div>
       {!mContext.isMobile ? (
         <div className="header__progress">

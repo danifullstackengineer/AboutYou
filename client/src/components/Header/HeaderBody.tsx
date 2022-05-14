@@ -12,7 +12,6 @@ function HeaderBody({
   clickedMenu,
   custom,
   accessories,
-  close
 }: {
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
   chosenMode: boolean | undefined;
@@ -21,13 +20,11 @@ function HeaderBody({
   headerRef: React.RefObject<HTMLDivElement>;
   clickedMenu: boolean;
   custom?: boolean;
-  accessories?:boolean;
-  close:boolean;
+  accessories?: boolean;
 }) {
-
   return (
     <div className="headerBody">
-      <HeaderSticky close={close}/>
+      <HeaderSticky headerRef={headerRef}/>
       <Header
         setClickedMenu={setClickedMenu}
         setClickedLogin={setClickedLogin}
@@ -37,10 +34,9 @@ function HeaderBody({
         clickedMenu={clickedMenu}
         custom={custom}
         accessories={accessories}
-        close={close}
       />
     </div>
   );
 }
 
-export default HeaderBody;
+export default React.memo(HeaderBody);

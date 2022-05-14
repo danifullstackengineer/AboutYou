@@ -71,6 +71,9 @@
 .fifthFooter > footer > section:first-child > div > div {
   margin: 1em 0 1em 0;
 }
+.fifthFooter > footer > section:first-child .nbLogo img {
+  object-fit: contain!important;
+}
 .fifthFooter > footer > section:first-child > div > div:first-child {
   display: flex;
   justify-content: center;

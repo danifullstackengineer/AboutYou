@@ -12,13 +12,11 @@ import expressStaticGzip from "express-static-gzip";
 import compression from "compression";
 import Coinpayments from "coinpayments";
 import helmet from "helmet";
-import https from "https";
 import spdy from "spdy";
 dotenv.config();
 import Stripe from "stripe";
 import fs from "fs";
 
-import http2 from "http2";
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const __filename = fileURLToPath(import.meta.url);
@@ -47,9 +45,7 @@ app.use(compression());
 //     })
 //   )
 // );
-app.use(helmet({
-  contentSecurityPolicy: false
-}))
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 if (!(process.env.NODE_ENV === "production")) {
@@ -73,7 +69,9 @@ mongoose
     console.log("Connected to database...");
     spdy.createServer(
       {
-        key: fs.readFileSync(path.join(__dirname, "cert" ,"server.key")),
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
+        key: fs.readFileSync(path.join(__dirname, "cert", "server.key")),
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
         cert: fs.readFileSync(path.join(__dirname, "cert", "server.crt")),
         spdy: {
           protocols: ["h2"],

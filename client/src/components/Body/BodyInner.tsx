@@ -124,11 +124,15 @@ function BodyInner({
   };
 
   useEffect(() => {
-    if (ref360.current && hasClicked) {
+    // if (ref360.current && hasClicked) {
+    //   setHasClicked(false);
+    //   ref360.current.scrollIntoView({ block: "end" });
+    // }
+    if (hasClicked) {
       setHasClicked(false);
-      ref360.current.scrollIntoView({ block: "end" });
+      window.scrollTo({ top: 0 });
     }
-  }, [hasClicked, ref360]);
+  }, [hasClicked]);
 
   // useEffect(() => {
   //   //TODO: Handle errors
@@ -232,7 +236,21 @@ function BodyInner({
       {randomAcc && accessories && !loadingAcc ? (
         <div className="bodyInner-random">
           {randomAcc.map((accessory: AccessoryType, i: number) => {
-            return <Accessory accessory={accessory} key={i} />;
+            return (
+              <Accessory
+                accessory={accessory}
+                key={i}
+                setClickedLogin={setClickedLogin}
+                setClickedBasket={setClickedBasket}
+                setClickedMenu={setClickedMenu}
+                setClickedWishlist={setClickedWishlist}
+                clickedBasket={clickedBasket}
+                clickedMenu={clickedMenu}
+                clickedWishlist={clickedWishlist}
+                liked={true}
+                handleOpening={handleOpening}
+              />
+            );
           })}
         </div>
       ) : (
@@ -242,4 +260,4 @@ function BodyInner({
   );
 }
 
-export default BodyInner;
+export default React.memo(BodyInner);

@@ -25,7 +25,6 @@ import { BasketContext, BasketContextType } from "./Context/Basket";
 import { WishlistContext, WishlistContextType } from "./Context/Wishlist";
 import mobileCheck from "./Logic/mobilecheck";
 import { MobileContext } from "./Context/Mobile";
-import MenuPhone from "./Comp-Single/MenuPhone";
 import Menu from "./Comp-Single/Menu";
 import {
   addToBasketStorageAndContext,
@@ -185,7 +184,7 @@ function App() {
 
   const mainRef = useRef<HTMLDivElement>(null);
 
-    const [chosenMode, setChosenMode] = useState<boolean>();
+  const [chosenMode, setChosenMode] = useState<boolean>();
 
   useEffect(() => {
     if (chosenMode === false) {
@@ -377,42 +376,23 @@ function App() {
           >
             <MobileContext.Provider value={{ isMobile: isMobile }}>
               <Router>
-                {isViewport620 ? (
-                  <Menu
-                    clickedMenu={clickedMenu}
-                    chosenMode={chosenMode}
-                    setClickedLogin={setClickedLogin}
-                    setChosenAction={setChosenAction}
-                    setClickedBasket={setClickedBasket}
-                    setClickedWishlist={setClickedWishlist}
-                    setClickedUser={setClickedUser}
-                    setClickedLanguage={setClickedLanguage}
-                    clickedBasket={clickedBasket}
-                    clickedWishlist={clickedWishlist}
-                    clickedUser={clickedUser}
-                    clickedLanguage={clickedLanguage}
-                    handleOpening={handleOpening}
-                    display={display}
-                  />
-                ) : (
-                  <MenuPhone
-                    clickedMenu={clickedMenu}
-                    chosenMode={chosenMode}
-                    setClickedLogin={setClickedLogin}
-                    setChosenAction={setChosenAction}
-                    setClickedBasket={setClickedBasket}
-                    setClickedWishlist={setClickedWishlist}
-                    setClickedUser={setClickedUser}
-                    setClickedLanguage={setClickedLanguage}
-                    clickedBasket={clickedBasket}
-                    clickedWishlist={clickedWishlist}
-                    clickedUser={clickedUser}
-                    clickedLanguage={clickedLanguage}
-                    handleOpening={handleOpening}
-                    setClickedMenu={setClickedMenu}
-                    display={display}
-                  />
-                )}
+                <Menu
+                  clickedMenu={clickedMenu}
+                  chosenMode={chosenMode}
+                  setClickedLogin={setClickedLogin}
+                  setChosenAction={setChosenAction}
+                  setClickedBasket={setClickedBasket}
+                  setClickedWishlist={setClickedWishlist}
+                  setClickedUser={setClickedUser}
+                  setClickedLanguage={setClickedLanguage}
+                  clickedBasket={clickedBasket}
+                  clickedWishlist={clickedWishlist}
+                  clickedUser={clickedUser}
+                  clickedLanguage={clickedLanguage}
+                  handleOpening={handleOpening}
+                  display={display}
+                  headerRef={headerRef}
+                />
                 <Credential
                   chosenAction={chosenAction}
                   setChosenAction={setChosenAction}
@@ -432,7 +412,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -460,7 +439,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -490,7 +468,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -520,7 +497,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -577,7 +553,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -625,7 +600,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           clickedMenu={clickedMenu}
@@ -647,7 +621,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           chosenMode={chosenMode}
@@ -669,7 +642,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedMenu={setClickedMenu}
                           chosenMode={chosenMode}
@@ -691,7 +663,6 @@ function App() {
                     element={
                       <>
                         <HeaderBody
-                          close={!isViewport620 && clickedMenu}
                           headerRef={headerRef}
                           setClickedLogin={setClickedLogin}
                           chosenMode={chosenMode}

@@ -7,6 +7,7 @@ import {
 import { AuthContext } from "../Context/Auth";
 import { BasketContext } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
+import { useWindowDimensions } from "../Hooks/Viewport";
 import "../styles/Comp-Single/ProductCustom.css";
 import { ProductType } from "../types/Product";
 
@@ -37,6 +38,8 @@ const ProductCustom = ({
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
+
+  const { width } = useWindowDimensions();
 
   const bContext = useContext(BasketContext);
   const aContext = useContext(AuthContext);
@@ -148,6 +151,9 @@ const ProductCustom = ({
 
   return (
     <div
+      onClick={() =>
+        handleChangeProduct360 ? handleChangeProduct360(product) : undefined
+      }
       className={`productCustom ${
         dark ? "productCustom-dark" : "productCustom-light"
       }`}
@@ -160,7 +166,9 @@ const ProductCustom = ({
         />
       </div>
       <h3>{product.title}</h3>
-      <h4>Only: $ {product.price}</h4>
+      <h4>
+        <span>Only: </span>$ {product.price}
+      </h4>
       {!dark ? (
         <button
           className={"productCustom__customize-btn"}
@@ -218,6 +226,48 @@ const ProductCustom = ({
             loading={"lazy"}
           />
         </button>
+      ) : (
+        ""
+      )}
+      {width <= 1100 && dark ? (
+        <div className="productCustom__options">
+          <button
+            aria-label="Like Product"
+            className={"productCustom__heart-btn "}
+            onClick={(e) => handleLike(e)}
+          >
+            <img
+              src={
+                likedInner
+                  ? "/assets/svg/heart-dark.svg"
+                  : "/assets/svg/heart-half-dark.svg"
+              }
+              alt=""
+              loading={"lazy"}
+            />
+            <span>{likes}</span>
+          </button>
+          <button
+            aria-label="Add to Wishlist"
+            onClick={handleWishlist}
+            className={"productCustom__wishlist-btn"}
+          ></button>
+          <button
+            onClick={handleBasket}
+            className={"productCustom__basket-btn"}
+            aria-label="Add to Basket"
+          >
+            <img
+              src={
+                bContext.isInBasket(product.id)
+                  ? "/assets/svg/basket_clicked.svg"
+                  : "/assets/svg/basket_unclicked.svg"
+              }
+              alt=""
+              loading={"lazy"}
+            />
+          </button>
+        </div>
       ) : (
         ""
       )}

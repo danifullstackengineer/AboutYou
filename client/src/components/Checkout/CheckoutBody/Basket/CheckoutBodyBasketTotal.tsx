@@ -28,4 +28,4 @@ function CheckoutBodyBasketTotal({
   );
 }
 
-export default CheckoutBodyBasketTotal;
+export default React.memo(CheckoutBodyBasketTotal);

@@ -4,9 +4,10 @@ const getAccessoriesBasedOnParent = gql
 `query($parentId: ID!) {
     getAccessoriesBasedOnParent(parentId:$parentId){
          id,
-      image,
+      backgroundImg,
       title,
       price,
+      dark
     }
   }
   `
@@ -15,11 +16,12 @@ const getAccessories = gql`
 query {
   getAccessories {
     id,
-    image,
+    backgroundImg,
     title,
     price,
     likes,
-    parentId
+    parentId,
+    dark
   }
 }
 `
