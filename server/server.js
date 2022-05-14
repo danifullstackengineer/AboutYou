@@ -48,7 +48,10 @@ app.use(compression());
 app.use(helmet({ contentSecurityPolicy: false }));
 // manually set up csp since helmet's csp doesn't seem to work properly
 app.use((req, res, next) => {
-  res.set("Content-Security-Policy", "default-src 'self'");
+  res.set(
+    "Content-Security-Policy",
+    "default-src 'self' unsafe-inline; script-src https://unpkg.com/react/umd/react.production.min.js"
+  );
   next();
 });
 app.use(bodyParser.json());
@@ -67,7 +70,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 const PORT = process.env.PORT || 5000;
-
 
 mongoose
   .connect(process.env.MONGO_URI)
