@@ -38,6 +38,7 @@ app.use((req, res, next) => {
     "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3 www.facebook.com; style-src 'self' https://connect.facebook.net/en_US/sdk.js; frame-src 'self' https://connect.facebook.net/en_US/sdk.js www.facebook.com;"
   );
   next();
+  
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
