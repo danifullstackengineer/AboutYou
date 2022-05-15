@@ -233,7 +233,7 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
       } ${mContext.isMobile ? "slider-mobile" : ""}`}
     >
       <div className={`slider__slide ${anim}`}>
-        <img src={currentQueue[0]} alt="" />
+        <img src={currentQueue[0]} alt=""/>
         <div className="slider__info">
           <span>{infoCurrent[0].title1}</span>
           <span>{infoCurrent[0].title2}</span>
