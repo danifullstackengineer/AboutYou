@@ -17,7 +17,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Basket from "./components/Basket/Basket";
 import UserInformation from "./components/UserInformation/UserInformation";
-import ProductBody from "./components/Product/ProductBody";
 import Subscribe from "./Comp-Single/Subscribe";
 import ScrollIntoViewComponent from "./Comp-Single/ScrollIntoViewComponent";
 import { AuthContext } from "./Context/Auth";
@@ -659,24 +658,6 @@ function App() {
                       </>
                     }
                   />
-                  <Route
-                    path="/product/:id"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                        />
-                        <ProductBody />
-                        <FooterBody />
-                      </>
-                    }
-                  />
-
                   <Route
                     path="/admin"
                     element={

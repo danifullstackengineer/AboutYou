@@ -252,13 +252,20 @@ function CheckoutBodyMainForm({
 
   console.log(isGoodSecondAddress);
 
+  useEffect(() => {
+    if (firstAddrRef && firstAddrRef.current && newAddress) {
+      firstAddrRef.current.style.marginBottom = "2em";
+    } else if (secondAddrRef && secondAddrRef.current && newAddress) {
+      secondAddrRef.current.style.marginBottom = "2em";
+    }
+  }, [firstAddrRef, secondAddrRef, newAddress]);
+
   return (
     <div
       ref={
         firstAddrRef ? firstAddrRef : secondAddrRef ? secondAddrRef : undefined
       }
       className="checkoutBodyMainForm"
-      style={{ marginBottom: newAddress ? "2em" : undefined }}
     >
       <h1>{title}</h1>
       <div className="checkoutBodyMainForm__title-country">

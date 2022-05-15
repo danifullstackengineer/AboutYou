@@ -7,7 +7,7 @@ import { BiLockAlt } from "react-icons/bi";
 import { VscSettings } from "react-icons/vsc";
 import { RiMessage2Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useRef } from "react";
 import { AuthContext } from "../../Context/Auth";
 
 function UserInformation({
@@ -27,14 +27,21 @@ function UserInformation({
       setClickedLogin(true);
       setDisableClosing(true);
     }
-  }, [context]);
+  }, [context, setClickedLogin, setDisableClosing]);
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (mainRef.current && type !== 2) {
+      mainRef.current.style.marginTop = "3.5em";
+    }
+  }, [mainRef, type]);
 
   return (
     <div
-      className={`userInformation ${type !== 2 ? "userInformation-padding" : ""}`}
-      style={{
-        marginTop: type !== 2 ? "3.5em" : undefined,
-      }}
+      className={`userInformation ${
+        type !== 2 ? "userInformation-padding" : ""
+      }`}
+      ref={mainRef}
     >
       {type !== 2 ? (
         <div className="userInformation__selection">

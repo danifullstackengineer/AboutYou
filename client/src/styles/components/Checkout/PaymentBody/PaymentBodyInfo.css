@@ -8,6 +8,7 @@
 .paymentBodyInfo > span {
     padding: 1em 0 1em 5em;
     text-align: center;
+	font-weight: bold;
 }
 @media screen and (max-width: 1200px) {
     .paymentBodyInfo {

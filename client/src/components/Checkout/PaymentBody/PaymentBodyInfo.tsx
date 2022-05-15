@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../styles/components/Checkout/PaymentBody/PaymentBodyInfo.css";
 import PaymentBodyInfoAddress from "./PaymentBodyInfo/PaymentBodyInfoAddress";
 import PaymentBodyInfoCardPayment from "./PaymentBodyInfo/PaymentBodyInfoCardPayment";
@@ -54,12 +54,13 @@ function PaymentBodyInfo({
     );
   };
 
+
   return (
     <div className="paymentBodyInfo">
       <PaymentBodyInfoAddress />
       <span>
         Delivery estimated between{" "}
-        <span style={{ fontWeight: "bold" }}>
+        <span>
           {returnDateAndEstimatedDate()}
         </span>
       </span>

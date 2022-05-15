@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "../../styles/components/Header/Header.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 import NBLogo from "../../Comp-Single/NBLogo";
 import { useWindowDimensions } from "../../Hooks/Viewport";
@@ -28,6 +28,7 @@ function Header({
   const { t, i18n } = useTranslation();
 
   const mContext = useContext(MobileContext);
+  const location = useLocation();
 
   const [search, setSearch] = useState<string>();
 
@@ -47,7 +48,7 @@ function Header({
     } else if (window.location.pathname === "/dark" && chosenMode !== false) {
       setChosenMode(false);
     }
-  }, [window.location.pathname]);
+  }, [chosenMode, location.pathname, setChosenMode]);
 
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
@@ -66,7 +67,26 @@ function Header({
         window.removeEventListener("scroll", () => {});
       };
     }
-  }, []);
+  }, [mContext.isMobile]);
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      divRef.current &&
+      !(location.pathname === "/light" || location.pathname === "/dark")
+    ) {
+      divRef.current.style.marginBottom = "1.5em";
+    }
+  }, [divRef, location]);
+
+  const mobileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (mobileRef.current) {
+      mobileRef.current.style.width = scrollAmount + "%";
+    }
+  }, [mobileRef, scrollAmount]);
 
   return (
     <div
@@ -102,16 +122,7 @@ function Header({
           />
         )}
       </div>
-      <div
-        className="header__bottom"
-        style={{
-          marginBottom:
-            window.location.pathname != "/light" &&
-            window.location.pathname != "/dark"
-              ? "1.5em"
-              : "",
-        }}
-      >
+      <div ref={divRef} className="header__bottom">
         <div className="header__bottom-btns">
           <button
             type="button"
@@ -210,12 +221,7 @@ function Header({
       </div>
       {!mContext.isMobile ? (
         <div className="header__progress">
-          <div
-            className="header__progress-amount"
-            style={{
-              width: scrollAmount + "%",
-            }}
-          ></div>
+          <div ref={mobileRef} className="header__progress-amount"></div>
         </div>
       ) : (
         ""

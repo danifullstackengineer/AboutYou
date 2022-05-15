@@ -253,6 +253,9 @@
     transition: var(--transitionLightMode);
   }
 }
+.slider__react-icons-zindex {
+	z-index: 2;
+}
 @media screen and (max-width: 480px){
   .slider .slider__slide {
     height: 300px;

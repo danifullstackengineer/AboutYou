@@ -5,6 +5,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import useTimer from "../../Hooks/Timer";
 import React from "react";
 import { MobileContext } from "../../Context/Mobile";
+import { IconContext } from "react-icons";
 
 function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   const [{ seconds, reset }] = useTimer(1000);
@@ -104,12 +105,12 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   }, [currentQueue]);
 
   const handlePrev = (): void => {
-    if(mContext.isMobile){
-    setButtonAnim1("slider-btn-animated-mobile")
-    setTimeout(()=>{
-      setButtonAnim1("");
-    }, 250)
-  }
+    if (mContext.isMobile) {
+      setButtonAnim1("slider-btn-animated-mobile");
+      setTimeout(() => {
+        setButtonAnim1("");
+      }, 250);
+    }
     if (!isSliding) {
       setIsSliding(true);
       setAnim("slider__slide-anim-backwards-initial");
@@ -149,11 +150,11 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
   };
 
   const handleNext = (): void => {
-    if(mContext.isMobile){
-      setButtonAnim2("slider-btn-animated-mobile")
-      setTimeout(()=>{
+    if (mContext.isMobile) {
+      setButtonAnim2("slider-btn-animated-mobile");
+      setTimeout(() => {
         setButtonAnim2("");
-      }, 250)
+      }, 250);
     }
     if (!isSliding) {
       setIsSliding(true);
@@ -271,11 +272,29 @@ function SliderComp({ chosenMode }: { chosenMode: boolean | undefined }) {
           <button>Story</button>
         </div>
       </div>
-      <button type="button" className={`slider__prev ${buttonAnim1}`} onClick={handlePrev} aria-label="Previous Image Slider">
-        <IoIosArrowBack style={{zIndex: "2"}}/>
+      <button
+        type="button"
+        className={`slider__prev ${buttonAnim1}`}
+        onClick={handlePrev}
+        aria-label="Previous Image Slider"
+      >
+        <IconContext.Provider
+          value={{ className: "slider__react-icons-zindex" }}
+        >
+          <IoIosArrowBack />
+        </IconContext.Provider>
       </button>
-      <button type="button" className={`slider__next ${buttonAnim2}`} onClick={handleNext} aria-label="Next Image Slider">
-        <IoIosArrowForward style={{zIndex: "2"}}/>
+      <button
+        type="button"
+        className={`slider__next ${buttonAnim2}`}
+        onClick={handleNext}
+        aria-label="Next Image Slider"
+      >
+        <IconContext.Provider
+          value={{ className: "slider__react-icons-zindex" }}
+        >
+          <IoIosArrowForward />
+        </IconContext.Provider>
       </button>
       <div className="slider__dots">
         <div

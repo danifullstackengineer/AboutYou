@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "about-you-app",
   "main": "index.js",
+  "engines": {
+    "node": "17.9.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run-client": "cd client && npm start && cd ..",
