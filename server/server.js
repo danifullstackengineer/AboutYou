@@ -35,7 +35,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use((req, res, next) => {
   res.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3;"
+    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3; style-src https://connect.facebook.net/en_US/sdk.js"
   );
   next();
 });
