@@ -35,18 +35,18 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use((req, res, next) => {
   res.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3; style-src https://connect.facebook.net/en_US/sdk.js"
+    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3; style-src 'self' https://connect.facebook.net/en_US/sdk.js"
   );
   next();
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/", router);
 if (!(process.env.NODE_ENV === "production")) {
   // Handle app on development
   app.use(cors());
-}
-app.use("/", router);
-if (process.env.NODE_ENV === "production") {
+} else {
+  // Handle app on production
   app.use(expressStaticGzip(path.join(__dirname, "..", "client", "build")));
   app.get("*", async (_, res) => {
     res.sendFile(
