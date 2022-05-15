@@ -34,9 +34,6 @@ body {
   align-items: flex-start;
   min-width: 350px;
 }
-.dummyH1 {
-	display: none;
-}
 .main {
   width: 100%;
   display: -webkit-box;
