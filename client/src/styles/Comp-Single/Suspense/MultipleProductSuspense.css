@@ -1,0 +1,21 @@
+.multipleProductSuspense {
+  width: 30%;
+  background-color: rgb(200, 200, 200);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 50px;
+  height: 30vh;
+  box-shadow: rgba(100, 100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.multipleProductSuspense__loader {
+	width: 15px;
+	height:15px;
+	border-radius: 50%;
+	background-color: white;
+}
+.multipleProductSuspense__loader-active {
+	background-color: black;
+}

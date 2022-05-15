@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+  Suspense,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "../../styles/components/Body/BodyInner.css";
 import { useLazyQuery } from "@apollo/client";
 import { getAllProductsMain } from "../../Apollo/Products";
@@ -12,6 +18,7 @@ import Product360 from "../../Comp-Single/Product360";
 import { AccessoryType } from "../../types/Accessory";
 import { getAccessories } from "../../Apollo/Accessory";
 import Accessory from "../../Comp-Single/Accessory";
+import { useLocation } from "react-router-dom";
 
 function BodyInner({
   setClickedLogin,
@@ -39,6 +46,8 @@ function BodyInner({
   accessories?: boolean;
 }) {
   const aContext = useContext(AuthContext);
+
+	const location = useLocation();
 
   const [randomProd, setRandomProd] = useState<ProductType[]>();
   const [randomAcc, setRandomAcc] = useState<AccessoryType[]>();
@@ -70,13 +79,13 @@ function BodyInner({
     if (!accessories) {
       getAllProductsNonCustomizableQuery();
     }
-  }, [window.location.pathname, chosenMode]);
+  }, [chosenMode, accessories, getAllProductsNonCustomizableQuery, location]);
 
   useEffect(() => {
     if (window.location.pathname === "/accessories" && !dataAcc) {
       getAllAccessoriesQuery();
     }
-  }, [window.location.pathname]);
+  }, [dataAcc, getAllAccessoriesQuery, location]);
 
   useEffect(() => {
     if (dataNon && custom) {
@@ -92,7 +101,7 @@ function BodyInner({
         setRandomAcc(res);
       });
     }
-  }, [dataAcc, accessories]);
+  }, [dataAcc, accessories, randomAcc]);
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -101,7 +110,7 @@ function BodyInner({
       setIsMounted(true);
       getUserLikedProductsQuery();
     }
-  }, [aContext]);
+  }, [aContext, getUserLikedProductsQuery, isMounted, location]);
 
   const ref360 = useRef<HTMLDivElement>(null);
 
@@ -194,6 +203,7 @@ function BodyInner({
               if (i > 0) {
                 return (
                   <ProductCustom
+                    loading_img={i < 6 ? "eager" : "lazy"}
                     product={product}
                     key={i}
                     handleChangeProduct360={handleChangeProduct360}
@@ -215,6 +225,7 @@ function BodyInner({
           {randomProd.map((product: ProductType, i: number) => {
             return (
               <ProductCustom
+                loading_img={i < 6 ? "eager" : "lazy"}
                 product={product}
                 key={i}
                 dark={true}
@@ -238,6 +249,7 @@ function BodyInner({
           {randomAcc.map((accessory: AccessoryType, i: number) => {
             return (
               <Accessory
+                loading_img={i < 6 ? "eager" : "lazy"}
                 accessory={accessory}
                 key={i}
                 setClickedLogin={setClickedLogin}

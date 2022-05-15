@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useWindowDimensions } from "../../Hooks/Viewport";
 import "../../styles/components/Checkout/ContinueCheckout.css";
 
@@ -27,7 +27,7 @@ function ContinueCheckout({
     }
   }, [refProp]);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (
       dummyRef.current &&
       refProp &&
@@ -41,12 +41,12 @@ function ContinueCheckout({
         refProp.current.style.position = "fixed";
       }
     }
-  };
+  }, [continueTop, refProp]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [continueTop, width, height]);
+  }, [continueTop, width, height, handleScroll]);
 
   return (
     <>
@@ -69,4 +69,4 @@ function ContinueCheckout({
   );
 }
 
-export default ContinueCheckout;
+export default React.memo(ContinueCheckout);

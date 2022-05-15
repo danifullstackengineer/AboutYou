@@ -209,7 +209,7 @@ function Product360({
           <img
             src={product.backgroundImg + "1.jpg"}
             alt={""}
-            loading={"lazy"}
+            loading={"eager"}
           />
         ) : (
           ""
@@ -218,7 +218,7 @@ function Product360({
           <img
             src={product.foregroundImg + "10.jpg"}
             alt={""}
-            loading={"lazy"}
+            loading={"eager"}
           />
         ) : (
           ""
@@ -388,7 +388,7 @@ function Product360({
         )}
       </div>
       {!clicked ? (
-        <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"lazy"} />
+        <img src={"/assets/cursor/360-icon.svg"} alt={""} loading={"eager"} />
       ) : (
         ""
       )}

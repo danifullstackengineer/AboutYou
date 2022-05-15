@@ -66,3 +66,4 @@ TODO: Reset fields when changing 360 product
 TODO: Handle Cookies blocked by client
 TODO: Remove inline styling in react side, so that csp doesn't complain
 TODO: Fix failed to load stripe error
+TODO: On mobile add support for hover effects. Primarily needed on products

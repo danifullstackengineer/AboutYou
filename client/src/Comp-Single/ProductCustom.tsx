@@ -23,6 +23,7 @@ const ProductCustom = ({
   setClickedLogin,
   setClickedWishlist,
   clickedWishlist,
+  loading_img,
 }: {
   product: ProductType;
   dark?: boolean;
@@ -35,6 +36,7 @@ const ProductCustom = ({
   setClickedLogin?: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedWishlist?: React.Dispatch<React.SetStateAction<boolean>>;
   clickedWishlist?: boolean;
+  loading_img: "lazy" | "eager";
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
@@ -162,7 +164,7 @@ const ProductCustom = ({
         <img
           src={!dark ? product.backgroundImg + "1.jpg" : product.backgroundImg}
           alt={""}
-          loading={"lazy"}
+          loading={loading_img}
         />
       </div>
       <h3>{product.title}</h3>
@@ -194,7 +196,7 @@ const ProductCustom = ({
                 : "/assets/svg/heart-half-dark.svg"
             }
             alt=""
-            loading={"lazy"}
+            loading={loading_img}
           />
           <span>{likes}</span>
         </button>
@@ -223,7 +225,7 @@ const ProductCustom = ({
                 : "/assets/svg/basket_unclicked.svg"
             }
             alt=""
-            loading={"lazy"}
+            loading={loading_img}
           />
         </button>
       ) : (
@@ -243,7 +245,7 @@ const ProductCustom = ({
                   : "/assets/svg/heart-half-dark.svg"
               }
               alt=""
-              loading={"lazy"}
+              loading={loading_img}
             />
             <span>{likes}</span>
           </button>
@@ -264,7 +266,7 @@ const ProductCustom = ({
                   : "/assets/svg/basket_unclicked.svg"
               }
               alt=""
-              loading={"lazy"}
+              loading={loading_img}
             />
           </button>
         </div>

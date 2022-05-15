@@ -17,6 +17,7 @@ const Accessory = ({
   handleOpening,
   clickedBasket,
   clickedWishlist,
+  loading_img,
 }: {
   accessory: AccessoryType;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +29,7 @@ const Accessory = ({
   clickedBasket: boolean;
   clickedWishlist: boolean;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+  loading_img: "eager" | "lazy";
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
@@ -89,7 +91,7 @@ const Accessory = ({
   return (
     <div className={`accessory`}>
       <div className={`accessory__img`}>
-        <img src={accessory.backgroundImg} alt={""} loading={"lazy"} />
+        <img src={accessory.backgroundImg} alt={""} loading={loading_img} />
       </div>
       <h3>{accessory.title}</h3>
       <h4>Only: $ {accessory.price}</h4>
@@ -105,7 +107,7 @@ const Accessory = ({
               : "/assets/svg/heart-half-dark.svg"
           }
           alt=""
-          loading={"lazy"}
+          loading={loading_img}
         />
         <span>{likes}</span>
       </button>
@@ -128,13 +130,11 @@ const Accessory = ({
               : "/assets/svg/basket_unclicked.svg"
           }
           alt=""
-          loading={"lazy"}
+          loading={loading_img}
         />
       </button>
       {width <= 1100 ? (
-        <div
-          className="accessory__options"
-        >
+        <div className="accessory__options">
           <button
             aria-label="Like Product"
             className={"accessory__heart-btn "}
@@ -147,7 +147,7 @@ const Accessory = ({
                   : "/assets/svg/heart-half-dark.svg"
               }
               alt=""
-              loading={"lazy"}
+              loading={loading_img}
             />
             <span>{likes}</span>
           </button>
@@ -168,7 +168,7 @@ const Accessory = ({
                   : "/assets/svg/basket_unclicked.svg"
               }
               alt=""
-              loading={"lazy"}
+              loading={loading_img}
             />
           </button>
         </div>
