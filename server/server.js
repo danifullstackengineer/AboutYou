@@ -50,8 +50,10 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use((req, res, next) => {
   res.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3; img-src 'self'"
+    "default-src 'self'; script-src 'self' https://unpkg.com/react/umd/react.production.min.js https://unpkg.com/react-dom/umd/react-dom.production.min.js https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js https://connect.facebook.net/en_US/sdk.js https://js.stripe.com/v3; img-src https: data:;"
   );
+  // For images
+  res.set("X-Content-Type-Options", "nosniff");
   next();
 });
 app.use(bodyParser.json());
