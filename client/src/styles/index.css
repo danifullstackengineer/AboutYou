@@ -4,6 +4,7 @@
 @font-face {
   font-family: "Mark Pro";
   src: local("MarkP"), url(../assets/fonts/MarkP.ttf) format("truetype");
+  font-display: swap;
 }
 html {
   scroll-behavior: smooth;
