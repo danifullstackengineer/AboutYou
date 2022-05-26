@@ -21,7 +21,7 @@ DONE: -primul produs random din 360 --
 DONE: -dupa daca dai click pe urmatoarele produse, primul se inlocuieste cu cel pe care ai dat click
 si celalalt se duce sus si devine 360
 DEPRECATED: -in 360 dupa primul vin coloane de cate 3 produse, numai cu 1 img fiecare
--imagini cate 3 in dark mode si accesorii
+DONE:-imagini cate 3 in dark mode si accesorii
 
 3.0.0
 DONE: slider pe light mode si dark mode sa dispara
@@ -30,7 +30,7 @@ search sa fie numai pe pagina respectiva, adica daca esti pe toate produsele sa 
 DONE: pe toate ecranele sa fie cate 3 produse.
 imaginile nu merg pe anumite calculatoare -- because of csp
 logare cu FACEBOOK, INSTAGRAM, TWITTER, APPLE, GMAIL
-la 360 butoanele nu sunt destul de mari - culori, marimi
+DONE:la 360 butoanele nu sunt destul de mari - culori, marimi
 
 
 TODO: DONE: --- fix likes --- fixed
@@ -67,3 +67,4 @@ TODO: Handle Cookies blocked by client
 TODO: Remove inline styling in react side, so that csp doesn't complain
 TODO: Fix failed to load stripe error
 TODO: On mobile add support for hover effects. Primarily needed on products
+TODO: Configure stripe to use cross origin

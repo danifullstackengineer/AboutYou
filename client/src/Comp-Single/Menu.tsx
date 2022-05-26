@@ -237,7 +237,13 @@ function Menu({
     product: ExtendedProductType | ExtendedAccessoryType
   ) => {
     wContext.removeFromWishlist(product.id);
-    bContext.addToBasket(product);
+    bContext.addToBasket({
+      ...product,
+      selectedSize: undefined,
+      selectedColor: undefined,
+      selectedAccessory: undefined,
+      customStyle: undefined,
+    });
   };
 
   const { height, width } = useWindowDimensions();
@@ -247,7 +253,8 @@ function Menu({
   useEffect(() => {
     if (headerRef.current && mainRef.current && menuOptionRef.current) {
       mainRef.current.style.top = headerRef.current.offsetHeight + "px";
-      mainRef.current.style.maxHeight = "calc(100vh - " + headerRef.current.offsetHeight + "px)";
+      mainRef.current.style.maxHeight =
+        "calc(100vh - " + headerRef.current.offsetHeight + "px)";
     }
   }, [headerRef, mainRef, width, height, location, menuOptionRef]);
 
@@ -360,7 +367,7 @@ function Menu({
           )}
         </div>
       </div>
-      <div className="menu__option"  ref={menuOptionRef}>
+      <div className="menu__option" ref={menuOptionRef}>
         <h3 onClick={() => handleOpening("wishlist")}>Wishlist</h3>
         <div
           onScroll={
@@ -396,8 +403,7 @@ function Menu({
                         Quantity: {product.quantity}
                       </span>
                       <span>
-                        Price: $
-                        {(product.price * product.quantity).toFixed(2)}
+                        Price: ${(product.price * product.quantity).toFixed(2)}
                       </span>
                       <div
                         className="menu__option-option-product-right-btns"

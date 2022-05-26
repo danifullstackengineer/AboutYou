@@ -10,6 +10,8 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
 
   const bContext = useContext(BasketContext);
 
+  const [clickedEdit, setClickedEdit] = useState<boolean>(false);
+
   return (
     <div
       className={`checkoutBodyBasketOrder ${
@@ -36,20 +38,29 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
               }`}
             >
               <img
-                src={item.dark ? item.backgroundImg : item.backgroundImg + "1.jpg"}
+                src={
+                  item.dark ? item.backgroundImg : item.backgroundImg + "1.jpg"
+                }
                 alt={""}
                 loading={"lazy"}
               />
               <div className="checkoutBodyBasketOrder__info">
                 <div className="checkoutBodyBasketOrder__info-upper">
                   <div className="checkoutBodyBasketOrder__info-upper-left">
-                    <Link to="">{item.title}</Link>
-                    <span>Color: Black &amp; White</span>
+                    <h5>{item.title}</h5>
+                    {/* <span>
+                      Color: {item.selectedColor ? item.selectedColor : ""}
+                    </span> */}
+                    {item.selectedColor ? (
+                      <span>Color: {item.selectedColor}</span>
+                    ) : (
+                      ""
+                    )}
                     <span>Size: S</span>
                     {!payment ? <span>Quantity: {item.quantity}</span> : ""}
                   </div>
                   {!payment ? (
-                    <Link to="/">Edit</Link>
+                    <button onClick={() => setClickedEdit(true)}>Edit</button>
                   ) : (
                     <div className="checkoutBodyBasketOrder__modify-amount">
                       <span>Amount:</span>

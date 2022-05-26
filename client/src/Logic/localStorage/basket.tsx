@@ -5,13 +5,13 @@ import {
 import { ProductType, ProductTypeBasket } from "../../types/Product";
 import { cloneDeep } from "lodash";
 import React from "react";
-import { AccessoryType } from "../../types/Accessory";
+import { AccessoryType, AccessoryTypeBasket } from "../../types/Accessory";
 
 const addToBasketStorageAndContext = (
-  item: ProductType | ProductTypeBasket | AccessoryType,
-  basket: ExtendedProductType[] | ProductTypeBasket[] | ExtendedAccessoryType[],
+  item: ProductTypeBasket | AccessoryTypeBasket,
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[],
   setBasket: React.Dispatch<
-    React.SetStateAction<ExtendedProductType[] | ExtendedAccessoryType[]>
+    React.SetStateAction<ProductTypeBasket[] | AccessoryTypeBasket[]>
   >
 ): void => {
   const duplicate = (): boolean | undefined => {
@@ -38,9 +38,9 @@ const addToBasketStorageAndContext = (
 
 const removeFromBasketStorageAndContext = (
   id: string,
-  basket: ExtendedProductType[] | ExtendedAccessoryType[],
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[],
   setBasket: React.Dispatch<
-    React.SetStateAction<ExtendedProductType[] | ExtendedAccessoryType[]>
+    React.SetStateAction<ProductTypeBasket[] | AccessoryTypeBasket[]>
   >
 ): void => {
   var basket_clone = cloneDeep(basket);
@@ -52,7 +52,7 @@ const removeFromBasketStorageAndContext = (
 };
 
 const getTotalPriceBasket = (
-  basket: ExtendedProductType[] | ExtendedAccessoryType[]
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[]
 ): number => {
   var total = 0;
   basket.forEach((product) => (total += product.quantity * product.price));
@@ -61,7 +61,7 @@ const getTotalPriceBasket = (
 
 const isProductInBasket = (
   id: string,
-  basket: ExtendedProductType[] | ExtendedAccessoryType[]
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[]
 ): boolean => {
   var isIn = false;
   basket.forEach((product) => (product.id === id ? (isIn = true) : undefined));
@@ -70,8 +70,10 @@ const isProductInBasket = (
 
 const decrementProductStorage = (
   id: string,
-  basket: ExtendedProductType[] | ExtendedAccessoryType[],
-  setBasket: React.Dispatch<React.SetStateAction<ExtendedProductType[] | ExtendedAccessoryType[]>>
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[],
+  setBasket: React.Dispatch<
+    React.SetStateAction<ProductTypeBasket[] | AccessoryTypeBasket[]>
+  >
 ): void => {
   var basket_clone = cloneDeep(basket);
   basket_clone.filter((product: ExtendedProductType) =>

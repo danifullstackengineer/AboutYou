@@ -133,7 +133,11 @@ const ProductCustom = ({
     if (bContext.isInBasket(product.id)) {
       bContext.removeFromBasket(product.id);
     } else {
-      bContext.addToBasket(product);
+      bContext.addToBasket({
+	...product, quantity: 1,
+	selectedSize: undefined,
+	selectedColor: undefined
+});
     }
     if (!clickedMenu && setClickedBasket && setClickedMenu) {
       setClickedMenu(true);

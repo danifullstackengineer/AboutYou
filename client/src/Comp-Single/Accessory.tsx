@@ -48,7 +48,14 @@ const Accessory = ({
     if (bContext.isInBasket(accessory.id)) {
       bContext.removeFromBasket(accessory.id);
     } else {
-      bContext.addToBasket(accessory);
+      bContext.addToBasket({
+        ...accessory,
+        quantity: 0,
+        selectedSize: undefined,
+        selectedColor: undefined,
+        selectedAccessory: undefined,
+        customStyle: undefined,
+      });
     }
     if (!clickedMenu) {
       setClickedMenu(true);

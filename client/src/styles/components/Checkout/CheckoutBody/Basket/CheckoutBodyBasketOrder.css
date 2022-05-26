@@ -16,7 +16,7 @@
   justify-content: space-evenly;
   align-items: center;
   padding-bottom: 1em;
-  position:relative;
+  position: relative;
 }
 .checkoutBodyBasketOrder__item:not(:last-child) {
   border-bottom: 1px solid rgb(240, 240, 240);
@@ -53,27 +53,33 @@
   margin-right: 1.5em;
   width: 200px;
 }
-.checkoutBodyBasketOrder__info-upper > a {
+.checkoutBodyBasketOrder__info-upper > button {
   margin-right: 1em;
   color: rgb(100, 100, 100);
   text-align: left;
-  font-size: 0.75rem;
+  border: none;
+  background-color: transparent;
+  align-self: flex-start;
+  cursor: pointer;
 }
-.checkoutBodyBasketOrder__info-upper > a:hover {
+.checkoutBodyBasketOrder__info-upper h5 {
+  font-size: 0.85rem;
+}
+.checkoutBodyBasketOrder__info-upper > button:hover {
   text-decoration: underline;
 }
-.checkoutBodyBasketOrder__info-upper-left a,
+.checkoutBodyBasketOrder__info-upper-left button,
 .checkoutBodyBasketOrder__info-upper-left span {
   margin-bottom: 0.25em;
 }
-.checkoutBodyBasketOrder__info-upper-left a {
+.checkoutBodyBasketOrder__info-upper-left button {
   font-weight: bold;
 }
 .checkoutBodyBasketOrder__info-upper-left > span {
   font-size: 0.75rem;
   color: rgb(100, 100, 100);
 }
-.checkoutBodyBasketOrder__info-upper-left > a,
+.checkoutBodyBasketOrder__info-upper-left > button,
 .checkoutBodyBasketOrder__info-upper-left > span {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -81,7 +87,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.checkoutBodyBasketOrder__info-upper-left > a:hover {
+.checkoutBodyBasketOrder__info-upper-left > button:hover {
   color: rgb(150, 150, 150);
 }
 .checkoutBodyBasketOrder__info-lower {
@@ -179,7 +185,7 @@
   position: absolute;
   width: 0;
   height: 5px;
-  background-color: rgb(100,200,200);
+  background-color: rgb(100, 200, 200);
   left: 0;
   top: 100%;
 }
@@ -193,7 +199,7 @@
   flex-direction: column;
 }
 .checkoutBodyBasketOrder-empty a {
-  margin-top: .5em;
+  margin-top: 0.5em;
 }
 .checkoutBodyBasketOrder-empty a:hover {
   text-decoration: underline;
@@ -214,12 +220,12 @@
     visibility: hidden;
   }
 }
-@media screen and (max-width: 650px){
+@media screen and (max-width: 650px) {
   .checkoutBodyBasketOrder__item {
     flex-direction: column;
   }
 }
-@media screen and (max-width: 550px){
+@media screen and (max-width: 550px) {
   .checkoutBodyBasketOrder img {
     width: 250px;
     height: auto;

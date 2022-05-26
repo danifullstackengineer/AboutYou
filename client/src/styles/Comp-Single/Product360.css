@@ -77,10 +77,15 @@
 }
 .product360__right-top li {
   list-style: none;
-  width: 25%;
   font-size: 1rem;
   text-align: center;
   margin: 5px 5px 5px 5px;
+}
+.product360__right-colors li {
+	width: 45%;
+}
+.product360__right-sizes li {
+	width: 15%;
 }
 .product360__right-top > div:not(.product360__right-custom) li {
   border: 2px solid rgb(100, 100, 100);

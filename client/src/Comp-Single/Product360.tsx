@@ -164,14 +164,15 @@ function Product360({
   const handleAddToBasket = (): void => {
     if (sizeIdx && colorIdx) {
       bContext.addToBasket({
-        ...product,
-        selectedSize: product.sizes[sizeIdx],
-        selectedColor: product.colors[colorIdx],
-        selectedAccessory: accIndex
-          ? data.getAccessoriesBasedOnParent[accIndex]
-          : undefined,
-        customStyle: file,
-      });
+	...product,
+	selectedSize: product.sizes[sizeIdx],
+	selectedColor: product.colors[colorIdx],
+	selectedAccessory: accIndex
+		? data.getAccessoriesBasedOnParent[accIndex]
+		: undefined,
+	customStyle: file,
+	quantity:1
+});
     }
     if (!clickedMenu) {
       setClickedMenu(true);

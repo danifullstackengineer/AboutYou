@@ -55,7 +55,12 @@ const Product = ({
     if (bContext.isInBasket(product.id)) {
       bContext.removeFromBasket(product.id);
     } else {
-      bContext.addToBasket(product);
+      bContext.addToBasket({
+        ...product,
+        quantity: 1,
+        selectedSize: undefined,
+        selectedColor: undefined,
+      });
     }
     if (!clickedMenu) {
       setClickedMenu(true);
@@ -93,13 +98,11 @@ const Product = ({
     }
   };
 
-
   useEffect(() => {
     if (liked !== undefined) {
       setLikedInner(liked);
     }
   }, [liked]);
-
 
   const handleLike = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -144,7 +147,7 @@ const Product = ({
           <span>{likes}</span>
         </div>
         <button
-        aria-label="Add to Wishlist"
+          aria-label="Add to Wishlist"
           onClick={(e) => handleWishlist(e)}
           className={
             wContext.isInWishlist(product.id)

@@ -7,3 +7,10 @@ export type AccessoryType = {
     parentId: string[];
     dark: true;
 }
+export type AccessoryTypeBasket = AccessoryType & {
+	selectedSize: undefined;
+	selectedColor: undefined;
+	selectedAccessory: undefined;
+	customStyle: undefined;
+	quantity: number;
+}
