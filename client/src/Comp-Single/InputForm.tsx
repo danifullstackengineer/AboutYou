@@ -23,7 +23,6 @@ function InputForm({
   setDate,
   phoneNumber,
   date,
-  reset,
 }: {
   width: number;
   placeholder: string;
@@ -42,7 +41,6 @@ function InputForm({
   setDate?: React.Dispatch<React.SetStateAction<Date | string>>;
   phoneNumber?: boolean;
   date?: string | Date;
-  reset?: number;
 }) {
   const [input, setInput] = useState<string>("");
   const [deleteTyped, setDeleteTyped] = useState<boolean>(false);
@@ -57,15 +55,6 @@ function InputForm({
       setInput(value);
     }
   }, [value]);
-
-  useEffect(() => {
-    if (reset) {
-      setInput("");
-      setIsFocused(false);
-      setClearInput(false);
-	  setDeleteTyped(false);
-    }
-  }, [reset]);
 
   useEffect(() => {
     if (divRef.current) {

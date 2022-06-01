@@ -39,51 +39,16 @@ function Credential({
   const [input2, setInput2] = useState<string>("");
   const [input3, setInput3] = useState<string>("");
   const [input4, setInput4] = useState<string>("");
-  const [data, setData] = useState<{
-    first: string;
-    last: string;
-    email: string;
-    password: string;
-  }>({ first: "", last: "", email: "", password: "" });
   const [warn, setWarn] = useState<string>();
   const [fade_warning, set_fade_warning] = useState<boolean>(false);
-  const [loginForm, setLoginForm] = useState<boolean>(false);
-  const [registerForm, setRegisterForm] = useState<boolean>(false);
-  const [reset, setReset] = useState<number>(1);
 
-  const [
-    register_user_no_third_party_mut,
-    { loading: loadingReg, error: errorReg, data: dataReg },
-  ] = useMutation(register_user_no_third_party, {
-    variables: {
-      first: data.first,
-      last: data.last,
-      email: data.email,
-      password: data.password,
-    },
-  });
+  const [register_user_no_third_party_mut] = useMutation(
+    register_user_no_third_party
+  );
 
-  useEffect(() => {
-    if (chosenAction) {
-      setReset(reset + 1);
-      setData({ first: "", last: "", email: "", password: "" });
-      setInput1("");
-      setInput2("");
-      setInput3("");
-      setInput4("");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chosenAction]);
-
-  const [
-    login_user_no_third_party_query,
-    { loading: loadingLog, error: errorLog, data: dataLog },
-  ] = useLazyQuery(login_user_no_third_party, {
-    variables: {
-      email: data.email,
-      password: data.password,
-    },
-  });
+  const [login_user_no_third_party_query] = useLazyQuery(
+    login_user_no_third_party
+  );
 
   const handleShowFade = useCallback(() => {
     set_fade_warning(true);
@@ -93,13 +58,16 @@ function Credential({
     return () => clearTimeout(timeout);
   }, []);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleSubmit = (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
+  ): void => {
     e.preventDefault();
-    if (!loadingReg && !loadingLog && !fade_warning) {
+    if (!isLoading && !fade_warning) {
+      setIsLoading(true);
       if (chosenAction[0]) {
         const reg1 = checkRegex(input1, "first");
         if (!reg1) {
@@ -128,13 +96,36 @@ function Credential({
           return;
         }
         if (input1 && input2 && input3 && input4) {
-          setData({
-            first: input1.trim(),
-            last: input2.trim(),
-            email: input3.trim(),
-            password: input4.trim(),
-          });
-          setRegisterForm(true);
+          register_user_no_third_party_mut({
+            variables: {
+              first: input1,
+              last: input2,
+              email: input3,
+              password: input4,
+            },
+          })
+            .then(({ data }) => {
+              setIsLoading(false);
+              if (data.register_user_no_third_party.id === "-1") {
+                setWarn("Email is already in use.");
+                handleShowFade();
+              } else {
+                setWarn(
+                  "Succesfully registered. Please check your email address."
+                );
+                handleShowFade();
+                setTimeout(() => {
+                  setChosenAction([false, true]);
+                }, 2600);
+              }
+            })
+            .catch(() => {
+              setIsLoading(false);
+              setWarn(
+                "Something went wrong, please try again. If the problem persists, please contact us via email."
+              );
+              handleShowFade();
+            });
         }
       } else if (chosenAction[1]) {
         const reg3 = checkRegex(input3, "email");
@@ -152,95 +143,36 @@ function Credential({
           return;
         }
         if (input3 && input4) {
-          setData({
-            first: input1,
-            last: input2,
-            email: input3.trim(),
-            password: input4.trim(),
-          });
-          setLoginForm(true);
+          login_user_no_third_party_query({
+            variables: { email: input3, password: input4 },
+          })
+            .then(({ data }) => {
+              setIsLoading(false);
+              if (data.login_user_no_third_party.success) {
+                window.dispatchEvent(new Event("loggedIn"));
+                const { uid, token, expirationDate } =
+                  data.login_user_no_third_party;
+                context.login(uid, token, new Date(parseInt(expirationDate)));
+                setTimeout(() => {
+                  setClickedLogin(false);
+                }, 2600);
+              }
+              setWarn(data.login_user_no_third_party.message);
+              handleShowFade();
+            })
+            .catch(() => {
+              setIsLoading(false);
+              setWarn(
+                "Something went wrong, please try again. If the problem persists, please contact us via email."
+              );
+              handleShowFade();
+            });
         }
       }
     } else {
       setWarn("Please wait 2 seconds before trying again.");
     }
   };
-
-  useEffect(() => {
-    if (registerForm) {
-      register_user_no_third_party_mut();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [registerForm]);
-
-  useEffect(() => {
-    if (loginForm) {
-      login_user_no_third_party_query();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loginForm]);
-
-  useEffect(() => {
-    if (errorReg) {
-      setRegisterForm(false);
-      setWarn(
-        "Something went wrong, please try again. If the problem persists, please contact us via email."
-      );
-      handleShowFade();
-      setData({ first: "", last: "", email: "", password: "" });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorReg]);
-
-  useEffect(() => {
-    if (errorLog) {
-      setLoginForm(false);
-      setWarn(
-        "Something went wrong, please try again. If the problem persists, please contact us via email."
-      );
-      handleShowFade();
-      setData({ first: "", last: "", email: "", password: "" });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errorLog]);
-
-  useEffect(() => {
-    if (dataReg && registerForm && !loadingReg) {
-      setRegisterForm(false);
-      if (dataReg.register_user_no_third_party.id === "-1") {
-        setWarn("Email is already in use.");
-        handleShowFade();
-      } else {
-        setWarn("Succesfully registered. Please check your email address.");
-        handleShowFade();
-        const timeout = setTimeout(() => {
-          setChosenAction([false, true]);
-          return () => clearTimeout(timeout);
-        }, 2600);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataReg, registerForm, loadingReg]);
-
-  useEffect(() => {
-    if (dataLog && loginForm && !loadingLog) {
-      setLoginForm(false);
-      if (dataLog.login_user_no_third_party.success) {
-        window.dispatchEvent(new Event("loggedIn"));
-        const { uid, token, expirationDate } =
-          dataLog.login_user_no_third_party;
-        context.login(uid, token, new Date(parseInt(expirationDate)));
-        setWarn(dataLog.login_user_no_third_party.message);
-        handleShowFade();
-        console.log(dataLog.login_user_no_third_party.message);
-        const timeout = setTimeout(() => {
-          setClickedLogin(false);
-          return () => clearTimeout(timeout);
-        }, 2600);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataLog, loginForm, loadingLog]);
 
   return (
     <div
@@ -367,7 +299,6 @@ function Credential({
                   border={[10, 10, 10, 10]}
                   setInputParent={setInput1}
                   transformAmount={-230}
-                  reset={reset}
                 />
                 <InputForm
                   width={270}
@@ -377,7 +308,6 @@ function Credential({
                   border={[10, 10, 10, 10]}
                   setInputParent={setInput2}
                   transformAmount={-230}
-                  reset={reset}
                 />
               </>
             ) : (
@@ -391,7 +321,6 @@ function Credential({
               border={[10, 10, 10, 10]}
               setInputParent={setInput3}
               transformAmount={-230}
-              reset={reset}
             />
             <InputForm
               width={270}
@@ -401,7 +330,6 @@ function Credential({
               border={[10, 10, 10, 10]}
               setInputParent={setInput4}
               transformAmount={-230}
-              reset={reset}
             />
           </div>
           {chosenAction[1] ? (
@@ -443,7 +371,7 @@ function Credential({
               width={250}
               height={50}
               //   isLoading={chosenAction[0] ? isLoadingRegister : isLoadingLogin}
-              isLoading={chosenAction[0] ? loadingReg : loadingLog}
+              isLoading={isLoading}
               type="submit"
             />
           </div>

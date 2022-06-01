@@ -1,4 +1,4 @@
-1.0.0
+1.0.0::DEPRECATED:
 1. checkout warning unrefundable , after payment is made show unrefundable
 2. stanga : home icon => 
 3. fav si like button in stanga jos
@@ -35,7 +35,7 @@ DONE:la 360 butoanele nu sunt destul de mari - culori, marimi
 
 TODO: DONE: fix likes
 TODO: DONE: on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image.
-TODO: in checkout add countries in the dropdown --- fixed(changed to no dropdown)
+TODO: DONE: in checkout add countries in the dropdown
 TODO: DONE: Add form validation in checkout forms
 TODO: DEPRECATED: Add tablet responsiveness in checkout
 TODO: Fix checkout button -- partially fixed --- need to work on payment button
@@ -44,7 +44,7 @@ TODO: DONE: In payment selection on manual crypto after someone selects it, it d
 TODO: DONE: Change warning in payment method to be responsive.
 TODO: DONE: In checkout page on the inputs, make sure there's some padding on the right side.
 TODO: Handle error in Product360
-TODO: Sometimes in 360 product you can't select all sizes or all colors.
+TODO: DONE: Sometimes in 360 product you can't select all sizes or all colors.
 TODO: Handle errors in BodyInner;
 TODO: DONE: When adding to basket in Product360 it doesn't open the menu.
 TODO: Make it so that when user adds the same product but with different sizes/colors/accesories/custom, it appears as a separate item and not the same.
@@ -54,7 +54,7 @@ TODO: DONE: On mobile while the 360 img is loading, it creates an empty space.
 TODO: Add react.lazy and custom suspense/error handling to some components
 TODO: Improve loaidng speed by making products lazy.
 TODO: Replace the query in body inner with separate queries for each product
-TODO: Add form validation for register/login
+TODO: DONE: Add form validation for register/login
 TODO: Add login/register support for 3rd party(fb, apple, microsoft)
 TODO: Crate regex for access code for admin login
 TODO: Make token secrets secure in .env file
@@ -69,3 +69,6 @@ TODO: Fix failed to load stripe error
 TODO: On mobile add support for hover effects. Primarily needed on products
 TODO: Configure stripe to use cross origin
 TODO: Add somehow the image from the basket to the localstorage or save it somehow
+TODO: Make liking products not so laggy
+TODO: When logging out it appears heart doesn't update
+TODO: Make reset password

@@ -115,6 +115,7 @@ const RootQuery = new GraphQLObjectType({
             success: false,
             message: "Invalid credentials.",
           };
+		  console.log(user);
         return await bcrypt
           .compare(args.password, user.password)
           .then((resHash) => {
