@@ -291,7 +291,7 @@ const Mutations = new GraphQLObjectType({
             await send_mail(
               email,
               "NB - Verification Email",
-              "Please click the following link to verify your email: https://localhost:5000/verify_email/query?uuid=" +
+              "Please click the following link to verify your email: http://localhost:5000/verify_email/query?uuid=" +
                 verification_uuid +
                 "&id=" +
                 id

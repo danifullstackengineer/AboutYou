@@ -76,11 +76,29 @@ const verify_email = async (req, res) => {
     const uuid = req.query.uuid;
     const id = req.query.id;
     return await User.findById(id).then(async (doc) => {
-      if (!doc) return res.redirect("/404");
-      if (doc.verification_uuid !== uuid) return res.redirect("/404");
+      if (!doc)
+        return res.redirect(
+          process.env.NODE_ENV === "production"
+            ? "https://about-us-clone.herokuapp.com/error/user_not_found"
+            : "http://localhost:3000/error/user_not_found"
+        );
+      if (doc.verified)
+        return res.redirect(
+          process.env.NODE_ENV === "production"
+            ? "https://about-us-clone.herokuapp.com"
+            : "http://localhost:3000/"
+        );
+      if (doc.verification_uuid !== uuid)
+        return res.redirect(
+          process.env.NODE_ENV === "production"
+            ? "https://about-us-clone.herokuapp.com/error/invalid_link"
+            : "http://localhost:3000/error/invalid_link"
+        );
       doc.verified = true;
       await doc.save();
-      return res.redirect("/");
+      return res.redirect(
+        process.env.NODE_ENV === "production" ? "/" : "http://localhost:3000"
+      );
     });
   } catch (err) {
     res.send("/400");
