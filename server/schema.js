@@ -280,9 +280,10 @@ const Mutations = new GraphQLObjectType({
             await send_mail(
               email,
               "NB - Verification Email",
-              "Please click access this link to verify your account: https://about-us-clone.herokuapp.com/verify_account/" +
+              "Please click access this link to verify your account: https://about-us-clone.herokuapp.com/verify_email/query?uuid=" +
                 verification_uuid +
-                "",
+                "&id=" +
+                id,
               html_to_send
             );
             return { id, email };
