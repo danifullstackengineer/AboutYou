@@ -66,7 +66,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 //Verify email
-router.get("/verify_email/", verify_email);
+router.get("/verify_email/query", verify_email);
 
 // Admin only
 router.post("/admin/api/login", apiLimited, loginAdmin);

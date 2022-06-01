@@ -73,9 +73,18 @@ const login = async (req, res) => {
 
 const verify_email = async (req, res) => {
   try {
-    const q = req.query;
-    console.log(q);
-  } catch (err) {}
+    const uuid = req.query.uuid;
+    const id = req.query.id;
+    return await User.findById(id).then(async (doc) => {
+      if (!doc) return res.redirect("/404");
+      if (doc.verification_uuid !== uuid) return res.redirect("/404");
+      doc.verified = true;
+      await doc.save();
+      return res.redirect("/");
+    });
+  } catch (err) {
+    res.send("/400");
+  }
 };
 
 const verifyJWT = async (req, res, next) => {

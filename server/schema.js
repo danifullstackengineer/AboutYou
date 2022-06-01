@@ -276,15 +276,25 @@ const Mutations = new GraphQLObjectType({
               uuid: verification_uuid,
               id,
             };
+            // TODO: UNcommnet in production
+            // let html_to_send = template(data);
+            // await send_mail(
+            //   email,
+            //   "NB - Verification Email",
+            //   "Please click access this link to verify your account: https://about-us-clone.herokuapp.com/verify_email/query?uuid=" +
+            //     verification_uuid +
+            //     "&id=" +
+            //     id,
+            //   html_to_send
+            // );
             let html_to_send = template(data);
             await send_mail(
               email,
               "NB - Verification Email",
-              "Please click access this link to verify your account: https://about-us-clone.herokuapp.com/verify_email/query?uuid=" +
+              "Please click the following link to verify your email: https://localhost:5000/verify_email/query?uuid=" +
                 verification_uuid +
                 "&id=" +
-                id,
-              html_to_send
+                id
             );
             return { id, email };
           });
