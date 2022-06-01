@@ -472,4 +472,4 @@ function Credential({
   );
 }
 
-export default React.memo(Credential);
+export default Credential;

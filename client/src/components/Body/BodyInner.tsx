@@ -47,10 +47,18 @@ function BodyInner({
 }) {
   const aContext = useContext(AuthContext);
 
-	const location = useLocation();
+  const location = useLocation();
 
   const [randomProd, setRandomProd] = useState<ProductType[]>();
   const [randomAcc, setRandomAcc] = useState<AccessoryType[]>();
+
+  const [id, setId] = useState<string>();
+
+  useEffect(() => {
+    if (aContext.userId) {
+      setId(aContext.userId);
+    }
+  }, [aContext.userId]);
 
   const [
     getAllProductsNonCustomizableQuery,
@@ -71,7 +79,7 @@ function BodyInner({
     { loading: loadingL, data: dataL, error: errorL },
   ] = useLazyQuery(getUserLikedProducts, {
     variables: {
-      id: aContext.userId,
+      id,
     },
   });
 
@@ -106,11 +114,11 @@ function BodyInner({
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    if (aContext.isLoggedIn && !isMounted) {
+    if (aContext.isLoggedIn && !isMounted && id) {
       setIsMounted(true);
       getUserLikedProductsQuery();
     }
-  }, [aContext, getUserLikedProductsQuery, isMounted, location]);
+  }, [id, getUserLikedProductsQuery, isMounted, location, aContext.isLoggedIn]);
 
   const ref360 = useRef<HTMLDivElement>(null);
 

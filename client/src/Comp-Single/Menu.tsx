@@ -89,7 +89,13 @@ function Menu({
     setClickedUser(false);
     setClickedWishlist(false);
     setClickedLanguage(false);
-  }, [clickedMenu, setClickedBasket, setClickedLanguage, setClickedUser, setClickedWishlist]);
+  }, [
+    clickedMenu,
+    setClickedBasket,
+    setClickedLanguage,
+    setClickedUser,
+    setClickedWishlist,
+  ]);
 
   useEffect(() => {
     if (basketRef.current && basketWrapperRef.current && isOpened) {
@@ -256,7 +262,15 @@ function Menu({
       mainRef.current.style.maxHeight =
         "calc(100vh - " + headerRef.current.offsetHeight + "px)";
     }
-  }, [headerRef, mainRef, width, height, location, menuOptionRef, headerRef.current?.offsetHeight]);
+  }, [
+    headerRef,
+    mainRef,
+    width,
+    height,
+    location,
+    menuOptionRef,
+    headerRef.current?.offsetHeight,
+  ]);
 
   return (
     <div
