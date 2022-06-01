@@ -1,6 +1,9 @@
 import graphql, { GraphQLBoolean, GraphQLList, GraphQLNonNull } from "graphql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import fs from "fs";
+import { promisify } from "util";
+import handlebars from "handlebars";
 
 import {
   GraphQLObjectType,
@@ -24,6 +27,7 @@ import {
   EmailRegex,
 } from "./GraphQL/RegexType.js";
 import { LoginResultType } from "./GraphQL/MiscType.js";
+import { send_mail } from "./logic/mail/send_mail.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -115,7 +119,8 @@ const RootQuery = new GraphQLObjectType({
             success: false,
             message: "Invalid credentials.",
           };
-		  console.log(user);
+        if (!user.verified)
+          return { success: false, message: "Please verify your account." };
         return await bcrypt
           .compare(args.password, user.password)
           .then((resHash) => {
@@ -256,11 +261,51 @@ const Mutations = new GraphQLObjectType({
           email: args.email,
           password: hash,
         });
-        return await user.save().then(({ email, id }) => {
-          return { id, email };
-        });
+        return await user
+          .save()
+          .then(async ({ email, id, verification_uuid }) => {
+            // eslint-disable-next-line security/detect-non-literal-fs-filename
+            const read_file = await promisify(fs.readFile);
+            const html = await read_file(
+              "./logic/mail/verify_account.html",
+              "utf-8"
+            );
+
+            const template = handlebars.compile(html);
+            const data = {
+              uuid: verification_uuid,
+              id,
+            };
+            let html_to_send = template(data);
+            await send_mail(
+              email,
+              "NB - Verification Email",
+              "Please click access this link to verify your account: https://about-us-clone.herokuapp.com/verify_account/" +
+                verification_uuid +
+                "",
+              html_to_send
+            );
+            return { id, email };
+          });
       },
     },
+    // verify_email: {
+    //   type: UserType,
+    //   args: {
+    //     email: { type: new GraphQLNonNull(EmailRegex) },
+    //   },
+    //   async resolve(_, args) {
+    //     const user = await User.findOne({ email: args.email });
+    // 	if(!user) return null;
+    //     const mail = await send_mail(
+    //       args.email,
+    //       "Email Verification - NB",
+    //       "Please click the link to verify your email address: ",
+    //       "test html"
+    //     );
+    //     console.log(mail);
+    //   },
+    // },
   },
 });
 

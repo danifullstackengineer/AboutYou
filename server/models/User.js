@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 const userTable = new mongoose.Schema({
   first: String,
@@ -22,6 +23,10 @@ const userTable = new mongoose.Schema({
   subscribed: {
     type: Boolean,
     default: false,
+  },
+  verification_uuid: {
+    type: String,
+    default: uuidv4(),
   },
 });
 

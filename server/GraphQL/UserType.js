@@ -16,6 +16,7 @@ const UserType = new GraphQLObjectType({
     likedProducts: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
     verified: { type: new GraphQLNonNull(GraphQLBoolean) },
     subscribed: { type: new GraphQLNonNull(GraphQLBoolean) },
+	verification_uuid: {type: new GraphQLNonNull(GraphQLString)}
   }),
 });
 

@@ -67,9 +67,15 @@ const login = async (req, res) => {
       }
     });
   } catch (err) {
-    console.log(err);
     res.send(loginBad);
   }
+};
+
+const verify_email = async (req, res) => {
+  try {
+    const q = req.query;
+    console.log(q);
+  } catch (err) {}
 };
 
 const verifyJWT = async (req, res, next) => {
@@ -90,8 +96,7 @@ const verifyJWT = async (req, res, next) => {
       req.userId = decoded.id;
       next();
     });
-  }
-  catch (err) {
+  } catch (err) {
     return res.send(loginBad);
   }
 };
@@ -99,4 +104,4 @@ const isAuth = async (_, res) => {
   return res.send(loginGood);
 };
 
-export { register, login, verifyJWT, isAuth };
+export { register, login, verifyJWT, isAuth, verify_email };
