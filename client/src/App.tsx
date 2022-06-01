@@ -319,23 +319,6 @@ function App() {
     setIsMobile(mobileCheck());
   }, []);
 
-  const [isViewport620, setIsViewport620] = useState<boolean>(true);
-  const [hasChecked, setHasChecked] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isMobile) {
-      window.addEventListener("resize", () => {
-        setIsViewport620(window.innerHeight > 620);
-      });
-    }
-    if (!hasChecked) {
-      setHasChecked(true);
-      setIsViewport620(window.innerHeight > 620);
-    }
-
-    return () => window.removeEventListener("resize", () => {});
-  }, [isMobile, hasChecked]);
-
   const [display, setDisplay] = useState<string>("");
 
   return (

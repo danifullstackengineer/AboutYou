@@ -82,14 +82,14 @@ function Menu({
       localStorage.setItem("i18nextLng", "ro");
       i18n.changeLanguage("ro");
     }
-  }, [activeLang]);
+  }, [activeLang, i18n]);
 
   useEffect(() => {
     setClickedBasket(false);
     setClickedUser(false);
     setClickedWishlist(false);
     setClickedLanguage(false);
-  }, [clickedMenu]);
+  }, [clickedMenu, setClickedBasket, setClickedLanguage, setClickedUser, setClickedWishlist]);
 
   useEffect(() => {
     if (basketRef.current && basketWrapperRef.current && isOpened) {
@@ -101,7 +101,7 @@ function Menu({
       }
     }
     setIsOpened(true);
-  }, [clickedBasket, bContext]);
+  }, [clickedBasket, bContext, isOpened]);
 
   useEffect(() => {
     if (wishlistRef.current && wishlistWrapperRef.current && isOpened) {
@@ -113,7 +113,7 @@ function Menu({
       }
     }
     setIsOpened(true);
-  }, [wContext, clickedWishlist]);
+  }, [wContext, clickedWishlist, isOpened]);
 
   useEffect(() => {
     if (userRef.current && userWrapperRef.current && isOpened) {
@@ -125,7 +125,7 @@ function Menu({
       }
     }
     setIsOpened(true);
-  }, [aContext, clickedUser]);
+  }, [aContext, clickedUser, isOpened]);
 
   useEffect(() => {
     if (languageRef.current && languageWrapperRef.current && isOpened) {
@@ -137,7 +137,7 @@ function Menu({
       }
     }
     setIsOpened(true);
-  }, [clickedLanguage]);
+  }, [clickedLanguage, isOpened]);
 
   const [scrollAmountBasket, setScrollAmountBasket] = useState<number>(0);
   const [scrollAmountWishlist, setScrollAmountWishlist] = useState<number>(0);
@@ -256,7 +256,7 @@ function Menu({
       mainRef.current.style.maxHeight =
         "calc(100vh - " + headerRef.current.offsetHeight + "px)";
     }
-  }, [headerRef, mainRef, width, height, location, menuOptionRef]);
+  }, [headerRef, mainRef, width, height, location, menuOptionRef, headerRef.current?.offsetHeight]);
 
   return (
     <div
