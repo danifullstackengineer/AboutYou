@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import "../../styles/components/Credentials/Credential.css";
 import { IoMdClose } from "react-icons/io";
 import InteractiveBtn from "../../Comp-Single/InteractiveBtn";
@@ -7,10 +7,14 @@ import { AiFillApple } from "react-icons/ai";
 import InputForm from "../../Comp-Single/InputForm";
 import { Link } from "react-router-dom";
 import { checkRegex } from "../../Logic/Credentials";
-import { register, login } from "../../API/Credential";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/Auth";
 import { MobileContext } from "../../Context/Mobile";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import {
+  login_user_no_third_party,
+  register_user_no_third_party,
+} from "../../Apollo/User";
 
 function Credential({
   clickedLogin,
@@ -31,100 +35,212 @@ function Credential({
   const context = useContext(AuthContext);
   const mContext = useContext(MobileContext);
 
-  const [warning, setWarning] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-  ]);
   const [input1, setInput1] = useState<string>("");
   const [input2, setInput2] = useState<string>("");
   const [input3, setInput3] = useState<string>("");
   const [input4, setInput4] = useState<string>("");
-  const [warn] = useState<string[]>([
-    "Please enter your first name",
-    "Please enter your last name",
-    "Please enter your email address",
-    "Please enter your password",
-  ]);
+  const [data, setData] = useState<{
+    first: string;
+    last: string;
+    email: string;
+    password: string;
+  }>({ first: "", last: "", email: "", password: "" });
+  const [warn, setWarn] = useState<string>();
+  const [fade_warning, set_fade_warning] = useState<boolean>(false);
+  const [loginForm, setLoginForm] = useState<boolean>(false);
+  const [registerForm, setRegisterForm] = useState<boolean>(false);
+  const [reset, setReset] = useState<number>(1);
 
-  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
-  const [isLoadingRegister, setIsLoadingRegister] = useState<boolean>(false);
+  const [
+    register_user_no_third_party_mut,
+    { loading: loadingReg, error: errorReg, data: dataReg },
+  ] = useMutation(register_user_no_third_party, {
+    variables: {
+      first: data.first,
+      last: data.last,
+      email: data.email,
+      password: data.password,
+    },
+  });
+
+  useEffect(() => {
+    if (chosenAction) {
+      setReset(reset + 1);
+      setData({ first: "", last: "", email: "", password: "" });
+      setInput1("");
+      setInput2("");
+      setInput3("");
+      setInput4("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chosenAction]);
+
+  const [
+    login_user_no_third_party_query,
+    { loading: loadingLog, error: errorLog, data: dataLog },
+  ] = useLazyQuery(login_user_no_third_party, {
+    variables: {
+      email: data.email,
+      password: data.password,
+    },
+  });
+
+  const handleShowFade = useCallback(() => {
+    set_fade_warning(true);
+    const timeout = setTimeout(() => {
+      set_fade_warning(false);
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleSubmit = (
     e:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLDivElement, MouseEvent>
-  ): void => {
+  ) => {
     e.preventDefault();
-    if (chosenAction[0]) {
-      setWarning([
-        !checkRegex(input1, "first"),
-        !checkRegex(input2, "last"),
-        !checkRegex(input3, "email"),
-        !checkRegex(input4, "password"),
-      ]);
-      if (!warning[0] && !warning[1] && !warning[2] && !warning[3]) {
-        setIsLoadingRegister(true);
-        register(input1, input2, input3, input4).then((res) => {
-          if (res.success) {
-            login(input3, input4).then((resLogin) => {
-              console.log(resLogin);
-              if (resLogin.success && resLogin.userData) {
-                window.dispatchEvent(new Event("loggedIn"));
-                setClickedLogin(false);
-                context.login(
-                  resLogin.userData.uid,
-                  resLogin.userData.token,
-                  new Date(resLogin.userData.expirationDate)
-                );
-              }
-            });
-          }
-          setIsLoadingRegister(false);
-        });
+    if (!loadingReg && !loadingLog && !fade_warning) {
+      if (chosenAction[0]) {
+        const reg1 = checkRegex(input1, "first");
+        if (!reg1) {
+          setWarn("Please use a valid first name.");
+          handleShowFade();
+          return;
+        }
+        const reg2 = checkRegex(input2, "last");
+        if (!reg2) {
+          setWarn("Please use a valid last name.");
+          handleShowFade();
+          return;
+        }
+        const reg3 = checkRegex(input3, "email");
+        if (!reg3) {
+          setWarn("Please use a valid email address.");
+          handleShowFade();
+          return;
+        }
+        const reg4 = checkRegex(input4, "password");
+        if (!reg4) {
+          setWarn(
+            "Please use a valid password. Only alphanumerics, @ and - are allowed and the password must be at least 6 digits long"
+          );
+          handleShowFade();
+          return;
+        }
+        if (input1 && input2 && input3 && input4) {
+          setData({
+            first: input1.trim(),
+            last: input2.trim(),
+            email: input3.trim(),
+            password: input4.trim(),
+          });
+          setRegisterForm(true);
+        }
+      } else if (chosenAction[1]) {
+        const reg3 = checkRegex(input3, "email");
+        if (!reg3) {
+          setWarn("Please use a valid email address.");
+          handleShowFade();
+          return;
+        }
+        const reg4 = checkRegex(input4, "password");
+        if (!reg4) {
+          setWarn(
+            "Please use a valid password. Only alphanumerics, @ and - are allowed and the password must be at least 6 digits long"
+          );
+          handleShowFade();
+          return;
+        }
+        if (input3 && input4) {
+          setData({
+            first: input1,
+            last: input2,
+            email: input3.trim(),
+            password: input4.trim(),
+          });
+          setLoginForm(true);
+        }
       }
     } else {
-      setWarning([
-        warning[0],
-        warning[1],
-        !checkRegex(input3, "email"),
-        !checkRegex(input4, "password"),
-      ]);
-      if (!warning[3] && !warning[4]) {
-        setIsLoadingLogin(true);
-        login(input3, input4).then((res) => {
-          setTimeout(() => {
-            if (res.success && res.userData) {
-              window.dispatchEvent(new Event("loggedIn"));
-              setClickedLogin(false);
-              context.login(
-                res.userData.uid,
-                res.userData.token,
-                new Date(res.userData.expirationDate)
-              );
-            }
-            setIsLoadingLogin(false);
-          }, 1000);
-        });
-      }
+      setWarn("Please wait 2 seconds before trying again.");
     }
   };
 
   useEffect(() => {
-    if (warning[0] && input1) {
-      setWarning([false, warning[1], warning[2], warning[3]]);
+    if (registerForm) {
+      register_user_no_third_party_mut();
     }
-    if (warning[1] && input2) {
-      setWarning([warning[0], false, warning[2], warning[3]]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [registerForm]);
+
+  useEffect(() => {
+    if (loginForm) {
+      login_user_no_third_party_query();
     }
-    if (warning[2] && input3) {
-      setWarning([warning[0], warning[1], false, warning[3]]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loginForm]);
+
+  useEffect(() => {
+    if (errorReg) {
+      setRegisterForm(false);
+      setWarn(
+        "Something went wrong, please try again. If the problem persists, please contact us via email."
+      );
+      handleShowFade();
+      setData({ first: "", last: "", email: "", password: "" });
     }
-    if (warning[3] && input4) {
-      setWarning([warning[0], warning[1], warning[2], false]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorReg]);
+
+  useEffect(() => {
+    if (errorLog) {
+      setLoginForm(false);
+      setWarn(
+        "Something went wrong, please try again. If the problem persists, please contact us via email."
+      );
+      handleShowFade();
+      setData({ first: "", last: "", email: "", password: "" });
     }
-  }, [input1, input2, input3, input4, warning]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorLog]);
+
+  useEffect(() => {
+    if (dataReg && registerForm && !loadingReg) {
+      setRegisterForm(false);
+      if (dataReg.register_user_no_third_party.id === "-1") {
+        setWarn("Email is already in use.");
+        handleShowFade();
+      } else {
+        setWarn("Succesfully registered. Please check your email address.");
+        handleShowFade();
+        const timeout = setTimeout(() => {
+          setChosenAction([false, true]);
+          return () => clearTimeout(timeout);
+        }, 2600);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataReg, registerForm, loadingReg]);
+
+  useEffect(() => {
+    if (dataLog && loginForm && !loadingLog) {
+      setLoginForm(false);
+      if (dataLog.login_user_no_third_party.success) {
+        window.dispatchEvent(new Event("loggedIn"));
+        const { uid, token, expirationDate } =
+          dataLog.login_user_no_third_party;
+        context.login(uid, token, new Date(parseInt(expirationDate)));
+        setWarn(dataLog.login_user_no_third_party.message);
+        handleShowFade();
+        console.log(dataLog.login_user_no_third_party.message);
+        const timeout = setTimeout(() => {
+          setClickedLogin(false);
+          return () => clearTimeout(timeout);
+        }, 2600);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataLog, loginForm, loadingLog]);
 
   return (
     <div
@@ -132,6 +248,17 @@ function Credential({
         clickedLogin ? "credential__show" : "credential__hide"
       } ${mContext.isMobile ? "credential-mobile" : ""}`}
     >
+      {warn ? (
+        <div
+          className={`credential__warn ${
+            fade_warning ? "credential__warn-fade" : ""
+          }`}
+        >
+          {warn}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="credential__container">
         <div className="credential__container-top">
           <h2>{chosenAction[0] ? "Register" : "Log In"}</h2>
@@ -238,10 +365,9 @@ function Credential({
                   placeholder={"First name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
-                  warning={warning[0]}
-                  warningMsg={warn[0]}
                   setInputParent={setInput1}
                   transformAmount={-230}
+                  reset={reset}
                 />
                 <InputForm
                   width={270}
@@ -249,10 +375,9 @@ function Credential({
                   placeholder={"Last name"}
                   type={"text"}
                   border={[10, 10, 10, 10]}
-                  warning={warning[1]}
-                  warningMsg={warn[1]}
                   setInputParent={setInput2}
                   transformAmount={-230}
+                  reset={reset}
                 />
               </>
             ) : (
@@ -264,10 +389,9 @@ function Credential({
               placeholder={"Your email address"}
               type={"text"}
               border={[10, 10, 10, 10]}
-              warning={warning[2]}
-              warningMsg={warn[2]}
               setInputParent={setInput3}
               transformAmount={-230}
+              reset={reset}
             />
             <InputForm
               width={270}
@@ -275,10 +399,9 @@ function Credential({
               placeholder={"Password (min. 6 characters)"}
               type={"password"}
               border={[10, 10, 10, 10]}
-              warning={warning[3]}
-              warningMsg={warn[3]}
               setInputParent={setInput4}
               transformAmount={-230}
+              reset={reset}
             />
           </div>
           {chosenAction[1] ? (
@@ -319,7 +442,8 @@ function Credential({
               text={chosenAction[0] ? "Register" : "Login"}
               width={250}
               height={50}
-              isLoading={chosenAction[0] ? isLoadingRegister : isLoadingLogin}
+              //   isLoading={chosenAction[0] ? isLoadingRegister : isLoadingLogin}
+              isLoading={chosenAction[0] ? loadingReg : loadingLog}
               type="submit"
             />
           </div>
@@ -348,4 +472,4 @@ function Credential({
   );
 }
 
-export default Credential;
+export default React.memo(Credential);

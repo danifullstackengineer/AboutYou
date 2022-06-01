@@ -2,10 +2,10 @@ import {
   ExtendedAccessoryType,
   ExtendedProductType,
 } from "../../Context/Basket";
-import { ProductType, ProductTypeBasket } from "../../types/Product";
+import { ProductTypeBasket } from "../../types/Product";
 import { cloneDeep } from "lodash";
 import React from "react";
-import { AccessoryType, AccessoryTypeBasket } from "../../types/Accessory";
+import { AccessoryTypeBasket } from "../../types/Accessory";
 
 const addToBasketStorageAndContext = (
   item: ProductTypeBasket | AccessoryTypeBasket,
@@ -22,7 +22,7 @@ const addToBasketStorageAndContext = (
   };
   var basket_clone = cloneDeep(basket);
   if (duplicate()) {
-    basket_clone.map((product: ExtendedProductType | ExtendedAccessoryType) => {
+    basket_clone.map((product: ProductTypeBasket | AccessoryTypeBasket) => {
       if (product.id !== item.id) return product;
       else {
         product.quantity++;

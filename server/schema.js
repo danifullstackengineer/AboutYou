@@ -1,4 +1,6 @@
 import graphql, { GraphQLBoolean, GraphQLList, GraphQLNonNull } from "graphql";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 import {
   GraphQLObjectType,
@@ -15,6 +17,13 @@ import Products from "./models/Products.js";
 import Accessories from "./models/Accessories.js";
 import AccessoryType from "./GraphQL/AccessoryType.js";
 import { LikedAndTotalLikes } from "./GraphQL/CustomType.js";
+import {
+  FirstNameRegex,
+  LastNameRegex,
+  PasswordRegex,
+  EmailRegex,
+} from "./GraphQL/RegexType.js";
+import { LoginResultType } from "./GraphQL/MiscType.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -91,6 +100,59 @@ const RootQuery = new GraphQLObjectType({
           }
         }
         return res;
+      },
+    },
+    login_user_no_third_party: {
+      type: LoginResultType,
+      args: {
+        email: { type: new GraphQLNonNull(EmailRegex) },
+        password: { type: new GraphQLNonNull(PasswordRegex) },
+      },
+      async resolve(_, args) {
+        const user = await User.findOne({ email: args.email });
+        if (!user)
+          return {
+            success: false,
+            message: "Invalid credentials.",
+          };
+        return await bcrypt
+          .compare(args.password, user.password)
+          .then((resHash) => {
+            if (resHash) {
+              const id = user.id;
+              const expiry = 30;
+              if (process.env.TOKEN_SECRET) {
+                const token = jwt.sign({ id }, process.env.TOKEN_SECRET, {
+                  expiresIn: expiry * 30,
+                });
+                return {
+                  success: true,
+                  message: "Succesfully logged in.",
+                  token,
+                  uid: user.id,
+                  expirationDate: new Date(
+                    new Date().getTime() + expiry * 60000
+                  ),
+                };
+              } else {
+                return {
+                  success: false,
+                  message:
+                    process.env.NODE_ENV === "production"
+                      ? "Please ensure you're using a Token secret"
+                      : "Something went wrong, please try again. If the problem persists, please contact us via email.",
+                };
+              }
+            } else {
+              return {
+                success: false,
+                message: "Invalid credentials.",
+              };
+            }
+          })
+          .catch(() => {
+            return { success: false, message: "Invalid credentials." };
+          });
       },
     },
   },
@@ -171,6 +233,30 @@ const Mutations = new GraphQLObjectType({
               return doc;
             }
           }
+        });
+      },
+    },
+    register_user_no_third_party: {
+      type: UserType,
+      args: {
+        first: { type: new GraphQLNonNull(FirstNameRegex) },
+        last: { type: new GraphQLNonNull(LastNameRegex) },
+        email: { type: new GraphQLNonNull(EmailRegex) },
+        password: { type: new GraphQLNonNull(PasswordRegex) },
+      },
+      async resolve(_, args) {
+        const isUser = await User.findOne({ email: args.email });
+        if (isUser) return { id: -1, email: "" };
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(args.password, salt);
+        const user = new User({
+          first: args.first,
+          last: args.last,
+          email: args.email,
+          password: hash,
+        });
+        return await user.save().then(({ email, id }) => {
+          return { id, email };
         });
       },
     },

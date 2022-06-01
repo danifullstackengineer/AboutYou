@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import "../../styles/components/Header/Header.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
@@ -52,22 +52,21 @@ function Header({
 
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
+  const handleScroll = useCallback(()=>{
+	  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+	  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+	  const scrolled = (winScroll / height ) * 100;
+	  setScrollAmount(scrolled);
+  }, [])
+
   useEffect(() => {
     if (!mContext.isMobile) {
-      window.addEventListener("scroll", () => {
-        var winScroll =
-          document.body.scrollTop || document.documentElement.scrollTop;
-        var height =
-          document.documentElement.scrollHeight -
-          document.documentElement.clientHeight;
-        var scrolled = (winScroll / height) * 100;
-        setScrollAmount(scrolled);
-      });
+      window.addEventListener("scroll", handleScroll);
       return () => {
-        window.removeEventListener("scroll", () => {});
+        window.removeEventListener("scroll", handleScroll);
       };
     }
-  }, [mContext.isMobile]);
+  }, [handleScroll, mContext.isMobile]);
 
   const divRef = useRef<HTMLDivElement>(null);
 

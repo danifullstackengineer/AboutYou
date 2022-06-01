@@ -14,9 +14,9 @@ export type ProductType = {
 }
 
 export type ProductTypeBasket = ExtendedProductType & {
-    selectedSize: ProductType['sizes'][0] | undefined;
-    selectedColor: ProductType['colors'][0] | undefined;
+    selectedSize?: ProductType['sizes'][0];
+    selectedColor?: ProductType['colors'][0];
     selectedAccessory?: AccessoryType;
-    customStyle?: FileList[0];
+    customStyle?: File;
 	quantity: number;
 }

@@ -1,4 +1,4 @@
-import graphql, { GraphQLList, GraphQLNonNull } from "graphql";
+import graphql, { GraphQLBoolean, GraphQLList, GraphQLNonNull } from "graphql";
 
 import { GraphQLString, GraphQLObjectType, GraphQLID } from "graphql";
 
@@ -14,6 +14,8 @@ const UserType = new GraphQLObjectType({
     phoneNumber: { type: GraphQLString },
     id: { type: GraphQLID },
     likedProducts: { type: new GraphQLNonNull(new GraphQLList(GraphQLString)) },
+    verified: { type: new GraphQLNonNull(GraphQLBoolean) },
+    subscribed: { type: new GraphQLNonNull(GraphQLBoolean) },
   }),
 });
 

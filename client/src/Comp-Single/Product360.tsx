@@ -59,7 +59,7 @@ function Product360({
   useEffect(() => {
     if (data) {
       var arrAcc: boolean[] = [];
-      data.getAccessoriesBasedOnParent.map(
+      data.getAccessoriesBasedOnParent.forEach(
         (accessory: AccessoryType, i: number) => {
           arrAcc.push(false);
         }
@@ -121,15 +121,15 @@ function Product360({
         return product.price;
       }
     } else return product.price;
-  }, [product, accIndex]);
+  }, [addedAccessory, accIndex, data, product.price]);
 
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
     setTotal(getTotalAfterAccessory());
-  }, [accIndex, product.price]);
+  }, [accIndex, getTotalAfterAccessory, product.price]);
 
-  const [file, setFile] = useState<any>();
+  const [file, setFile] = useState<File>();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const warn = "Please use a valid image file.";
@@ -162,17 +162,17 @@ function Product360({
   }, [hasSelectedColor, hasSelectedSize]);
 
   const handleAddToBasket = (): void => {
-    if (sizeIdx && colorIdx) {
+    if (sizeIdx !== undefined && colorIdx !== undefined) {
       bContext.addToBasket({
-	...product,
-	selectedSize: product.sizes[sizeIdx],
-	selectedColor: product.colors[colorIdx],
-	selectedAccessory: accIndex
-		? data.getAccessoriesBasedOnParent[accIndex]
-		: undefined,
-	customStyle: file,
-	quantity:1
-});
+        ...product,
+        selectedSize: product.sizes[sizeIdx],
+        selectedColor: product.colors[colorIdx],
+        selectedAccessory: accIndex !== undefined
+          ? data.getAccessoriesBasedOnParent[accIndex]
+          : undefined,
+        customStyle: file,
+        quantity: 1,
+      });
     }
     if (!clickedMenu) {
       setClickedMenu(true);
@@ -180,7 +180,6 @@ function Product360({
         setClickedBasket(true);
       }, 150);
     } else {
-      console.log("true clicked menu!");
       if (!clickedBasket) {
         handleOpening("basket");
       }

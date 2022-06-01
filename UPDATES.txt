@@ -15,7 +15,7 @@
 2.0.0
 LIGHT_MODE=
 DONE: -settings in drept cu logourile --
--bug 360 face mai mic --
+DONE: -bug 360 face mai mic --
 DONE: -slider nu merge pe ecrane mai mici
 DONE: -primul produs random din 360 --
 DONE: -dupa daca dai click pe urmatoarele produse, primul se inlocuieste cu cel pe care ai dat click
@@ -33,22 +33,22 @@ logare cu FACEBOOK, INSTAGRAM, TWITTER, APPLE, GMAIL
 DONE:la 360 butoanele nu sunt destul de mari - culori, marimi
 
 
-TODO: DONE: --- fix likes --- fixed
-TODO: DONE: --- on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image. --- fixed
-TODO: --- in checkout add countries in the dropdown --- fixed(changed to no dropdown)
-TODO: DONE:--- Add form validation in checkout forms --- fixed
+TODO: DONE: fix likes
+TODO: DONE: on the 360 product on certain widths, 3.jpg (or index === 2) gives back white image.
+TODO: in checkout add countries in the dropdown --- fixed(changed to no dropdown)
+TODO: DONE: Add form validation in checkout forms
 TODO: DEPRECATED: Add tablet responsiveness in checkout
 TODO: Fix checkout button -- partially fixed --- need to work on payment button
 TODO: Add scrolling when form input is invalid/missing
-TODO: DONE: --- In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method. --- fixed
-TODO: DONE: --- Change warning in payment method to be responsive. --- fixed
-TODO: DONE: --- In checkout page on the inputs, make sure there's some padding on the right side. --- fixed
+TODO: DONE: In payment selection on manual crypto after someone selects it, it doesn't fully go away if you choose another method.
+TODO: DONE: Change warning in payment method to be responsive.
+TODO: DONE: In checkout page on the inputs, make sure there's some padding on the right side.
 TODO: Handle error in Product360
 TODO: Sometimes in 360 product you can't select all sizes or all colors.
 TODO: Handle errors in BodyInner;
-TODO: DONE: --- When adding to basket in Product360 it doesn't open the menu. --- fixed
+TODO: DONE: When adding to basket in Product360 it doesn't open the menu.
 TODO: Make it so that when user adds the same product but with different sizes/colors/accesories/custom, it appears as a separate item and not the same.
-TODO: If name is too big for the color in product 360, it overflows;
+TODO: DONE: If name is too big for the color in product 360, it overflows;
 TODO: DONE: On smaller screens, the scrollintoview for 360 products doesn't show everything.
 TODO: DONE: On mobile while the 360 img is loading, it creates an empty space.
 TODO: Add react.lazy and custom suspense/error handling to some components
@@ -68,3 +68,4 @@ TODO: Remove inline styling in react side, so that csp doesn't complain
 TODO: Fix failed to load stripe error
 TODO: On mobile add support for hover effects. Primarily needed on products
 TODO: Configure stripe to use cross origin
+TODO: Add somehow the image from the basket to the localstorage or save it somehow
