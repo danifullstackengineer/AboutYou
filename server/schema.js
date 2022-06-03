@@ -50,9 +50,14 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(ProductType),
       args: {
         dark: { type: new GraphQLNonNull(GraphQLBoolean) },
+        offset: { type: GraphQLInt },
+        limit: { type: GraphQLInt },
       },
       async resolve(par, args) {
-        return await Products.find({ dark: args.dark });
+        return await Products.find({ dark: args.dark })
+          .lean()
+          .skip(args.offset ? args.offset : 0)
+          .limit(args.limit ? args.limit : 0);
       },
     },
     getAccessories: {

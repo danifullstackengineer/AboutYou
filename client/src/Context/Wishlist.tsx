@@ -6,8 +6,8 @@ import { ExtendedAccessoryType, ExtendedProductType } from "./Basket";
 export declare type WishlistContextType = {
   product: ExtendedProductType[] | ExtendedAccessoryType[];
   addToWishlist: (item: ProductType | AccessoryType) => void;
-  removeFromWishlist: (id: ProductType["id"] | AccessoryType['id']) => void;
-  isInWishlist: (id: ProductType["id"] | AccessoryType['id']) => boolean;
+  removeFromWishlist: (id: ProductType["_id"] | AccessoryType['_id']) => void;
+  isInWishlist: (id: ProductType["_id"] | AccessoryType['_id']) => boolean;
 };
 
 export const WishlistContext = createContext<WishlistContextType>({

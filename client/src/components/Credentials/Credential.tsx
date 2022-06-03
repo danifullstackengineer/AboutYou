@@ -330,6 +330,7 @@ function Credential({
               border={[10, 10, 10, 10]}
               setInputParent={setInput4}
               transformAmount={-230}
+              autocomplete={true}
             />
           </div>
           {chosenAction[1] ? (

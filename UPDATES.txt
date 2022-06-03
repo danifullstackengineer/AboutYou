@@ -72,3 +72,5 @@ TODO: Add somehow the image from the basket to the localstorage or save it someh
 TODO: Make liking products not so laggy
 TODO: When logging out it appears heart doesn't update
 TODO: Make reset password
+TODO: Add custom page handlers for confirming email address
+TODO: Fix swapping 360 products

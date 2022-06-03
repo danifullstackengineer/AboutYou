@@ -10,6 +10,7 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import "./i18";
+import { offsetLimitPagination } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
   uri: "/graphql",
@@ -57,7 +58,10 @@ const client = new ApolloClient({
         keyFields: [],
       },
       ProductType: {
-        keyFields: ["id"],
+        keyFields: ["_id"],
+        merge(incoming = [], existing = []) {
+          return offsetLimitPagination();
+        },
       },
     },
   }),

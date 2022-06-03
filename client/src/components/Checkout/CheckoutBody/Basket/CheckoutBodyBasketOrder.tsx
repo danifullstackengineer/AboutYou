@@ -72,7 +72,7 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
                               <IoMdArrowDropup />
                             </span>
                             <span
-                              onClick={() => bContext.decrementProduct(item.id)}
+                              onClick={() => bContext.decrementProduct(item._id)}
                             >
                               <IoMdArrowDropdown />
                             </span>
@@ -80,7 +80,7 @@ function CheckoutBodyBasketOrder({ payment }: { payment?: boolean }) {
                         </div>
                       </div>
                       <button
-                        onClick={() => bContext.removeFromBasket(item.id)}
+                        onClick={() => bContext.removeFromBasket(item._id)}
                       >
                         Remove item
                       </button>

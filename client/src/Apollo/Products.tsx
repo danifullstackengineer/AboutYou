@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 const getAllProductsMain = gql`
-  query ($dark: Boolean!) {
-    getProducts(dark: $dark) {
-      id
+  query ($dark: Boolean!, $offset: Int, $limit: Int) {
+    getProducts(dark: $dark, offset: $offset, limit: $limit) {
+      _id
       backgroundImg
       foregroundImg
       title
@@ -26,14 +26,15 @@ const setLikedProduct = gql`
 `;
 const getIfLikedProductByUserAndTotalLikes = gql`
   query ($id: ID, $product_id: ID!) {
-    getIfLikedProductByUserAndTotalLikes(
-      id: $id,
-      product_id: $product_id
-    ) {
+    getIfLikedProductByUserAndTotalLikes(id: $id, product_id: $product_id) {
       likes
       liked
     }
   }
 `;
 
-export { getAllProductsMain, setLikedProduct, getIfLikedProductByUserAndTotalLikes };
+export {
+  getAllProductsMain,
+  setLikedProduct,
+  getIfLikedProductByUserAndTotalLikes,
+};

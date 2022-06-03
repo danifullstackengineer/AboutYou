@@ -16,14 +16,14 @@ const addToBasketStorageAndContext = (
 ): void => {
   const duplicate = (): boolean | undefined => {
     for (let i = 0; i < basket.length; i++) {
-      if (basket[i].id === item.id) return true;
+      if (basket[i]._id === item._id) return true;
       else continue;
     }
   };
   var basket_clone = cloneDeep(basket);
   if (duplicate()) {
     basket_clone.map((product: ProductTypeBasket | AccessoryTypeBasket) => {
-      if (product.id !== item.id) return product;
+      if (product._id !== item._id) return product;
       else {
         product.quantity++;
         return product;
@@ -45,7 +45,7 @@ const removeFromBasketStorageAndContext = (
 ): void => {
   var basket_clone = cloneDeep(basket);
   basket_clone = basket_clone.filter(
-    (product: ExtendedProductType | ExtendedAccessoryType) => product.id !== id
+    (product: ExtendedProductType | ExtendedAccessoryType) => product._id !== id
   );
   setBasket(basket_clone);
   localStorage.setItem("basket", JSON.stringify(basket_clone));
@@ -64,7 +64,7 @@ const isProductInBasket = (
   basket: ProductTypeBasket[] | AccessoryTypeBasket[]
 ): boolean => {
   var isIn = false;
-  basket.forEach((product) => (product.id === id ? (isIn = true) : undefined));
+  basket.forEach((product) => (product._id === id ? (isIn = true) : undefined));
   return isIn;
 };
 
@@ -77,7 +77,7 @@ const decrementProductStorage = (
 ): void => {
   var basket_clone = cloneDeep(basket);
   basket_clone.filter((product: ExtendedProductType) =>
-    product.id === id && product.quantity > 1 ? product.quantity-- : product
+    product._id === id && product.quantity > 1 ? product.quantity-- : product
   );
   setBasket(basket_clone);
   localStorage.setItem("basket", JSON.stringify(basket_clone));

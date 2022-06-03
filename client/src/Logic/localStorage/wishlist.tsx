@@ -10,7 +10,7 @@ const addToWishlistStorageAndContext = (
 ) => {
   const duplicate = (): boolean | undefined => {
     for (let i = 0; i < wishlist.length; i++) {
-      if (wishlist[i].id === item.id) return true;
+      if (wishlist[i]._id === item._id) return true;
       else continue;
     }
   };
@@ -28,7 +28,7 @@ const removeFromWishlistStorageAndContext = (
 ): void => {
   var wishlist_clone = cloneDeep(wishlist);
   wishlist_clone = wishlist_clone.filter(
-    (product: ExtendedProductType | ExtendedAccessoryType) => product.id !== id
+    (product: ExtendedProductType | ExtendedAccessoryType) => product._id !== id
   );
   setWishlist(wishlist_clone);
   localStorage.setItem("wishlist", JSON.stringify(wishlist_clone));
@@ -36,7 +36,7 @@ const removeFromWishlistStorageAndContext = (
 const isProductInWishlist = (id: string, wishlist: ExtendedProductType[] | ExtendedAccessoryType[]) => {
   var isIn = false;
   wishlist.forEach((product) =>
-    product.id === id ? (isIn = true) : undefined
+    product._id === id ? (isIn = true) : undefined
   );
 
   return isIn;

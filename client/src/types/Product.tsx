@@ -1,7 +1,7 @@
 import { ExtendedProductType } from '../Context/Basket';
 import type {AccessoryType} from './Accessory';
 export type ProductType = {
-    id: string;
+    _id: string;
     backgroundImg: string;
     foregroundImg: string;
     title: string;

@@ -17,7 +17,6 @@ const Accessory = ({
   handleOpening,
   clickedBasket,
   clickedWishlist,
-  loading_img,
 }: {
   accessory: AccessoryType;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +28,6 @@ const Accessory = ({
   clickedBasket: boolean;
   clickedWishlist: boolean;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
-  loading_img: "eager" | "lazy";
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
@@ -45,8 +43,8 @@ const Accessory = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.stopPropagation();
-    if (bContext.isInBasket(accessory.id)) {
-      bContext.removeFromBasket(accessory.id);
+    if (bContext.isInBasket(accessory._id)) {
+      bContext.removeFromBasket(accessory._id);
     } else {
       bContext.addToBasket({
         ...accessory,
@@ -75,8 +73,8 @@ const Accessory = ({
     if (!aContext.isLoggedIn) {
       setClickedLogin(true);
     } else {
-      if (wContext.isInWishlist(accessory.id)) {
-        wContext.removeFromWishlist(accessory.id);
+      if (wContext.isInWishlist(accessory._id)) {
+        wContext.removeFromWishlist(accessory._id);
       } else {
         wContext.addToWishlist(accessory);
       }
@@ -98,7 +96,7 @@ const Accessory = ({
   return (
     <div className={`accessory`}>
       <div className={`accessory__img`}>
-        <img src={accessory.backgroundImg} alt={""} loading={loading_img} />
+        <img src={accessory.backgroundImg} alt={""}/>
       </div>
       <h3>{accessory.title}</h3>
       <h4>Only: $ {accessory.price}</h4>
@@ -114,7 +112,6 @@ const Accessory = ({
               : "/assets/svg/heart-half-dark.svg"
           }
           alt=""
-          loading={loading_img}
         />
         <span>{likes}</span>
       </button>
@@ -132,12 +129,11 @@ const Accessory = ({
       >
         <img
           src={
-            bContext.isInBasket(accessory.id)
+            bContext.isInBasket(accessory._id)
               ? "/assets/svg/basket_clicked.svg"
               : "/assets/svg/basket_unclicked.svg"
           }
           alt=""
-          loading={loading_img}
         />
       </button>
       {width <= 1100 ? (
@@ -154,7 +150,6 @@ const Accessory = ({
                   : "/assets/svg/heart-half-dark.svg"
               }
               alt=""
-              loading={loading_img}
             />
             <span>{likes}</span>
           </button>
@@ -170,12 +165,11 @@ const Accessory = ({
           >
             <img
               src={
-                bContext.isInBasket(accessory.id)
+                bContext.isInBasket(accessory._id)
                   ? "/assets/svg/basket_clicked.svg"
                   : "/assets/svg/basket_unclicked.svg"
               }
               alt=""
-              loading={loading_img}
             />
           </button>
         </div>

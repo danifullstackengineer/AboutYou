@@ -34,7 +34,7 @@ function Product360({
 
   const { loading, error, data } = useQuery(getAccessoriesBasedOnParent, {
     variables: {
-      parentId: product.id,
+      parentId: product._id,
     },
   });
 

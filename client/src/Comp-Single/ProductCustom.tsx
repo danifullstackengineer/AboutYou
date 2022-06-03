@@ -1,5 +1,6 @@
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import React, { useContext, useEffect, useState } from "react";
+import { cloneDeep } from "lodash";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   getIfLikedProductByUserAndTotalLikes,
   setLikedProduct,
@@ -14,7 +15,6 @@ import { ProductType } from "../types/Product";
 const ProductCustom = ({
   product,
   dark,
-  handleChangeProduct360,
   clickedMenu,
   setClickedMenu,
   setClickedBasket,
@@ -23,11 +23,11 @@ const ProductCustom = ({
   setClickedLogin,
   setClickedWishlist,
   clickedWishlist,
-  loading_img,
+  refProduct,
+  handle360Change,
 }: {
   product: ProductType;
   dark?: boolean;
-  handleChangeProduct360?: (product: ProductType) => void;
   clickedMenu?: boolean;
   setClickedBasket?: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedMenu?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,7 +36,8 @@ const ProductCustom = ({
   setClickedLogin?: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedWishlist?: React.Dispatch<React.SetStateAction<boolean>>;
   clickedWishlist?: boolean;
-  loading_img: "lazy" | "eager";
+  refProduct?: React.RefObject<HTMLDivElement>;
+  handle360Change?: (product: ProductType) => void;
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(0);
@@ -53,15 +54,15 @@ const ProductCustom = ({
   ] = useLazyQuery(getIfLikedProductByUserAndTotalLikes, {
     variables: {
       id: aContext.userId,
-      product_id: product.id,
+      product_id: product._id,
     },
   });
 
   useEffect(() => {
-    if (product.id && dark) {
+    if (product._id && dark) {
       getLikesAndIfLiked();
     }
-  }, [aContext, product.id, dark]);
+  }, [aContext, product._id, dark]);
 
   useEffect(() => {
     if (dataL) {
@@ -75,7 +76,7 @@ const ProductCustom = ({
     {
       variables: {
         id: aContext.userId,
-        likedId: product.id,
+        likedId: product._id,
         liked: !likedInner,
       },
     }
@@ -109,8 +110,8 @@ const ProductCustom = ({
     if (!aContext.isLoggedIn && setClickedLogin) {
       setClickedLogin(true);
     } else {
-      if (wContext.isInWishlist(product.id)) {
-        wContext.removeFromWishlist(product.id);
+      if (wContext.isInWishlist(product._id)) {
+        wContext.removeFromWishlist(product._id);
       } else {
         wContext.addToWishlist(product);
       }
@@ -130,14 +131,15 @@ const ProductCustom = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
     e.stopPropagation();
-    if (bContext.isInBasket(product.id)) {
-      bContext.removeFromBasket(product.id);
+    if (bContext.isInBasket(product._id)) {
+      bContext.removeFromBasket(product._id);
     } else {
       bContext.addToBasket({
-	...product, quantity: 1,
-	selectedSize: undefined,
-	selectedColor: undefined
-});
+        ...product,
+        quantity: 1,
+        selectedSize: undefined,
+        selectedColor: undefined,
+      });
     }
     if (!clickedMenu && setClickedBasket && setClickedMenu) {
       setClickedMenu(true);
@@ -157,9 +159,8 @@ const ProductCustom = ({
 
   return (
     <div
-      onClick={() =>
-        handleChangeProduct360 ? handleChangeProduct360(product) : undefined
-      }
+      ref={refProduct}
+      onClick={() => (handle360Change ? handle360Change(product) : undefined)}
       className={`productCustom ${
         dark ? "productCustom-dark" : "productCustom-light"
       }`}
@@ -168,7 +169,6 @@ const ProductCustom = ({
         <img
           src={!dark ? product.backgroundImg + "1.jpg" : product.backgroundImg}
           alt={""}
-          loading={loading_img}
         />
       </div>
       <h3>{product.title}</h3>
@@ -179,7 +179,7 @@ const ProductCustom = ({
         <button
           className={"productCustom__customize-btn"}
           onClick={() =>
-            handleChangeProduct360 ? handleChangeProduct360(product) : undefined
+            handle360Change ? handle360Change(product) : undefined
           }
         >
           Customize!
@@ -200,7 +200,6 @@ const ProductCustom = ({
                 : "/assets/svg/heart-half-dark.svg"
             }
             alt=""
-            loading={loading_img}
           />
           <span>{likes}</span>
         </button>
@@ -224,12 +223,11 @@ const ProductCustom = ({
         >
           <img
             src={
-              bContext.isInBasket(product.id)
+              bContext.isInBasket(product._id)
                 ? "/assets/svg/basket_clicked.svg"
                 : "/assets/svg/basket_unclicked.svg"
             }
             alt=""
-            loading={loading_img}
           />
         </button>
       ) : (
@@ -249,7 +247,6 @@ const ProductCustom = ({
                   : "/assets/svg/heart-half-dark.svg"
               }
               alt=""
-              loading={loading_img}
             />
             <span>{likes}</span>
           </button>
@@ -265,12 +262,11 @@ const ProductCustom = ({
           >
             <img
               src={
-                bContext.isInBasket(product.id)
+                bContext.isInBasket(product._id)
                   ? "/assets/svg/basket_clicked.svg"
                   : "/assets/svg/basket_unclicked.svg"
               }
               alt=""
-              loading={loading_img}
             />
           </button>
         </div>

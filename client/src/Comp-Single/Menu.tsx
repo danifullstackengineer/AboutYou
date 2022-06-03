@@ -242,7 +242,7 @@ function Menu({
   const handleAddToBasketFromWishlist = (
     product: ExtendedProductType | ExtendedAccessoryType
   ) => {
-    wContext.removeFromWishlist(product.id);
+    wContext.removeFromWishlist(product._id);
     bContext.addToBasket({
       ...product,
       selectedSize: undefined,
@@ -328,7 +328,7 @@ function Menu({
                           <button
                             type="button"
                             onClick={() =>
-                              bContext.decrementProduct(product.id)
+                              bContext.decrementProduct(product._id)
                             }
                           >
                             -
@@ -338,7 +338,7 @@ function Menu({
                           <button
                             type="button"
                             onClick={() =>
-                              bContext.removeFromBasket(product.id)
+                              bContext.removeFromBasket(product._id)
                             }
                           >
                             Remove
@@ -430,7 +430,7 @@ function Menu({
                         <button
                           type="button"
                           onClick={() =>
-                            wContext.removeFromWishlist(product.id)
+                            wContext.removeFromWishlist(product._id)
                           }
                         >
                           Remove

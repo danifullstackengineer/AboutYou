@@ -7,10 +7,10 @@ export declare type BasketContextType = {
     | ProductTypeBasket[]
     | AccessoryTypeBasket[];
   addToBasket: (item: ProductTypeBasket | AccessoryTypeBasket) => void;
-  removeFromBasket: (id: ProductType["id"] | AccessoryType["id"]) => void;
+  removeFromBasket: (id: ProductType["_id"] | AccessoryType["_id"]) => void;
   getTotalPrice: () => number;
-  isInBasket: (id: ProductType["id"] | AccessoryType["id"]) => boolean;
-  decrementProduct: (id: ProductType["id"] | AccessoryType["id"]) => void;
+  isInBasket: (id: ProductType["_id"] | AccessoryType["_id"]) => boolean;
+  decrementProduct: (id: ProductType["_id"] | AccessoryType["_id"]) => void;
 };
 
 export const BasketContext = createContext<BasketContextType>({

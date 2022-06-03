@@ -13,7 +13,7 @@ import {
 const ProductType = new GraphQLObjectType({
   name: "ProductType",
   fields: () => ({
-    id: { type: new GraphQLNonNull(GraphQLID) },
+    _id: { type: new GraphQLNonNull(GraphQLID) },
     backgroundImg: { type: new GraphQLNonNull(GraphQLString) },
     foregroundImg: { type: new GraphQLNonNull(GraphQLString) },
     title: { type: new GraphQLNonNull(GraphQLString) },

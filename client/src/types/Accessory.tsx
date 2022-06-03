@@ -1,5 +1,5 @@
 export type AccessoryType = {
-    id: string;
+    _id: string;
     backgroundImg: string;
     title: string;
     price: number;

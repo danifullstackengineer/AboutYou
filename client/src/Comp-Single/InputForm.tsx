@@ -23,6 +23,7 @@ function InputForm({
   setDate,
   phoneNumber,
   date,
+  autocomplete,
 }: {
   width: number;
   placeholder: string;
@@ -41,6 +42,7 @@ function InputForm({
   setDate?: React.Dispatch<React.SetStateAction<Date | string>>;
   phoneNumber?: boolean;
   date?: string | Date;
+  autocomplete?: boolean;
 }) {
   const [input, setInput] = useState<string>("");
   const [deleteTyped, setDeleteTyped] = useState<boolean>(false);
@@ -149,6 +151,7 @@ function InputForm({
         }}
         value={input}
         readOnly={calendar}
+        autoComplete={autocomplete ? "on" : "off"}
       />
       {warning ? (
         <span className="inputForm__icon-warn">
