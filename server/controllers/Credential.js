@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { send_mail } from "../logic/mail/send_mail.js";
 import User from "../models/User.js";
 import {
   registerGood,
@@ -27,7 +28,7 @@ const register = async (req, res) => {
     });
     await user
       .save()
-      .then(() => {
+      .then(async () => {
         return res.send(registerGood);
       })
       .catch(() => {

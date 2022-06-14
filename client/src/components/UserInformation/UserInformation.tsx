@@ -6,7 +6,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BiLockAlt } from "react-icons/bi";
 import { VscSettings } from "react-icons/vsc";
 import { RiMessage2Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useContext, useRef } from "react";
 import { AuthContext } from "../../Context/Auth";
 
@@ -20,19 +20,27 @@ function UserInformation({
   setDisableClosing: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const context = useContext(AuthContext);
 
   useEffect(() => {
-    if (!context.isLoggedIn && window.location.pathname !== "/help") {
+    if (!context.isLoggedIn && location.pathname !== "/help") {
       setClickedLogin(true);
       setDisableClosing(true);
+    } else {
+      setClickedLogin(false);
+      setDisableClosing(false);
     }
   }, [context, setClickedLogin, setDisableClosing]);
 
   const mainRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (mainRef.current && type !== 2) {
-      mainRef.current.style.marginTop = "3.5em";
+    if (mainRef.current) {
+      if (type !== 2) {
+        mainRef.current.style.marginTop = "3.5em";
+      } else {
+        mainRef.current.style.marginTop = "0";
+      }
     }
   }, [mainRef, type]);
 

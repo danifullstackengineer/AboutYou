@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import "../../styles/components/Header/Header.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
@@ -52,12 +58,15 @@ function Header({
 
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
-  const handleScroll = useCallback(()=>{
-	  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-	  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-	  const scrolled = (winScroll / height ) * 100;
-	  setScrollAmount(scrolled);
-  }, [])
+  const handleScroll = useCallback(() => {
+    const winScroll =
+      document.body.scrollTop || document.documentElement.scrollTop;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    setScrollAmount(scrolled);
+  }, []);
 
   useEffect(() => {
     if (!mContext.isMobile) {
@@ -126,7 +135,7 @@ function Header({
           <button
             type="button"
             className={
-              !accessories && !custom ? "header__bottom-btns-active" : ""
+              location.pathname === "/" ? "header__bottom-btns-active" : ""
             }
             onClick={() => navigate("/")}
           >
@@ -142,8 +151,14 @@ function Header({
           </button>
           <button
             type="button"
-            className={custom ? "header__bottom-btns-active" : ""}
-            onClick={() => navigate("/light")}
+            className={
+              location.pathname === "/light" || location.pathname === "/dark"
+                ? "header__bottom-btns-active"
+                : ""
+            }
+            onClick={() =>
+              navigate(location.pathname !== "/dark" ? "/light" : "/dark")
+            }
           >
             <Trans
               i18nKey={
@@ -157,7 +172,11 @@ function Header({
           </button>
           <button
             type="button"
-            className={accessories ? "header__bottom-btns-active" : ""}
+            className={
+              location.pathname === "/accessories"
+                ? "header__bottom-btns-active"
+                : ""
+            }
             onClick={() => navigate("/accessories")}
           >
             <Trans

@@ -183,28 +183,25 @@ const Mutations = new GraphQLObjectType({
         id: { type: new GraphQLNonNull(GraphQLID) },
       },
       async resolve(par, args) {
-        const currentUser = await User.findById(args.id);
-        if (currentUser) {
-          const newUser = {
-            first: args.first ? args.first : currentUser.first,
-            last: args.last ? args.last : currentUser.last,
-            email: args.email ? args.email : currentUser.email,
-            birthDate: args.birthDate ? args.birthDate : currentUser.birthDate,
-            phoneNumber: args.phoneNumber
-              ? args.phoneNumber
-              : currentUser.phoneNumber,
-          };
-          return await User.findOneAndUpdate(
-            { id: args.id },
-            {
-              first: newUser.first,
-              last: newUser.last,
-              email: newUser.email,
-              birthDate: newUser.birthDate,
-              phoneNumber: newUser.phoneNumber,
-            }
-          );
-        }
+        let opts = {};
+        if (args.first) opts.first = args.first;
+        if (args.last) opts.last = args.last;
+        if (args.email) opts.email = args.email;
+        if (args.birthDate) opts.birthDate = args.birthDate;
+        if (args.phoneNumber) opts.phoneNumber = args.phoneNumber;
+        return await User.findOneAndUpdate(
+          { id: args.id },
+          {
+            $set: {
+              first: opts.first,
+              last: opts.last,
+              email: opts.email,
+              birthDate: opts.birthDate,
+              phoneNumber: opts.phoneNumber,
+            },
+          },
+          { new: true }
+        );
       },
     },
     modifyUserLikedProducts: {
@@ -276,7 +273,7 @@ const Mutations = new GraphQLObjectType({
               "utf-8"
             );
 
-            const template = handlebars.compile(html);
+            const template = await handlebars.compile(html);
             const data = {
               uuid: verification_uuid,
               id,
@@ -292,15 +289,22 @@ const Mutations = new GraphQLObjectType({
             //     id,
             //   html_to_send
             // );
-            let html_to_send = template(data);
+            let html_to_send = await template(data);
             await send_mail(
               email,
               "NB - Verification Email",
               "Please click the following link to verify your email: http://localhost:5000/verify_email/query?uuid=" +
                 verification_uuid +
                 "&id=" +
-                id
-            );
+                id,
+              html_to_send
+            )
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
             return { id, email };
           });
       },

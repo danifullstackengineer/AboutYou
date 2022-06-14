@@ -61,13 +61,17 @@ function FifthFooter({ chosenMode }: { chosenMode?: boolean | undefined }) {
           <ul>
             <li onClick={() => navigate("/customer-care/contact")}>Contact</li>
             <li onClick={() => navigate("/help")}>Help</li>
-            <li onClick={() => navigate("/customer-care/partner-program")}>Partner program</li>
-            <li onClick={()=> navigate("/customer-care/delivery-area")}>Delivery area</li>
+            <li onClick={() => navigate("/customer-care/partner-program")}>
+              Partner program
+            </li>
+            <li onClick={() => navigate("/customer-care/delivery-area")}>
+              Delivery area
+            </li>
           </ul>
         </section>
         <section>
           <h3>SECURE SHOPPING</h3>
-          <ul>
+          <ul onClick={() => navigate("/customer-care/ssl")}>
             <li>
               <img src={"/assets/png/ssl.png"} alt={""} loading={"lazy"} />
               Your data is secure with us

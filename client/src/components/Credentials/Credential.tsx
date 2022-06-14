@@ -72,18 +72,21 @@ function Credential({
         const reg1 = checkRegex(input1, "first");
         if (!reg1) {
           setWarn("Please use a valid first name.");
+		  setIsLoading(false);
           handleShowFade();
           return;
         }
         const reg2 = checkRegex(input2, "last");
         if (!reg2) {
           setWarn("Please use a valid last name.");
+		  setIsLoading(false);
           handleShowFade();
           return;
         }
         const reg3 = checkRegex(input3, "email");
         if (!reg3) {
           setWarn("Please use a valid email address.");
+		  setIsLoading(false);
           handleShowFade();
           return;
         }
@@ -92,6 +95,7 @@ function Credential({
           setWarn(
             "Please use a valid password. Only alphanumerics, @ and - are allowed and the password must be at least 6 digits long"
           );
+		  setIsLoading(false);
           handleShowFade();
           return;
         }
@@ -131,6 +135,7 @@ function Credential({
         const reg3 = checkRegex(input3, "email");
         if (!reg3) {
           setWarn("Please use a valid email address.");
+		  setIsLoading(false);
           handleShowFade();
           return;
         }
@@ -139,6 +144,7 @@ function Credential({
           setWarn(
             "Please use a valid password. Only alphanumerics, @ and - are allowed and the password must be at least 6 digits long"
           );
+		  setIsLoading(false);
           handleShowFade();
           return;
         }

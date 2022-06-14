@@ -17,7 +17,7 @@ const FinishedProducts = () => {
         That's all we have to offer. If you are looking for something specific
         and you cannot find it, please contact us at myemail@gmail.com
       </h2>
-      <img src={"./assets/svg/404.svg"} alt={""} />
+      <img src={"./assets/svg/finished.svg"} alt={""} />
     </div>
   );
 };

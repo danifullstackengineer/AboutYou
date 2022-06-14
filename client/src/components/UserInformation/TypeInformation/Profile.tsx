@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import InteractiveBtn from "../../../Comp-Single/InteractiveBtn";
 import "../../../styles/components/UserInformation/TypeInformation/Profile.css";
 import { BiUser } from "react-icons/bi";
 import InputForm from "../../../Comp-Single/InputForm";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { getUserInformation, setUserInformation } from "../../../Apollo/User";
-import jwt from "jwt-decode";
+import { AuthContext } from "../../../Context/Auth";
 
 function Profile() {
+  const aContext = useContext(AuthContext);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     setUserInformationMutation().then(() => {
@@ -42,14 +44,10 @@ function Profile() {
   }, [data]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const { id }: { id: string } = jwt(token);
-      if (id) {
-        setId(id);
-      }
+    if (aContext.isLoggedIn && aContext.userId) {
+      setId(aContext.userId);
     }
-  }, []);
+  }, [aContext.isLoggedIn]);
 
   useEffect(() => {
     if (id && !ranOnce) {

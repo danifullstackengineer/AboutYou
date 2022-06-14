@@ -37,14 +37,15 @@ const CustomerCare = () => {
         return <CustomerOption text={[{ title: "", description: "" }]} />;
       case "delivery-area":
         return <CustomerOption text={[{ title: "", description: "" }]} />;
-      default:
+      case "ssl":
         return (
           <CustomerOption
-            notfound_404={true}
             text={[
               {
-                title: "Link not found.",
-                description: "",
+                title: "SSL",
+                description: [
+                  "We care about our customer's security when they shop online, and to ensure that this is the case, we are using TLS version 1.3 to protect our website against malicious attackers.",
+                ],
               },
             ]}
           />
@@ -84,6 +85,16 @@ const CustomerCare = () => {
           hoverBgColor={"black"}
           type="button"
           onClick={() => navigate("/customer-care/delivery-area")}
+        />
+        <InteractiveBtn
+          text={"SSL"}
+          width={100}
+          height={50}
+          percWidth={true}
+          bgColor={type === "ssl" ? "black" : "rgb(100,100,100)"}
+          hoverBgColor={"black"}
+          type="button"
+          onClick={() => navigate("/customer-care/ssl")}
         />
       </div>
       <div className="customerCare__content">{renderJSX()}</div>

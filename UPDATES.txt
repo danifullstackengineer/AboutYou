@@ -51,8 +51,8 @@ TODO: Make it so that when user adds the same product but with different sizes/c
 TODO: DONE: If name is too big for the color in product 360, it overflows;
 TODO: DONE: On smaller screens, the scrollintoview for 360 products doesn't show everything.
 TODO: DONE: On mobile while the 360 img is loading, it creates an empty space.
-TODO: Add react.lazy and custom suspense/error handling to some components
-TODO: Improve loaidng speed by making products lazy.
+TODO: DEPRECATED: Add react.lazy and custom suspense/error handling to some components
+TODO: DONE: Improve loaidng speed by making products lazy.(Not done with react.lazy but using pagination with graphql)
 TODO: Replace the query in body inner with separate queries for each product
 TODO: DONE: Add form validation for register/login
 TODO: Add login/register support for 3rd party(fb, apple, microsoft)
@@ -74,3 +74,10 @@ TODO: When logging out it appears heart doesn't update
 TODO: Make reset password
 TODO: Add custom page handlers for confirming email address
 TODO: Fix swapping 360 products
+TODO: Create page for logout
+TODO: If on another page other than the main 4, and is scrolled then it will try to load every single product after clicking on for example "/". This does not need to happen.
+TODO: Create forgot password front-end and back-end
+TODO: Logging in is buggy. As well as registering
+TODO: Finish verification email
+TODO: Add validation to all the forms
+TODO: When changing user information, there is a bug.

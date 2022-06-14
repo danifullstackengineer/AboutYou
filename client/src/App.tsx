@@ -41,6 +41,7 @@ import {
 import Admin from "./components/Admin/Admin";
 import { AccessLevel, AdminContext } from "./Context/Admin";
 import CustomerCare from "./components/CustomerCare/CustomerCare";
+import LandscapeWarn from "./Comp-Single/LandscapeWarn";
 
 var logoutTimer: NodeJS.Timeout;
 
@@ -314,10 +315,28 @@ function App() {
   //todo: modify this to false
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
+  const [isLandscape, setIsLandScape] = useState<boolean>(false);
+
   // todo: uncomment this
   useEffect(() => {
     setIsMobile(mobileCheck());
   }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      const landscape = window.matchMedia("(orientation:landscape)");
+      const do_portrait_logic = (e?: MediaQueryListEvent) => {
+        if (e) {
+          setIsLandScape(e.matches);
+        } else {
+          setIsLandScape(landscape.matches);
+        }
+      };
+      do_portrait_logic();
+      landscape.addEventListener("change", (e) => do_portrait_logic(e));
+      return () => landscape.removeEventListener("change", () => {});
+    }
+  }, [isMobile]);
 
   const [display, setDisplay] = useState<string>("");
 
@@ -330,353 +349,357 @@ function App() {
       }}
       ref={mainRef}
     >
-      <WishlistContext.Provider
-        value={{
-          product: wishlist,
-          addToWishlist: addToWishlist,
-          removeFromWishlist: removeFromWishlist,
-          isInWishlist: isInWishlist,
-        }}
-      >
-        <BasketContext.Provider
+      {!isLandscape ? (
+        <WishlistContext.Provider
           value={{
-            product: basket,
-            addToBasket: addToBasket,
-            removeFromBasket: removeFromBasket,
-            getTotalPrice: getTotalPrice,
-            isInBasket: isInBasket,
-            decrementProduct: decrementProduct,
+            product: wishlist,
+            addToWishlist: addToWishlist,
+            removeFromWishlist: removeFromWishlist,
+            isInWishlist: isInWishlist,
           }}
         >
-          <AuthContext.Provider
+          <BasketContext.Provider
             value={{
-              isLoggedIn: isLoggedIn,
-              token: token,
-              userId: userId,
-              login: login,
-              logout: logout,
+              product: basket,
+              addToBasket: addToBasket,
+              removeFromBasket: removeFromBasket,
+              getTotalPrice: getTotalPrice,
+              isInBasket: isInBasket,
+              decrementProduct: decrementProduct,
             }}
           >
-            <MobileContext.Provider value={{ isMobile: isMobile }}>
-              <Router>
-                <Menu
-                  clickedMenu={clickedMenu}
-                  chosenMode={chosenMode}
-                  setClickedLogin={setClickedLogin}
-                  setChosenAction={setChosenAction}
-                  setClickedBasket={setClickedBasket}
-                  setClickedWishlist={setClickedWishlist}
-                  setClickedUser={setClickedUser}
-                  setClickedLanguage={setClickedLanguage}
-                  clickedBasket={clickedBasket}
-                  clickedWishlist={clickedWishlist}
-                  clickedUser={clickedUser}
-                  clickedLanguage={clickedLanguage}
-                  handleOpening={handleOpening}
-                  display={display}
-                  headerRef={headerRef}
-                />
-                <Credential
-                  chosenAction={chosenAction}
-                  setChosenAction={setChosenAction}
-                  clickedLogin={clickedLogin}
-                  setClickedLogin={setClickedLogin}
-                  disableClosing={disableClosing}
-                />
-                {!closedSubscribe ? (
-                  <Subscribe setClosedSubscribe={setClosedSubscribe} />
-                ) : (
-                  ""
-                )}
-                <ScrollIntoViewComponent mainRef={mainRef} />
-                <Routes>
-                  <Route
-                    path="/*"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                        />
-                        <Body
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedBasket={setClickedBasket}
-                          setClickedWishlist={setClickedWishlist}
-                          handleOpening={handleOpening}
-                          clickedWishlist={clickedWishlist}
-                          clickedBasket={clickedBasket}
-                        />
-                        <FooterBody chosenMode={chosenMode} />
-                      </>
-                    }
+            <AuthContext.Provider
+              value={{
+                isLoggedIn: isLoggedIn,
+                token: token,
+                userId: userId,
+                login: login,
+                logout: logout,
+              }}
+            >
+              <MobileContext.Provider value={{ isMobile: isMobile }}>
+                <Router>
+                  <Menu
+                    clickedMenu={clickedMenu}
+                    chosenMode={chosenMode}
+                    setClickedLogin={setClickedLogin}
+                    setChosenAction={setChosenAction}
+                    setClickedBasket={setClickedBasket}
+                    setClickedWishlist={setClickedWishlist}
+                    setClickedUser={setClickedUser}
+                    setClickedLanguage={setClickedLanguage}
+                    clickedBasket={clickedBasket}
+                    clickedWishlist={clickedWishlist}
+                    clickedUser={clickedUser}
+                    clickedLanguage={clickedLanguage}
+                    handleOpening={handleOpening}
+                    display={display}
+                    headerRef={headerRef}
                   />
-                  <Route
-                    path="/light"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          custom={true}
-                        />
-                        <Body
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedBasket={setClickedBasket}
-                          setClickedWishlist={setClickedWishlist}
-                          handleOpening={handleOpening}
-                          clickedWishlist={clickedWishlist}
-                          clickedBasket={clickedBasket}
-                          custom={true}
-                        />
-                        <FooterBody chosenMode={chosenMode} />
-                      </>
-                    }
+                  <Credential
+                    chosenAction={chosenAction}
+                    setChosenAction={setChosenAction}
+                    clickedLogin={clickedLogin}
+                    setClickedLogin={setClickedLogin}
+                    disableClosing={disableClosing}
                   />
-                  <Route
-                    path="/dark"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          custom={true}
-                        />
-                        <Body
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedBasket={setClickedBasket}
-                          setClickedWishlist={setClickedWishlist}
-                          handleOpening={handleOpening}
-                          clickedWishlist={clickedWishlist}
-                          clickedBasket={clickedBasket}
-                          custom={true}
-                        />
-                        <FooterBody chosenMode={chosenMode} />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/accessories"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          accessories={true}
-                        />
-                        <Body
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedBasket={setClickedBasket}
-                          setClickedWishlist={setClickedWishlist}
-                          handleOpening={handleOpening}
-                          clickedWishlist={clickedWishlist}
-                          clickedBasket={clickedBasket}
-                          accessories={true}
-                        />
-                        <FooterBody chosenMode={chosenMode} />
-                      </>
-                    }
-                  />
+                  {!closedSubscribe ? (
+                    <Subscribe setClosedSubscribe={setClosedSubscribe} />
+                  ) : (
+                    ""
+                  )}
+                  <ScrollIntoViewComponent mainRef={mainRef} />
+                  <Routes>
+                    <Route
+                      path="/*"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                          />
+                          <Body
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedBasket={setClickedBasket}
+                            setClickedWishlist={setClickedWishlist}
+                            handleOpening={handleOpening}
+                            clickedWishlist={clickedWishlist}
+                            clickedBasket={clickedBasket}
+                          />
+                          <FooterBody chosenMode={chosenMode} />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/light"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                            custom={true}
+                          />
+                          <Body
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedBasket={setClickedBasket}
+                            setClickedWishlist={setClickedWishlist}
+                            handleOpening={handleOpening}
+                            clickedWishlist={clickedWishlist}
+                            clickedBasket={clickedBasket}
+                            custom={true}
+                          />
+                          <FooterBody chosenMode={chosenMode} />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/dark"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                            custom={true}
+                          />
+                          <Body
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedBasket={setClickedBasket}
+                            setClickedWishlist={setClickedWishlist}
+                            handleOpening={handleOpening}
+                            clickedWishlist={clickedWishlist}
+                            clickedBasket={clickedBasket}
+                            custom={true}
+                          />
+                          <FooterBody chosenMode={chosenMode} />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/accessories"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                            accessories={true}
+                          />
+                          <Body
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedBasket={setClickedBasket}
+                            setClickedWishlist={setClickedWishlist}
+                            handleOpening={handleOpening}
+                            clickedWishlist={clickedWishlist}
+                            clickedBasket={clickedBasket}
+                            accessories={true}
+                          />
+                          <FooterBody chosenMode={chosenMode} />
+                        </>
+                      }
+                    />
 
-                  <Route
-                    path="/checkout"
-                    element={
-                      <Checkout
-                        setAmount={setAmount}
-                        checkout={true}
-                        setClickedLogin={setClickedLogin}
-                        setDisableClosing={setDisableClosing}
-                        setDisplay={setDisplay}
-                        setChosenAction={setChosenAction}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/payment"
-                    element={
-                      <Checkout
-                        amount={amount}
-                        payment={true}
-                        setClickedLogin={setClickedLogin}
-                        setDisableClosing={setDisableClosing}
-                        setDisplay={setDisplay}
-                        setChosenAction={setChosenAction}
-                      />
-                    }
-                  />
-                  <Route
-                    path="/basket"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                        />{" "}
-                        <Basket />
-                        <FooterBody />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/payment/success"
-                    element={
-                      <>
+                    <Route
+                      path="/checkout"
+                      element={
                         <Checkout
-                          amount={amount}
-                          paid={true}
+                          setAmount={setAmount}
+                          checkout={true}
                           setClickedLogin={setClickedLogin}
                           setDisableClosing={setDisableClosing}
                           setDisplay={setDisplay}
                           setChosenAction={setChosenAction}
                         />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/payment/failure"
-                    element={
-                      <>
+                      }
+                    />
+                    <Route
+                      path="/payment"
+                      element={
                         <Checkout
                           amount={amount}
-                          paid={true}
+                          payment={true}
                           setClickedLogin={setClickedLogin}
                           setDisableClosing={setDisableClosing}
                           setDisplay={setDisplay}
                           setChosenAction={setChosenAction}
                         />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/orders"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          setClickedLogin={setClickedLogin}
-                        />
-                        <UserInformation
-                          type={0}
-                          setClickedLogin={setClickedLogin}
-                          setDisableClosing={setDisableClosing}
-                        />
-                        <FooterBody />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/profile"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          chosenMode={chosenMode}
-                          clickedMenu={clickedMenu}
-                          setChosenMode={setChosenMode}
-                          setClickedLogin={setClickedLogin}
-                        />
-                        <UserInformation
-                          type={1}
-                          setClickedLogin={setClickedLogin}
-                          setDisableClosing={setDisableClosing}
-                        />
-                        <FooterBody />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/help"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedMenu={setClickedMenu}
-                          chosenMode={chosenMode}
-                          clickedMenu={clickedMenu}
-                          setChosenMode={setChosenMode}
-                          setClickedLogin={setClickedLogin}
-                        />
-                        <UserInformation
-                          type={2}
-                          setClickedLogin={setClickedLogin}
-                          setDisableClosing={setDisableClosing}
-                        />{" "}
-                        <FooterBody />
-                      </>
-                    }
-                  />
-                  <Route
-                    path="/admin"
-                    element={
-                      <AdminContext.Provider
-                        value={{
-                          isLoggedIn: isLoggedInAdmin,
-                          accessLevel: accessLevel,
-                        }}
-                      >
-                        <Admin />
-                      </AdminContext.Provider>
-                    }
-                  />
-                  <Route
-                    path="/customer-care/:type"
-                    element={
-                      <>
-                        <HeaderBody
-                          headerRef={headerRef}
-                          setClickedLogin={setClickedLogin}
-                          chosenMode={chosenMode}
-                          setChosenMode={setChosenMode}
-                          setClickedMenu={setClickedMenu}
-                          clickedMenu={clickedMenu}
-                        />
-                        <CustomerCare />
-                        <FooterBody />
-                      </>
-                    }
-                  />
-                </Routes>
-              </Router>
-            </MobileContext.Provider>
-          </AuthContext.Provider>
-        </BasketContext.Provider>
-      </WishlistContext.Provider>
+                      }
+                    />
+                    <Route
+                      path="/basket"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                          />{" "}
+                          <Basket />
+                          <FooterBody />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/payment/success"
+                      element={
+                        <>
+                          <Checkout
+                            amount={amount}
+                            paid={true}
+                            setClickedLogin={setClickedLogin}
+                            setDisableClosing={setDisableClosing}
+                            setDisplay={setDisplay}
+                            setChosenAction={setChosenAction}
+                          />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/payment/failure"
+                      element={
+                        <>
+                          <Checkout
+                            amount={amount}
+                            paid={true}
+                            setClickedLogin={setClickedLogin}
+                            setDisableClosing={setDisableClosing}
+                            setDisplay={setDisplay}
+                            setChosenAction={setChosenAction}
+                          />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/orders"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                            setClickedLogin={setClickedLogin}
+                          />
+                          <UserInformation
+                            type={0}
+                            setClickedLogin={setClickedLogin}
+                            setDisableClosing={setDisableClosing}
+                          />
+                          <FooterBody />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            chosenMode={chosenMode}
+                            clickedMenu={clickedMenu}
+                            setChosenMode={setChosenMode}
+                            setClickedLogin={setClickedLogin}
+                          />
+                          <UserInformation
+                            type={1}
+                            setClickedLogin={setClickedLogin}
+                            setDisableClosing={setDisableClosing}
+                          />
+                          <FooterBody />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/help"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedMenu={setClickedMenu}
+                            chosenMode={chosenMode}
+                            clickedMenu={clickedMenu}
+                            setChosenMode={setChosenMode}
+                            setClickedLogin={setClickedLogin}
+                          />
+                          <UserInformation
+                            type={2}
+                            setClickedLogin={setClickedLogin}
+                            setDisableClosing={setDisableClosing}
+                          />{" "}
+                          <FooterBody />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/admin"
+                      element={
+                        <AdminContext.Provider
+                          value={{
+                            isLoggedIn: isLoggedInAdmin,
+                            accessLevel: accessLevel,
+                          }}
+                        >
+                          <Admin />
+                        </AdminContext.Provider>
+                      }
+                    />
+                    <Route
+                      path="/customer-care/:type"
+                      element={
+                        <>
+                          <HeaderBody
+                            headerRef={headerRef}
+                            setClickedLogin={setClickedLogin}
+                            chosenMode={chosenMode}
+                            setChosenMode={setChosenMode}
+                            setClickedMenu={setClickedMenu}
+                            clickedMenu={clickedMenu}
+                          />
+                          <CustomerCare />
+                          <FooterBody />
+                        </>
+                      }
+                    />
+                  </Routes>
+                </Router>
+              </MobileContext.Provider>
+            </AuthContext.Provider>
+          </BasketContext.Provider>
+        </WishlistContext.Provider>
+      ) : (
+        <LandscapeWarn />
+      )}
     </div>
   );
 }

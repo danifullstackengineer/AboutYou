@@ -54,9 +54,6 @@ const client = new ApolloClient({
   link: from([errorLink, httpLink]),
   cache: new InMemoryCache({
     typePolicies: {
-      UserType: {
-        keyFields: [],
-      },
       ProductType: {
         keyFields: ["_id"],
         merge(incoming = [], existing = []) {
