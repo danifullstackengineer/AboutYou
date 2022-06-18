@@ -28,6 +28,7 @@ import {
 } from "./GraphQL/RegexType.js";
 import { LoginResultType } from "./GraphQL/MiscType.js";
 import { send_mail } from "./logic/mail/send_mail.js";
+import { search_products } from "./logic/products.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -38,9 +39,10 @@ const RootQuery = new GraphQLObjectType({
         id: { type: GraphQLID },
       },
       async resolve(par, args) {
-        const user = await User.findById(args.id);
+        // const user = await User.findById(args.id);
+        const user = User.findById(args.id).lean();
         if (user) {
-          return user;
+          return user.lean();
         } else {
           return undefined;
         }
@@ -62,9 +64,15 @@ const RootQuery = new GraphQLObjectType({
     },
     getAccessories: {
       type: new GraphQLList(AccessoryType),
-      args: {},
+      args: {
+        offset: { type: GraphQLInt },
+        limit: { type: GraphQLInt },
+      },
       async resolve(par, args) {
-        return await Accessories.find({});
+        return await Accessories.find({})
+          .lean()
+          .skip(args.offset ? args.offset : 0)
+          .limit(args.limit ? args.limit : 0);
       },
     },
     getSingleProduct: {
@@ -101,6 +109,32 @@ const RootQuery = new GraphQLObjectType({
             if (user) {
               user.likedProducts.forEach((prod) => {
                 if (prod === args.product_id) {
+                  res.liked = true;
+                  return;
+                }
+              });
+            }
+          }
+        }
+        return res;
+      },
+    },
+    getIfLikedAccessoryByUserAndTotalLikes: {
+      type: LikedAndTotalLikes,
+      args: {
+        id: { type: GraphQLID },
+        accessory_id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      async resolve(par, args) {
+        var res = { likes: 0, liked: false };
+        const accessory = await Accessories.findById(args.accessory_id);
+        if (accessory) {
+          res.likes = accessory.likes;
+          if (args.id) {
+            const user = await User.findById(args.id);
+            if (user) {
+              user.likedProducts.forEach((prod) => {
+                if (prod === args.accessory_id) {
                   res.liked = true;
                   return;
                 }
@@ -164,6 +198,21 @@ const RootQuery = new GraphQLObjectType({
           .catch(() => {
             return { success: false, message: "Invalid credentials." };
           });
+      },
+    },
+    get_search_items: {
+      type: new GraphQLObjectType({
+        name: "OnlyIDType",
+        fields: () => ({
+          _id: { type: new GraphQLNonNull(GraphQLID) },
+        }),
+      }),
+      args: {
+        search_input: { type: new GraphQLNonNull(GraphQLString) },
+        type: { type: GraphQLString },
+      },
+      async resolve(par, args) {
+        await search_products(args.search_input, args.type);
       },
     },
   },
@@ -234,6 +283,46 @@ const Mutations = new GraphQLObjectType({
               });
               prod.likes--;
               await prod.save();
+              await doc.save().then((docSaved) => {
+                return docSaved;
+              });
+            } else {
+              return doc;
+            }
+          }
+        });
+      },
+    },
+    modifyUserLikedAccessories: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        likedId: { type: new GraphQLNonNull(GraphQLString) },
+        liked: { type: new GraphQLNonNull(GraphQLBoolean) },
+      },
+      async resolve(parent, args) {
+        return await User.findById(args.id).then(async (doc) => {
+          const acc = await Accessories.findById(args.likedId);
+          const likedAcc = doc.likedProducts.find(
+            (acc) => acc === args.likedId
+          );
+          if (args.liked) {
+            if (likedAcc) return doc;
+            else {
+              doc.likedProducts.push(args.likedId);
+              acc.likes++;
+              await acc.save();
+              await doc.save().then((docSaved) => {
+                return docSaved;
+              });
+            }
+          } else {
+            if (likedAcc) {
+              doc.likedProducts = doc.likedProducts.filter((acc) => {
+                if (acc !== args.likedId) return acc;
+              });
+              acc.likes--;
+              await acc.save();
               await doc.save().then((docSaved) => {
                 return docSaved;
               });

@@ -24,13 +24,18 @@ function Menu({
   setClickedWishlist,
   setClickedUser,
   setClickedLanguage,
+  setClickedSearch,
   clickedBasket,
   clickedWishlist,
   clickedUser,
   clickedLanguage,
+  clickedSearch,
   handleOpening,
   display,
   headerRef,
+  searchValue,
+  setSearchValue,
+  handleSearch,
 }: {
   clickedMenu: boolean;
   chosenMode: boolean | undefined;
@@ -40,13 +45,20 @@ function Menu({
   setClickedWishlist: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedUser: React.Dispatch<React.SetStateAction<boolean>>;
   setClickedLanguage: React.Dispatch<React.SetStateAction<boolean>>;
+  setClickedSearch: React.Dispatch<React.SetStateAction<boolean>>;
   clickedBasket: boolean;
   clickedWishlist: boolean;
   clickedUser: boolean;
   clickedLanguage: boolean;
-  handleOpening: (type: "basket" | "wishlist" | "user" | "language") => void;
+  clickedSearch: boolean;
+  handleOpening: (
+    type: "basket" | "wishlist" | "user" | "language" | "search"
+  ) => void;
   display: string;
   headerRef: React.RefObject<HTMLDivElement>;
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSearch: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [activeLang, setActiveLang] = useState<boolean[]>([true, false]);
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -60,6 +72,7 @@ function Menu({
   const wishlistRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
   const languageRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   const mainRef = useRef<HTMLDivElement>(null);
 
@@ -73,6 +86,7 @@ function Menu({
   const wishlistWrapperRef = useRef<HTMLDivElement>(null);
   const userWrapperRef = useRef<HTMLDivElement>(null);
   const languageWrapperRef = useRef<HTMLDivElement>(null);
+  const searchWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (activeLang[0]) {
@@ -89,13 +103,8 @@ function Menu({
     setClickedUser(false);
     setClickedWishlist(false);
     setClickedLanguage(false);
-  }, [
-    clickedMenu,
-    setClickedBasket,
-    setClickedLanguage,
-    setClickedUser,
-    setClickedWishlist,
-  ]);
+    setClickedSearch(false);
+  }, [clickedMenu]);
 
   useEffect(() => {
     if (basketRef.current && basketWrapperRef.current && isOpened) {
@@ -144,6 +153,18 @@ function Menu({
     }
     setIsOpened(true);
   }, [clickedLanguage, isOpened]);
+
+  useEffect(() => {
+    if (searchRef.current && searchWrapperRef.current && isOpened) {
+      if (clickedSearch) {
+        searchRef.current.style.height =
+          searchWrapperRef.current.clientHeight + "px";
+      } else {
+        searchRef.current.style.height = 0 + "px";
+      }
+    }
+    setIsOpened(true);
+  }, [clickedSearch, isOpened]);
 
   const [scrollAmountBasket, setScrollAmountBasket] = useState<number>(0);
   const [scrollAmountWishlist, setScrollAmountWishlist] = useState<number>(0);
@@ -254,13 +275,27 @@ function Menu({
 
   const { height, width } = useWindowDimensions();
 
-  const menuOptionRef = useRef<HTMLDivElement>(null);
+  const basketContainerRef = useRef<HTMLDivElement>(null);
+  const wishlistContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (headerRef.current && mainRef.current && menuOptionRef.current) {
+    if (
+      headerRef.current &&
+      mainRef.current &&
+      basketContainerRef.current &&
+      wishlistContainerRef.current
+    ) {
       mainRef.current.style.top = headerRef.current.offsetHeight + "px";
       mainRef.current.style.maxHeight =
         "calc(100vh - " + headerRef.current.offsetHeight + "px)";
+      basketContainerRef.current.style.maxHeight =
+        "calc(100vh - " +
+        headerRef.current.offsetHeight +
+        "px - 4 * (1.25rem + 20px))";
+      wishlistContainerRef.current.style.maxHeight =
+        "calc(100vh - " +
+        headerRef.current.offsetHeight +
+        "px - 4 * (1.25rem + 20px))";
     }
   }, [
     headerRef,
@@ -268,9 +303,31 @@ function Menu({
     width,
     height,
     location,
-    menuOptionRef,
+    basketContainerRef,
+    wishlistContainerRef,
     headerRef.current?.offsetHeight,
   ]);
+
+  const [searchPlaceholder, setSearchPlaceholder] = useState<string>("");
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/":
+        setSearchPlaceholder("normal shoes...");
+        break;
+      case "/light":
+        setSearchPlaceholder("custom shoes...");
+        break;
+      case "/dark":
+        setSearchPlaceholder("special shoes...");
+        break;
+      case "/accessories":
+        setSearchPlaceholder("accessories...");
+        break;
+      default:
+        setSearchPlaceholder("products...");
+    }
+  }, [location.pathname]);
 
   return (
     <div
@@ -280,7 +337,7 @@ function Menu({
       } ${mContext.isMobile ? "menu-mobile" : ""}`}
       style={{ display }}
     >
-      <div className={`menu__option`} ref={menuOptionRef}>
+      <div className={`menu__option`} ref={basketContainerRef}>
         <h3 onClick={() => handleOpening("basket")}>Basket</h3>
         <div
           ref={basketRef}
@@ -381,7 +438,7 @@ function Menu({
           )}
         </div>
       </div>
-      <div className="menu__option" ref={menuOptionRef}>
+      <div className="menu__option" ref={wishlistContainerRef}>
         <h3 onClick={() => handleOpening("wishlist")}>Wishlist</h3>
         <div
           onScroll={
@@ -555,6 +612,30 @@ function Menu({
               >
                 RO
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="menu__option">
+        <h3 onClick={() => handleOpening("search")}>Search Products</h3>
+        <div
+          ref={searchRef}
+          className={`menu__option-option ${
+            clickedSearch
+              ? "menu__option-option-active"
+              : "menu__option-option-inactive"
+          }`}
+        >
+          <div className="menu__option-option-wrapper" ref={searchWrapperRef}>
+            <div className="menu__option-option-search">
+              <form onSubmit={(e) => handleSearch(e)}>
+                <input
+                  type="search"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder={"Search all of our " + searchPlaceholder}
+                />
+              </form>
             </div>
           </div>
         </div>

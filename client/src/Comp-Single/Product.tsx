@@ -123,12 +123,6 @@ const Product = ({
     }
   };
 
-//   useEffect(() => {
-//     if (liked !== undefined) {
-//       setLikedInner(likedInner);
-//     }
-//   }, [liked]);
-
   const handleLike = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void => {
@@ -150,6 +144,7 @@ const Product = ({
       }
     }
   };
+
 
   return (
     <div className={`product`} ref={refProduct}>

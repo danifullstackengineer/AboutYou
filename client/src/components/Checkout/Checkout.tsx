@@ -19,6 +19,8 @@ import { useStripe } from "@stripe/react-stripe-js";
 import ProcessingPayment from "../../Comp-Single/ProcessingPayment";
 import PaymentFailure from "./PaymentBody/PaymentFinished/PaymentFailure";
 import PaymentSuccess from "./PaymentBody/PaymentFinished/PaymentSuccess";
+import { ProductTypeBasket } from "../../types/Product";
+import { AccessoryTypeBasket } from "../../types/Accessory";
 
 function Checkout({
   setAmount,
@@ -28,6 +30,7 @@ function Checkout({
   setDisplay,
   setClickedLogin,
   setChosenAction,
+  setBasket,
 }: {
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   amount?: string;
@@ -38,6 +41,9 @@ function Checkout({
   setDisplay: React.Dispatch<React.SetStateAction<string>>;
   setChosenAction: React.Dispatch<React.SetStateAction<boolean[]>>;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setBasket?: React.Dispatch<
+    React.SetStateAction<ProductTypeBasket[] | AccessoryTypeBasket[]>
+  >;
 }) {
   useEffect(() => {
     setDisplay("none");
@@ -231,9 +237,7 @@ function Checkout({
       {checkout ? (
         <ProgressCheckout progress="checkout" />
       ) : payment ? (
-        <ProgressCheckout
-          progress="payment"
-        />
+        <ProgressCheckout progress="payment" />
       ) : (
         ""
       )}
@@ -242,6 +246,7 @@ function Checkout({
           setAmount={setAmount}
           clickedContinue={clickedContinue}
           setClickedContinue={setClickedContinue}
+          setBasket={setBasket}
         />
       ) : paid === undefined ? (
         <PaymentBody

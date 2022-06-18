@@ -83,10 +83,30 @@ const decrementProductStorage = (
   localStorage.setItem("basket", JSON.stringify(basket_clone));
 };
 
+const updateProductStorage = (
+  id: string,
+  basket: ProductTypeBasket[] | AccessoryTypeBasket[],
+  setBasket: React.Dispatch<
+    React.SetStateAction<ProductTypeBasket[] | AccessoryTypeBasket[]>
+  >,
+  updateObject: Partial<ProductTypeBasket>
+): void => {
+  var basket_clone = cloneDeep(basket);
+  basket_clone.map((product: ProductTypeBasket, i: number) => {
+    if (product._id === id) {
+      basket_clone[i] = { ...basket_clone[i], ...updateObject };
+    }
+    return basket_clone[i];
+  });
+  setBasket(basket_clone);
+  localStorage.setItem("basket", JSON.stringify(basket_clone));
+};
+
 export {
   addToBasketStorageAndContext,
   removeFromBasketStorageAndContext,
   getTotalPriceBasket,
   isProductInBasket,
   decrementProductStorage,
+  updateProductStorage,
 };

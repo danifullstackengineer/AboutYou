@@ -17,14 +17,17 @@
   align-items: center;
   padding-bottom: 1em;
   position: relative;
+  overflow: hidden;
 }
 .checkoutBodyBasketOrder__item:not(:last-child) {
   border-bottom: 1px solid rgb(240, 240, 240);
 }
 .checkoutBodyBasketOrder img {
   width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: 50% 50%;
   margin-right: 10px;
   cursor: pointer;
@@ -51,7 +54,25 @@
   display: flex;
   flex-direction: column;
   margin-right: 1.5em;
-  width: 200px;
+}
+.checkoutBodyBasketOrder__info-upper-left select {
+  background-color: whitesmoke;
+  color: black;
+  padding: 0.125em 0 0.125em 0;
+  border: none;
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  width: 100px;
+}
+.checkoutBodyBasketOrder__info-upper-left select:disabled {
+  border: 1px solid rgb(100, 100, 100);
+}
+.checkoutBodyBasketOrder__info-upper-left select:not(:disabled) {
+  cursor: pointer;
+  border: 1px solid black;
 }
 .checkoutBodyBasketOrder__info-upper > button {
   margin-right: 1em;
@@ -71,6 +92,9 @@
 .checkoutBodyBasketOrder__info-upper-left button,
 .checkoutBodyBasketOrder__info-upper-left span {
   margin-bottom: 0.25em;
+}
+.checkoutBodyBasketOrder__info-upper > button {
+  width: 2rem;
 }
 .checkoutBodyBasketOrder__info-upper-left button {
   font-weight: bold;
@@ -94,12 +118,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  width: 40%;
+  align-items: flex-end;
+  width: 100%;
 }
 .checkoutBodyBasketOrder__info-lower span {
   margin-bottom: 0.25em;
-  padding-right: 20px;
 }
 .checkoutBodyBasketOrder__info-lower span:first-child {
   color: rgb(100, 100, 100);
@@ -136,9 +159,6 @@
   background: transparent;
   border: none;
   cursor: pointer;
-}
-.checkoutBodyBasketOrder-payment .checkoutBodyBasketOrder__info-lower {
-  transform: translateX(100%);
 }
 .checkoutBodyBasketOrder__modify-amount > span {
   text-align: center;

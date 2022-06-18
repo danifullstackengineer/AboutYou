@@ -13,7 +13,24 @@
 .checkoutBody__items > div {
   margin: 0 2em 0 2em;
 }
-@media screen and (max-width: 1000px){
+.checkoutBody__warning {
+  position: fixed;
+  background-color: white;
+  border: 2px solid black;
+  font-size: 1.25rem;
+  left: 200%;
+  transition: left 500ms ease-in, transform 500ms ease-in;
+  top: 50%;
+  padding: 0.25em;
+  text-align: center;
+  width: 350px;
+  transform: translate(0, -50%);
+}
+.checkoutBody__warning-show {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media screen and (max-width: 1000px) {
   .checkoutBody__items {
     flex-direction: column;
   }

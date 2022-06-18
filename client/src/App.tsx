@@ -239,9 +239,19 @@ function App() {
   const [clickedWishlist, setClickedWishlist] = useState<boolean>(false);
   const [clickedUser, setClickedUser] = useState<boolean>(false);
   const [clickedLanguage, setClickedLanguage] = useState<boolean>(false);
+  const [clickedSearch, setClickedSearch] = useState<boolean>(false);
+
+  const [searchValue, setSearchValue] = useState<string>("");
+
+  const handleSearch = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+	},
+    [searchValue]
+  );
 
   const handleOpening = useCallback(
-    (type: "basket" | "user" | "wishlist" | "language"): void => {
+    (type: "basket" | "user" | "wishlist" | "language" | "search"): void => {
       switch (type) {
         case "basket":
           if (clickedBasket) {
@@ -250,7 +260,13 @@ function App() {
             setClickedLanguage(false);
             setClickedUser(false);
             setClickedWishlist(false);
-            if (clickedUser || clickedLanguage || clickedWishlist) {
+            setClickedSearch(false);
+            if (
+              clickedUser ||
+              clickedLanguage ||
+              clickedWishlist ||
+              clickedSearch
+            ) {
               setTimeout(() => {
                 setClickedBasket(!clickedBasket);
               }, 250);
@@ -266,7 +282,13 @@ function App() {
             setClickedLanguage(false);
             setClickedUser(false);
             setClickedBasket(false);
-            if (clickedUser || clickedLanguage || clickedBasket) {
+            setClickedSearch(false);
+            if (
+              clickedUser ||
+              clickedLanguage ||
+              clickedBasket ||
+              clickedSearch
+            ) {
               setTimeout(() => {
                 setClickedWishlist(!clickedWishlist);
               }, 250);
@@ -282,7 +304,13 @@ function App() {
             setClickedLanguage(false);
             setClickedWishlist(false);
             setClickedBasket(false);
-            if (clickedWishlist || clickedLanguage || clickedBasket) {
+            setClickedSearch(false);
+            if (
+              clickedWishlist ||
+              clickedLanguage ||
+              clickedBasket ||
+              clickedSearch
+            ) {
               setTimeout(() => {
                 setClickedUser(!clickedUser);
               }, 250);
@@ -298,7 +326,13 @@ function App() {
             setClickedUser(false);
             setClickedWishlist(false);
             setClickedBasket(false);
-            if (clickedWishlist || clickedUser || clickedBasket) {
+            setClickedSearch(false);
+            if (
+              clickedWishlist ||
+              clickedUser ||
+              clickedBasket ||
+              clickedSearch
+            ) {
               setTimeout(() => {
                 setClickedLanguage(!clickedLanguage);
               }, 250);
@@ -307,17 +341,42 @@ function App() {
             }
           }
           break;
+        case "search":
+          if (clickedSearch) {
+            setClickedSearch(!clickedSearch);
+          } else {
+            setClickedUser(false);
+            setClickedWishlist(false);
+            setClickedBasket(false);
+            setClickedLanguage(false);
+            if (
+              clickedUser ||
+              clickedWishlist ||
+              clickedBasket ||
+              clickedLanguage
+            ) {
+              setTimeout(() => {
+                setClickedSearch(!clickedSearch);
+              }, 250);
+            } else {
+              setClickedSearch(!clickedSearch);
+            }
+          }
       }
     },
-    [clickedBasket, clickedLanguage, clickedUser, clickedWishlist]
+    [
+      clickedBasket,
+      clickedLanguage,
+      clickedUser,
+      clickedWishlist,
+      clickedSearch,
+    ]
   );
 
-  //todo: modify this to false
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const [isLandscape, setIsLandScape] = useState<boolean>(false);
 
-  // todo: uncomment this
   useEffect(() => {
     setIsMobile(mobileCheck());
   }, []);
@@ -392,9 +451,14 @@ function App() {
                     clickedWishlist={clickedWishlist}
                     clickedUser={clickedUser}
                     clickedLanguage={clickedLanguage}
+                    clickedSearch={clickedSearch}
+                    setClickedSearch={setClickedSearch}
                     handleOpening={handleOpening}
                     display={display}
                     headerRef={headerRef}
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    handleSearch={handleSearch}
                   />
                   <Credential
                     chosenAction={chosenAction}
@@ -535,6 +599,7 @@ function App() {
                           setDisableClosing={setDisableClosing}
                           setDisplay={setDisplay}
                           setChosenAction={setChosenAction}
+						  setBasket={setBasket}
                         />
                       }
                     />

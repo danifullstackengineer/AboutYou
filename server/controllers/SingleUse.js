@@ -1,25 +1,33 @@
 import Products from "../models/Products.js";
 
 const createProducts = async (_, res) => {
-    try {
-        for (let i = 0; i < items.length; i++) {
-            await new Products({
-                backgroundImg: items[i].backgroundImg,
-                foregroundImg: items[i].foregroundImg,
-                title: items[i].title,
-                price: items[i].price,
-                colors: items[i].colors,
-                sizes: items[i].sizes,
-                isCustomizable: items[i].isCustomizable
-            }).save().then(async (res) => {
-                console.log(`Created product with id: ${res.id}`)
-            })
-        }
-        return res.send("Success!!")
+  try {
+    for (let i = 0; i < items.length; i++) {
+      await new Products({
+        backgroundImg: items[i].backgroundImg,
+        foregroundImg: items[i].foregroundImg,
+        title: items[i].title,
+        price: items[i].price,
+        colors: items[i].colors,
+        sizes: items[i].sizes,
+        isCustomizable: items[i].isCustomizable,
+      })
+        .save()
+        .then(async (res) => {
+          console.log(`Created product with id: ${res.id}`);
+        });
     }
-    catch (err) {
-        console.error(err);
-    }
+    return res.send("Success!!");
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const add_search_string_to_products_and_accessories = async (_, res) => {
+  try {
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const items = [

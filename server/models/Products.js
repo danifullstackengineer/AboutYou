@@ -10,13 +10,17 @@ const productTable = mongoose.Schema({
   accessoryId: [String],
   likes: {
     type: Number,
-    default: 0
+    default: 0,
   },
   dark: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
+//   search_string: {
+//     type: String,
+//     required: true,
+//     index: true,
+//   },
 });
 
 export default mongoose.model("Product", productTable);
-

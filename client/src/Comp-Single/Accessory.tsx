@@ -1,4 +1,9 @@
-import React, { useContext, useState } from "react";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  getIfLikedAccessoryByUserAndTotalLikes,
+  setLikedAccessory,
+} from "../Apollo/Accessory";
 import { AuthContext } from "../Context/Auth";
 import { BasketContext } from "../Context/Basket";
 import { WishlistContext } from "../Context/Wishlist";
@@ -30,15 +35,67 @@ const Accessory = ({
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
-  const [likes, setLikes] = useState<number>(0);
+  const [likes, setLikes] = useState<number>(accessory.likes);
+
+  const [
+    getLikesAndIfLiked,
+    { data: dataL, error: errorL, loading: loadingL },
+  ] = useLazyQuery(getIfLikedAccessoryByUserAndTotalLikes);
 
   const wContext = useContext(WishlistContext);
   const bContext = useContext(BasketContext);
   const aContext = useContext(AuthContext);
 
+  useEffect(() => {
+    if (accessory._id) {
+      getLikesAndIfLiked({
+        variables: {
+          id: aContext.userId,
+          accessory_id: accessory._id,
+        },
+      });
+    }
+  }, [aContext, accessory._id]);
+
+  useEffect(() => {
+    if (dataL) {
+      setLikes(dataL.getIfLikedAccessoryByUserAndTotalLikes.likes);
+      setLikedInner(dataL.getIfLikedAccessoryByUserAndTotalLikes.liked);
+    }
+  }, [dataL]);
+
+  const [likedMutation, { loading, data, error }] = useMutation(
+    setLikedAccessory,
+    {
+      variables: {
+        id: aContext.userId,
+        likedId: accessory._id,
+        liked: !likedInner,
+      },
+    }
+  );
+
   const handleLike = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {};
+  ): void => {
+    if (!loading) {
+      e.stopPropagation();
+      if (!aContext.isLoggedIn) {
+        setClickedLogin(true);
+      } else {
+        likedMutation().then(() => {
+          if (!loading) {
+            if (likedInner) {
+              setLikes(likes - 1);
+            } else {
+              setLikes(likes + 1);
+            }
+            setLikedInner(!likedInner);
+          }
+        });
+      }
+    }
+  };
   const handleBasket = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
@@ -96,7 +153,7 @@ const Accessory = ({
   return (
     <div className={`accessory`}>
       <div className={`accessory__img`}>
-        <img src={accessory.backgroundImg} alt={""}/>
+        <img src={accessory.backgroundImg} alt={""} />
       </div>
       <h3>{accessory.title}</h3>
       <h4>Only: $ {accessory.price}</h4>
@@ -107,9 +164,7 @@ const Accessory = ({
       >
         <img
           src={
-            likedInner
-              ? "/assets/svg/heart-dark.svg"
-              : "/assets/svg/heart-half-dark.svg"
+            likedInner ? "/assets/svg/heart.svg" : "/assets/svg/heart-half.svg"
           }
           alt=""
         />
@@ -119,7 +174,11 @@ const Accessory = ({
       <button
         aria-label="Add to Wishlist"
         onClick={handleWishlist}
-        className={"accessory__wishlist-btn"}
+        className={`accessory__wishlist-btn ${
+          wContext.isInWishlist(accessory._id)
+            ? "accessory__wishlist-btn-clicked"
+            : ""
+        }`}
       ></button>
 
       <button
@@ -146,8 +205,8 @@ const Accessory = ({
             <img
               src={
                 likedInner
-                  ? "/assets/svg/heart-dark.svg"
-                  : "/assets/svg/heart-half-dark.svg"
+                  ? "/assets/svg/heart.svg"
+                  : "/assets/svg/heart-half.svg"
               }
               alt=""
             />

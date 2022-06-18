@@ -79,5 +79,8 @@ TODO: If on another page other than the main 4, and is scrolled then it will try
 TODO: Create forgot password front-end and back-end
 TODO: Logging in is buggy. As well as registering
 TODO: Finish verification email
-TODO: Add validation to all the forms
+TODO: DONE: Add validation to all the forms
 TODO: When changing user information, there is a bug.
+TODO: Fix search items
+TODO: DONE: When adding to cart/wishlist for accessories it treats all of them as the same entity
+TODO: There is a css bug when the basket/wishlist is filled.

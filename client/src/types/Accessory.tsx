@@ -6,6 +6,8 @@ export type AccessoryType = {
     likes: number;
     parentId: string[];
     dark: true;
+	colors?: string[];
+	sizes?: string[]
 }
 export type AccessoryTypeBasket = AccessoryType & {
 	selectedSize: undefined;

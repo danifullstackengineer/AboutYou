@@ -250,8 +250,6 @@ function CheckoutBodyMainForm({
 
   const { width } = useWindowDimensions();
 
-  console.log(isGoodSecondAddress);
-
   useEffect(() => {
     if (firstAddrRef && firstAddrRef.current && newAddress) {
       firstAddrRef.current.style.marginBottom = "2em";

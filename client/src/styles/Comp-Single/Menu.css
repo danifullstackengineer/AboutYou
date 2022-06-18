@@ -35,7 +35,6 @@
   justify-content: center;
   position: relative;
   overflow-y: auto;
-  min-height: 30px;
 }
 .menu__option > h3 {
   font-size: 1.25rem;
@@ -120,7 +119,7 @@
 .menu__option-option-product-left > img {
   width: 250px;
   height: 150px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: 50% 50%;
 }
 .menu__option-option-product-right {
@@ -298,6 +297,22 @@
 }
 .menu__option-option-product-total-btn {
   margin: 1em 0 1em 0;
+}
+.menu__option-option-search {
+  height: 45px;
+}
+.menu__option-option-search form {
+  width: 100%;
+  height: 100%;
+}
+.menu__option-option-search > form > input {
+  width: calc(100% - 1rem);
+  height: inherit;
+  border: none;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: black;
+  padding-left: 1rem;
 }
 @media screen and (max-width: 400px) {
   .menu {

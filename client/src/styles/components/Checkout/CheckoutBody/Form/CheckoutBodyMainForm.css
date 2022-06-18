@@ -110,38 +110,38 @@
   border: none;
 }
 .checkoutBodyMainForm__country-selection-sel {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-    min-height: 40px;
-    cursor: pointer;
-    width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  min-height: 40px;
+  cursor: pointer;
+  width: 100%;
 }
 .checkoutBodyMainForm__country-selection-sel:hover {
-    background-color: rgb(240,240,240);
+  background-color: rgb(240, 240, 240);
 }
 .checkoutBodyMainForm__country-selection-sel > img {
-    width: 20px;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
+  width: 20px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 .checkoutBodyMainForm__country-selection > div:last-child {
-    max-height: 150px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
+  max-height: 150px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
 }
 .checkoutBodyMainForm__input {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: .5em 0 0 0;
+  margin: 0.5em 0 0 0;
 }
 @keyframes slideLeftBefore {
   0% {
@@ -159,8 +159,12 @@
     left: 50%;
   }
 }
-
-@media screen and (max-width: 650px){
+@media screen and (max-width: 1100px) and (min-width: 1000px) {
+  .inputFormCheckout__warn {
+    display: none;
+  }
+}
+@media screen and (max-width: 650px) {
   .checkoutBodyMainForm__title-country {
     flex-direction: column;
   }
