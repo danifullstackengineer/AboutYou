@@ -17,6 +17,7 @@ import Stripe from "stripe";
 import fs from "fs";
 import http2 from "http2";
 import http2Express from "http2-express-bridge";
+import { config_paypal } from "./logic/payment.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
@@ -42,6 +43,7 @@ app.use(helmet({ contentSecurityPolicy: false }));
 // });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+config_paypal();
 app.use("/", router);
 if (!(process.env.NODE_ENV === "production")) {
   // Handle app on development

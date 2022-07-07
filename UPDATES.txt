@@ -84,3 +84,4 @@ TODO: When changing user information, there is a bug.
 TODO: Fix search items
 TODO: DONE: When adding to cart/wishlist for accessories it treats all of them as the same entity
 TODO: There is a css bug when the basket/wishlist is filled.
+TODO: Birth date is buggy

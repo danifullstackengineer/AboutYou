@@ -18,4 +18,13 @@ const LoginResultType = new GraphQLObjectType({
   },
 });
 
-export { LoginResultType };
+const PaymentResultType = new GraphQLObjectType({
+  name: "PaymentResultType",
+  fields: {
+    success: { type: new GraphQLNonNull(GraphQLBoolean) },
+    redirect_link: { type: GraphQLString },
+    message: { type: GraphQLString },
+  },
+});
+
+export { LoginResultType, PaymentResultType };

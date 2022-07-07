@@ -8,14 +8,14 @@ import {
   isAuth,
   verify_email
 } from "./controllers/Credential.js";
-import {
-  createPaypalPaymentPage,
-  handlePaypalSuccessPayment,
-  createStripeSecret,
-  createStripePayment,
-  getTotalCrypto,
-  createCoinpaymentsPayment,
-} from "./controllers/Payment.js";
+// import {
+//   createPaypalPaymentPage,
+//   handlePaypalSuccessPayment,
+//   createStripeSecret,
+//   createStripePayment,
+//   getTotalCrypto,
+//   createCoinpaymentsPayment,
+// } from "./controllers/Payment.js";
 import { createProducts } from "./controllers/SingleUse.js";
 
 const apiLimited = rateLimit({
@@ -32,33 +32,33 @@ router.post("/login", apiLimited, login);
 router.get("/isUserAuth", apiLimited, verifyJWT, isAuth);
 
 //PAYPAL
-router.post(
-  "/createPaypalPayment",
-  apiLimited,
-  verifyJWT,
-  createPaypalPaymentPage
-);
-router.get(
-  "/executePaypalPayment",
-  apiLimited,
-  verifyJWT,
-  handlePaypalSuccessPayment
-);
+// router.post(
+//   "/createPaypalPayment",
+//   apiLimited,
+//   verifyJWT,
+//   createPaypalPaymentPage
+// );
+// router.get(
+//   "/executePaypalPayment",
+//   apiLimited,
+//   verifyJWT,
+//   handlePaypalSuccessPayment
+// );
 
 //Stripe
-router.post("/createStripeSecret", apiLimited, verifyJWT, createStripeSecret);
-router.post("/createStripePayment", apiLimited, verifyJWT, createStripePayment);
+// router.post("/createStripeSecret", apiLimited, verifyJWT, createStripeSecret);
+// router.post("/createStripePayment", apiLimited, verifyJWT, createStripePayment);
 
 //Crypto
-router.post("/getTotalCrypto", apiLimited, verifyJWT, getTotalCrypto);
+// router.post("/getTotalCrypto", apiLimited, verifyJWT, getTotalCrypto);
 
 //Coinpayments
-router.post(
-  "/createCoinpaymentsPayment",
-  apiLimited,
-  verifyJWT,
-  createCoinpaymentsPayment
-);
+// router.post(
+//   "/createCoinpaymentsPayment",
+//   apiLimited,
+//   verifyJWT,
+//   createCoinpaymentsPayment
+// );
 
 //Dev only
 if (process.env.NODE_ENV !== "production") {

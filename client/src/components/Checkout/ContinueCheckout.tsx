@@ -8,7 +8,8 @@ function ContinueCheckout({
   continueText,
   redirectToPaymentProvider,
   setRedirectToPaymentProvider,
-  isGoodInputPhoneNumber
+  isGoodInputPhoneNumber,
+  phoneNumberRef,
 }: {
   refProp?: React.RefObject<HTMLDivElement>;
   setClickedContinue: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,10 +17,11 @@ function ContinueCheckout({
   redirectToPaymentProvider?: boolean;
   setRedirectToPaymentProvider: React.Dispatch<React.SetStateAction<boolean>>;
   isGoodInputPhoneNumber?: boolean;
+  phoneNumberRef?: React.RefObject<HTMLDivElement>;
 }) {
   const dummyRef = useRef<HTMLDivElement>(null);
   const [continueTop, setContinueTop] = useState<number>();
-  const {width, height} = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (refProp && refProp.current) {
@@ -28,14 +30,13 @@ function ContinueCheckout({
   }, [refProp]);
 
   const handleScroll = useCallback(() => {
-    if (
-      dummyRef.current &&
-      refProp &&
-      refProp.current
-    ) {
+    if (dummyRef.current && refProp && refProp.current) {
       const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
-      if (continueTop && continueTop + winScroll >= dummyRef.current.offsetTop) {
+      if (
+        continueTop &&
+        continueTop + winScroll >= dummyRef.current.offsetTop
+      ) {
         refProp.current.style.position = "relative";
       } else {
         refProp.current.style.position = "fixed";
@@ -56,6 +57,13 @@ function ContinueCheckout({
           onClick={() => {
             if (redirectToPaymentProvider && isGoodInputPhoneNumber) {
               setRedirectToPaymentProvider(true);
+            } else if (
+              redirectToPaymentProvider &&
+              !isGoodInputPhoneNumber &&
+              phoneNumberRef &&
+              phoneNumberRef.current
+            ) {
+              phoneNumberRef.current.scrollIntoView();
             } else {
               setClickedContinue(true);
               setRedirectToPaymentProvider(false);

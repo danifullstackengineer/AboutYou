@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   calculateTotalCrypto,
   createCoinpaymentsPayment,
@@ -21,6 +21,10 @@ import PaymentFailure from "./PaymentBody/PaymentFinished/PaymentFailure";
 import PaymentSuccess from "./PaymentBody/PaymentFinished/PaymentSuccess";
 import { ProductTypeBasket } from "../../types/Product";
 import { AccessoryTypeBasket } from "../../types/Accessory";
+import { useLazyQuery } from "@apollo/client";
+import { create_paypal_payment } from "../../Apollo/Payment";
+import { BasketContext } from "../../Context/Basket";
+import { AuthContext } from "../../Context/Auth";
 
 function Checkout({
   setAmount,
@@ -51,6 +55,14 @@ function Checkout({
       setDisplay("flex");
     };
   }, []);
+
+  const bContext = useContext(BasketContext);
+  const aContext = useContext(AuthContext);
+
+  // Payment Apollo
+  const [create_paypal_payment_query] = useLazyQuery(create_paypal_payment, {
+    fetchPolicy: "no-cache",
+  });
 
   const continueRef = useRef<HTMLDivElement>(null);
 
@@ -99,6 +111,64 @@ function Checkout({
   ]);
 
   const [currentCoin, setCurrentCoin] = useState<string>("");
+
+  useEffect(() => {
+    if (redirectToPaymentProvider) {
+      setRedirectToPaymentProvider(false);
+      if (currentMethod[0]) {
+        setVisibleProcessing(true);
+        setTitleProcessing(
+          "Processing payment through Paypal. A new window will open..."
+        );
+        var basket: {
+          _id: string;
+          accessoryId?: string;
+          selectedSize?: string | number;
+          selectedColor?: string;
+          quantity: number;
+          customStyle?: File;
+        }[] = [];
+        bContext.product.forEach((item) => {
+          basket.push({
+            _id: item._id,
+            accessoryId: item.selectedAccessory?._id,
+            selectedSize: item.selectedSize,
+            selectedColor: item.selectedColor,
+            quantity: item.quantity,
+            customStyle: item.customStyle,
+          });
+        });
+        var addressOne = localStorage.getItem("addressOne");
+        if (addressOne) {
+          addressOne = JSON.parse(addressOne);
+        }
+        var addressTwo = localStorage.getItem("addressTwo");
+        if (addressTwo) {
+          addressTwo = JSON.parse(addressTwo);
+        }
+        fetch("https://ipapi.co/json/")
+          .then((res) => res.json())
+          .then((res) => {
+            create_paypal_payment_query({
+              variables: {
+                basket,
+                addressOne: addressOne,
+                addressTwo: addressTwo,
+                _id: aContext.userId,
+                country_code: res.country_code,
+              },
+            })
+              .then((res) => {
+                console.log("paypal payment res is: ", res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {});
+      }
+    }
+  }, [redirectToPaymentProvider, currentMethod]);
 
   // useEffect(() => {
   //   if (redirectToPaymentProvider) {
@@ -219,6 +289,8 @@ function Checkout({
   const [titleProcesing, setTitleProcessing] = useState<string>("");
   const [finished, setFinished] = useState<boolean>(false);
 
+  const phoneNumberRef = useRef<HTMLDivElement>(null);
+
   return (
     <div className="checkout">
       <ProcessingPayment
@@ -259,6 +331,7 @@ function Checkout({
           setActiveDropdown={setActiveDropdown}
           activeDropdown={activeDropdown}
           setAmount={setAmount}
+          phoneNumberRef={phoneNumberRef}
         />
       ) : paid === true ? (
         <PaymentSuccess />
@@ -281,6 +354,7 @@ function Checkout({
             redirectToPaymentProvider={true}
             setRedirectToPaymentProvider={setRedirectToPaymentProvider}
             isGoodInputPhoneNumber={isGoodInputPhoneNumber}
+            phoneNumberRef={phoneNumberRef}
           />
         )
       ) : (

@@ -14,6 +14,7 @@ function PaymentBody({
   setAmount,
   isGoodInputPhoneNumber,
   setIsGoodInputPhoneNumber,
+  phoneNumberRef
 }: {
   currentMethod: boolean[];
   setCurrentMethod: React.Dispatch<React.SetStateAction<boolean[]>>;
@@ -26,6 +27,7 @@ function PaymentBody({
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   isGoodInputPhoneNumber: boolean;
   setIsGoodInputPhoneNumber: React.Dispatch<React.SetStateAction<boolean>>;
+  phoneNumberRef: React.RefObject<HTMLDivElement>;
 }) {
   return (
     <div className="paymentBody">
@@ -43,6 +45,7 @@ function PaymentBody({
           setAmount={setAmount}
           isGoodInputPhoneNumber={isGoodInputPhoneNumber}
           setIsGoodInputPhoneNumber={setIsGoodInputPhoneNumber}
+		  phoneNumberRef={phoneNumberRef}
         />
       </div>
     </div>

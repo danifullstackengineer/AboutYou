@@ -5,9 +5,11 @@ import "../../../../styles/components/Checkout/PaymentBody/PaymentBodyInfo/Payme
 function PaymentBodyInfoPhoneNumber({
   isGoodInputPhoneNumber,
   setIsGoodInputPhoneNumber,
+  phoneNumberRef
 }: {
   isGoodInputPhoneNumber: boolean;
   setIsGoodInputPhoneNumber: React.Dispatch<React.SetStateAction<boolean>>;
+  phoneNumberRef: React.RefObject<HTMLDivElement>;
 }) {
   const [input, setInput] = useState<string>("");
 
@@ -32,7 +34,7 @@ function PaymentBodyInfoPhoneNumber({
   const { width } = useWindowDimensions();
 
   return (
-    <div className="paymentBodyInfoPhoneNumber">
+    <div className="paymentBodyInfoPhoneNumber" ref={phoneNumberRef}>
       <span>Phone number</span>
       <div className="paymentBodyInfoPhoneNumber__content">
         <input

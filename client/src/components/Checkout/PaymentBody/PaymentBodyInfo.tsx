@@ -14,6 +14,7 @@ function PaymentBodyInfo({
   setAmount,
   isGoodInputPhoneNumber,
   setIsGoodInputPhoneNumber,
+  phoneNumberRef
 }: {
   isCardPayment: boolean;
   setCardElement: React.Dispatch<
@@ -22,6 +23,7 @@ function PaymentBodyInfo({
   setAmount?: React.Dispatch<React.SetStateAction<string>>;
   isGoodInputPhoneNumber: boolean;
   setIsGoodInputPhoneNumber: React.Dispatch<React.SetStateAction<boolean>>;
+  phoneNumberRef: React.RefObject<HTMLDivElement>;
 }) {
   const returnDateAndEstimatedDate = (): string => {
     const days_for_first = 10;
@@ -69,6 +71,7 @@ function PaymentBodyInfo({
       <PaymentBodyInfoPhoneNumber
         isGoodInputPhoneNumber={isGoodInputPhoneNumber}
         setIsGoodInputPhoneNumber={setIsGoodInputPhoneNumber}
+		phoneNumberRef={phoneNumberRef}
       />
       <PaymentBodyInfoSubscribe />
       {isCardPayment ? (

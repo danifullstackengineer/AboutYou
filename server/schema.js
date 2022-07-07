@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs";
 import { promisify } from "util";
 import handlebars from "handlebars";
+import paypal from "paypal-rest-sdk";
 
 import {
   GraphQLObjectType,
@@ -19,16 +20,24 @@ import User from "./models/User.js";
 import Products from "./models/Products.js";
 import Accessories from "./models/Accessories.js";
 import AccessoryType from "./GraphQL/AccessoryType.js";
-import { LikedAndTotalLikes } from "./GraphQL/CustomType.js";
+import { ItemType, LikedAndTotalLikes } from "./GraphQL/CustomType.js";
 import {
   FirstNameRegex,
   LastNameRegex,
   PasswordRegex,
   EmailRegex,
 } from "./GraphQL/RegexType.js";
-import { LoginResultType } from "./GraphQL/MiscType.js";
+import { LoginResultType, PaymentResultType } from "./GraphQL/MiscType.js";
 import { send_mail } from "./logic/mail/send_mail.js";
 import { search_products } from "./logic/products.js";
+import { AddressOneType, AddressTwoType } from "./GraphQL/AddressType.js";
+import {
+  config_paypal,
+  create_address_json,
+  create_payment_json,
+  decideTotal,
+} from "./logic/payment.js";
+import Orders from "./models/Orders.js";
 
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
@@ -39,7 +48,6 @@ const RootQuery = new GraphQLObjectType({
         id: { type: GraphQLID },
       },
       async resolve(par, args) {
-        // const user = await User.findById(args.id);
         const user = User.findById(args.id).lean();
         if (user) {
           return user.lean();
@@ -213,6 +221,59 @@ const RootQuery = new GraphQLObjectType({
       },
       async resolve(par, args) {
         await search_products(args.search_input, args.type);
+      },
+    },
+    create_paypal_payment: {
+      type: PaymentResultType,
+      args: {
+        basket: { type: new GraphQLNonNull(new GraphQLList(ItemType)) },
+        addressOne: { type: new GraphQLNonNull(AddressOneType) },
+        addressTwo: { type: AddressTwoType },
+        _id: { type: GraphQLID },
+        country_code: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(par, args) {
+        try {
+          const total = await decideTotal(args.basket);
+          const json_addr = create_address_json(
+            args.addressOne,
+            args.addressTwo,
+            args.country_code
+          );
+          const payment_json = create_payment_json(json_addr, total);
+          paypal.payment.create(payment_json, async (error, payment) => {
+            if (error) {
+              throw error;
+            }
+            var res = {
+              success: false,
+              message: "Could not create your order",
+            };
+            for (let i = 0; i < payment.links.length; i++) {
+              // eslint-disable-next-line security/detect-object-injection
+              if (payment.links[i].rel === "approval_url") {
+                await new Orders({
+                  madeBy: args._id,
+                  orderInformation: payment.transactions,
+                  payId: payment.id,
+                  method: "PayPal",
+                }).save();
+
+                res = {
+                  success: true,
+                  // eslint-disable-next-line security/detect-object-injection
+                  redirect_link: payment.links[i].href,
+                };
+              }
+            }
+            return res;
+          });
+        } catch (err) {
+          return {
+            success: false,
+            message: "There was a problem while processing payment.",
+          };
+        }
       },
     },
   },
