@@ -22,6 +22,7 @@ const Accessory = ({
   handleOpening,
   clickedBasket,
   clickedWishlist,
+  refProduct
 }: {
   accessory: AccessoryType;
   setClickedLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,6 +34,7 @@ const Accessory = ({
   clickedBasket: boolean;
   clickedWishlist: boolean;
   handleOpening: (type: "user" | "wishlist" | "basket" | "language") => void;
+  refProduct?:React.RefObject<HTMLDivElement>;
 }) => {
   const [likedInner, setLikedInner] = useState<boolean>(false);
   const [likes, setLikes] = useState<number>(accessory.likes);
@@ -151,7 +153,7 @@ const Accessory = ({
   const { width } = useWindowDimensions();
 
   return (
-    <div className={`accessory`}>
+    <div className={`accessory`} ref={refProduct}>
       <div className={`accessory__img`}>
         <img src={accessory.backgroundImg} alt={""} />
       </div>

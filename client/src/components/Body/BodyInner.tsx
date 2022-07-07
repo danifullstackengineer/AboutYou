@@ -338,6 +338,7 @@ const BodyInner = ({
             setClickedLogin={setClickedLogin}
             setClickedWishlist={setClickedWishlist}
             clickedWishlist={clickedWishlist}
+			refProduct={i=== limit_three_cols -1 ? lastProductRef_dark : undefined}
           />
         );
       })
@@ -361,11 +362,12 @@ const BodyInner = ({
             clickedWishlist={clickedWishlist}
             liked={true}
             handleOpening={handleOpening}
+			refProduct={ i=== limit_three_cols -1 ? lastAccessoryRef : undefined}
           />
         );
       })
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offset_acc, acc]);
 
   useEffect(() => {
@@ -460,10 +462,12 @@ const BodyInner = ({
         }
         break;
       case "/dark":
+		  console.log(lastProductRef_dark.current);
         if (lastProductRef_dark.current) {
           const top = lastProductRef_dark.current.offsetTop;
           const height = lastProductRef_dark.current.offsetHeight;
           const y = window.scrollY;
+		  console.log(height, y, top);
           if (height + y >= top && !loadingDark) {
             setLoadMore_dark(true);
           }
